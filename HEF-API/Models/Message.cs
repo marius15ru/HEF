@@ -8,4 +8,5 @@ namespace myApp.Models
         public string Detail { get; set; }
         public string ErrorCode { get; set; }
         //public DataResult DataResult { get; set; }
+    }
 }
