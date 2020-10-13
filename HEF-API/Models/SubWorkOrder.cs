@@ -17,7 +17,7 @@ namespace myApp.Models
         public string Description { get; set; }
         public string Comment { get; set; }
         public int Measurement { get; set; }
-        public Enums.MeasurementType MeasurementType { get; set }
+        public Enums.MeasurementType MeasurementType { get; set; }
         public bool Delay { get; set; }
     }
 }

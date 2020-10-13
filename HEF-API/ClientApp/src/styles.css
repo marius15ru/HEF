@@ -14,3 +14,60 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.border-box{
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.log-in-logo{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.log-in-header{
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.log-in-input{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 75%;
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+.log-in-button{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 30%;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  background-color: #0182d4;
+  color: white;
+}
+
+.task-status-box{
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 30px;
+  width: 330px;
+}
+
+.task-status-box:nth-child(1){
+  margin-right: none;
+}
+
+.task-status-header{
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
