@@ -14,8 +14,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material';
+import { MatGridListModule, MatSelectModule } from '@angular/material';
 import { UserViewComponent } from './views/user-view/user-view.component';
+import { AdminViewComponent } from './views/admin-view/admin-view.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatTabsModule} from '@angular/material/tabs';
+import { AdminTasksComponent } from './views/admin-view/admin-tasks/admin-tasks.component';
+import { AdminPlantsComponent } from './views/admin-view/admin-plants/admin-plants.component';
+import { AdminEquipmentComponent } from './views/admin-view/admin-equipment/admin-equipment.component';
+import { AdminLocationComponent } from './views/admin-view/admin-location/admin-location.component';
+import { AdminStaffComponent } from './views/admin-view/admin-staff/admin-staff.component';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +34,13 @@ import { UserViewComponent } from './views/user-view/user-view.component';
     CounterComponent,
     FetchDataComponent,
     LogInComponent,
-    UserViewComponent
+    UserViewComponent,
+    AdminViewComponent,
+    AdminTasksComponent,
+    AdminPlantsComponent,
+    AdminEquipmentComponent,
+    AdminLocationComponent,
+    AdminStaffComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,13 +50,17 @@ import { UserViewComponent } from './views/user-view/user-view.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'home', component: UserViewComponent},
+      { path: 'verkadili', component: UserViewComponent},
+      { path: 'stjornandi', component: AdminViewComponent},
     ]),
     BrowserAnimationsModule,
     MatInputModule,
     MatFormFieldModule,
     MatOptionModule,
     MatSelectModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,6 +9,15 @@ code {
   color: #e01a76;
 }
 
+.mat-tab-group{
+  animation-duration: 1ms;
+  transition-duration: 1ms;
+}
+
+::ng-deep .mat-ink-bar {
+  background-color: #0182d4 !important;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -16,13 +25,14 @@ code {
 }
 
 .border-box{
-  border: 1px solid black;
+  border: 2px solid #0182d4;
   border-radius: 5px;
 }
 
 .log-in-logo{
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px;
   display: block;
 }
 
@@ -59,13 +69,46 @@ code {
   width: 330px;
 }
 
-.task-status-box:nth-child(1){
-  margin-right: none;
-}
-
 .task-status-header{
   margin-top: 10px;
   margin-bottom: 15px;
+}
+
+mat-grid-tile {
+  background: lightblue;
+}
+.grid-tile{
+  box-shadow: grey;
+}
+
+.grid-tile-header{
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.grid-tile-button{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.grid-tile-button-text{
+  font-size: 16px;
+  text-decoration: underline;
+  font-weight: bold;  
+}
+
+.grid-tile-button-text:hover{
+  cursor: pointer;
+}
+
+.grid-tile-routing-icon{
+  margin-left: 5px;
+}
+
+.main-content-holder{
+  margin-top: 30px;
 }
 
 

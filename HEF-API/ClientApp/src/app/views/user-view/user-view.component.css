@@ -1,0 +1,13 @@
+.routing-header{
+    float: right;
+    position: relative;
+    cursor: pointer;
+}
+
+.user-view-header{
+    display: inline-block;
+}
+
+.grid-header-routing-icon{
+    margin-left: 5px;
+  }
