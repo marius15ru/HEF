@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -24,6 +24,11 @@ import { AdminPlantsComponent } from './views/admin-view/admin-plants/admin-plan
 import { AdminEquipmentComponent } from './views/admin-view/admin-equipment/admin-equipment.component';
 import { AdminLocationComponent } from './views/admin-view/admin-location/admin-location.component';
 import { AdminStaffComponent } from './views/admin-view/admin-staff/admin-staff.component';
+import { UserTasksComponent } from './views/user-view/user-tasks/user-tasks.component';
+import { CreateEmergencyTaskComponent } from './views/user-view/create-emergency-task/create-emergency-task.component';
+import { ObtainTaskComponent } from './views/user-view/obtain-task/obtain-task.component';
+import { GridModule } from '@syncfusion/ej2-angular-grids';
+import { ChartModule } from '@syncfusion/ej2-angular-charts';
 
 
 @NgModule({
@@ -40,7 +45,10 @@ import { AdminStaffComponent } from './views/admin-view/admin-staff/admin-staff.
     AdminPlantsComponent,
     AdminEquipmentComponent,
     AdminLocationComponent,
-    AdminStaffComponent
+    AdminStaffComponent,
+    UserTasksComponent,
+    CreateEmergencyTaskComponent,
+    ObtainTaskComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -60,7 +68,9 @@ import { AdminStaffComponent } from './views/admin-view/admin-staff/admin-staff.
     MatSelectModule,
     MatGridListModule,
     MatDatepickerModule,
-    MatTabsModule
+    MatTabsModule,
+    GridModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]
