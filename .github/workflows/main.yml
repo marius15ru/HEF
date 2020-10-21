@@ -30,8 +30,8 @@ jobs:
       # Install and set up node dependencies
       - name: Node
         run: |
-          npm i
-          npm run start
+          npm ci
+          npm run build
 
       # Run linters
       - name: Linters
