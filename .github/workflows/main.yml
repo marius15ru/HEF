@@ -27,12 +27,10 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
       
-      # Install and set up node dependencies
-      - name: Node
+      - name: Install Node dependencies
         run: npm ci
 
-      # Run linters
-      - name: Linters
+      - name: Run Linters
         run: npm run lint
 
       # Unit test
