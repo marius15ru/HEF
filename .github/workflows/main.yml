@@ -29,9 +29,7 @@ jobs:
       
       # Install and set up node dependencies
       - name: Node
-        run: |
-          npm ci
-          npm run build
+        run: npm ci
 
       # Run linters
       - name: Linters
