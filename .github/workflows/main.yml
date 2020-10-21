@@ -30,7 +30,7 @@ jobs:
         run: pwd
       
       - name: list files
-        run: cat $GITHUB_PATH
+        run: echo $GITHUB_PATH
       
       - name: Define path
         run: echo "HEF/HEF-API/ClinetApp" >> $GITHUB_PATH
