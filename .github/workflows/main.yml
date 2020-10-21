@@ -27,9 +27,6 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
       
-      - name: Define path
-        run: cd HEF-API/ClientApp
-      
       - name: list files
         run: ls -l
       
