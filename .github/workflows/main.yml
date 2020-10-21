@@ -27,18 +27,15 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
       
-      - name: list files
-        run: ls -l
-      
       # Install and set up node dependencies
-      #- name: Node
-      #  run: |
-      #    npm i
-      #    npm run start
+      - name: Node
+        run: |
+          npm i
+          npm run start
 
       # Run linters
-      #- name: Linters
-      #  run: npm run lint
+      - name: Linters
+        run: npm run lint
 
       # Unit test
       #- name: Unit Tests
