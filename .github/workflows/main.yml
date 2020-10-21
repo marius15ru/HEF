@@ -26,9 +26,14 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1.7.2
       
+      - name: list files
+        run: pwd
+      
+      - name: list files
+        run: cat $GITHUB_PATH
       
       - name: Define path
-        run: echo "/HEF-API/ClinetApp" >> $GITHUB_PATH
+        run: echo "HEF/HEF-API/ClinetApp" >> $GITHUB_PATH
       
       - name: list files
         run: ls -l
