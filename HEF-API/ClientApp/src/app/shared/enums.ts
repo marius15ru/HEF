@@ -1,5 +1,4 @@
-export enum DataOperation
-{
+export enum DataOperation {
     Undefined = 0,
     Insert = 1,
     Read = 2,
@@ -12,22 +11,19 @@ export enum DataOperation
 
 }
 
-export enum Role
-{
+export enum Role {
     Undefined = 0,
     Worker = 1,
     Admin = 2,
 }
 
-export enum UserStatus
-{
+export enum UserStatus {
     Undefined = 0,
     Available = 1,
     UnAvailable = 2,
 }
 
-export enum WorkOrderStatus
-{
+export enum WorkOrderStatus {
     Undefined = 0,
     Pending = 1,
     InProgress = 2,
@@ -36,8 +32,7 @@ export enum WorkOrderStatus
 
 }
 
-export enum MeasurementType
-{
+export enum MeasurementType {
     Undefined = 0,
     Celsius = 1,
     Liters = 2,
@@ -46,16 +41,16 @@ export enum MeasurementType
     LitersPerSecond = 5
 
 }
-export enum PlantType
-{
+
+export enum PlantType {
     Undefined = 0,
     Water = 1,
     Data = 2,
     Heat = 3,
     Drainage = 4
 }
-export enum TimeFrame
-{
+
+export enum TimeFrame {
     Undefined = 0,
     Week = 1,
     TwoWeeks = 2,
@@ -70,8 +65,7 @@ export enum TimeFrame
     TenYears = 11
 }
 
-export enum Task
-{
+export enum Task {
     Undefined = 0,
     Clean = 1,
     Vacuum = 2,
