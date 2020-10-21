@@ -27,8 +27,11 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
       
       
-      - name: List files
-        run: echo "/HEF-API/ClinetApp" >> ls -l
+      - name: Define path
+        run: echo "/HEF-API/ClinetApp" >> $GITHUB_PATH
+      
+      - name: list files
+        run: ls -l
       
       # Install and set up node dependencies
       #- name: Node
