@@ -26,8 +26,9 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1.7.2
       
+      
       - name: List files
-        run: ls -l
+        run: echo "/HEF-API/ClinetApp" >> ls -l
       
       # Install and set up node dependencies
       #- name: Node
