@@ -1,0 +1,9 @@
+.create-task-button{
+    float: right;
+    /* position: relative; */
+}
+
+.grid-header-text{
+    left: 0;
+    position: absolute;
+}
