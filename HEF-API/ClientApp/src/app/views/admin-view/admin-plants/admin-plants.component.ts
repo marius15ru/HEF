@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-dialog.component';
 
 @Component({
   selector: 'app-admin-plants',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPlantsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogItem: MatDialog,) { }
 
   ngOnInit() {
+  }
+
+  openDialog(){
+
+    const refUser = this.dialogItem.open(AdminPlantsDialogComponent, {
+      data: {},
+      width: '800px'
+    });
+
+    refUser.afterClosed().subscribe( (result) => {
+      console.log('Dialog closed');
+    });
   }
 
 }

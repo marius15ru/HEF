@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AdminLocationDialogComponent } from './admin-location-dialog/admin-location-dialog.component';
 
 @Component({
   selector: 'app-admin-location',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLocationComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogItem: MatDialog,) { }
 
   ngOnInit() {
+  }
+
+  openDialog(){
+
+    const refUser = this.dialogItem.open(AdminLocationDialogComponent, {
+      data: {},
+      width: '800px'
+    });
+
+    refUser.afterClosed().subscribe( (result) => {
+      console.log('Dialog closed');
+    });
   }
 
 }

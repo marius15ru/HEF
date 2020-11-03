@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
-import { MatGridListModule, MatSelectModule } from '@angular/material';
+import { MatDialogModule, MatGridListModule, MatSelectModule } from '@angular/material';
 import { UserViewComponent } from './views/user-view/user-view.component';
 import { AdminViewComponent } from './views/admin-view/admin-view.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -29,6 +29,11 @@ import { CreateEmergencyTaskComponent } from './views/user-view/create-emergency
 import { ObtainTaskComponent } from './views/user-view/obtain-task/obtain-task.component';
 import { GridModule } from '@syncfusion/ej2-angular-grids';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
+import { AdminTasksDialogComponent } from './views/admin-view/admin-tasks/admin-tasks-dialog/admin-tasks-dialog.component';
+import { AdminStaffDialogComponent } from './views/admin-view/admin-staff/admin-staff-dialog/admin-staff-dialog.component';
+import { AdminPlantsDialogComponent } from './views/admin-view/admin-plants/admin-plants-dialog/admin-plants-dialog.component';
+import { AdminLocationDialogComponent } from './views/admin-view/admin-location/admin-location-dialog/admin-location-dialog.component';
+import { AdminEquipmentDialogComponent } from './views/admin-view/admin-equipment/admin-equipment-dialog/admin-equipment-dialog.component';
 
 
 @NgModule({
@@ -48,7 +53,12 @@ import { ChartModule } from '@syncfusion/ej2-angular-charts';
     AdminStaffComponent,
     UserTasksComponent,
     CreateEmergencyTaskComponent,
-    ObtainTaskComponent
+    ObtainTaskComponent,
+    AdminTasksDialogComponent,
+    AdminStaffDialogComponent,
+    AdminPlantsDialogComponent,
+    AdminLocationDialogComponent,
+    AdminEquipmentDialogComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -69,10 +79,18 @@ import { ChartModule } from '@syncfusion/ej2-angular-charts';
     MatGridListModule,
     MatDatepickerModule,
     MatTabsModule,
+    MatDialogModule,
     GridModule,
     ChartModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AdminTasksDialogComponent,
+    AdminStaffDialogComponent,
+    AdminPlantsDialogComponent,
+    AdminLocationDialogComponent,
+    AdminEquipmentDialogComponent,
+  ],
 })
 export class AppModule { }

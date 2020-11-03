@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AdminEquipmentDialogComponent } from './admin-equipment-dialog/admin-equipment-dialog.component';
 
 @Component({
   selector: 'app-admin-equipment',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminEquipmentComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogItem: MatDialog,) { }
 
   ngOnInit() {
+  }
+
+  openDialog(){
+
+    const refUser = this.dialogItem.open(AdminEquipmentDialogComponent, {
+      data: {},
+      width: '800px'
+    });
+
+    refUser.afterClosed().subscribe( (result) => {
+      console.log('Dialog closed');
+    });
   }
 
 }

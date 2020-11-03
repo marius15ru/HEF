@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AdminStaffDialogComponent } from './admin-staff-dialog/admin-staff-dialog.component';
 
 @Component({
   selector: 'app-admin-staff',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminStaffComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogItem: MatDialog,) { }
 
   ngOnInit() {
+  }
+
+  openDialog(){
+
+    const refUser = this.dialogItem.open(AdminStaffDialogComponent, {
+      data: {},
+      width: '800px'
+    });
+
+    refUser.afterClosed().subscribe( (result) => {
+      console.log('Dialog closed');
+    });
   }
 
 }
