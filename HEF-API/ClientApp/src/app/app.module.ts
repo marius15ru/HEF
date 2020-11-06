@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, FormControl } from '@angular/forms';
+import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -81,7 +80,8 @@ import { AdminEquipmentDialogComponent } from './views/admin-view/admin-equipmen
     MatTabsModule,
     MatDialogModule,
     GridModule,
-    ChartModule
+    ChartModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,1 +1,22 @@
-<p>admin-plants-dialog works!</p>
+<h2>{{dialogData.action}} Veitu</h2>
+
+<mat-dialog-content>
+    <label class="form-input">
+        Nafn
+        <input type="text" class="form-input" formControlName="name">
+    </label>
+    <form [formGroup]="plantForm" (ngSubmit)="onSubmit()">
+        <label class="form-input">
+            Tegund veitu
+            <select formControlName="type" class="form-input">
+                <option *ngFor="let item of keys()">
+                    {{item}}
+                </option>
+            </select>
+        </label>
+
+        <button type="submit" [disabled]="!plantForm.valid">Submit</button>
+    </form>
+
+</mat-dialog-content>
+

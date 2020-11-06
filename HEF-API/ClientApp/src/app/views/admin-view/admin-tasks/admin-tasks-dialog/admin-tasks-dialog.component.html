@@ -1,1 +1,53 @@
-<p>admin-tasks-dialog works!</p>
+<h2>{{dialogData.action}} Verk</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="workOrderForm" (ngSubmit)="onSubmit()">
+        <label class="form-input">
+            Veita
+            <input type="text" class="form-input" formControlName="plant">
+        </label>
+
+        <label class="form-input">
+            Verkaðili
+            <input type="text" class="form-input" formControlName="user">
+        </label>
+        <label class="form-input">
+            Stöð
+            <input type="text" class="form-input" formControlName="location">
+        </label>
+        <label class="form-input">
+            Nafn
+            <input type="text" class="form-input" formControlName="name">
+        </label>
+        <label class="form-input">
+            Endurtekningar
+            <select formControlName="timeFrame" class="form-input">
+                <option *ngFor="let item of keys()">
+                    {{item}}
+                </option>
+            </select>
+        </label>
+        <label class="form-input">
+            Lengd verks(mín)
+            <input type="text" class="form-input" formControlName="duration">
+        </label>
+        <label class="form-input">
+            Klára fyrir
+            <input type="date" class="form-input" formControlName="completeBy">
+        </label>
+        <label class="form-input">
+            Neyðarverk?
+            <input type="text" class="form-input" formControlName="emergencyJob">
+        </label>
+        <label class="form-input">
+            Athugasemdir?
+            <input type="text" class="form-input" formControlName="hasComments">
+        </label>
+        <label class="form-input">
+            Síðasta athugun
+            <input type="text" class="form-input" formControlName="lastCheck">
+        </label>
+        
+        <button type="submit" [disabled]="!workOrderForm.valid">Submit</button>
+    </form>
+</mat-dialog-content>

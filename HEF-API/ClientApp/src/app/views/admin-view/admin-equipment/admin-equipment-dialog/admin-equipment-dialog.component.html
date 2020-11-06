@@ -1,1 +1,37 @@
-<p>admin-equipment-dialog works!</p>
+<h2>{{dialogData.action}} Búnað</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="equipmentForm" (ngSubmit)="onSubmit()">
+        <label class="form-input">
+            Stöð
+            <input type="text" class="form-input" formControlName="location">
+        </label>
+        <label class="form-input">
+            Nafn
+            <input type="text" class="form-input" formControlName="name">
+        </label>
+        <label class="form-input">
+            Framleiðandi
+            <input type="text" class="form-input" formControlName="manufacturer">
+        </label>
+        <label class="form-input">
+            Árgerð
+            <input type="text" class="form-input" formControlName="model">
+        </label>
+        <label class="form-input">
+            Aðgerð
+            <input type="text" class="form-input" formControlName="operation">
+        </label>
+        <!-- <label class="form-input">
+            Endurtekningar
+            <input type="time" class="form-input" formControlName="timeFrame">
+            <select formControlName="timeFrame" class="form-input">
+                <option *ngFor="let item of keys()">
+                    {{item}}
+                </option>
+            </select>
+        </label> -->
+        
+        <button type="submit" [disabled]="!equipmentForm.valid">Submit</button>
+    </form>
+</mat-dialog-content>

@@ -14,10 +14,12 @@ export class AdminLocationComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog(){
+  openDialog(action: string){
 
     const refUser = this.dialogItem.open(AdminLocationDialogComponent, {
-      data: {},
+      data: {
+        action: 'Stofna'
+      },
       width: '800px'
     });
 

@@ -14,10 +14,12 @@ export class AdminTasksComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog(){
+  openDialog(action: string){
 
     const refUser = this.dialogItem.open(AdminTasksDialogComponent, {
-      data: {},
+      data: {
+        action: 'Stofna'
+      },
       width: '800px'
     });
 

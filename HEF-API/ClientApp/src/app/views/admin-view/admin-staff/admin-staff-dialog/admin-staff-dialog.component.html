@@ -1,1 +1,29 @@
-<p>admin-staff-dialog works!</p>
+<h2>{{dialogData.action}} Starfsmann</h2>
+<mat-dialog-content>
+    <form [formGroup]="staffForm" (ngSubmit)="onSubmit()">
+            <label class="form-input">
+                Nafn
+                <input type="text" class="form-input" formControlName="name">
+            </label>
+            
+            <label class="form-input">
+                Hlutverk
+                <select formControlName="role" class="form-input">
+                    <option *ngFor="let item of keys()">
+                        {{item}}
+                    </option>
+                </select>
+            </label>
+            
+            <label class="form-input">
+                Staða
+                <select formControlName="status" class="form-input">
+                    <option *ngFor="let item of keys2()">
+                        {{item}}
+                    </option>
+                </select>
+            </label>
+            <button type="submit" [disabled]="!staffForm.valid">Submit</button>
+    </form>
+</mat-dialog-content>
+

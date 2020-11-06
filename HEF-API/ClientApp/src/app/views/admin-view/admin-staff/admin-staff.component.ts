@@ -14,10 +14,13 @@ export class AdminStaffComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog(){
+  openDialog(action: string){
 
     const refUser = this.dialogItem.open(AdminStaffDialogComponent, {
-      data: {},
+      data: {
+        action: "Stofna",
+        
+      },
       width: '800px'
     });
 

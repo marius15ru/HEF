@@ -1,1 +1,37 @@
-<p>admin-location-dialog works!</p>
+<h2>{{dialogData.action}} Stöð</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+        <label class="form-input">
+            Nafn
+            <input type="text" class="form-input" formControlName="name">
+        </label>
+        <label class="form-input">
+            Veita
+            <input type="text" class="form-input" formControlName="plant">
+        </label>
+        <label class="form-input">
+            Municipal
+            <input type="text" class="form-input" formControlName="municipal">
+        </label>
+        <label class="form-input">
+            Heimilisfang
+            <input type="text" class="form-input" formControlName="address">
+        </label>
+        <label class="form-input">
+            Hnit
+            <input type="text" class="form-input" formControlName="coOrdinates">
+        </label>
+
+        <label class="form-input">
+            Nánari staðsetning
+            <input type="text" class="form-input" formControlName="preciseLocation">
+        </label>
+        <label class="form-input">
+            Lýsing
+            <input type="text" class="form-input" formControlName="description">
+        </label>
+
+        <button type="submit" [disabled]="!locationForm.valid">Submit</button>
+    </form>
+</mat-dialog-content>
