@@ -1,3 +1,4 @@
+using HEF_API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +6,11 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using MySql.Data.MySqlClient;
+using System.IO;
+using System;
 
 namespace HEF_API
 {
@@ -26,6 +32,19 @@ namespace HEF_API
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            var connectionStringBuilder = new MySqlConnectionStringBuilder
+            {
+                Server = "37.205.39.209",
+                Port = 3306,
+                UserID = "hefis_eftirlit",
+                Password = "Jupiter.2020",
+                Database = "hefis_eftirlit",
+            };
+
+            services.AddDbContext<RepoContext>(
+                options => options.UseMySql(connectionStringBuilder.ConnectionString)
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

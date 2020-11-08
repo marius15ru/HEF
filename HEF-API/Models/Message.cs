@@ -1,5 +1,5 @@
 ﻿using System;
-namespace myApp.Models
+namespace HEF_API.Models
 {
     public class Message
     {

@@ -1,12 +1,11 @@
 ﻿using System;
-namespace myApp.Models
+namespace HEF_API.Models
 {
     public class WorkOrder
     {
         public int Id { get; set; }
         //Foreign keys
         public Plant PlantId { get; set; }
-        public User UserId { get; set; }
         public Location LocationId { get; set; }
 
         public string Name { get; set; }

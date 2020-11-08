@@ -1,15 +1,13 @@
 ﻿using System;
-namespace myApp.Models
+namespace HEF_API.Models
 {
     public class SubWorkOrder
     {
         public string Id { get; set; }
         //Foreign keys
         public WorkOrder WorkOrderId { get; set; }
-        public User UserId { get; set; }
         public Equipment EquipmentId { get; set; }
         public Location LocationId { get; set; }
-
 
         public string Name { get; set; }
         public Enums.WorkOrderStatus Status { get; set; }
