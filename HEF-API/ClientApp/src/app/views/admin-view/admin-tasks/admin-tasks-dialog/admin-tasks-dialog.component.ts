@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Pipe } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TimeFrame } from 'src/app/shared/enums';
+import { Recuring } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-admin-tasks-dialog',
@@ -11,13 +11,13 @@ import { TimeFrame } from 'src/app/shared/enums';
 
 
 export class AdminTasksDialogComponent implements OnInit {
-  workOrderForm = new FormGroup({
+  jobForm = new FormGroup({
     plant: new FormControl(''),
     user: new FormControl(''),
     location: new FormControl(''),
     name: new FormControl(''),
     status: new FormControl(''),
-    timeFrame: new FormControl(''),
+    recuring: new FormControl(''),
     duration: new FormControl(''),
     completeBy: new FormControl(''),
     emergencyJob: new FormControl(''),
@@ -25,9 +25,9 @@ export class AdminTasksDialogComponent implements OnInit {
     lastCheck: new FormControl('')
   });
 
-  timeFrame = TimeFrame;
+  recur = Recuring;
   keys() : Array<string> {
-      var keys = Object.keys(this.timeFrame);
+      var keys = Object.keys(this.recur);
       return keys.slice(keys.length / 2);
   }
 
@@ -40,7 +40,7 @@ export class AdminTasksDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.warn(this.workOrderForm.value);
+    console.warn(this.jobForm.value);
   }
 
 }

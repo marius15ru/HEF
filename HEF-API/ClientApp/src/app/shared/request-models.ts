@@ -1,5 +1,5 @@
 import { DataOperation } from "./enums";
-import { Equipment, Location, Message, Plant, SubWorkOrder, User, WorkOrder } from "./models";
+import { Equipment, Job, Message, Plant, Station, SubJobs, User } from "./models";
 
 
 export class EquipmentOperationsRequest{
@@ -12,13 +12,13 @@ export class EquipmentOperationsResult{
     message: Message;
 }
 
-export class LocationOperationsRequest{
-    item: Location;
+export class StationOperationsRequest{
+    item: Station;
     action: DataOperation;
 }
 
-export class LocationOperationsResult{
-    items: Location[];
+export class StationOperationsResult{
+    items: Station[];
     message: Message;
 }
 
@@ -32,13 +32,13 @@ export class PlantOperationsResult{
     message: Message;
 }
 
-export class SubWorkOrderOperationsRequest{
-    item: SubWorkOrder;
+export class SubJobsOperationsRequest{
+    item: SubJobs;
     action: DataOperation;
 }
 
-export class SubWorkOrderOperationsResult{
-    items: SubWorkOrder[];
+export class SubJobsOperationsResult{
+    items: SubJobs[];
     message: Message;
 }
 
@@ -52,13 +52,13 @@ export class UserOperationsResult{
     message: Message;
 }
 
-export class WorkOrderOperationsRequest{
-    item: WorkOrder;
+export class JobOperationsRequest{
+    item: Job;
     action: DataOperation;
 }
 
-export class WorkOrderOperationsResult{
-    items: WorkOrder[];
+export class JobOperationsResult{
+    items: Job[];
     message: Message;
 }
 

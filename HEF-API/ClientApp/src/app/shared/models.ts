@@ -1,29 +1,68 @@
-import { MeasurementType, PlantType, Role, Task, TimeFrame, UserStatus, WorkOrderStatus } from './enums';
+import { MeasurementType, PlantType, Recuring, Role, Task, UserStatus, JobStatus } from './enums';
+
+export class Area {
+    id: number;
+    name: string;
+}
+
+export class Comment {
+    id: number;
+    userId: number;
+    jobId: number;
+    text: string;
+}
 
 export class Equipment {
     id: number;
     // Foreign keys
-    workOrderId: number;
-    equipmentId: number;
-    locationId: number;
-
-    Name: string;
+    stationId: number;
+    
+    name: string;
     model: string;
     manufacturer: string;
-    task: Task;
-    lastCheck: Date;
+    operation: string;
 }
 
-export class Location {
+export class Job {
+    id: number;
+    // Foreign keys
+    stationId: number;
+
+    completedBy: Date;
+    description: string;
+    duration: Date;
+    emergencyJob: boolean;
+    hasComments: boolean;
+    lastCheck: Date;
+    name: string;
+    recuring: Recuring;
+    status: JobStatus;
+}
+export class JobAssignments {
+    id: number;
+
+    jobId: number;
+    userId: number;
+}
+
+export class Plant {
+    id: number;
+    // Foreign keys
+
+    name: string; 
+}
+
+export class Station {
     id: number;
     // Foreign keys
     plantId: number;
+    areaId: number;
 
-    name: string;
     address: string;
-    postCode: string;
+    description: string;
+    name: string;
+    locationPrecise: string;
     coOrdinates: string;
-    preciseLocation: string;
 }
 
 export class Message {
@@ -34,33 +73,17 @@ export class Message {
     // DataResult DataResult
 }
 
-export class Plant {
-    id: number;
-    // Foreign keys
-    workOrderId: number;
-    equipmentId: number;
-    locationId: number;
 
-    name: string;
-    plantType: PlantType;
-}
-
-export class SubWorkOrder {
+export class SubJobs {
     id: string;
     // Foreign keys
-    workOrderId: number;
-    userId: number;
+    jobId: number;
     equipmentId: number;
-    locationId: number;
-
     name: string;
-    status: WorkOrderStatus;
-    duration: string;
+    status: JobStatus;
     description: string;
-    comment: string;
-    measurement: number;
-    measurementType: MeasurementType;
-    delay: boolean;
+    value: number;
+    unit: MeasurementType;
 }
 
 export class User {
@@ -71,19 +94,3 @@ export class User {
     status: UserStatus;
 }
 
-export class WorkOrder {
-    id: number;
-    // Foreign keys
-    plantId: number;
-    userId: number;
-    locationId: number;
-
-    name: string;
-    status: WorkOrderStatus;
-    timeFrame: TimeFrame;
-    duration: string;
-    completeBy: Date;
-    emergencyJob: boolean;
-    hasComments: boolean;
-    lastCheck: Date;
-}

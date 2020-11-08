@@ -7,7 +7,7 @@ export enum DataOperation {
     List = 5,
     ListByPlant = 6,
     ListByUser = 7,
-    ListByWorkOrder = 8,
+    ListByJob = 8,
 
 }
 
@@ -23,7 +23,7 @@ export enum UserStatus {
     UnAvailable = 2,
 }
 
-export enum WorkOrderStatus {
+export enum JobStatus {
     Undefined = 0,
     Pending = 1,
     InProgress = 2,
@@ -50,7 +50,7 @@ export enum PlantType {
     Drainage = 4
 }
 
-export enum TimeFrame {
+export enum Recuring {
     Undefined = 0,
     Week = 1,
     TwoWeeks = 2,

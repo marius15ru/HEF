@@ -1,7 +1,7 @@
 <h2>{{dialogData.action}} Verk</h2>
 
 <mat-dialog-content>
-    <form [formGroup]="workOrderForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
         <label class="form-input">
             Veita
             <input type="text" class="form-input" formControlName="plant">
@@ -48,6 +48,6 @@
             <input type="text" class="form-input" formControlName="lastCheck">
         </label>
         
-        <button class="form-submition" type="submit" [disabled]="!workOrderForm.valid">{{dialogData.action}}</button>
+        <button class="form-submition" type="submit" [disabled]="!jobForm.valid">{{dialogData.action}}</button>
     </form>
 </mat-dialog-content>
