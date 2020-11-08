@@ -48,6 +48,6 @@
             <input type="text" class="form-input" formControlName="lastCheck">
         </label>
         
-        <button type="submit" [disabled]="!workOrderForm.valid">Submit</button>
+        <button class="form-submition" type="submit" [disabled]="!workOrderForm.valid">{{dialogData.action}}</button>
     </form>
 </mat-dialog-content>

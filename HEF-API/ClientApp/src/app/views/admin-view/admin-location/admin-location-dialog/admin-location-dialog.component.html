@@ -32,6 +32,6 @@
             <input type="text" class="form-input" formControlName="description">
         </label>
 
-        <button type="submit" [disabled]="!locationForm.valid">Submit</button>
+        <button class="form-submition" type="submit" [disabled]="!locationForm.valid">{{dialogData.action}}</button>
     </form>
 </mat-dialog-content>

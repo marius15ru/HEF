@@ -15,7 +15,7 @@
             </select>
         </label>
 
-        <button type="submit" [disabled]="!plantForm.valid">Submit</button>
+        <button class="form-submition" type="submit" [disabled]="!plantForm.valid">{{dialogData.action}}</button>
     </form>
 
 </mat-dialog-content>
