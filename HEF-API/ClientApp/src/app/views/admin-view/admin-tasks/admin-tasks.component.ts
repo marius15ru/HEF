@@ -9,12 +9,12 @@ import { AdminTasksDialogComponent } from './admin-tasks-dialog/admin-tasks-dial
 })
 export class AdminTasksComponent implements OnInit {
 
-  constructor(public dialogItem: MatDialog,) {}
+  constructor(public dialogItem: MatDialog, ) {}
 
   ngOnInit() {
   }
 
-  openDialog(action: string){
+  openDialog(action: string) {
 
     const refUser = this.dialogItem.open(AdminTasksDialogComponent, {
       data: {

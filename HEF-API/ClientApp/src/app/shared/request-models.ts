@@ -1,63 +1,63 @@
-import { DataOperation } from "./enums";
-import { Equipment, Job, Message, Plant, Station, SubJobs, User } from "./models";
+import { DataOperation } from './enums';
+import { Equipment, Job, Message, Plant, Station, SubJobs, User } from './models';
 
 
-export class EquipmentOperationsRequest{
+export class EquipmentOperationsRequest {
     item: Equipment;
     action: DataOperation;
 }
 
-export class EquipmentOperationsResult{
+export class EquipmentOperationsResult {
     items: Equipment[];
     message: Message;
 }
 
-export class StationOperationsRequest{
+export class StationOperationsRequest {
     item: Station;
     action: DataOperation;
 }
 
-export class StationOperationsResult{
+export class StationOperationsResult {
     items: Station[];
     message: Message;
 }
 
-export class PlantOperationsRequest{
+export class PlantOperationsRequest {
     item: Plant;
     action: DataOperation;
 }
 
-export class PlantOperationsResult{
+export class PlantOperationsResult {
     items: Plant[];
     message: Message;
 }
 
-export class SubJobsOperationsRequest{
+export class SubJobsOperationsRequest {
     item: SubJobs;
     action: DataOperation;
 }
 
-export class SubJobsOperationsResult{
+export class SubJobsOperationsResult {
     items: SubJobs[];
     message: Message;
 }
 
-export class UserOperationsRequest{
+export class UserOperationsRequest {
     item: User;
     action: DataOperation;
 }
 
-export class UserOperationsResult{
+export class UserOperationsResult {
     items: User[];
     message: Message;
 }
 
-export class JobOperationsRequest{
+export class JobOperationsRequest {
     item: Job;
     action: DataOperation;
 }
 
-export class JobOperationsResult{
+export class JobOperationsResult {
     items: Job[];
     message: Message;
 }

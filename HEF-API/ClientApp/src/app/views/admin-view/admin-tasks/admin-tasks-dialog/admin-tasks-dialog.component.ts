@@ -26,8 +26,8 @@ export class AdminTasksDialogComponent implements OnInit {
   });
 
   recur = Recuring;
-  keys() : Array<string> {
-      var keys = Object.keys(this.recur);
+  keys(): Array<string> {
+      const keys = Object.keys(this.recur);
       return keys.slice(keys.length / 2);
   }
 

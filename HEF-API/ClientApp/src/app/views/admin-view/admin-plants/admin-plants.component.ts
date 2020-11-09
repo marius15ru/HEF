@@ -9,17 +9,16 @@ import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-d
 })
 export class AdminPlantsComponent implements OnInit {
 
-  constructor(public dialogItem: MatDialog,) { }
+  constructor(public dialogItem: MatDialog, ) { }
 
   ngOnInit() {
   }
 
-  openDialog(action: string){
+  openDialog(action: string) {
 
     const refUser = this.dialogItem.open(AdminPlantsDialogComponent, {
       data: {
         action: 'Stofna',
-        
       },
       width: '800px'
     });

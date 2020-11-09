@@ -16,8 +16,8 @@ export class AdminPlantsDialogComponent implements OnInit {
   });
 
   plantType = PlantType;
-  keys() : Array<string> {
-      var keys = Object.keys(this.plantType);
+  keys(): Array<string> {
+      const keys = Object.keys(this.plantType);
       return keys.slice(keys.length / 2);
   }
 

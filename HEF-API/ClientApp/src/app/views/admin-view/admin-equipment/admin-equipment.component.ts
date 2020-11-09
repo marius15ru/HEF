@@ -9,12 +9,12 @@ import { AdminEquipmentDialogComponent } from './admin-equipment-dialog/admin-eq
 })
 export class AdminEquipmentComponent implements OnInit {
 
-  constructor(public dialogItem: MatDialog,) { }
+  constructor(public dialogItem: MatDialog, ) { }
 
   ngOnInit() {
   }
 
-  openDialog(action: string){
+  openDialog(action: string) {
 
     const refUser = this.dialogItem.open(AdminEquipmentDialogComponent, {
       data: {

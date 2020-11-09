@@ -15,5 +15,7 @@ namespace HEF_API.Services
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Plant> Plant { get; set; }
         public DbSet<Area> Area { get; set; }
+        public DbSet<Station> Station { get; set; }
+        
     }
 }

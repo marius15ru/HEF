@@ -9,17 +9,16 @@ import { AdminStaffDialogComponent } from './admin-staff-dialog/admin-staff-dial
 })
 export class AdminStaffComponent implements OnInit {
 
-  constructor(public dialogItem: MatDialog,) { }
+  constructor(public dialogItem: MatDialog, ) { }
 
   ngOnInit() {
   }
 
-  openDialog(action: string){
+  openDialog(action: string) {
 
     const refUser = this.dialogItem.open(AdminStaffDialogComponent, {
       data: {
-        action: "Stofna",
-        
+        action: 'Stofna',
       },
       width: '800px'
     });

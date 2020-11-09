@@ -16,7 +16,7 @@ export class Equipment {
     id: number;
     // Foreign keys
     stationId: number;
-    
+
     name: string;
     model: string;
     manufacturer: string;
@@ -49,7 +49,7 @@ export class Plant {
     id: number;
     // Foreign keys
 
-    name: string; 
+    name: string;
 }
 
 export class Station {

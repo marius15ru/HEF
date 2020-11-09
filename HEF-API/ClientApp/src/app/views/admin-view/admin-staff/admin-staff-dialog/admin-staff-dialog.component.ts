@@ -16,15 +16,15 @@ export class AdminStaffDialogComponent implements OnInit {
     status: new FormControl(''),
 
   });
-
   role = Role;
-  keys() : Array<string> {
-      var keys = Object.keys(this.role);
+  status = UserStatus;
+
+  keys(): Array<string> {
+      const keys = Object.keys(this.role);
       return keys.slice(keys.length / 2);
   }
-  status = UserStatus;
   keys2(): Array<string> {
-    var keys2 = Object.keys(this.status);
+    const keys2 = Object.keys(this.status);
     return keys2.slice(keys2.length / 2);
   }
 

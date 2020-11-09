@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AdminEquipmentDialogComponent implements OnInit {
 
-  dialogAction: string = '';
+  dialogAction: '';
 
   equipmentForm = new FormGroup({
     location: new FormControl(''),
