@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using myApp.Models;
+using HEF_API.Models;
 
-namespace myApp.RequestModels
+namespace HEF_API.RequestModels
 {
-    public class LocationOperationsResult
+    public class StationOperationsResult
     {
-        public List<Location> Items { get; set; }
+        public List<Station> Items { get; set; }
         public Message Message { get; set; }
     }
 }

@@ -6,12 +6,12 @@ namespace HEF_API.Models
         public int Id { get; set; }
         
         //Foreign keys
-        public Location LocationId { get; set; }
+        public Station StationId { get; set; }
 
         public string Name { get; set; }
-        public string Model { get; set; }
+        public DateTime Model { get; set; }
         public string Manufacturer { get; set; }
-        public Enums.Task Task { get; set; }
+        public string Operation { get; set; }
         public DateTime LastCheck { get; set; }
     }
 }

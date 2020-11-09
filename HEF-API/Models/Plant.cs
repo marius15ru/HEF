@@ -7,7 +7,5 @@ namespace HEF_API.Models
         //Foreign keys
 
         public string Name { get; set; }
-        public Enums.Role Role { get; set; }
-        public Enums.PlantType PlantType { get; set; }
     }
 }

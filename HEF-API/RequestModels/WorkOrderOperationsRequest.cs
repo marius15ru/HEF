@@ -1,12 +1,12 @@
 ﻿using System;
-using myApp.Models;
-using static myApp.Models.Enums;
+using HEF_API.Models;
+using static HEF_API.Models.Enums;
 
-namespace myApp.RequestModels
+namespace HEF_API.RequestModels
 {
-    public class WorkOrderOperationsRequest
+    public class JobOperationsRequest
     {
-        public WorkOrder Item { get; set; }
+        public Job Item { get; set; }
         public DataOperation Action { get; set; }
     }
 }

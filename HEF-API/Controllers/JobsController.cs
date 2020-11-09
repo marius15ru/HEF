@@ -2,33 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using HEF_API.Services;
-using Microsoft.EntityFrameworkCore;
-
 using HEF_API.Models;
+using HEF_API.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace HEF_API.Controller
+namespace HEF_API.Controllers
 {
-    [Route("api/users")]
-    public class UsersController : ControllerBase
+    [Route("api/jobs")]
+    public class JobsController : ControllerBase
     {
         private RepoContext _context;
 
-        public UsersController(RepoContext context)
+        public JobsController(RepoContext context)
         {
             _context = context;
         }
-
+        // GET: api/values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public async Task<ActionResult<IEnumerable<Job>>> Get()
         {
-            return await _context.User
-                .OrderBy(x => x.Name)
-                .ToListAsync();
+            using (_context.Database.BeginTransaction())
+            {
+                return await _context.Job.ToListAsync();
+            }
         }
 
         // GET api/values/5

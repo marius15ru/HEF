@@ -13,7 +13,7 @@ namespace HEF_API.Models
             List = 5,
             ListByPlant = 6,
             ListByUser = 7,
-            ListByWorkOrder = 8
+            ListByJob = 8
 
         }
 
@@ -31,7 +31,7 @@ namespace HEF_API.Models
             UnAvailable = 2
         }
 
-        public enum WorkOrderStatus
+        public enum JobStatus
         {
             Undefined = 0,
             Pending = 1,
@@ -40,7 +40,7 @@ namespace HEF_API.Models
             Finished = 4
         }
 
-        public enum MeasurementType
+        public enum Unit
         {
             Undefined = 0,
             Celsius = 1,

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using myApp.Models;
+using HEF_API.Models;
 
-namespace myApp.RequestModels
+namespace HEF_API.RequestModels
 {
-    public class SubWorkOrderOperationsResult
+    public class SubJobOperationsResult
     {
-        public List<SubWorkOrder> Items { get; set; }
+        public List<SubJobs> Items { get; set; }
         public Message Message { get; set; }
     }
 }
