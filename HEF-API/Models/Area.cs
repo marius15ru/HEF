@@ -1,9 +1,15 @@
 ﻿using System;
 namespace HEF_API.Models
 {
-    public class Area
+    public interface IArea
     {
-        public int AreaId { get; set; }
+        int Id { get; set; }
+        string Name { get; set; }
+    }
+
+    public class Area: IArea
+    {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
