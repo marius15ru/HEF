@@ -1,9 +1,9 @@
 ﻿using System;
 namespace HEF_Test
 {
-    public class AreaTests
+    public class TestDB
     {
-        public AreaTests()
+        public TestDB()
         {
         }
     }

@@ -1,7 +1,24 @@
 ﻿using System;
 namespace HEF_API.Models
 {
-    public class Job
+    public interface IJob
+    {
+        int Id { get; set; }
+        //Foreign keys
+        Station StationId { get; set; }
+
+        string Name { get; set; }
+        string Description { get; set; }
+        Enums.JobStatus Status { get; set; }
+        DateTime CompleteBy { get; set; }
+        bool Recurring { get; set; }
+        string Duration { get; set; }
+        bool EmergencyJob { get; set; }
+        bool HasComments { get; set; }
+        DateTime LastCheck { get; set; }
+    }
+
+    public class Job: IJob
     {
         public int Id { get; set; }
         //Foreign keys

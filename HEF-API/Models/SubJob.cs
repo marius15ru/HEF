@@ -1,7 +1,7 @@
 ﻿using System;
 namespace HEF_API.Models
 {
-    public class SubJobs
+    public class SubJob
     {
         public string Id { get; set; }
         //Foreign keys

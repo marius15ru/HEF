@@ -11,7 +11,6 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System;
-using MySqlConnector;
 
 namespace HEF_API
 {
@@ -46,8 +45,6 @@ namespace HEF_API
             services.AddDbContext<RepoContext>(
                 options => options.UseMySql(connectionStringBuilder.ConnectionString)
                 );
-
-            services.AddScoped<IAreaService, AreaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

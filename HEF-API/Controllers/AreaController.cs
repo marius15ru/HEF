@@ -10,51 +10,51 @@ using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace HEF_API.Controllers
+namespace HEF_API.Controller
 {
     [Route("api/areas")]
     public class AreaController : ControllerBase
     {
-        private readonly IAreaService _service;
+        private RepoContext _context;
 
-        public AreaController(IAreaService service)
+        public AreaController(RepoContext context)
         {
-            _service = service;
+            _context = context;
         }
 
         // GET: api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Area>>> Get()
         {
-            return await _service.GetAllAreas();
+            using (_context.Database.BeginTransaction())
+            {
+                return await _context.Area.ToListAsync();
+            }
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Area>> Get(int id)
+        public string Get(int id)
         {
-            return await _service.GetAreaById(1);
+            return "value";
         }
 
         // POST api/values
         [HttpPost]
-        public async Task Post([FromBody] Area value)
+        public void Post([FromBody] string value)
         {
-            await _service.AddArea(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] Area value)
+        public void Put(int id, [FromBody] string value)
         {
-            await _service.EditArea(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            await _service.RemoveArea(id);
         }
     }
 }

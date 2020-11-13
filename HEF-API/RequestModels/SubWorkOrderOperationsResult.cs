@@ -6,7 +6,7 @@ namespace HEF_API.RequestModels
 {
     public class SubJobOperationsResult
     {
-        public List<SubJobs> Items { get; set; }
+        public List<SubJob> Items { get; set; }
         public Message Message { get; set; }
     }
 }
