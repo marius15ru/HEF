@@ -1,59 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HEF_API.Models;
 using HEF_API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HEF_API.Controllers
 {
     [Route("api/stations")]
-    public class StationsController : ControllerBase
+    public class StationController : ControllerBase
     {
-        private RepoContext _context;
+        private readonly IStationService _service;
 
-        public StationsController(RepoContext context)
+        public StationController(IStationService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Station>>> Get()
         {
-            using (_context.Database.BeginTransaction())
-            {
-                return await _context.Station.ToListAsync();
-            }
+            return await _service.GetAllStations();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Station>> Get(int id)
         {
-            return "value";
+            return await _service.GetStationById(id);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post([FromBody] Station value)
         {
+            await _service.AddStation(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async void Put(int id, [FromBody] Station value)
         {
+            await _service.UpdateStation(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await _service.RemoveStation(id);
         }
     }
 }

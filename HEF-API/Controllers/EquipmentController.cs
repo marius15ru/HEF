@@ -8,49 +8,49 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HEF_API.Controllers
 {
-    [Route("api/users")]
-    public class UserController : ControllerBase
+    [Route("api/equipments")]
+    public class EquipmentController : ControllerBase
     {
-        private readonly IUserService _service;
+        private readonly IEquipmentService _service;
 
-        public UserController(IUserService service)
+        public EquipmentController(IEquipmentService service)
         {
             _service = service;
         }
 
         // GET: api/values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public async Task<ActionResult<IEnumerable<Equipment>>> Get()
         {
-            return await _service.GetAllUsers();
+            return await _service.GetAllEquipments();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<Equipment>> Get(int id)
         {
-            return await _service.GetUserById(id);
+            return await _service.GetEquipmentById(id);
         }
 
         // POST api/values
         [HttpPost]
-        public async Task Post([FromBody] User value)
+        public async Task Post([FromBody] Equipment value)
         {
-            await _service.AddUser(value);
+            await _service.AddEquipment(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] User value)
+        public async void Put(int id, [FromBody] Equipment value)
         {
-            await _service.UpdateUser(id, value);
+            await _service.UpdateEquipment(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveUser(id);
+            await _service.RemoveEquipment(id);
         }
     }
 }

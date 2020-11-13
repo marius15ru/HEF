@@ -1,29 +1,30 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HEF_API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HEF_API.Services
 {
-    public interface IAreaService
+    public interface IStationService
     {
-        public Task<List<Area>> GetAllAreas();
-        public Task<Area> GetAreaById(int id);
-        public Task AddArea(Area a);
-        public Task UpdateArea(int id, Area value);
-        public Task RemoveArea(int id);
+        public Task<List<Station>> GetAllStations();
+        public Task<Station> GetStationById(int id);
+        public Task AddStation(Station a);
+        public Task UpdateStation(int id, Station value);
+        public Task RemoveStation(int id);
     }
-    
-    public class AreaService: ServiceBase<Area>, IAreaService
+
+    public class StationService : ServiceBase<Station>, IStationService
     {
-        public AreaService(RepoContext context)
-            :base(context)
+        public StationService(RepoContext context)
+            : base(context)
         { }
 
-        public async Task<List<Area>> GetAllAreas() => await GetAll().ToListAsync();
-        public async Task<Area> GetAreaById(int id) => await GetById(id);
-        public async Task AddArea(Area value) => await Add(value);
-        public async Task UpdateArea(int id, Area entity) => await Update(id, entity);
-        public async Task RemoveArea(int id) => await Remove(id);
+        public async Task<List<Station>> GetAllStations() => await GetAll().ToListAsync();
+        public async Task<Station> GetStationById(int id) => await GetById(id);
+        public async Task AddStation(Station value) => await Add(value);
+        public async Task UpdateStation(int id, Station entity) => await Update(id, entity);
+        public async Task RemoveStation(int id) => await Remove(id);
     }
 }

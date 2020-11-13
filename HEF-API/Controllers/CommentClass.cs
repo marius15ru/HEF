@@ -8,49 +8,49 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HEF_API.Controllers
 {
-    [Route("api/users")]
-    public class UserController : ControllerBase
+    [Route("api/comments")]
+    public class CommentController : ControllerBase
     {
-        private readonly IUserService _service;
+        private readonly ICommentService _service;
 
-        public UserController(IUserService service)
+        public CommentController(ICommentService service)
         {
             _service = service;
         }
 
         // GET: api/values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public async Task<ActionResult<IEnumerable<Comment>>> Get()
         {
-            return await _service.GetAllUsers();
+            return await _service.GetAllComments();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<Comment>> Get(int id)
         {
-            return await _service.GetUserById(id);
+            return await _service.GetCommentById(id);
         }
 
         // POST api/values
         [HttpPost]
-        public async Task Post([FromBody] User value)
+        public async Task Post([FromBody] Comment value)
         {
-            await _service.AddUser(value);
+            await _service.AddComment(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] User value)
+        public async void Put(int id, [FromBody] Comment value)
         {
-            await _service.UpdateUser(id, value);
+            await _service.UpdateComment(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveUser(id);
+            await _service.RemoveComment(id);
         }
     }
 }

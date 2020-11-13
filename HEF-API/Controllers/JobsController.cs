@@ -5,55 +5,56 @@ using System.Threading.Tasks;
 using HEF_API.Models;
 using HEF_API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HEF_API.Controllers
 {
-    [Route("api/jobs")]
-    public class JobsController : ControllerBase
+    [Route("api/Jobs")]
+    public class JobController : ControllerBase
     {
-        private RepoContext _context;
+        private readonly IJobService _service;
 
-        public JobsController(RepoContext context)
+        public JobController(IJobService service)
         {
-            _context = context;
+            _service = service;
         }
+
         // GET: api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Job>>> Get()
         {
-            using (_context.Database.BeginTransaction())
-            {
-                return await _context.Job.ToListAsync();
-            }
+            return await _service.GetAllJobs();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Job>> Get(int id)
         {
-            return "value";
+            return await _service.GetJobById(id);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post([FromBody] Job value)
         {
+            await _service.AddJob(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async void Put(int id, [FromBody] Job value)
         {
+            await _service.UpdateJob(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await _service.RemoveJob(id);
         }
     }
 }
