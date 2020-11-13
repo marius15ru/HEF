@@ -2,7 +2,6 @@
 using HEF_API.Models;
 using HEF_API.Controllers;
 using Xunit;
-using Moq;
 using System.Collections.Generic;
 using HEF_API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,29 +14,49 @@ using System.Net.Http;
 
 namespace HEF_Test
 {
-    public class AreaTests: TestWithSqlite
+    public class JobTests: TestWithSqlite
     {
         private readonly ITestOutputHelper output;
-        private readonly AreaService _service;
+        private readonly JobService _service;
 
-        public AreaTests(ITestOutputHelper output)
+        public JobTests(ITestOutputHelper output)
         {
             this.output = output;
             Populate();
-            _service = new AreaService(dbContext);
+            _service = new JobService(dbContext);
         }
 
         private void Populate()
         {
-            dbContext.Add(new Area { Name = "Fellar" });
-            dbContext.Add(new Area { Name = "Egilsst" });
+            dbContext.Add(new Job
+            {
+                Name = "UN2",
+                Description = "Lýsing",
+                Status = (Enums.JobStatus)1,
+                CompleteBy = new DateTime(2020, 10, 01),
+                Recurring = false,
+                Duration = "01:30",
+                EmergencyJob = false,
+                HasComments = false,
+                LastCheck = new DateTime(2020, 08, 08)
+            });
+            dbContext.Add(new Job
+            {
+                Name = "MIN30",
+                Description = "Lýsing",
+                Status = (Enums.JobStatus)1,
+                CompleteBy = new DateTime(2020, 10, 01),
+                Recurring = false,
+                Duration = "01:30",
+                EmergencyJob = false,
+            });
             dbContext.SaveChanges();
         }
 
         [Fact]
         public async Task GetAll()
         {
-            var res = await _service.GetAllAreas();
+            var res = await _service.GetAllJobs();
 
             var dbCount = res.Count();
             var lastId = res.Last().Id;
@@ -50,7 +69,7 @@ namespace HEF_Test
         public async Task GetById()
         {
             var id = 1;
-            var res = await _service.GetAreaById(id);
+            var res = await _service.GetJobById(id);
 
             var redId = res.Id;
 
@@ -60,12 +79,23 @@ namespace HEF_Test
         [Fact]
         public async Task Create()
         {
-            var enitity = new Area { Name = "Vogur" };
+            var enitity = new Job
+            {
+                Name = "njob",
+                Description = "Lýsing",
+                Status = (Enums.JobStatus)1,
+                CompleteBy = new DateTime(2020, 10, 01),
+                Recurring = false,
+                Duration = "01:30",
+                EmergencyJob = false,
+                HasComments = false,
+                LastCheck = new DateTime(2020, 10, 08)
+            };
 
-            await _service.AddArea(enitity);
+            await _service.AddJob(enitity);
 
-            var dbCount = dbContext.Area.Count();
-            var lastId = dbContext.Area.OrderBy(x => x.Id).Last().Id;
+            var dbCount = dbContext.Job.Count();
+            var lastId = dbContext.Job.OrderBy(x => x.Id).Last().Id;
 
             Assert.Equal(3, dbCount);
             Assert.Equal(3, lastId);
@@ -75,24 +105,28 @@ namespace HEF_Test
         public async Task Update()
         {
             int id = 2;
-            var enitity = new Area { Name = "Vogur" };
+            var enitity = new Job
+            {
+                Name = "Change Job",
+                HasComments = true
+            };
 
-            await _service.EditArea(id, enitity);
+            await _service.UpdateJob(id, enitity);
 
-            var res = dbContext.Area.Where(x => x.Id == 2).Single().Name;
+            var res = dbContext.Job.Find(id).Name;
 
-            Assert.Equal("Vogur", res);
+            Assert.Equal("Change Job", res);
         }
 
         [Fact]
         public async Task Delete()
         {
             int id = 2;
-            var before = dbContext.Area.Count();
+            var before = dbContext.Job.Count();
 
-            await _service.RemoveArea(id);
+            await _service.RemoveJob(id);
 
-            var after = dbContext.Area.Count() + 1;
+            var after = dbContext.Job.Count() + 1;
 
             Assert.Equal(before, after);
         }
