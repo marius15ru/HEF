@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DataOperation } from 'src/app/shared/enums';
 import { AdminLocationDialogComponent } from './admin-location-dialog/admin-location-dialog.component';
 
 @Component({
@@ -9,9 +11,14 @@ import { AdminLocationDialogComponent } from './admin-location-dialog/admin-loca
 })
 export class AdminLocationComponent implements OnInit {
 
-  constructor(public dialogItem: MatDialog, ) { }
+
+  constructor(public dialogItem: MatDialog){
+   }
+
+   
 
   ngOnInit() {
+    
   }
 
   openDialog(action: string) {
@@ -29,3 +36,8 @@ export class AdminLocationComponent implements OnInit {
   }
 
 }
+
+// interface Area {
+//   id: number;
+//   name: string;
+// }

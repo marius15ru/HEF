@@ -1,4 +1,4 @@
-import { MeasurementType, PlantType, Recuring, Role, Task, UserStatus, JobStatus } from './enums';
+import { MeasurementType, PlantType, recurring, Role, Task, UserStatus, JobStatus } from './enums';
 
 export class Area {
     id: number;
@@ -28,14 +28,14 @@ export class Job {
     // Foreign keys
     stationId: number;
 
-    completedBy: Date;
+    completeBy: Date;
     description: string;
     duration: Date;
     emergencyJob: boolean;
     hasComments: boolean;
     lastCheck: Date;
     name: string;
-    recuring: Recuring;
+    recurring: recurring;
     status: JobStatus;
 }
 export class JobAssignments {

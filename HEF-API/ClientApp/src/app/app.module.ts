@@ -33,6 +33,8 @@ import { AdminStaffDialogComponent } from './views/admin-view/admin-staff/admin-
 import { AdminPlantsDialogComponent } from './views/admin-view/admin-plants/admin-plants-dialog/admin-plants-dialog.component';
 import { AdminLocationDialogComponent } from './views/admin-view/admin-location/admin-location-dialog/admin-location-dialog.component';
 import { AdminEquipmentDialogComponent } from './views/admin-view/admin-equipment/admin-equipment-dialog/admin-equipment-dialog.component';
+import { AdminAreasComponent } from './views/admin-view/admin-areas/admin-areas.component';
+import { AdminAreasDialogComponent } from './views/admin-view/admin-areas/admin-areas-dialog/admin-areas-dialog.component';
 
 
 @NgModule({
@@ -58,6 +60,8 @@ import { AdminEquipmentDialogComponent } from './views/admin-view/admin-equipmen
     AdminPlantsDialogComponent,
     AdminLocationDialogComponent,
     AdminEquipmentDialogComponent,
+    AdminAreasComponent,
+    AdminAreasDialogComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -91,6 +95,7 @@ import { AdminEquipmentDialogComponent } from './views/admin-view/admin-equipmen
     AdminPlantsDialogComponent,
     AdminLocationDialogComponent,
     AdminEquipmentDialogComponent,
+    AdminAreasDialogComponent
   ],
 })
 export class AppModule { }

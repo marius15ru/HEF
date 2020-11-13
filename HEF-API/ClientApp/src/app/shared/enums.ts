@@ -50,7 +50,7 @@ export enum PlantType {
     Drainage = 4
 }
 
-export enum Recuring {
+export enum recurring {
     Undefined = 0,
     Week = 1,
     TwoWeeks = 2,

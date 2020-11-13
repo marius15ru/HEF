@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Job } from 'src/app/shared/models';
 import { AdminTasksDialogComponent } from './admin-tasks-dialog/admin-tasks-dialog.component';
 
 @Component({
@@ -9,7 +11,14 @@ import { AdminTasksDialogComponent } from './admin-tasks-dialog/admin-tasks-dial
 })
 export class AdminTasksComponent implements OnInit {
 
-  constructor(public dialogItem: MatDialog, ) {}
+  public jobs: Job[];
+
+  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+    http.get<Job[]>(baseUrl + 'api/jobs').subscribe(result => {
+      console.log(result);
+      this.jobs = result;
+    }, error => console.error(error));
+   }
 
   ngOnInit() {
   }

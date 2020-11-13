@@ -150,6 +150,14 @@ mat-grid-tile {
   padding-bottom: 5px;
 }
 
+.action-icon{
+  margin-right: 5px;
+}
+
+.action-icon:hover{
+  cursor: pointer;
+}
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

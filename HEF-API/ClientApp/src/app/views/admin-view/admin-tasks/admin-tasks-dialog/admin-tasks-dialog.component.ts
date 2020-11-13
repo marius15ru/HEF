@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Pipe } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Recuring } from 'src/app/shared/enums';
+import { recurring } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-admin-tasks-dialog',
@@ -17,7 +17,7 @@ export class AdminTasksDialogComponent implements OnInit {
     location: new FormControl(''),
     name: new FormControl(''),
     status: new FormControl(''),
-    recuring: new FormControl(''),
+    recurring: new FormControl(''),
     duration: new FormControl(''),
     completeBy: new FormControl(''),
     emergencyJob: new FormControl(''),
@@ -25,7 +25,7 @@ export class AdminTasksDialogComponent implements OnInit {
     lastCheck: new FormControl('')
   });
 
-  recur = Recuring;
+  recur = recurring;
   keys(): Array<string> {
       const keys = Object.keys(this.recur);
       return keys.slice(keys.length / 2);

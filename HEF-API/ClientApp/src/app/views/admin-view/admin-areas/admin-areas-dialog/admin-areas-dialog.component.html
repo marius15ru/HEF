@@ -1,0 +1,16 @@
+<h2>{{editMode}} Stöð</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="areaForm" (ngSubmit)="onSubmit()">
+        <label class="form-input">
+            Auðkenni
+            <input type="text" class="form-input" formControlName="id">
+        </label>
+        <label class="form-input">
+            Nafn
+            <input type="text" class="form-input" formControlName="name">
+        </label>
+
+        <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!areaForm.valid">{{editMode}}</button>
+    </form>
+</mat-dialog-content>
