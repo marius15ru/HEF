@@ -15,9 +15,9 @@ namespace HEF_API.Controllers
     [Route("api/Jobs")]
     public class JobController : ControllerBase
     {
-        private readonly IJobService _service;
+        private readonly IServiceWrapper _service;
 
-        public JobController(IJobService service)
+        public JobController(IServiceWrapper service)
         {
             _service = service;
         }
@@ -26,35 +26,35 @@ namespace HEF_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Job>>> Get()
         {
-            return await _service.GetAllJobs();
+            return await _service.Job.GetAllJobs();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Job>> Get(int id)
         {
-            return await _service.GetJobById(id);
+            return await _service.Job.GetJobById(id);
         }
 
         // POST api/values
         [HttpPost]
         public async Task Post([FromBody] Job value)
         {
-            await _service.AddJob(value);
+            await _service.Job.AddJob(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] Job value)
         {
-            await _service.UpdateJob(id, value);
+            await _service.Job.UpdateJob(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveJob(id);
+            await _service.Job.RemoveJob(id);
         }
     }
 }

@@ -1,16 +1,10 @@
 ﻿using System;
 using HEF_API.Models;
-using HEF_API.Controllers;
 using Xunit;
-using System.Collections.Generic;
 using HEF_API.Services;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 using System.Linq;
-using Newtonsoft.Json;
-using System.Net.Http;
 
 namespace HEF_Test
 {
@@ -54,7 +48,7 @@ namespace HEF_Test
         }
 
         [Fact]
-        public async Task GetAll()
+        public async Task TestGetAllJob()
         {
             var res = await _service.GetAllJobs();
 
@@ -66,7 +60,7 @@ namespace HEF_Test
         }
 
         [Fact]
-        public async Task GetById()
+        public async Task TestGetByIdJob()
         {
             var id = 1;
             var res = await _service.GetJobById(id);
@@ -77,7 +71,7 @@ namespace HEF_Test
         }
 
         [Fact]
-        public async Task Create()
+        public async Task TestCreateJob()
         {
             var enitity = new Job
             {
@@ -102,7 +96,7 @@ namespace HEF_Test
         }
 
         [Fact]
-        public async Task Update()
+        public async Task TestUpdateJob()
         {
             int id = 2;
             var enitity = new Job
@@ -119,7 +113,7 @@ namespace HEF_Test
         }
 
         [Fact]
-        public async Task Delete()
+        public async Task TestDeleteJob()
         {
             int id = 2;
             var before = dbContext.Job.Count();

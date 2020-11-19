@@ -11,9 +11,9 @@ namespace HEF_API.Controllers
     [Route("api/areas")]
     public class AreaController : ControllerBase
     {
-        private readonly IAreaService _service;
+        private readonly IServiceWrapper _service;
 
-        public AreaController(IAreaService service)
+        public AreaController(IServiceWrapper service)
         {
             _service = service;
         }
@@ -22,35 +22,35 @@ namespace HEF_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Area>>> Get()
         {
-            return await _service.GetAllAreas();
+            return await _service.Area.GetAllAreas();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Area>> Get(int id)
         {
-            return await _service.GetAreaById(id);
+            return await _service.Area.GetAreaById(id);
         }
 
         // POST api/values
         [HttpPost]
         public async Task Post([FromBody] Area value)
         {
-            await _service.AddArea(value);
+            await _service.Area.AddArea(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] Area value)
         {
-            await _service.UpdateArea(id, value);
+            await _service.Area.UpdateArea(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveArea(id);
+            await _service.Area.RemoveArea(id);
         }
     }
 }

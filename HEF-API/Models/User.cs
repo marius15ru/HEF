@@ -1,5 +1,4 @@
-﻿using System;
-namespace HEF_API.Models
+﻿namespace HEF_API.Models
 {
     public class User
     {

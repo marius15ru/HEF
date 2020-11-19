@@ -1,12 +1,13 @@
-﻿using System;
-namespace HEF_API.Models
+﻿namespace HEF_API.Models
 {
     public class SubJob
     {
         public string Id { get; set; }
         //Foreign keys
-        public Job JobId { get; set; }
-        public Equipment EquipmentId { get; set; }
+        public int JobId { get; set; }
+        public Job Job { get; set; }
+        public int EquipmentId { get; set; }
+        public Equipment Equipment { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }

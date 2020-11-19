@@ -1,63 +1,39 @@
 ﻿using System;
 using HEF_API.Models;
-using HEF_API.Controllers;
 using Xunit;
-using System.Collections.Generic;
 using HEF_API.Services;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 using System.Linq;
-using Newtonsoft.Json;
-using System.Net.Http;
+using Bogus;
 
 namespace HEF_Test
 {
-    public class JobTests: TestWithSqlite
+    public class CommentTests : TestWithSqlite
     {
         private readonly ITestOutputHelper output;
-        private readonly JobService _service;
+        private readonly IServiceWrapper _service;
 
-        public JobTests(ITestOutputHelper output)
+        private readonly Faker<Comment> _commentGenerator;
+
+        private readonly IModelGenerator _modelGen;
+
+        public CommentTests(ITestOutputHelper output)
         {
             this.output = output;
-            Populate();
-            _service = new JobService(dbContext);
+            _modelGen = new ModelGenerator();
+            _commentGenerator = _modelGen.GetCommentGenerator;
+            _service = new ServiceWrapper(dbContext);
+            _service.Comment.AddComment(_commentGenerator.Generate());
+            _service.Comment.AddComment(_commentGenerator.Generate());
+            _service.Save();
         }
-
-        private void Populate()
-        {
-            dbContext.Add(new Job
-            {
-                Name = "UN2",
-                Description = "Lýsing",
-                Status = (Enums.JobStatus)1,
-                CompleteBy = new DateTime(2020, 10, 01),
-                Recurring = false,
-                Duration = "01:30",
-                EmergencyJob = false,
-                HasComments = false,
-                LastCheck = new DateTime(2020, 08, 08)
-            });
-            dbContext.Add(new Job
-            {
-                Name = "MIN30",
-                Description = "Lýsing",
-                Status = (Enums.JobStatus)1,
-                CompleteBy = new DateTime(2020, 10, 01),
-                Recurring = false,
-                Duration = "01:30",
-                EmergencyJob = false,
-            });
-            dbContext.SaveChanges();
-        }
-
+        
         [Fact]
-        public async Task GetAll()
+        public async Task TestGetAllComments()
         {
-            var res = await _service.GetAllJobs();
-
+            var res = await _service.Comment.GetAllComments();
+            this.output.WriteLine("Area: {0}", _service.Area.GetAllAreas().Result.ToString());
             var dbCount = res.Count();
             var lastId = res.Last().Id;
 
@@ -66,69 +42,61 @@ namespace HEF_Test
         }
 
         [Fact]
-        public async Task GetById()
+        public async Task TestGetByIdComments()
         {
             var id = 1;
-            var res = await _service.GetJobById(id);
+            var res = await _service.Comment.GetCommentById(id);
 
-            var redId = res.Id;
+            var resId = res.Id;
 
-            Assert.Equal(1, redId);
+            Assert.Equal(1, resId);
         }
 
         [Fact]
-        public async Task Create()
+        public async Task TestCreateComments()
         {
-            var enitity = new Job
-            {
-                Name = "njob",
-                Description = "Lýsing",
-                Status = (Enums.JobStatus)1,
-                CompleteBy = new DateTime(2020, 10, 01),
-                Recurring = false,
-                Duration = "01:30",
-                EmergencyJob = false,
-                HasComments = false,
-                LastCheck = new DateTime(2020, 10, 08)
-            };
+            var enitity = _commentGenerator.Generate();
 
-            await _service.AddJob(enitity);
+            await _service.Comment.AddComment(enitity);
 
-            var dbCount = dbContext.Job.Count();
-            var lastId = dbContext.Job.OrderBy(x => x.Id).Last().Id;
+            var dbCount = dbContext.Comment.Count();
+            var lastId = dbContext.Comment.OrderBy(x => x.Id).Last().Id;
 
             Assert.Equal(3, dbCount);
             Assert.Equal(3, lastId);
         }
 
         [Fact]
-        public async Task Update()
+        public async Task TestUpdateComments()
         {
             int id = 2;
-            var enitity = new Job
+            var enitity = new Comment
             {
-                Name = "Change Job",
-                HasComments = true
+                UserId = 1,
+                JobId = 1,
+                Text = "My text",
+                Seen = true,
             };
 
-            await _service.UpdateJob(id, enitity);
+            await _service.Comment.UpdateComment(id, enitity);
 
-            var res = dbContext.Job.Where(x => x.Id == 2).Single().Name;
+            var res = dbContext.Comment.Find(id).Text;
 
-            Assert.Equal("Change Job", res);
+            Assert.Equal("My text", res);
         }
-
+        
         [Fact]
-        public async Task Delete()
+        public async Task TestDeleteComments()
         {
             int id = 2;
-            var before = dbContext.Job.Count();
+            var before = dbContext.Comment.Count();
 
-            await _service.RemoveJob(id);
+            await _service.Comment.RemoveComment(id);
 
-            var after = dbContext.Job.Count() + 1;
+            var after = dbContext.Comment.Count() + 1;
 
             Assert.Equal(before, after);
         }
     }
 }
+ 

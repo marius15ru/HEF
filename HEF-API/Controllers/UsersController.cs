@@ -11,46 +11,46 @@ namespace HEF_API.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _service;
+        private readonly IServiceWrapper _serviceWrapper;
 
-        public UserController(IUserService service)
+        public UserController(IServiceWrapper service)
         {
-            _service = service;
+            _serviceWrapper = service;
         }
 
         // GET: api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> Get()
         {
-            return await _service.GetAllUsers();
+            return await _serviceWrapper.User.GetAllUsers();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            return await _service.GetUserById(id);
+            return await _serviceWrapper.User.GetUserById(id);
         }
 
         // POST api/values
         [HttpPost]
         public async Task Post([FromBody] User value)
         {
-            await _service.AddUser(value);
+            await _serviceWrapper.User.AddUser(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] User value)
         {
-            await _service.UpdateUser(id, value);
+            await _serviceWrapper.User.UpdateUser(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveUser(id);
+            await _serviceWrapper.User.RemoveUser(id);
         }
     }
 }

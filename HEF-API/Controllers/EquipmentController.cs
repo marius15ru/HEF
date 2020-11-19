@@ -11,9 +11,9 @@ namespace HEF_API.Controllers
     [Route("api/equipments")]
     public class EquipmentController : ControllerBase
     {
-        private readonly IEquipmentService _service;
+        private readonly IServiceWrapper _service;
 
-        public EquipmentController(IEquipmentService service)
+        public EquipmentController(IServiceWrapper service)
         {
             _service = service;
         }
@@ -22,35 +22,35 @@ namespace HEF_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Equipment>>> Get()
         {
-            return await _service.GetAllEquipments();
+            return await _service.Equipment.GetAllEquipments();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Equipment>> Get(int id)
         {
-            return await _service.GetEquipmentById(id);
+            return await _service.Equipment.GetEquipmentById(id);
         }
 
         // POST api/values
         [HttpPost]
         public async Task Post([FromBody] Equipment value)
         {
-            await _service.AddEquipment(value);
+            await _service.Equipment.AddEquipment(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] Equipment value)
         {
-            await _service.UpdateEquipment(id, value);
+            await _service.Equipment.UpdateEquipment(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveEquipment(id);
+            await _service.Equipment.RemoveEquipment(id);
         }
     }
 }

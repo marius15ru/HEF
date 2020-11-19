@@ -1,21 +1,21 @@
 using HEF_API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using MySql.Data.MySqlClient;
+using System;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System.Text.Json.Serialization;
 
 namespace HEF_API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -39,10 +39,25 @@ namespace HEF_API
             };
 
             services.AddDbContext<RepoContext>(
-                options => options.UseMySql(connectionStringBuilder.ConnectionString)
-                );
+                options
+                => options.UseMySql(
+                    connectionStringBuilder.ConnectionString,
+                    mySqlOptions =>
+                    {
+                        mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
+                        .EnableRetryOnFailure(
+                        maxRetryCount: 10,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null);
+                    }));
 
-            services.AddScoped<IAreaService, AreaService>();
+            services.AddScoped<IServiceWrapper, ServiceWrapper>();
+
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.IgnoreNullValues = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

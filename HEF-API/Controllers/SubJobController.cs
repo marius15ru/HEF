@@ -11,9 +11,9 @@ namespace HEF_API.Controllers
     [Route("api/subjobs")]
     public class SubJobController : ControllerBase
     {
-        private readonly ISubJobService _service;
+        private readonly IServiceWrapper _service;
 
-        public SubJobController(ISubJobService service)
+        public SubJobController(IServiceWrapper service)
         {
             _service = service;
         }
@@ -22,35 +22,35 @@ namespace HEF_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SubJob>>> Get()
         {
-            return await _service.GetAllSubJobs();
+            return await _service.SubJob.GetAllSubJobs();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<SubJob>> Get(int id)
         {
-            return await _service.GetSubJobById(id);
+            return await _service.SubJob.GetSubJobById(id);
         }
 
         // POST api/values
         [HttpPost]
         public async Task Post([FromBody] SubJob value)
         {
-            await _service.AddSubJob(value);
+            await _service.SubJob.AddSubJob(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] SubJob value)
         {
-            await _service.UpdateSubJob(id, value);
+            await _service.SubJob.UpdateSubJob(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveSubJob(id);
+            await _service.SubJob.RemoveSubJob(id);
         }
     }
 }

@@ -11,9 +11,9 @@ namespace HEF_API.Controllers
     [Route("api/comments")]
     public class CommentController : ControllerBase
     {
-        private readonly ICommentService _service;
+        private readonly IServiceWrapper _service;
 
-        public CommentController(ICommentService service)
+        public CommentController(IServiceWrapper service)
         {
             _service = service;
         }
@@ -22,35 +22,35 @@ namespace HEF_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> Get()
         {
-            return await _service.GetAllComments();
+            return await _service.Comment.GetAllComments();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> Get(int id)
         {
-            return await _service.GetCommentById(id);
+            return await _service.Comment.GetCommentById(id);
         }
 
         // POST api/values
         [HttpPost]
         public async Task Post([FromBody] Comment value)
         {
-            await _service.AddComment(value);
+            await _service.Comment.AddComment(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] Comment value)
         {
-            await _service.UpdateComment(id, value);
+            await _service.Comment.UpdateComment(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveComment(id);
+            await _service.Comment.RemoveComment(id);
         }
     }
 }

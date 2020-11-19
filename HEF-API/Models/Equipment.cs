@@ -1,12 +1,14 @@
 ﻿using System;
+
 namespace HEF_API.Models
 {
     public class Equipment
     {
         public int Id { get; set; }
-        
+
         //Foreign keys
-        public Station StationId { get; set; }
+        public int StationId { get; set; }
+        public Station Station { get; set; }
 
         public string Name { get; set; }
         public DateTime Model { get; set; }

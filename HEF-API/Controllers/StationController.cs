@@ -11,9 +11,9 @@ namespace HEF_API.Controllers
     [Route("api/stations")]
     public class StationController : ControllerBase
     {
-        private readonly IStationService _service;
+        private readonly IServiceWrapper _service;
 
-        public StationController(IStationService service)
+        public StationController(IServiceWrapper service)
         {
             _service = service;
         }
@@ -22,35 +22,35 @@ namespace HEF_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Station>>> Get()
         {
-            return await _service.GetAllStations();
+            return await _service.Station.GetAllStations();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Station>> Get(int id)
         {
-            return await _service.GetStationById(id);
+            return await _service.Station.GetStationById(id);
         }
 
         // POST api/values
         [HttpPost]
         public async Task Post([FromBody] Station value)
         {
-            await _service.AddStation(value);
+            await _service.Station.AddStation(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] Station value)
         {
-            await _service.UpdateStation(id, value);
+            await _service.Station.UpdateStation(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await _service.RemoveStation(id);
+            await _service.Station.RemoveStation(id);
         }
     }
 }
