@@ -74,7 +74,7 @@ namespace HEF_API.Models
             TenYears = 11
         }
 
-        public enum Task
+        public enum Tasks
         {
             Undefined = 0,
             Clean = 1,

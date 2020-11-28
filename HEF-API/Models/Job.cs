@@ -7,7 +7,6 @@ namespace HEF_API.Models
         public int Id { get; set; }
         //Foreign keys
         public int StationId { get; set; }
-        public Station Station { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
