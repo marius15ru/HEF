@@ -49,7 +49,7 @@ export enum PlantType {
     Drainage = 4
 }
 
-export enum recurring {
+export enum Recurring {
     Undefined = 0,
     Week = 1,
     TwoWeeks = 2,
@@ -64,10 +64,10 @@ export enum recurring {
     TenYears = 11
 }
 
-export namespace recurring {
+export namespace Recurring {
 
     export function values() {
-      return Object.keys(recurring).filter(
+      return Object.keys(Recurring).filter(
         (type) => isNaN(<any>type) && type !== 'values'
       );
     }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, Pipe } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { JobStatus, recurring } from 'src/app/shared/enums';
+import { JobStatus, Recurring } from 'src/app/shared/enums';
 import { EnumToArrayPipe, Job, Station } from 'src/app/shared/models';
 
 @Component({
@@ -17,7 +17,7 @@ export class AdminTasksDialogComponent implements OnInit {
   editMode: string;
   editDisabled: boolean = false;
   selectedRow: Job;
-  recur = recurring;
+  recur = Recurring;
   jobStatus = JobStatus;
   stations: Station[];
 

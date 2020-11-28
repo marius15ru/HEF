@@ -58,7 +58,7 @@ namespace HEF_API.Models
             Heat = 3,
             Drainage = 4
         }
-        public enum TimeFrame
+        public enum Recurring
         {
             Undefined = 0,
             Week = 1,

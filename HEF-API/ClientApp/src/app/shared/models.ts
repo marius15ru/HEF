@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { MeasurementType, PlantType, recurring, Role, Task, UserStatus, JobStatus } from './enums';
+import { MeasurementType, PlantType, Role, Task, UserStatus, JobStatus, Recurring } from './enums';
 
 export class Area {
     id: number;
@@ -36,7 +36,7 @@ export class Job {
     hasComments: boolean;
     lastCheck: Date;
     name: string;
-    recurring: recurring;
+    recurring: Recurring;
     status: JobStatus;
 }
 export class JobAssignments {
