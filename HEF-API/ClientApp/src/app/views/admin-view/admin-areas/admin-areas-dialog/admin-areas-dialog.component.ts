@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Area } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-admin-areas-dialog',
@@ -9,7 +10,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AdminAreasDialogComponent implements OnInit {
 
-  editMode: string = "";
+  editMode: string;
+  editDisabled: boolean = false;
 
   areaForm = new FormGroup({
     id: new FormControl(''),
@@ -18,7 +20,7 @@ export class AdminAreasDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AdminAreasDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string}
+    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, areas: Area}
   ) { }
 
   ngOnInit() {
@@ -30,14 +32,21 @@ export class AdminAreasDialogComponent implements OnInit {
   }
 
   setMode(){
-    if(this.dialogData.action.toLowerCase() == 'insert'){
-      this.editMode = 'Stofna';
-    }else if(this.dialogData.action.toLowerCase() == 'update'){
-      this.editMode = 'Uppfæra';
-    }else if(this.dialogData.action.toLowerCase() == 'view'){
-      this.editMode = 'Skoða';
-    }else{
-      this.editMode = 'Eyða';
+    switch(this.dialogData.action.toLowerCase()){
+      case 'insert':
+        this.editMode = 'Stofna';
+        break;
+      case 'update':
+        this.editMode = 'Uppfæra';
+        break;
+      case 'view':
+        this.editMode = 'Skoða';
+        this.editDisabled = true;
+        break;
+      case 'delete':
+        this.editMode = 'Eyða';
+        this.editDisabled = true;
+        break;
     }
   }
 

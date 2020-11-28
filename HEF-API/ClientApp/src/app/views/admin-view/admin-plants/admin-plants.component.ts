@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Plant } from 'src/app/shared/models';
 import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-dialog.component';
 
 @Component({
@@ -9,16 +11,24 @@ import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-d
 })
 export class AdminPlantsComponent implements OnInit {
 
-  constructor(public dialogItem: MatDialog, ) { }
+  public plants: Plant[];
+
+  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+    http.get<Plant[]>(baseUrl + 'api/plants').subscribe(result => {
+      console.log(result);
+      this.plants = result;
+    }, error => console.error(error));
+  }
 
   ngOnInit() {
   }
 
-  openDialog(action: string) {
+  openDialog(plants: Plant, action: string) {
 
     const refUser = this.dialogItem.open(AdminPlantsDialogComponent, {
       data: {
-        action: 'Stofna',
+        action: action,
+        plant: plants
       },
       width: '800px'
     });

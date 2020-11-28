@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { User } from 'src/app/shared/models';
 import { AdminStaffDialogComponent } from './admin-staff-dialog/admin-staff-dialog.component';
 
 @Component({
@@ -8,8 +10,15 @@ import { AdminStaffDialogComponent } from './admin-staff-dialog/admin-staff-dial
   styleUrls: ['./admin-staff.component.css']
 })
 export class AdminStaffComponent implements OnInit {
+  
+  public users: User[];
 
-  constructor(public dialogItem: MatDialog, ) { }
+  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+    http.get<User[]>(baseUrl + 'api/users').subscribe(result => {
+      console.log(result);
+      this.users = result;
+    }, error => console.error(error));
+   }
 
   ngOnInit() {
   }

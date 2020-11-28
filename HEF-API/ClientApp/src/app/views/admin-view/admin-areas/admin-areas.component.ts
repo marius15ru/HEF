@@ -23,11 +23,12 @@ export class AdminAreasComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog(item: Area, action: string) {
+  openDialog(area: Area, action: string) {
 
     const refUser = this.dialogItem.open(AdminAreasDialogComponent, {
       data: {
         action: action,
+        areas: area
       },
       width: '800px'
     });

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Equipment } from 'src/app/shared/models';
 import { AdminEquipmentDialogComponent } from './admin-equipment-dialog/admin-equipment-dialog.component';
 
 @Component({
@@ -9,16 +11,25 @@ import { AdminEquipmentDialogComponent } from './admin-equipment-dialog/admin-eq
 })
 export class AdminEquipmentComponent implements OnInit {
 
-  constructor(public dialogItem: MatDialog, ) { }
+  public equipments: Equipment[];
+
+  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+    http.get<Equipment[]>(baseUrl + 'api/equipments').subscribe(result => {
+      console.log(result);
+      this.equipments = result;
+    }, error => console.error(error));
+   }
 
   ngOnInit() {
   }
 
-  openDialog(action: string) {
+  openDialog(equipment: Equipment, action: string) {
+
 
     const refUser = this.dialogItem.open(AdminEquipmentDialogComponent, {
       data: {
-        action: 'Stofna',
+        action: action,
+        equipments: equipment
       },
       width: '800px'
     });

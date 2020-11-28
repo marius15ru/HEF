@@ -1,14 +1,15 @@
-<h2>{{editMode}} Stöð</h2>
+<h2 *ngIf="dialogData.action.toLowerCase() != 'insert'">{{editMode}} {{dialogData.areas.name}}</h2>
+<h2 *ngIf="dialogData.action.toLowerCase() == 'insert'">{{editMode}} Svæði</h2>
 
 <mat-dialog-content>
     <form [formGroup]="areaForm" (ngSubmit)="onSubmit()">
         <label class="form-input">
             Auðkenni
-            <input type="text" class="form-input" formControlName="id">
+            <input type="text" class="form-input" formControlName="id" placeholder="{{dialogData.areas.id}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name">
+            <input type="text" class="form-input" formControlName="name" placeholder="{{dialogData.areas.name}}" [attr.disabled]="editDisabled? true : null">
         </label>
 
         <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!areaForm.valid">{{editMode}}</button>

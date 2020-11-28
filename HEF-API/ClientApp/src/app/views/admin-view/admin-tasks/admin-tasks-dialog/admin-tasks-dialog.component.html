@@ -1,27 +1,29 @@
-<h2>{{dialogData.action}} Verk</h2>
+
+<h2 *ngIf="dialogData.action.toLowerCase() != 'insert'">{{editMode}} {{dialogData.job.name}}</h2>
+<h2 *ngIf="dialogData.action.toLowerCase() == 'insert'">{{editMode}} Verk</h2>
 
 <mat-dialog-content>
     <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
-        <label class="form-input">
+        <!-- <label class="form-input">
             Veita
-            <input type="text" class="form-input" formControlName="plant">
-        </label>
+            <input type="text" class="form-input" formControlName="plant" placeholder="{{dialogData.job.stationId}}">
+        </label> -->
 
         <label class="form-input">
             Verkaðili
-            <input type="text" class="form-input" formControlName="user">
+            <input type="text" class="form-input" formControlName="user" placeholder="VANTAR AÐ BÆTA VIÐ" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Stöð
-            <input type="text" class="form-input" formControlName="location">
+            <input type="text" class="form-input" formControlName="station" placeholder="{{dialogData.job.stationId}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name">
+            <input type="text" class="form-input" formControlName="name" placeholder="{{dialogData.job.name}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Endurtekningar
-            <select formControlName="timeFrame" class="form-input">
+            <select formControlName="timeFrame" class="form-input" [attr.disabled]="editDisabled? true : null">
                 <option *ngFor="let item of keys()">
                     {{item}}
                 </option>
@@ -29,25 +31,25 @@
         </label>
         <label class="form-input">
             Lengd verks(mín)
-            <input type="text" class="form-input" formControlName="duration">
+            <input type="text" class="form-input" formControlName="duration" placeholder="{{dialogData.job.duration}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Klára fyrir
-            <input type="date" class="form-input" formControlName="completeBy">
+            <input type="date" class="form-input" formControlName="completeBy" placeholder="{{dialogData.job.completeBy}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Neyðarverk?
-            <input type="text" class="form-input" formControlName="emergencyJob">
+            <input type="text" class="form-input" formControlName="emergencyJob" placeholder="{{dialogData.job.emergencyJob}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Athugasemdir?
-            <input type="text" class="form-input" formControlName="hasComments">
+            <input type="text" class="form-input" formControlName="hasComments" placeholder="{{dialogData.job.hasComments}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Síðasta athugun
-            <input type="text" class="form-input" formControlName="lastCheck">
+            <input type="text" class="form-input" formControlName="lastCheck" placeholder="{{dialogData.job.lastCheck}}" [attr.disabled]="editDisabled? true : null">
         </label>
         
-        <button class="form-submition" type="submit" [disabled]="!jobForm.valid">{{dialogData.action}}</button>
+        <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
     </form>
 </mat-dialog-content>

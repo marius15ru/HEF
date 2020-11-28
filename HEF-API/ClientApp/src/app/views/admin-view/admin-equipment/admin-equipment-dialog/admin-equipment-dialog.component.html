@@ -1,26 +1,27 @@
-<h2>{{dialogData.action}} Búnað</h2>
+<h2 *ngIf="dialogData.action.toLowerCase() != 'insert'">{{editMode}} {{dialogData.equipments.name}}</h2>
+<h2 *ngIf="dialogData.action.toLowerCase() == 'insert'">{{editMode}} Búnað</h2>
 
 <mat-dialog-content>
     <form [formGroup]="equipmentForm" (ngSubmit)="onSubmit()">
         <label class="form-input">
             Stöð
-            <input type="text" class="form-input" formControlName="location">
+            <input type="text" class="form-input" formControlName="station" placeholder="{{dialogData.equipments.stationId}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name">
+            <input type="text" class="form-input" formControlName="name" placeholder="{{dialogData.equipments.name}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Framleiðandi
-            <input type="text" class="form-input" formControlName="manufacturer">
+            <input type="text" class="form-input" formControlName="manufacturer" placeholder="{{dialogData.equipments.manufacturer}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Árgerð
-            <input type="text" class="form-input" formControlName="model">
+            <input type="text" class="form-input" formControlName="model" placeholder="{{dialogData.equipments.model}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <label class="form-input">
             Aðgerð
-            <input type="text" class="form-input" formControlName="operation">
+            <input type="text" class="form-input" formControlName="operation" placeholder="{{dialogData.equipments.operation}}" [attr.disabled]="editDisabled? true : null">
         </label>
         <!-- <label class="form-input">
             Endurtekningar
@@ -32,6 +33,6 @@
             </select>
         </label> -->
         
-        <button class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{dialogData.action}}</button>
+        <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{editMode}}</button>
     </form>
 </mat-dialog-content>

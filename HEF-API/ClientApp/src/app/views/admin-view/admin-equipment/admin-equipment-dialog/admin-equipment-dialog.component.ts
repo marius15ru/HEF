@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Equipment } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-admin-equipment-dialog',
@@ -10,9 +11,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class AdminEquipmentDialogComponent implements OnInit {
 
   dialogAction: '';
+  editMode: string;
+  editDisabled: boolean = false;
 
   equipmentForm = new FormGroup({
-    location: new FormControl(''),
+    station: new FormControl(''),
     name: new FormControl(''),
     model: new FormControl(''),
     manufacturer: new FormControl(''),
@@ -21,14 +24,34 @@ export class AdminEquipmentDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AdminEquipmentDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string}
+    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, equipments: Equipment}
   ) { }
 
   ngOnInit() {
+    this.setMode();
   }
 
   onSubmit() {
     console.warn(this.equipmentForm.value);
+  }
+
+  setMode(){
+    switch(this.dialogData.action.toLowerCase()){
+      case 'insert':
+        this.editMode = 'Stofna';
+        break;
+      case 'update':
+        this.editMode = 'Uppfæra';
+        break;
+      case 'view':
+        this.editMode = 'Skoða';
+        this.editDisabled = true;
+        break;
+      case 'delete':
+        this.editMode = 'Eyða';
+        this.editDisabled = true;
+        break;
+    }
   }
 
 }
