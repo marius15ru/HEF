@@ -36,11 +36,6 @@ namespace HEF_API.Services
                 .HasConversion<string>();
 
             modelBuilder
-                .Entity<Job>()
-                .Property(e => e.Status)
-                .HasConversion<string>();
-
-            modelBuilder
                 .Entity<SubJob>()
                 .Property(e => e.Status)
                 .HasConversion<string>();

@@ -35,6 +35,7 @@ import { AdminLocationDialogComponent } from './views/admin-view/admin-location/
 import { AdminEquipmentDialogComponent } from './views/admin-view/admin-equipment/admin-equipment-dialog/admin-equipment-dialog.component';
 import { AdminAreasComponent } from './views/admin-view/admin-areas/admin-areas.component';
 import { AdminAreasDialogComponent } from './views/admin-view/admin-areas/admin-areas-dialog/admin-areas-dialog.component';
+import { EnumToArrayPipe } from './shared/models';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { AdminAreasDialogComponent } from './views/admin-view/admin-areas/admin-
     AdminEquipmentDialogComponent,
     AdminAreasComponent,
     AdminAreasDialogComponent,
+    EnumToArrayPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -87,7 +89,7 @@ import { AdminAreasDialogComponent } from './views/admin-view/admin-areas/admin-
     ChartModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [EnumToArrayPipe],
   bootstrap: [AppComponent],
   entryComponents: [
     AdminTasksDialogComponent,

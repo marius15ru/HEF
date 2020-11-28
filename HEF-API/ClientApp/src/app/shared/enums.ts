@@ -29,7 +29,6 @@ export enum JobStatus {
     InProgress = 2,
     OnHold = 3,
     Finished = 4,
-
 }
 
 export enum MeasurementType {
@@ -64,6 +63,15 @@ export enum recurring {
     FiveYears = 10,
     TenYears = 11
 }
+
+export namespace recurring {
+
+    export function values() {
+      return Object.keys(recurring).filter(
+        (type) => isNaN(<any>type) && type !== 'values'
+      );
+    }
+  }
 
 export enum Task {
     Undefined = 0,

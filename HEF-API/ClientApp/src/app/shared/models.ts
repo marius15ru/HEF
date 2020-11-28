@@ -1,3 +1,4 @@
+import { Pipe, PipeTransform } from '@angular/core';
 import { MeasurementType, PlantType, recurring, Role, Task, UserStatus, JobStatus } from './enums';
 
 export class Area {
@@ -30,7 +31,7 @@ export class Job {
 
     completeBy: Date;
     description: string;
-    duration: Date;
+    duration: string;
     emergencyJob: boolean;
     hasComments: boolean;
     lastCheck: Date;
@@ -92,5 +93,12 @@ export class User {
     name: string;
     role: Role;
     status: UserStatus;
+}
+
+@Pipe({name: 'enumToArray'})
+export class EnumToArrayPipe implements PipeTransform {
+  transform(value) : Object {
+    return Object.keys(value).filter(e => !isNaN(+e)).map(o => { return {index: +o, name: value[o]}});
+  }
 }
 

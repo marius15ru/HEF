@@ -9,45 +9,69 @@
             <input type="text" class="form-input" formControlName="plant" placeholder="{{dialogData.job.stationId}}">
         </label> -->
 
-        <label class="form-input">
+        <!-- <label class="form-input">
             Verkaðili
-            <input type="text" class="form-input" formControlName="user" placeholder="VANTAR AÐ BÆTA VIÐ" [attr.disabled]="editDisabled? true : null">
-        </label>
+            <input type="text" class="form-input" formControlName="user" placeholder="VANTAR AÐ BÆTA VIÐ" >
+        </label> -->
         <label class="form-input">
             Stöð
-            <input type="text" class="form-input" formControlName="station" placeholder="{{dialogData.job.stationId}}" [attr.disabled]="editDisabled? true : null">
+            <select formControlName="station" class="form-input">
+                <option [value]="null">-</option>
+                <option *ngFor="let item of stations" [value]="item.id">{{item.name}}</option>
+            </select>
         </label>
         <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name" placeholder="{{dialogData.job.name}}" [attr.disabled]="editDisabled? true : null">
+            <input type="text" class="form-input" formControlName="name" [value]="jobForm.value.name" >
+        </label>
+        <label class="form-input">
+            Lýsing
+            <input type="text" class="form-input" formControlName="description" [value]="jobForm.value.description" >
         </label>
         <label class="form-input">
             Endurtekningar
-            <select formControlName="timeFrame" class="form-input" [attr.disabled]="editDisabled? true : null">
-                <option *ngFor="let item of keys()">
-                    {{item}}
+            <select formControlName="recurring" class="form-input">
+                <option *ngFor="let item of recur | enumToArray" [value]="item.index">
+                    {{item.name}}
                 </option>
             </select>
         </label>
         <label class="form-input">
             Lengd verks(mín)
-            <input type="text" class="form-input" formControlName="duration" placeholder="{{dialogData.job.duration}}" [attr.disabled]="editDisabled? true : null">
+            <input type="text" class="form-input" formControlName="duration" [value]="selectedRow.duration" >
         </label>
         <label class="form-input">
             Klára fyrir
-            <input type="date" class="form-input" formControlName="completeBy" placeholder="{{dialogData.job.completeBy}}" [attr.disabled]="editDisabled? true : null">
+            <input type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
+        </label>
+        <label class="form-input">
+            Staða
+            <select formControlName="status" class="form-input">
+                <option *ngFor="let item of jobStatus | enumToArray" [value]="item.index">
+                    {{item.name}}
+                </option>
+            </select>
         </label>
         <label class="form-input">
             Neyðarverk?
-            <input type="text" class="form-input" formControlName="emergencyJob" placeholder="{{dialogData.job.emergencyJob}}" [attr.disabled]="editDisabled? true : null">
+            <select formControlName="emergencyJob" class="form-input" [value]="selectedRow.emergencyJob">
+                <option [value]="null">-</option>
+                <option [value]="true">Já</option>
+                <option [value]="false">Nei</option>
+            </select>
         </label>
         <label class="form-input">
             Athugasemdir?
-            <input type="text" class="form-input" formControlName="hasComments" placeholder="{{dialogData.job.hasComments}}" [attr.disabled]="editDisabled? true : null">
+            <select formControlName="hasComments" class="form-input" [value]="selectedRow.hasComments">
+                <option [value]="null">-</option>
+                <option [value]="true">Já</option>
+                <option [value]="false">Nei</option>
+            </select>
         </label>
         <label class="form-input">
             Síðasta athugun
-            <input type="text" class="form-input" formControlName="lastCheck" placeholder="{{dialogData.job.lastCheck}}" [attr.disabled]="editDisabled? true : null">
+            <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
+            <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
         </label>
         
         <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
