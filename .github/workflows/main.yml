@@ -32,6 +32,9 @@ jobs:
 
       - name: Run Linters
         run: npm run lint
+      
+      - name: Run Tests on Services
+        run: dotnet test --filter FullyQualifiedName~HEF_Test.Services 
 
       # Unit test
       #- name: Unit Tests
