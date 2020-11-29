@@ -11,13 +11,14 @@ namespace HEF_API.Services
             : base(options)
         { }
 
-        public DbSet<User> User { get; set; }
-        public DbSet<Job> Job { get; set; }
-        public DbSet<Equipment> Equipment { get; set; }
-        public DbSet<Plant> Plant { get; set; }
-        public DbSet<Area> Areas { get; set; }
-        public DbSet<Station> Station { get; set; }
+        public DbSet<Area> Area { get; set; }
         public DbSet<Comment> Comment { get; set; }
+        public DbSet<Equipment> Equipment { get; set; }
+        public DbSet<Job> Job { get; set; }
+        public DbSet<Plant> Plant { get; set; }
+        public DbSet<Station> Station { get; set; }
+        public DbSet<SubJob> SubJob { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
