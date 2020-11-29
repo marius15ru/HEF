@@ -10,10 +10,10 @@ import { AdminStaffDialogComponent } from './admin-staff-dialog/admin-staff-dial
   styleUrls: ['./admin-staff.component.css']
 })
 export class AdminStaffComponent implements OnInit {
-  
+
   public users: User[];
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<User[]>(baseUrl + 'api/users').subscribe(result => {
       console.log(result);
       this.users = result;

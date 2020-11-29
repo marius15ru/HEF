@@ -13,7 +13,7 @@ export class AdminTasksComponent implements OnInit {
 
   public jobs: Job[];
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<Job[]>(baseUrl + 'api/jobs').subscribe(result => {
       console.log(result);
       this.jobs = result;
@@ -23,7 +23,7 @@ export class AdminTasksComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog(jobs:Job, action: string) {
+  openDialog(jobs: Job, action: string) {
 
     const refUser = this.dialogItem.open(AdminTasksDialogComponent, {
       data: {

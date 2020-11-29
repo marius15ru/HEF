@@ -12,13 +12,13 @@ import { AdminLocationDialogComponent } from './admin-location-dialog/admin-loca
 export class AdminLocationComponent implements OnInit {
 
 
-  constructor(public dialogItem: MatDialog){
+  constructor(public dialogItem: MatDialog) {
    }
 
-   
+
 
   ngOnInit() {
-    
+
   }
 
   openDialog(action: string) {

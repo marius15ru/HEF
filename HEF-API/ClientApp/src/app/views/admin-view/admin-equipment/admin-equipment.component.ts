@@ -13,7 +13,7 @@ export class AdminEquipmentComponent implements OnInit {
 
   public equipments: Equipment[];
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<Equipment[]>(baseUrl + 'api/equipments').subscribe(result => {
       console.log(result);
       this.equipments = result;

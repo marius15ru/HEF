@@ -13,7 +13,7 @@ export class AdminAreasComponent implements OnInit {
 
   public areas: Area[];
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<Area[]>(baseUrl + 'api/areas').subscribe(result => {
       console.log(result);
       this.areas = result;

@@ -12,7 +12,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
 
   dialogAction: '';
   editMode: string;
-  editDisabled: boolean = false;
+  editDisabled = false;
 
   equipmentForm = new FormGroup({
     station: new FormControl(''),
@@ -35,8 +35,8 @@ export class AdminEquipmentDialogComponent implements OnInit {
     console.warn(this.equipmentForm.value);
   }
 
-  setMode(){
-    switch(this.dialogData.action.toLowerCase()){
+  setMode() {
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
         this.editMode = 'Stofna';
         break;

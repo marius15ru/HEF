@@ -15,7 +15,7 @@ import { EnumToArrayPipe, Job, Station } from 'src/app/shared/models';
 export class AdminTasksDialogComponent implements OnInit {
 
   editMode: string;
-  editDisabled: boolean = false;
+  editDisabled = false;
   selectedRow: Job;
   recur = Recurring;
   jobStatus = JobStatus;
@@ -42,9 +42,9 @@ export class AdminTasksDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AdminTasksDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, job: Job},
-    private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
+    private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
       http.get<Station[]>(baseUrl + 'api/stations').subscribe(result => {
-        console.log(result, "in admin tasks dialog");
+        console.log(result, 'in admin tasks dialog');
         this.stations = result;
       }, error => console.error(error));
      }
@@ -52,7 +52,7 @@ export class AdminTasksDialogComponent implements OnInit {
 
   ngOnInit() {
     this.selectedRow = this.dialogData.job;
-    if(this.dialogData.action.toLowerCase() == "insert"){
+    if (this.dialogData.action.toLowerCase() === 'insert') {
       this.selectedRow = new Job();
       this.selectedRow.stationId = null;
       this.selectedRow.name = '';
@@ -71,54 +71,54 @@ export class AdminTasksDialogComponent implements OnInit {
     console.warn(this.jobForm.value);
   }
 
-  setMode(){
-    switch(this.dialogData.action.toLowerCase()){
+  setMode() {
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
         this.jobForm = new FormGroup({
-          station: new FormControl({ value: '', disabled: false}, 
+          station: new FormControl({ value: '', disabled: false},
           ),
-          name: new FormControl({ value: '', disabled: false}, 
+          name: new FormControl({ value: '', disabled: false},
           ),
-          description: new FormControl({ value: '', disabled: false}, 
+          description: new FormControl({ value: '', disabled: false},
           ),
-          status: new FormControl({ value: '', disabled: false}, 
+          status: new FormControl({ value: '', disabled: false},
           ),
-          recurring: new FormControl({ value: '', disabled: false}, 
+          recurring: new FormControl({ value: '', disabled: false},
           ),
-          duration: new FormControl({ value: '', disabled: false}, 
+          duration: new FormControl({ value: '', disabled: false},
           ),
-          completeBy: new FormControl({ value: '', disabled: false}, 
+          completeBy: new FormControl({ value: '', disabled: false},
           ),
-          emergencyJob: new FormControl({ value: '', disabled: false}, 
+          emergencyJob: new FormControl({ value: '', disabled: false},
           ),
-          hasComments: new FormControl({ value: '', disabled: false}, 
+          hasComments: new FormControl({ value: '', disabled: false},
           ),
-          lastCheck: new FormControl({ value: '', disabled: false}, 
+          lastCheck: new FormControl({ value: '', disabled: false},
           ),
         });
         this.editMode = 'Stofna';
         break;
       case 'update':
         this.jobForm = new FormGroup({
-          station: new FormControl({ value: this.selectedRow.stationId, disabled: false}, 
+          station: new FormControl({ value: this.selectedRow.stationId, disabled: false},
           ),
-          name: new FormControl({ value: this.selectedRow.name, disabled: false}, 
+          name: new FormControl({ value: this.selectedRow.name, disabled: false},
           ),
-          description: new FormControl({ value: '', disabled: false}, 
+          description: new FormControl({ value: '', disabled: false},
           ),
-          status: new FormControl({ value: this.selectedRow.status, disabled: false}, 
+          status: new FormControl({ value: this.selectedRow.status, disabled: false},
           ),
-          recurring: new FormControl({ value: this.selectedRow.recurring, disabled: false}, 
+          recurring: new FormControl({ value: this.selectedRow.recurring, disabled: false},
           ),
-          duration: new FormControl({ value: this.selectedRow.duration, disabled: false}, 
+          duration: new FormControl({ value: this.selectedRow.duration, disabled: false},
           ),
-          completeBy: new FormControl({ value: this.selectedRow.completeBy, disabled: false}, 
+          completeBy: new FormControl({ value: this.selectedRow.completeBy, disabled: false},
           ),
-          emergencyJob: new FormControl({ value: this.selectedRow.emergencyJob, disabled: false}, 
+          emergencyJob: new FormControl({ value: this.selectedRow.emergencyJob, disabled: false},
           ),
-          hasComments: new FormControl({ value: this.selectedRow.hasComments, disabled: false}, 
+          hasComments: new FormControl({ value: this.selectedRow.hasComments, disabled: false},
           ),
-          lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: false}, 
+          lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: false},
           ),
         });
         // this.actionButtonVisible = false;
@@ -127,25 +127,25 @@ export class AdminTasksDialogComponent implements OnInit {
         break;
       case 'view':
         this.jobForm = new FormGroup({
-          station: new FormControl({ value: this.selectedRow.stationId, disabled: true}, 
+          station: new FormControl({ value: this.selectedRow.stationId, disabled: true},
           ),
-          name: new FormControl({ value: this.selectedRow.name, disabled: true}, 
+          name: new FormControl({ value: this.selectedRow.name, disabled: true},
           ),
-          description: new FormControl({ value: '', disabled: false}, 
+          description: new FormControl({ value: '', disabled: false},
           ),
-          status: new FormControl({ value: this.selectedRow.status, disabled: true}, 
+          status: new FormControl({ value: this.selectedRow.status, disabled: true},
           ),
-          recurring: new FormControl({ value: this.selectedRow.recurring, disabled: true}, 
+          recurring: new FormControl({ value: this.selectedRow.recurring, disabled: true},
           ),
-          duration: new FormControl({ value: this.selectedRow.duration, disabled: true}, 
+          duration: new FormControl({ value: this.selectedRow.duration, disabled: true},
           ),
-          completeBy: new FormControl({ value: this.selectedRow.completeBy, disabled: true}, 
+          completeBy: new FormControl({ value: this.selectedRow.completeBy, disabled: true},
           ),
-          emergencyJob: new FormControl({ value: this.selectedRow.emergencyJob, disabled: true}, 
+          emergencyJob: new FormControl({ value: this.selectedRow.emergencyJob, disabled: true},
           ),
-          hasComments: new FormControl({ value: this.selectedRow.hasComments, disabled: true}, 
+          hasComments: new FormControl({ value: this.selectedRow.hasComments, disabled: true},
           ),
-          lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: true}, 
+          lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: true},
           ),
         });
         // this.actionButtonVisible = false;
@@ -155,25 +155,25 @@ export class AdminTasksDialogComponent implements OnInit {
         break;
       case 'delete':
         this.jobForm = new FormGroup({
-          station: new FormControl({ value: this.selectedRow.stationId, disabled: true}, 
+          station: new FormControl({ value: this.selectedRow.stationId, disabled: true},
           ),
-          name: new FormControl({ value: this.selectedRow.name, disabled: true}, 
+          name: new FormControl({ value: this.selectedRow.name, disabled: true},
           ),
-          description: new FormControl({ value: '', disabled: false}, 
+          description: new FormControl({ value: '', disabled: false},
           ),
-          status: new FormControl({ value: this.selectedRow.status, disabled: true}, 
+          status: new FormControl({ value: this.selectedRow.status, disabled: true},
           ),
-          recurring: new FormControl({ value: this.selectedRow.recurring, disabled: true}, 
+          recurring: new FormControl({ value: this.selectedRow.recurring, disabled: true},
           ),
-          duration: new FormControl({ value: this.selectedRow.duration, disabled: true}, 
+          duration: new FormControl({ value: this.selectedRow.duration, disabled: true},
           ),
-          completeBy: new FormControl({ value: this.selectedRow.completeBy, disabled: true}, 
+          completeBy: new FormControl({ value: this.selectedRow.completeBy, disabled: true},
           ),
-          emergencyJob: new FormControl({ value: this.selectedRow.emergencyJob, disabled: true}, 
+          emergencyJob: new FormControl({ value: this.selectedRow.emergencyJob, disabled: true},
           ),
-          hasComments: new FormControl({ value: this.selectedRow.hasComments, disabled: true}, 
+          hasComments: new FormControl({ value: this.selectedRow.hasComments, disabled: true},
           ),
-          lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: true}, 
+          lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: true},
           ),
         });
         this.editMode = 'Eyða';

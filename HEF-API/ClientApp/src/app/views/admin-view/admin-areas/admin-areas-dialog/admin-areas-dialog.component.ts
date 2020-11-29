@@ -11,7 +11,7 @@ import { Area } from 'src/app/shared/models';
 export class AdminAreasDialogComponent implements OnInit {
 
   editMode: string;
-  editDisabled: boolean = false;
+  editDisabled = false;
 
   areaForm = new FormGroup({
     id: new FormControl(''),
@@ -31,8 +31,8 @@ export class AdminAreasDialogComponent implements OnInit {
     console.warn(this.areaForm.value);
   }
 
-  setMode(){
-    switch(this.dialogData.action.toLowerCase()){
+  setMode() {
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
         this.editMode = 'Stofna';
         break;

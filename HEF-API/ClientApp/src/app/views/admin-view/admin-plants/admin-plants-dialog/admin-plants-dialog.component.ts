@@ -12,7 +12,7 @@ import { Plant } from 'src/app/shared/models';
 export class AdminPlantsDialogComponent implements OnInit {
 
   editMode: string;
-  editDisabled: boolean = false;
+  editDisabled = false;
 
   plantForm = new FormGroup({
     name: new FormControl(''),
@@ -38,8 +38,8 @@ export class AdminPlantsDialogComponent implements OnInit {
     console.warn(this.plantForm.value);
   }
 
-  setMode(){
-    switch(this.dialogData.action.toLowerCase()){
+  setMode() {
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
         this.editMode = 'Stofna';
         break;
