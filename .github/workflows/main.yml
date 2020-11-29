@@ -34,6 +34,7 @@ jobs:
         run: npm run lint
       
       - name: Run Tests on Services
+        working-directory: HEF-API/
         run: dotnet test --filter FullyQualifiedName~HEF_Test.Services 
 
       # Unit test
