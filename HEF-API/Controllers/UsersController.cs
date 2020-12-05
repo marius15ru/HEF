@@ -18,39 +18,46 @@ namespace HEF_API.Controllers
             _serviceWrapper = service;
         }
 
-        // GET: api/values
+        // GET: api/users?sortby=column
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public async Task<ActionResult<IEnumerable<User>>> Get([FromQuery(Name = "sortby")] string sortBy)
         {
-            return await _serviceWrapper.User.GetAllUsers();
+            return await _serviceWrapper.User.GetAllUsers(sortBy);
         }
 
-        // GET api/values/5
+        // GET api/users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
             return await _serviceWrapper.User.GetUserById(id);
         }
 
-        // POST api/values
+        // POST api/users
         [HttpPost]
         public async Task Post([FromBody] User value)
         {
             await _serviceWrapper.User.AddUser(value);
         }
 
-        // PUT api/values/5
+        // PUT api/users/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] User value)
         {
             await _serviceWrapper.User.UpdateUser(id, value);
         }
 
-        // DELETE api/values/5
+        // DELETE api/users/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
             await _serviceWrapper.User.RemoveUser(id);
+        }
+        
+        // GET api/users/{userId}/jobs
+        [HttpGet("{userId}/jobs")]
+        public async Task<ActionResult<IEnumerable<Job>>> GetJobs(int userId)
+        {
+            return await _serviceWrapper.User.GetUserJobsByUserId(userId);
         }
     }
 }

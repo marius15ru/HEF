@@ -18,35 +18,35 @@ namespace HEF_API.Controllers
             _service = service;
         }
 
-        // GET: api/values
+        // GET: api/plants?sortby=column
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Plant>>> Get()
+        public async Task<ActionResult<IEnumerable<Plant>>> Get([FromQuery(Name = "sortby")] string sortBy)
         {
-            return await _service.Plant.GetAllPlants();
+            return await _service.Plant.GetAllPlants(sortBy);
         }
 
-        // GET api/values/5
+        // GET api/plants/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Plant>> Get(int id)
         {
             return await _service.Plant.GetPlantById(id);
         }
 
-        // POST api/values
+        // POST api/plants
         [HttpPost]
         public async Task Post([FromBody] Plant value)
         {
             await _service.Plant.AddPlant(value);
         }
 
-        // PUT api/values/5
+        // PUT api/plants/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] Plant value)
         {
             await _service.Plant.UpdatePlant(id, value);
         }
 
-        // DELETE api/values/5
+        // DELETE api/plants/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {

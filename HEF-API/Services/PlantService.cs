@@ -7,7 +7,7 @@ namespace HEF_API.Services
 {
     public interface IPlantService
     {
-        public Task<List<Plant>> GetAllPlants();
+        public Task<List<Plant>> GetAllPlants(string sortBy);
         public Task<Plant> GetPlantById(int id);
         public Task AddPlant(Plant a);
         public Task UpdatePlant(int id, Plant value);
@@ -20,7 +20,7 @@ namespace HEF_API.Services
             :base(context)
         { }
 
-        public async Task<List<Plant>> GetAllPlants() => await GetAll().ToListAsync();
+        public async Task<List<Plant>> GetAllPlants(string sortBy) => await GetAll(sortBy).ToListAsync();
         public async Task<Plant> GetPlantById(int id) => await GetById(id);
         public async Task AddPlant(Plant value) => await Add(value);
         public async Task UpdatePlant(int id, Plant entity) => await Update(id, entity);

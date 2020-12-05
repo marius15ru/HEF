@@ -18,21 +18,21 @@ namespace HEF_API.Controllers
             _service = service;
         }
 
-        // GET: api/values
+        // GET: api/areas?sortby=column
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Area>>> Get()
+        public async Task<ActionResult<IEnumerable<Area>>> Get([FromQuery(Name = "sortby")] string sortBy)
         {
-            return await _service.Area.GetAllAreas();
+            return await _service.Area.GetAllAreas(sortBy);
         }
 
-        // GET api/values/5
+        // GET api/areas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Area>> Get(int id)
         {
             return await _service.Area.GetAreaById(id);
         }
 
-        // POST api/values
+        // POST api/areas
         [HttpPost]
         public async Task Post([FromBody] Area value)
         {
@@ -46,7 +46,7 @@ namespace HEF_API.Controllers
             await _service.Area.UpdateArea(id, value);
         }
 
-        // DELETE api/values/5
+        // DELETE api/areas/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {

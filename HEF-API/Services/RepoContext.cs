@@ -19,33 +19,28 @@ namespace HEF_API.Services
         public DbSet<Station> Station { get; set; }
         public DbSet<SubJob> SubJob { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Job_Assignments> Job_Assignments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder
-                .Entity<Area>()
-                .ToTable("Area");
+            modelBuilder.Entity<User>()
+                        .Property(e => e.Role)
+                        .HasConversion<string>();
+            
+            modelBuilder.Entity<User>()
+                        .Property(e => e.Status)
+                        .HasConversion<string>();
+            
+            modelBuilder.Entity<SubJob>()
+                        .Property(e => e.Status)
+                        .HasConversion<string>();
 
-            modelBuilder
-                .Entity<User>()
-                .Property(e => e.Role)
-                .HasConversion<string>();
+            modelBuilder.Entity<SubJob>()
+                        .Property(e => e.Unit)
+                        .HasConversion<string>();
 
-            modelBuilder
-                .Entity<User>()
-                .Property(e => e.Status)
-                .HasConversion<string>();
-
-            modelBuilder
-                .Entity<SubJob>()
-                .Property(e => e.Status)
-                .HasConversion<string>();
-
-            modelBuilder
-                .Entity<SubJob>()
-                .Property(e => e.Unit)
-                .HasConversion<string>();
-
+            modelBuilder.Entity<Job_Assignments>().HasKey(uj => new { uj.JobId, uj.UserId });
+            
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -7,7 +7,7 @@ namespace HEF_API.Services
 {
     public interface IEquipmentService
     {
-        public Task<List<Equipment>> GetAllEquipments();
+        public Task<List<Equipment>> GetAllEquipments(string sortBy);
         public Task<Equipment> GetEquipmentById(int id);
         public Task AddEquipment(Equipment a);
         public Task UpdateEquipment(int id, Equipment value);
@@ -20,7 +20,7 @@ namespace HEF_API.Services
             : base(context)
         { }
 
-        public async Task<List<Equipment>> GetAllEquipments() => await GetAll().ToListAsync();
+        public async Task<List<Equipment>> GetAllEquipments(string sortBy) => await GetAll(sortBy).ToListAsync();
         public async Task<Equipment> GetEquipmentById(int id) => await GetById(id);
         public async Task AddEquipment(Equipment value) => await Add(value);
         public async Task UpdateEquipment(int id, Equipment entity) => await Update(id, entity);

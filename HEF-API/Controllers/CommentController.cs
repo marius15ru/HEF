@@ -18,35 +18,35 @@ namespace HEF_API.Controllers
             _service = service;
         }
 
-        // GET: api/values
+        // GET: api/comments?sortby=column
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comment>>> Get()
+        public async Task<ActionResult<IEnumerable<Comment>>> Get([FromQuery(Name = "sortby")] string sortBy)
         {
-            return await _service.Comment.GetAllComments();
+            return await _service.Comment.GetAllComments(sortBy);
         }
 
-        // GET api/values/5
+        // GET api/comments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> Get(int id)
         {
             return await _service.Comment.GetCommentById(id);
         }
 
-        // POST api/values
+        // POST api/comments
         [HttpPost]
         public async Task Post([FromBody] Comment value)
         {
             await _service.Comment.AddComment(value);
         }
 
-        // PUT api/values/5
+        // PUT api/comments/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody] Comment value)
         {
             await _service.Comment.UpdateComment(id, value);
         }
 
-        // DELETE api/values/5
+        // DELETE api/comments/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
