@@ -15,23 +15,25 @@
         </label> -->
         <label class="form-input">
             Stöð
-            <select formControlName="station" class="form-input">
+            <select type="number" formControlName="stationId" class="form-input">
                 <option [value]="null">-</option>
-                <option *ngFor="let item of stations" [value]="item.id">{{item.name}}</option>
+                <option *ngFor="let item of stations" [ngValue]="item.id">{{item.name}}</option>
             </select>
         </label>
         <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name" [value]="jobForm.value.name" >
+            <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
         </label>
         <label class="form-input">
             Lýsing
-            <input type="text" class="form-input" formControlName="description" [value]="jobForm.value.description" >
+            <textarea type="text" class="form-input" formControlName="description" [value]="selectedRow.description" >
+                
+            </textarea>
         </label>
         <label class="form-input">
             Endurtekningar
-            <select formControlName="recurring" class="form-input">
-                <option *ngFor="let item of recur | enumToArray" [value]="item.index">
+            <select type="number" formControlName="recurring" class="form-input" value="selectedRow.recurring">
+                <option *ngFor="let item of recur | enumToArray" [ngValue]="item.index">
                     {{item.name}}
                 </option>
             </select>
@@ -42,30 +44,32 @@
         </label>
         <label class="form-input">
             Klára fyrir
-            <input type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
+            <!-- <input type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" > -->
+            <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
+            <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
         </label>
         <label class="form-input">
             Staða
-            <select formControlName="status" class="form-input">
-                <option *ngFor="let item of jobStatus | enumToArray" [value]="item.index">
+            <select type="number" formControlName="status" class="form-input" value="selectedRow.status">
+                <option *ngFor="let item of jobStatus | enumToArray" [ngValue]="item.index">
                     {{item.name}}
                 </option>
             </select>
         </label>
         <label class="form-input">
             Neyðarverk?
-            <select formControlName="emergencyJob" class="form-input" [value]="selectedRow.emergencyJob">
-                <option [value]="null">-</option>
-                <option [value]="true">Já</option>
-                <option [value]="false">Nei</option>
+            <select formControlName="emergencyJob" class="form-input" value="selectedRow.emergencyJob">
+                <option [ngValue]="null">-</option>
+                <option [ngValue]="true">Já</option>
+                <option [ngValue]="false">Nei</option>
             </select>
         </label>
         <label class="form-input">
             Athugasemdir?
-            <select formControlName="hasComments" class="form-input" [value]="selectedRow.hasComments">
-                <option [value]="null">-</option>
-                <option [value]="true">Já</option>
-                <option [value]="false">Nei</option>
+            <select formControlName="hasComments" class="form-input" value="selectedRow.hasComments">
+                <option [ngValue]="null">-</option>
+                <option [ngValue]="true">Já</option>
+                <option [ngValue]="false">Nei</option>
             </select>
         </label>
         <label class="form-input">

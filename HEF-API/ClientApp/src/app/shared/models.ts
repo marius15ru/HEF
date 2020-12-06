@@ -19,9 +19,10 @@ export class Equipment {
     stationId: number;
 
     name: string;
-    model: string;
+    model: Date;
     manufacturer: string;
     operation: string;
+    lastCheck: Date;
 }
 
 export class Job {

@@ -5,33 +5,34 @@
     <form [formGroup]="equipmentForm" (ngSubmit)="onSubmit()">
         <label class="form-input">
             Stöð
-            <input type="text" class="form-input" formControlName="station" placeholder="{{dialogData.equipments.stationId}}" [attr.disabled]="editDisabled? true : null">
+            <select type="number" formControlName="stationId" class="form-input">
+                <option [value]="null">-</option>
+                <option *ngFor="let item of stations" [ngValue]="item.id">{{item.name}}</option>
+            </select>
         </label>
         <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name" placeholder="{{dialogData.equipments.name}}" [attr.disabled]="editDisabled? true : null">
+            <input type="text" class="form-input" formControlName="name" value="selectedRow.name">
         </label>
         <label class="form-input">
             Framleiðandi
-            <input type="text" class="form-input" formControlName="manufacturer" placeholder="{{dialogData.equipments.manufacturer}}" [attr.disabled]="editDisabled? true : null">
+            <input type="text" class="form-input" formControlName="manufacturer" value="selectedRow.manufacturer">
         </label>
         <label class="form-input">
             Árgerð
-            <input type="text" class="form-input" formControlName="model" placeholder="{{dialogData.equipments.model}}" [attr.disabled]="editDisabled? true : null">
+            <!-- <input type="text" class="form-input" formControlName="model" value="selectedRow.model"> -->
+            <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="model" [value]="selectedRow.model" >
+            <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="model" [value]="selectedRow.model" >
         </label>
         <label class="form-input">
             Aðgerð
-            <input type="text" class="form-input" formControlName="operation" placeholder="{{dialogData.equipments.operation}}" [attr.disabled]="editDisabled? true : null">
+            <input type="text" class="form-input" formControlName="operation" value="selectedRow.operation">
         </label>
-        <!-- <label class="form-input">
-            Endurtekningar
-            <input type="time" class="form-input" formControlName="timeFrame">
-            <select formControlName="timeFrame" class="form-input">
-                <option *ngFor="let item of keys()">
-                    {{item}}
-                </option>
-            </select>
-        </label> -->
+        <label class="form-input">
+            Síðasta athugun
+            <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
+            <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
+        </label>
         
         <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{editMode}}</button>
     </form>
