@@ -8,7 +8,7 @@ namespace HEF_API.Services
 {
     public interface IUserService
     {
-        Task<List<User>> GetAllUsers(string sortBy);
+        Task<List<User>> GetAllUsers(string sortBy = null);
         Task<User> GetUserById(int id);
         Task AddUser(User a);
         Task UpdateUser(int id, User value);
@@ -22,7 +22,7 @@ namespace HEF_API.Services
             :base(context)
         { }
 
-        public async Task<List<User>> GetAllUsers(string sortBy) => await GetAll(sortBy).ToListAsync();
+        public async Task<List<User>> GetAllUsers(string sortBy = null) => await GetAll(sortBy).ToListAsync();
         public async Task<User> GetUserById(int id) => await GetById(id);
         public async Task AddUser(User value) => await Add(value);
         public async Task UpdateUser(int id, User entity) => await Update(id, entity);

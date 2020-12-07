@@ -8,7 +8,7 @@ namespace HEF_API.Services
 {
     public interface IAreaService
     {
-        Task<List<Area>> GetAllAreas(string sortBy);
+        Task<List<Area>> GetAllAreas(string sortBy = null);
         Task<Area> GetAreaById(int id);
         Task AddArea(Area a);
         Task UpdateArea(int id, Area value);
@@ -21,7 +21,7 @@ namespace HEF_API.Services
             : base(context)
         { }
 
-        public async Task<List<Area>> GetAllAreas(string sortBy) => await GetAll(sortBy).ToListAsync();
+        public async Task<List<Area>> GetAllAreas(string sortBy = null) => await GetAll(sortBy).ToListAsync();
         public async Task<Area> GetAreaById(int id) => await GetById(id);
         public async Task AddArea(Area value) => await Add(value);
         public async Task UpdateArea(int id, Area entity) => await Update(id, entity);

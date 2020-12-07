@@ -8,7 +8,7 @@ namespace HEF_API.Services
 {
     public interface IJobService
     {
-        Task<List<Job>> GetAllJobs(string sortBy);
+        Task<List<Job>> GetAllJobs(string sortBy = null);
         Task<Job> GetJobById(int id);
         Task AddJob(Job a);
         Task UpdateJob(int id, Job value);
@@ -24,7 +24,7 @@ namespace HEF_API.Services
             : base(context)
         { }
 
-        public async Task<List<Job>> GetAllJobs(string sortBy) => await GetAll(sortBy).ToListAsync();
+        public async Task<List<Job>> GetAllJobs(string sortBy = null) => await GetAll(sortBy).ToListAsync();
         public async Task<Job> GetJobById(int id) => await GetById(id);
         public async Task AddJob(Job value) => await Add(value);
         public async Task UpdateJob(int id, Job entity) => await Update(id, entity);

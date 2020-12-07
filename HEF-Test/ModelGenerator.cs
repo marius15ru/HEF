@@ -137,5 +137,6 @@ namespace HEF_Test
                 .RuleFor(x => x.Status, y => y.PickRandom<Enums.UserStatus>());
             return fakeUser;
         }
+
     }
 }
