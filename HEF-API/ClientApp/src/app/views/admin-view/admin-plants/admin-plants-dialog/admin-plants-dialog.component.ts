@@ -46,7 +46,6 @@ export class AdminPlantsDialogComponent implements OnInit {
   onSubmit() {
     console.log(this.plantForm.value);
     let requestModel: Plant = this.plantForm.value;
-    requestModel.id = 5;
     this.dataService.addPlant(requestModel).subscribe(result => {
       console.log(result);
     }, error => console.error(error));

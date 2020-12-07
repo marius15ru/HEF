@@ -76,14 +76,23 @@ export class AdminTasksDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.jobForm.value);
-    let requestModel: Job = this.jobForm.value;
-    requestModel.id = 9;
-    requestModel.completeBy = new Date(requestModel.completeBy);
-    requestModel.lastCheck = new Date(requestModel.lastCheck);
-    this.dataService.addJob(requestModel).subscribe(result => {
-      console.log(result);
-    }, error => console.error(error));
+    switch (this.dialogData.action.toLowerCase()){
+      case 'insert':
+        console.log(this.jobForm.value);
+        let requestModelInsert: Job = this.jobForm.value;
+        requestModelInsert.completeBy = new Date(requestModelInsert.completeBy);
+        requestModelInsert.lastCheck = new Date(requestModelInsert.lastCheck);
+        this.dataService.addJob(requestModelInsert).subscribe(result => {
+          console.log(result);
+        }, error => console.error(error));
+        break;
+      case 'update':
+        let requestModelUpdate: Job = this.jobForm.value;
+        this.dataService.updateJob(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
+          console.log(result, this.selectedRow.id.toString());
+        }, error => console.error(error));
+
+    }
    }
 
   //  getJobs(): void {

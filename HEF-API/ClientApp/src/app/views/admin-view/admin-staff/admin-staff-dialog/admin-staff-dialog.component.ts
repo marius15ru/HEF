@@ -48,7 +48,6 @@ export class AdminStaffDialogComponent implements OnInit {
   onSubmit() {
     console.log(this.staffForm.value);
     let requestModel: User = this.staffForm.value;
-    requestModel.id = 9;
     this.dataService.addUser(requestModel).subscribe(result => {
       console.log(result);
     }, error => console.error(error));

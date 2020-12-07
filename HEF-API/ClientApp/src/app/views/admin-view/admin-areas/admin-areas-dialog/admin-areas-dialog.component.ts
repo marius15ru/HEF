@@ -37,7 +37,6 @@ export class AdminAreasDialogComponent implements OnInit {
   onSubmit() {
     console.log(this.areaForm.value);
     let requestModel: Area = this.areaForm.value;
-    requestModel.id = 10;
     this.dataService.addArea(requestModel).subscribe(result => {
       console.log(result);
     }, error => console.error(error));

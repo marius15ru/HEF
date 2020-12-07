@@ -26,10 +26,6 @@ export class AdminTasksComponent implements OnInit {
     this.http.get<Job[]>('api/jobs').subscribe(result => {
       console.log(result);
       this.jobs = result;
-      // let index = Recurring["Annan hvern mánuð"].valueOf();
-      // console.log(index);
-      // this.jobs.forEach((value, index) => this.jobs[index].recurring = Recurring[this.jobs[index].recurring]);
-      // console.log(this.alteredJobs, "altered");
     }, error => console.error(error));
   }
 

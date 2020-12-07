@@ -1,9 +1,23 @@
 <div>
     <h2>Sækja nýtt verk</h2>
-    <ejs-grid>
-        <e-columns>
-            <e-column></e-column>
-            <e-column></e-column>
+    <ejs-grid #grid [dataSource]="jobs" allowPaging='true' allowSorting='true'>
+        <e-columns >
+            <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+            <e-column field='stationId' headerText='Stöð' width="90px" ></e-column>
+            <e-column field='name' headerText='Nafn' width="120px"></e-column>
+            <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px"></e-column>
+            <e-column field='description' headerText='Lýsing'></e-column>
+            <e-column field='emergencyJob' headerText='Neyðarverk?'></e-column>
+            <e-column field='lastCheck' headerText='Síðasta ath' type='date' format="dd.MM.yyyy"></e-column>
+            <e-column field='recurring' headerText='Endurtekið?'></e-column>
+            <e-column field='duration' headerText='Lengd'></e-column>
+            <e-column field='status' headerText='Staða'></e-column>
+            <e-column field="operations" headerText="Aðgerðir" width="100">
+                <ng-template #template let-jobs>
+                    <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
+                    <i class="fas fa-edit action-icon" matTooltip="Sækja"></i>
+                </ng-template>
+            </e-column>
         </e-columns>
     </ejs-grid>
 </div>

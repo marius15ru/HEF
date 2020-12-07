@@ -61,7 +61,6 @@ export class AdminEquipmentDialogComponent implements OnInit {
   onSubmit() {
     console.log(this.equipmentForm.value);
     let requestModel: Equipment = this.equipmentForm.value;
-    requestModel.id = 5;
     requestModel.model = new Date(requestModel.model);
     requestModel.lastCheck = new Date(requestModel.lastCheck);
     this.dataService.addEquipment(requestModel).subscribe(result => {

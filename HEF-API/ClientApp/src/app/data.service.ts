@@ -41,6 +41,13 @@ export class DataService {
     return this.http.post<Job>(this.jobsUrl, job, this.httpOptions);
   }
 
+  updateJob(job: Job, jobId: string) {
+    return this.http.put<Job>(this.jobsUrl + jobId + "/", job, this.httpOptions)
+      .pipe(
+        catchError(this.handleError('updateJob', job))
+      );
+  }
+
   addPlant(plant: Plant){
     console.log("DataService - AddPlant", plant);
     console.log(this.plantsURl);
