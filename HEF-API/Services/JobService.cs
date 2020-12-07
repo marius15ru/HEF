@@ -27,6 +27,7 @@ namespace HEF_API.Services
         public async Task<List<Job>> GetAllJobs(string sortBy = null) => await GetAll(sortBy).ToListAsync();
         public async Task<Job> GetJobById(int id) => await GetById(id);
         public async Task AddJob(Job value) => await Add(value);
+
         public async Task UpdateJob(int id, Job entity) => await Update(id, entity);
         public async Task RemoveJob(int id) => await Remove(id);
         public async Task<List<User>> GetJobUsersByJobId(int jobId)

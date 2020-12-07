@@ -50,18 +50,18 @@ export enum PlantType {
 }
 
 export enum Recurring {
-    Undefined = 0,
-    Week = 1,
-    TwoWeeks = 2,
-    Month = 3,
-    TwoMonths = 4,
-    ThreeMonths = 5,
-    SixMonths = 6,
-    Year = 7,
-    TwoYears = 8,
-    ThreeYears = 9,
-    FiveYears = 10,
-    TenYears = 11
+    "Undefined" = 0,
+    "Vikulega" = 1,
+    "Aðra hverja viku" = 2,
+    "Mánaðarlega" = 3,
+    "Annan hvern mánuð" = 4,
+    "Þriðja hvern mánuð" = 5,
+    "Hálfs árs fresti" = 6,
+    "Árlega" = 7,
+    "Annað hvert ár" = 8,
+    "Þriðja hvert ár" = 9,
+    "Fimmta hvert ár" = 10,
+    "Tíu ára fresti" = 11
 }
 
 export namespace Recurring {

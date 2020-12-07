@@ -13,14 +13,17 @@ export class AdminPlantsComponent implements OnInit {
 
   public plants: Plant[];
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Plant[]>(baseUrl + 'api/plants').subscribe(result => {
+  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
+
+  ngOnInit() {
+    this.getData();
+  }
+
+  getData(){
+    this.http.get<Plant[]>('api/plants').subscribe(result => {
       console.log(result);
       this.plants = result;
     }, error => console.error(error));
-  }
-
-  ngOnInit() {
   }
 
   openDialog(plants: Plant, action: string) {

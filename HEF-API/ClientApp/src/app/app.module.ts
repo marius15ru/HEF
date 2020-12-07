@@ -36,6 +36,7 @@ import { AdminEquipmentDialogComponent } from './views/admin-view/admin-equipmen
 import { AdminAreasComponent } from './views/admin-view/admin-areas/admin-areas.component';
 import { AdminAreasDialogComponent } from './views/admin-view/admin-areas/admin-areas-dialog/admin-areas-dialog.component';
 import { EnumToArrayPipe } from './shared/models';
+import { MessagesComponent } from './messages/messages.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { EnumToArrayPipe } from './shared/models';
     AdminEquipmentDialogComponent,
     AdminAreasComponent,
     AdminAreasDialogComponent,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    MessagesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

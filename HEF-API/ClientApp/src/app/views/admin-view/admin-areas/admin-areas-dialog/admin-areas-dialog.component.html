@@ -3,13 +3,13 @@
 
 <mat-dialog-content>
     <form [formGroup]="areaForm" (ngSubmit)="onSubmit()">
-        <label class="form-input">
+        <!-- <label class="form-input">
             Auðkenni
-            <input type="text" class="form-input" formControlName="id" placeholder="{{dialogData.areas.id}}" [attr.disabled]="editDisabled? true : null">
-        </label>
+            <input type="text" class="form-input" formControlName="id" [value]="">
+        </label> -->
         <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name" placeholder="{{dialogData.areas.name}}" [attr.disabled]="editDisabled? true : null">
+            <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name">
         </label>
 
         <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!areaForm.valid">{{editMode}}</button>

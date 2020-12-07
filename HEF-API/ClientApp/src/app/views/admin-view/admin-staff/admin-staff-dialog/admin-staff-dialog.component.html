@@ -5,8 +5,26 @@
                 Nafn
                 <input type="text" class="form-input" formControlName="name">
             </label>
-            
+
             <label class="form-input">
+                Staða
+                <select type="number" formControlName="status" class="form-input" value="selectedRow.status">
+                    <option *ngFor="let item of status | enumToArray" [ngValue]="item.index">
+                        {{item.name}}
+                    </option>
+                </select>
+            </label>
+
+            <label class="form-input">
+                Hlutverk
+                <select type="number" formControlName="role" class="form-input" value="selectedRow.role">
+                    <option *ngFor="let item of role | enumToArray" [ngValue]="item.index">
+                        {{item.name}}
+                    </option>
+                </select>
+            </label>
+            
+            <!-- <label class="form-input">
                 Hlutverk
                 <select formControlName="role" class="form-input">
                     <option *ngFor="let item of keys()">
@@ -22,7 +40,7 @@
                         {{item}}
                     </option>
                 </select>
-            </label>
+            </label> -->
             <button class="form-submition" type="submit" [disabled]="!staffForm.valid">{{dialogData.action}}</button>
     </form>
 </mat-dialog-content>

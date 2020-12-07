@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using HEF_API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace HEF_API.Services
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
         Task<T> GetById(int id);
         Task Add(T entity);
+        Job Insert(T entity);
         Task Update(int id, T values);
         Task Remove(int id);
     }
@@ -34,6 +36,13 @@ namespace HEF_API.Services
         {
             this.BaseContext.Set<T>().Add(entity);
             await this.BaseContext.SaveChangesAsync();
+        }
+
+        public Job Insert(T entity)
+        {
+            //this.BaseContext.Set<T>().Add(entity);
+            //this.BaseContext.SaveChangesAsync();
+            return new Job();
         }
 
         public async Task Update(int id, T values)

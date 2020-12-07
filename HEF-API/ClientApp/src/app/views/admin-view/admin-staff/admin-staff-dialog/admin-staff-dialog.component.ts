@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DataService } from 'src/app/data.service';
 import { Role, UserStatus } from 'src/app/shared/enums';
+import { User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-admin-staff-dialog',
@@ -19,24 +21,37 @@ export class AdminStaffDialogComponent implements OnInit {
   role = Role;
   status = UserStatus;
 
-  keys(): Array<string> {
-      const keys = Object.keys(this.role);
-      return keys.slice(keys.length / 2);
-  }
-  keys2(): Array<string> {
-    const keys2 = Object.keys(this.status);
-    return keys2.slice(keys2.length / 2);
-  }
+  selectedRow: User;
 
-  constructor(public dialogRef: MatDialogRef<AdminStaffDialogComponent>,
+  // keys(): Array<string> {
+  //     const keys = Object.keys(this.role);
+  //     return keys.slice(keys.length / 2);
+  // }
+  // keys2(): Array<string> {
+  //   const keys2 = Object.keys(this.status);
+  //   return keys2.slice(keys2.length / 2);
+  // }
+
+  constructor(public dialogRef: MatDialogRef<AdminStaffDialogComponent>, private dataService: DataService,
     @Inject(MAT_DIALOG_DATA) public dialogData: {action: string}
     ) { }
 
   ngOnInit() {
-  }
+    if (this.dialogData.action.toLowerCase() === 'insert') {
+      this.selectedRow = new User();
+      this.selectedRow.name = '';
+      this.selectedRow.role = null,
+      this.selectedRow.status = null
+    }
+   }
 
   onSubmit() {
-    console.warn(this.staffForm.value);
+    console.log(this.staffForm.value);
+    let requestModel: User = this.staffForm.value;
+    requestModel.id = 9;
+    this.dataService.addUser(requestModel).subscribe(result => {
+      console.log(result);
+    }, error => console.error(error));
   }
 
 }

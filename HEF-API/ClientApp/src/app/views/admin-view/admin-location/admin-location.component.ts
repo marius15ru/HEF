@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataOperation } from 'src/app/shared/enums';
+import { Station } from 'src/app/shared/models';
 import { AdminLocationDialogComponent } from './admin-location-dialog/admin-location-dialog.component';
 
 @Component({
@@ -11,14 +12,21 @@ import { AdminLocationDialogComponent } from './admin-location-dialog/admin-loca
 })
 export class AdminLocationComponent implements OnInit {
 
+  public stations: Station[];
 
-  constructor(public dialogItem: MatDialog) {
-   }
+  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
 
 
 
   ngOnInit() {
+    this.getData();
+  }
 
+  getData(){
+    this.http.get<Station[]>('api/stations').subscribe(result => {
+      console.log(result);
+      this.stations = result;
+    }, error => console.error(error));
   }
 
   openDialog(action: string) {

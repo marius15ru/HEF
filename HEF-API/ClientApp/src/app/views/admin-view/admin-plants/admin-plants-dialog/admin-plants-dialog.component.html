@@ -5,16 +5,16 @@
     <form [formGroup]="plantForm" (ngSubmit)="onSubmit()">
         <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name" placeholder="{{dialogData.plant.name}}" [attr.disabled]="editDisabled? true : null">
+            <input type="text" class="form-input" formControlName="name" value="selectedRow.name">
         </label>
-        <label class="form-input">
+        <!-- <label class="form-input">
             Tegund veitu
             <select formControlName="type" class="form-input" [attr.disabled]="editDisabled? true : null">
                 <option *ngFor="let item of keys()">
                     {{item}}
                 </option>
             </select>
-        </label>
+        </label> -->
 
         <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!plantForm.valid">{{editMode}}</button>
     </form>

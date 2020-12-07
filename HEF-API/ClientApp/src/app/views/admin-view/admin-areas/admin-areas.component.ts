@@ -13,14 +13,17 @@ export class AdminAreasComponent implements OnInit {
 
   public areas: Area[];
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Area[]>(baseUrl + 'api/areas').subscribe(result => {
+  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
+
+  ngOnInit() {
+    this.getData();
+  }
+
+  getData(){
+    this.http.get<Area[]>('api/areas').subscribe(result => {
       console.log(result);
       this.areas = result;
     }, error => console.error(error));
-   }
-
-  ngOnInit() {
   }
 
   openDialog(area: Area, action: string) {

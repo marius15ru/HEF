@@ -13,14 +13,17 @@ export class AdminEquipmentComponent implements OnInit {
 
   public equipments: Equipment[];
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Equipment[]>(baseUrl + 'api/equipments').subscribe(result => {
+  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
+
+  ngOnInit() {
+    this.getData();
+  }
+
+  getData(){
+    this.http.get<Equipment[]>('api/equipments').subscribe(result => {
       console.log(result);
       this.equipments = result;
     }, error => console.error(error));
-   }
-
-  ngOnInit() {
   }
 
   openDialog(equipment: Equipment, action: string) {
