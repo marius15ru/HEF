@@ -34,23 +34,26 @@ namespace HEF_API.Controllers
 
         // POST api/comments
         [HttpPost]
-        public async Task Post([FromBody] Comment value)
+        public async Task<ActionResult<Comment>> Post([FromBody] Comment value)
         {
             await _service.Comment.AddComment(value);
+            return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
         // PUT api/comments/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] Comment value)
+        public async Task<ActionResult> Put(int id, [FromBody] Comment value)
         {
             await _service.Comment.UpdateComment(id, value);
+            return NoContent();
         }
 
         // DELETE api/comments/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             await _service.Comment.RemoveComment(id);
+            return NoContent();
         }
     }
 }

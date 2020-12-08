@@ -78,9 +78,9 @@ namespace HEF_Test
                 .RuleFor(x => x.StationId, y => new Station().Id)
                 .RuleFor(x => x.Name, y => y.Name.JobTitle())
                 .RuleFor(x => x.Description, y => y.Name.JobDescriptor())
-                .RuleFor(x => x.Status, y => y.PickRandom<Enums.JobStatus>())
+                .RuleFor(x => x.Status, y => (int)y.PickRandom<Enums.JobStatus>())
                 .RuleFor(x => x.CompleteBy, y => y.Date.Past(1))
-                .RuleFor(x => x.Recurring, y => y.PickRandom<Enums.Recurring>())
+                .RuleFor(x => x.Recurring, y => (int)y.PickRandom<Enums.Recurring>())
                 .RuleFor(x => x.Duration, y => y.Random.Replace("##:##"))
                 .RuleFor(x => x.EmergencyJob, y => y.Random.Bool())
                 .RuleFor(x => x.HasComments, y => y.Random.Bool())
@@ -133,8 +133,8 @@ namespace HEF_Test
                 .StrictMode(true)
                 .RuleFor(o => o.Id, f => Ids++)
                 .RuleFor(x => x.Name, y => y.Name.FullName())
-                .RuleFor(x => x.Role, y => y.PickRandom<Enums.Role>())
-                .RuleFor(x => x.Status, y => y.PickRandom<Enums.UserStatus>());
+                .RuleFor(x => x.Role, y => (int)y.PickRandom<Enums.Role>())
+                .RuleFor(x => x.Status, y => (int)y.PickRandom<Enums.UserStatus>());
             return fakeUser;
         }
 

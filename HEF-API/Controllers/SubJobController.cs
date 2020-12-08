@@ -34,23 +34,26 @@ namespace HEF_API.Controllers
 
         // POST api/subjobs
         [HttpPost]
-        public async Task Post([FromBody] SubJob value)
+        public async Task<ActionResult<SubJob>> Post([FromBody] SubJob value)
         {
             await _service.SubJob.AddSubJob(value);
+            return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
         // PUT api/subjobs/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] SubJob value)
+        public async Task<ActionResult> Put(int id, [FromBody] SubJob value)
         {
             await _service.SubJob.UpdateSubJob(id, value);
+            return NoContent();
         }
 
         // DELETE api/subjobs/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             await _service.SubJob.RemoveSubJob(id);
+            return NoContent();
         }
     }
 }

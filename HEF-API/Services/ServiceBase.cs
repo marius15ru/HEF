@@ -45,28 +45,23 @@ namespace HEF_API.Services
             return new Job();
         }
 
-        public async Task Update(int id, T values)
+        public async Task Update(int id, T entity)
         {
-            var entity = BaseContext.Set<T>().Find(id);
-            foreach (PropertyInfo prop in entity.GetType().GetProperties())
-            {
-                var n = prop.GetValue(values, null);
-
-                if (n != null && prop.Name != "Id")
-                    prop.SetValue(entity, n);
-            }
-
-            if (entity != null)
-            {
-                this.BaseContext.Set<T>().Update(entity);
-                await this.BaseContext.SaveChangesAsync();
-            }
+            this.BaseContext.Set<T>().Update(entity);
+            await this.BaseContext.SaveChangesAsync();
         }
 
         public async Task Remove(int id)
         {
             var entity = this.BaseContext.Set<T>().Find(id);
+
             this.BaseContext.Set<T>().Remove(entity);
+            await this.BaseContext.SaveChangesAsync();
+        }
+
+
+        public async Task Save()
+        {
             await this.BaseContext.SaveChangesAsync();
         }
     }

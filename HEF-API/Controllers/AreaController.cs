@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HEF_API.Models;
+using HEF_API.RequestModels;
 using HEF_API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,28 +30,51 @@ namespace HEF_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Area>> Get(int id)
         {
-            return await _service.Area.GetAreaById(id);
+            var value = await _service.Area.GetAreaById(id);
+            if (value == null)
+                return NotFound();
+
+            return Ok(value);
         }
 
         // POST api/areas
         [HttpPost]
-        public async Task Post([FromBody] Area value)
+        public async Task<ActionResult<Area>> Post([FromBody] Area value)
         {
+            if (value == null)
+                return BadRequest("Object is null");
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model object");
+           
             await _service.Area.AddArea(value);
+
+            return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] Area value)
+        public async Task<ActionResult> Put(int id, [FromBody] Area value)
         {
-            await _service.Area.UpdateArea(id, value);
+            if(value == null)
+                return BadRequest("Object er null");
+            if (id == value.Id)
+                return BadRequest("Id does not match object.");
+
+            var area = _service.Area.GetAreaById(id);
+            if (area == null)
+                return NotFound();
+
+            await _service.Area.UpdateArea(id, value); 
+
+            return NoContent();
         }
 
         // DELETE api/areas/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             await _service.Area.RemoveArea(id);
+            return NoContent();
         }
     }
 }

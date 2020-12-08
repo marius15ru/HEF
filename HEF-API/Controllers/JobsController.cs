@@ -38,23 +38,26 @@ namespace HEF_API.Controllers
 
         // POST api/jobs
         [HttpPost]
-        public async Task Post([FromBody] Job value)
+        public async Task<ActionResult<Job>> Post([FromBody] Job value)
         {
             await _service.Job.AddJob(value);
+            return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
         // PUT api/jobs/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] Job value)
+        public async Task<ActionResult> Put(int id, [FromBody] Job value)
         {
             await _service.Job.UpdateJob(id, value);
+            return NoContent();
         }
 
         // DELETE api/jobs/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             await _service.Job.RemoveJob(id);
+            return NoContent();
         }
 
         // GET api/users/{jobId}/users
@@ -66,16 +69,18 @@ namespace HEF_API.Controllers
 
         // POST api/users/{userId}/jobs
         [HttpPost("{userId}/jobs")]
-        public async Task PostUser([FromBody] Job_Assignments value)
+        public async Task<ActionResult> PostUser([FromBody] Job_Assignments value)
         {
             await _service.Job.AddJobUser(value);
+            return NoContent();
         }
 
         // DELETE api/users/{userId}/jobs
         [HttpPost("{userId}/jobs")]
-        public async Task DeleteJob(int userId, [FromBody] Job_Assignments value)
+        public async Task<ActionResult> DeleteJob(int userId, [FromBody] Job_Assignments value)
         {
             await _service.Job.RemoveJobUser(userId, value.JobId);
+            return NoContent();
         }
     }
 }

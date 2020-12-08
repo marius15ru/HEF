@@ -34,23 +34,26 @@ namespace HEF_API.Controllers
 
         // POST api/stations
         [HttpPost]
-        public async Task Post([FromBody] Station value)
+        public async Task<ActionResult<Station>> Post([FromBody] Station value)
         {
             await _service.Station.AddStation(value);
+            return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
         // PUT api/stations/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] Station value)
+        public async Task<ActionResult> Put(int id, [FromBody] Station value)
         {
             await _service.Station.UpdateStation(id, value);
+            return NoContent();
         }
 
         // DELETE api/stations/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             await _service.Station.RemoveStation(id);
+            return NoContent();
         }
     }
 }
