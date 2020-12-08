@@ -57,7 +57,7 @@ namespace HEF_API.Controllers
         {
             if(value == null)
                 return BadRequest("Object er null");
-            if (id == value.Id)
+            if (id != value.Id)
                 return BadRequest("Id does not match object.");
 
             var area = _service.Area.GetAreaById(id);
