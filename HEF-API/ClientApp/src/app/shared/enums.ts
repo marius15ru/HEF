@@ -13,22 +13,22 @@ export enum DataOperation {
 
 export enum Role {
     Undefined = 0,
-    Worker = 1,
-    Admin = 2,
+    Verkaðili = 1,
+    Stjórnandi = 2,
 }
 
 export enum UserStatus {
     Undefined = 0,
-    Available = 1,
-    UnAvailable = 2,
+    Tiltækur = 1,
+    Ótiltækur = 2,
 }
 
 export enum JobStatus {
-    Undefined = 0,
-    Pending = 1,
-    InProgress = 2,
-    OnHold = 3,
-    Finished = 4,
+    "Undefined" = 0,
+    "Óúthlutað" = 1,
+    "Í vinnslu" = 2,
+    "Í bið" = 3,
+    "Lokið" = 4,
 }
 
 export enum MeasurementType {
@@ -52,15 +52,15 @@ export enum PlantType {
 export enum Recurring {
     "Undefined" = 0,
     "Vikulega" = 1,
-    "Aðra hverja viku" = 2,
+    "Tveggja vikna fresti" = 2,
     "Mánaðarlega" = 3,
-    "Annan hvern mánuð" = 4,
-    "Þriðja hvern mánuð" = 5,
+    "Tveggja mánaða fresti" = 4,
+    "Þriggja mánaða fresti" = 5,
     "Hálfs árs fresti" = 6,
     "Árlega" = 7,
-    "Annað hvert ár" = 8,
-    "Þriðja hvert ár" = 9,
-    "Fimmta hvert ár" = 10,
+    "Tveggja ára fresti" = 8,
+    "Þriggja ára fresti" = 9,
+    "Fimm ára fresti" = 10,
     "Tíu ára fresti" = 11
 }
 

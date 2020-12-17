@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit, Pipe } from '@angular/core';
+import { Component, Inject, OnInit, Pipe, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { DataService } from 'src/app/data.service';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
-import { EnumToArrayPipe, Job, Station } from 'src/app/shared/models';
+import { EnumToArrayPipe, Job, JobAssignments, Station, User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-admin-tasks-dialog',
@@ -23,6 +24,11 @@ export class AdminTasksDialogComponent implements OnInit {
   stations: Station[];
   recurIndex: number;
   statusIndex: number;
+  jobAssignment: JobAssignments[];
+  assignedIds: number[] = [];
+  users: User[] = [];
+  assignedUsers: User[] = [];
+  unassignedUsers: User[] = [];
 
   boolArray: Boolean[] = [true, false];
 
@@ -39,10 +45,18 @@ export class AdminTasksDialogComponent implements OnInit {
     lastCheck: new FormControl('')
   });
 
+  assignmentForm = new FormGroup({
+    jobId: new FormControl(null),
+    userId: new FormControl(null)
+  });
+
   // keys(): Array<string> {
   //     const keys = Object.keys(this.recur);
   //     return keys.slice(keys.length / 2);
   // }
+
+  @ViewChild('grid', {static: false})
+  public grid: GridComponent;
 
   constructor(
     private dataService: DataService, public dialogRef: MatDialogRef<AdminTasksDialogComponent>,
@@ -52,7 +66,6 @@ export class AdminTasksDialogComponent implements OnInit {
 
   ngOnInit() {
     this.getData();
-    this.selectedRow = this.dialogData.job;
     if (this.dialogData.action.toLowerCase() === 'insert') {
       this.selectedRow = new Job();
       this.selectedRow.stationId = null;
@@ -64,8 +77,11 @@ export class AdminTasksDialogComponent implements OnInit {
       this.selectedRow.completeBy = null;
       this.selectedRow.emergencyJob = null;
       this.selectedRow.lastCheck = null;
+    }else{
+      this.selectedRow = this.dialogData.job;
     }
     this.setMode();
+    this.getJobAssignments();
   }
 
   getData(){
@@ -73,6 +89,30 @@ export class AdminTasksDialogComponent implements OnInit {
       console.log(result);
       this.stations = result;
     }, error => console.error(error));
+
+    this.http.get<User[]>('api/users').subscribe(result => {
+      this.users = result;
+    }, error => console.error(error));
+
+ 
+  }
+
+  getJobAssignments(){
+    console.log(this.selectedRow.id.toString());
+    this.http.get<JobAssignments[]>('api/jobs/' + this.selectedRow.id.toString() + "/users").subscribe(result => {
+      console.log(result);
+      // this.jobAssignment = result;
+      for(var i = 0; i < result.length; i++){
+        this.assignedIds[i] = result[i].id;
+      }
+      this.assignedUsers = this.users.filter((item) => this.assignedIds.includes(item.id));
+      this.unassignedUsers = this.users.filter((item) => !this.assignedIds.includes(item.id));
+      console.log(this.assignedUsers);
+    })
+  }
+
+  assignUser(){
+    console.log();
   }
 
   onSubmit() {
@@ -88,26 +128,35 @@ export class AdminTasksDialogComponent implements OnInit {
         break;
       case 'update':
         let requestModelUpdate: Job = this.jobForm.value;
+        requestModelUpdate.id = this.selectedRow.id;
         this.dataService.updateJob(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
           console.log(result, this.selectedRow.id.toString());
         }, error => console.error(error));
-
+        break;
+      case 'delete':
+        let requestModelDelete: Job = this.jobForm.value;
+        requestModelDelete.id = this.selectedRow.id;
+        this.dataService.deleteJob(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
+          console.log(result, this.selectedRow.id.toString(), "deleted");
+        }, error => console.error(error));
+        break;
+      case 'assign':
+        console.log("assign");
+        let requestModelAssign: JobAssignments = this.assignmentForm.value;
+        requestModelAssign.jobId = this.selectedRow.id;
+        let userId: string = requestModelAssign.userId.toString() + '/';
+        console.log(requestModelAssign);
+        this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
+          console.log(result, this.selectedRow.id.toString(), "assigned");
+        }, error => console.error(error));
+        break;
     }
+      this.closeDialog();
    }
 
-  //  getJobs(): void {
-  //   this.dataService.getJob()
-  //   .subscribe(heroes => this.heroes = heroes);
-  // }
-
-  // add(name: string): void {
-  //   name = name.trim();
-  //   if (!name) { return; }
-  //   this.dataService.addHero({ name } as Hero)
-  //     .subscribe(hero => {
-  //       this.jobs.push(hero);
-  //     });
-  // }
+   closeDialog() {
+    this.dialogRef.close('Closed');
+  }
 
   setMode() {
     switch (this.dialogData.action.toLowerCase()) {
@@ -215,7 +264,14 @@ export class AdminTasksDialogComponent implements OnInit {
           ),
         });
         this.editMode = 'Eyða';
-        this.editDisabled = true;
+        // this.editDisabled = true;
+        break;
+      case 'assign':
+        this.editMode = "Úthluta";
+        this.assignmentForm = new FormGroup({
+          jobId: new FormControl({ value: this.selectedRow.id}),
+          userId: new FormControl({ value: null})
+        });
         break;
     }
   }

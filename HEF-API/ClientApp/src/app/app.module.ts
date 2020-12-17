@@ -26,7 +26,7 @@ import { AdminStaffComponent } from './views/admin-view/admin-staff/admin-staff.
 import { UserTasksComponent } from './views/user-view/user-tasks/user-tasks.component';
 import { CreateEmergencyTaskComponent } from './views/user-view/create-emergency-task/create-emergency-task.component';
 import { ObtainTaskComponent } from './views/user-view/obtain-task/obtain-task.component';
-import { GridModule } from '@syncfusion/ej2-angular-grids';
+import { GridModule, Sort, SortService, ResizeService, PdfExportService, ToolbarService, PageService } from '@syncfusion/ej2-angular-grids';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { AdminTasksDialogComponent } from './views/admin-view/admin-tasks/admin-tasks-dialog/admin-tasks-dialog.component';
 import { AdminStaffDialogComponent } from './views/admin-view/admin-staff/admin-staff-dialog/admin-staff-dialog.component';
@@ -91,7 +91,13 @@ import { MessagesComponent } from './messages/messages.component';
     ChartModule,
     ReactiveFormsModule
   ],
-  providers: [EnumToArrayPipe],
+  providers: 
+    [EnumToArrayPipe, 
+    SortService, 
+    ResizeService, 
+    PdfExportService, 
+    ToolbarService,
+    PageService],
   bootstrap: [AppComponent],
   entryComponents: [
     AdminTasksDialogComponent,

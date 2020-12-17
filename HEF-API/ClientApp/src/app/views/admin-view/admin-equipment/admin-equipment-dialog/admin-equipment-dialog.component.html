@@ -3,36 +3,73 @@
 
 <mat-dialog-content>
     <form [formGroup]="equipmentForm" (ngSubmit)="onSubmit()">
-        <label class="form-input">
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Stöð</mat-label>
+            <mat-select type="number" formControlName="stationId" class="form-input">
+                <mat-option [value]="null">-</mat-option>
+                <mat-option *ngFor="let item of stations" [value]="item.id">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Stöð
             <select type="number" formControlName="stationId" class="form-input">
                 <option [value]="null">-</option>
                 <option *ngFor="let item of stations" [ngValue]="item.id">{{item.name}}</option>
             </select>
-        </label>
-        <label class="form-input">
+        </label> -->
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Nafn</mat-label>
+            <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name">
+        </mat-form-field>
+        <!-- <label class="form-input">
             Nafn
-            <input type="text" class="form-input" formControlName="name" value="selectedRow.name">
-        </label>
-        <label class="form-input">
+            <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name">
+        </label> -->
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Framleiðandi</mat-label>
+            <input matInput type="text" class="form-input" formControlName="manufacturer" [value]="selectedRow.manufacturer">
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Framleiðandi
-            <input type="text" class="form-input" formControlName="manufacturer" value="selectedRow.manufacturer">
-        </label>
-        <label class="form-input">
+            <input type="text" class="form-input" formControlName="manufacturer" [value]="selectedRow.manufacturer">
+        </label> -->
+
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Árgerð</mat-label>
+            <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="model" [value]="selectedRow.model">
+            <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="model" [value]="selectedRow.model">
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Árgerð
-            <!-- <input type="text" class="form-input" formControlName="model" value="selectedRow.model"> -->
             <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="model" [value]="selectedRow.model" >
             <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="model" [value]="selectedRow.model" >
-        </label>
-        <label class="form-input">
+        </label> -->
+
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Aðgerð</mat-label>
+            <input matInput type="text" class="form-input" formControlName="operation" [value]="selectedRow.operation">
+        </mat-form-field>
+
+
+        <!-- <label class="form-input">
             Aðgerð
-            <input type="text" class="form-input" formControlName="operation" value="selectedRow.operation">
-        </label>
-        <label class="form-input">
+            <input type="text" class="form-input" formControlName="operation" [value]="selectedRow.operation">
+        </label> -->
+
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Síðasta athugun</mat-label>
+            <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck">
+            <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck">
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Síðasta athugun
             <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
             <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
-        </label>
+        </label> -->
         
         <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{editMode}}</button>
     </form>

@@ -7,10 +7,14 @@
             Auðkenni
             <input type="text" class="form-input" formControlName="id" [value]="">
         </label> -->
-        <label class="form-input">
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Nafn</mat-label>
+            <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
+        </mat-form-field>
+        <!-- <label class="form-input">
             Nafn
             <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name">
-        </label>
+        </label> -->
 
         <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!areaForm.valid">{{editMode}}</button>
     </form>

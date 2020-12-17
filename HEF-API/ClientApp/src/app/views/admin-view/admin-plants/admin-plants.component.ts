@@ -38,6 +38,7 @@ export class AdminPlantsComponent implements OnInit {
 
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
+      this.getData();
     });
   }
 

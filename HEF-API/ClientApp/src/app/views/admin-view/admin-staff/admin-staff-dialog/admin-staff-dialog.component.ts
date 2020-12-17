@@ -23,15 +23,6 @@ export class AdminStaffDialogComponent implements OnInit {
 
   selectedRow: User;
 
-  // keys(): Array<string> {
-  //     const keys = Object.keys(this.role);
-  //     return keys.slice(keys.length / 2);
-  // }
-  // keys2(): Array<string> {
-  //   const keys2 = Object.keys(this.status);
-  //   return keys2.slice(keys2.length / 2);
-  // }
-
   constructor(public dialogRef: MatDialogRef<AdminStaffDialogComponent>, private dataService: DataService,
     @Inject(MAT_DIALOG_DATA) public dialogData: {action: string}
     ) { }

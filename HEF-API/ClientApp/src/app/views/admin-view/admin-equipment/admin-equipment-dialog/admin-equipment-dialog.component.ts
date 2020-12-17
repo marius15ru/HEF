@@ -51,22 +51,42 @@ export class AdminEquipmentDialogComponent implements OnInit {
     this.http.get<Station[]>('api/stations').subscribe(result => {
       console.log(result);
       this.stations = result;
-      // let index = Recurring["Annan hvern mánuð"].valueOf();
-      // console.log(index);
-      // this.jobs.forEach((value, index) => this.jobs[index].recurring = Recurring[this.jobs[index].recurring]);
-      // console.log(this.alteredJobs, "altered");
     }, error => console.error(error));
   }
 
-  onSubmit() {
-    console.log(this.equipmentForm.value);
-    let requestModel: Equipment = this.equipmentForm.value;
-    requestModel.model = new Date(requestModel.model);
-    requestModel.lastCheck = new Date(requestModel.lastCheck);
-    this.dataService.addEquipment(requestModel).subscribe(result => {
-      console.log(result);
-    }, error => console.error(error));
+   onSubmit() {
+    switch (this.dialogData.action.toLowerCase()){
+      case 'insert':
+        console.log(this.equipmentForm.value);
+        let requestModel: Equipment = this.equipmentForm.value;
+        requestModel.model = new Date(requestModel.model);
+        requestModel.lastCheck = new Date(requestModel.lastCheck);
+        this.dataService.addEquipment(requestModel).subscribe(result => {
+          console.log(result);
+        }, error => console.error(error));
+        break;
+      case 'update':
+        let requestModelUpdate: Equipment = this.equipmentForm.value;
+        requestModelUpdate.id = this.selectedRow.id;
+        this.dataService.updateEquipment(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
+          console.log(result, this.selectedRow.id.toString());
+        }, error => console.error(error));
+        break;
+      case 'delete':
+        let requestModelDelete: Equipment = this.equipmentForm.value;
+        requestModelDelete.id = this.selectedRow.id;
+        this.dataService.deleteEquipment(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
+          console.log(result, this.selectedRow.id.toString(), "deleted");
+        }, error => console.error(error));
+        break;
+      
+    }
+      this.closeDialog();
    }
+
+   closeDialog() {
+    this.dialogRef.close('Closed');
+  }
 
   setMode() {
     switch (this.dialogData.action.toLowerCase()) {
@@ -116,7 +136,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
           ),
           operation: new FormControl({ value: '', disabled: true},
           ),
-          lastCheck: new FormControl({ value: '', disabled: false},
+          lastCheck: new FormControl({ value: '', disabled: true},
           ),
         });
         this.editMode = 'Skoða';
@@ -134,7 +154,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
           ),
           operation: new FormControl({ value: '', disabled: true},
           ),
-          lastCheck: new FormControl({ value: '', disabled: false},
+          lastCheck: new FormControl({ value: '', disabled: true},
           ),
         });
         this.editMode = 'Eyða';

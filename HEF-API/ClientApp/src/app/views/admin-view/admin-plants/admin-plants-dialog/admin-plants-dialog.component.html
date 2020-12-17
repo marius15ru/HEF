@@ -3,20 +3,18 @@
 
 <mat-dialog-content>
     <form [formGroup]="plantForm" (ngSubmit)="onSubmit()">
-        <label class="form-input">
-            Nafn
-            <input type="text" class="form-input" formControlName="name" value="selectedRow.name">
-        </label>
-        <!-- <label class="form-input">
-            Tegund veitu
-            <select formControlName="type" class="form-input" [attr.disabled]="editDisabled? true : null">
-                <option *ngFor="let item of keys()">
-                    {{item}}
-                </option>
-            </select>
-        </label> -->
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Nafn</mat-label>
+            <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
+        </mat-form-field>
 
-        <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!plantForm.valid">{{editMode}}</button>
+        <!-- <label class="form-input">
+            Nafn
+            <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name">
+        </label> -->
+  
+        <button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!plantForm.valid">{{editMode}}</button>
+        <button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
 
 </mat-dialog-content>

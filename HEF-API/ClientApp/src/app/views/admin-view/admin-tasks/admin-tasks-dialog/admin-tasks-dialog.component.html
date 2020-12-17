@@ -2,73 +2,172 @@
 <h2 *ngIf="dialogData.action.toLowerCase() != 'insert'">{{editMode}} {{dialogData.job.name}}</h2>
 <h2 *ngIf="dialogData.action.toLowerCase() == 'insert'">{{editMode}} Verk</h2>
 
-<mat-dialog-content>
-    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
-        <label class="form-input">
+<mat-dialog-content >
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()" *ngIf="dialogData.action != 'assign'">
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Stöð</mat-label>
+            <mat-select type="number" formControlName="stationId" class="form-input">
+                <mat-option [value]="null">-</mat-option>
+                <mat-option *ngFor="let item of stations" [value]="item.id">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- <label class="form-input">
             Stöð
             <select type="number" formControlName="stationId" class="form-input">
                 <option [value]="null">-</option>
                 <option *ngFor="let item of stations" [ngValue]="item.id">{{item.name}}</option>
             </select>
-        </label>
-        <label class="form-input">
+        </label> -->
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Nafn</mat-label>
+            <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
+        </mat-form-field>
+        <!-- <label class="form-input">
             Nafn
             <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
-        </label>
-        <label class="form-input">
+        </label> -->
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Lýsing</mat-label>
+            <textarea matInput type="text" class="form-input" formControlName="description" [value]="selectedRow.description"></textarea>
+        </mat-form-field>
+        <!-- <label class="form-input">
             Lýsing
             <textarea type="text" class="form-input" formControlName="description" [value]="selectedRow.description" >
                 
             </textarea>
-        </label>
-        <label class="form-input">
+        </label> -->
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Endurtekningar</mat-label>
+            <mat-select type="number" formControlName="recurring" class="form-input" value="selectedRow.recurring">
+                <mat-option *ngFor="let item of recur | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- <label class="form-input">
             Endurtekningar
             <select type="number" formControlName="recurring" class="form-input" value="selectedRow.recurring">
                 <option *ngFor="let item of recur | enumToArray" [ngValue]="item.index">
                     {{item.name}}
                 </option>
             </select>
-        </label>
-        <label class="form-input">
+        </label> -->
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Lengd verks(mín)</mat-label>
+            <input matInput type="text" class="form-input" formControlName="duration" [value]="selectedRow.duration" >
+        </mat-form-field>
+        <!-- <label class="form-input">
             Lengd verks(mín)
             <input type="text" class="form-input" formControlName="duration" [value]="selectedRow.duration" >
-        </label>
-        <label class="form-input">
+        </label> -->
+        <mat-form-field class="form-input">
+            <mat-label class="form-inut">Klára fyrir</mat-label>
+            <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
+            <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Klára fyrir
             <!-- <input type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" > -->
-            <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
+            <!-- <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
             <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
-        </label>
-        <label class="form-input">
+        </label> -->
+
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Staða</mat-label>
+            <mat-select type="number" formControlName="status" class="form-input" value="selectedRow.status">
+                <mat-option *ngFor="let item of jobStatus | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Staða
             <select type="number" formControlName="status" class="form-input" value="selectedRow.status">
                 <option *ngFor="let item of jobStatus | enumToArray" [ngValue]="item.index">
                     {{item.name}}
                 </option>
             </select>
-        </label>
-        <label class="form-input">
+        </label> -->
+
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Neyðarverk?</mat-label>
+            <mat-select formControlName="emergencyJob" class="form-input" value="selectedRow.emergencyJob">
+                <mat-option [value]="null">-</mat-option>
+                <mat-option [value]="true">Já</mat-option>
+                <mat-option [value]="false">Nei</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Neyðarverk?
             <select formControlName="emergencyJob" class="form-input" value="selectedRow.emergencyJob">
                 <option [ngValue]="null">-</option>
                 <option [ngValue]="true">Já</option>
                 <option [ngValue]="false">Nei</option>
             </select>
-        </label>
-        <label class="form-input">
+        </label> -->
+
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Athugasemdir?</mat-label>
+            <mat-select formControlName="hasComments" class="form-input" value="selectedRow.hasComments">
+                <mat-option [value]="null">-</mat-option>
+                <mat-option [value]="true">Já</mat-option>
+                <mat-option [value]="false">Nei</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Athugasemdir?
             <select formControlName="hasComments" class="form-input" value="selectedRow.hasComments">
                 <option [ngValue]="null">-</option>
                 <option [ngValue]="true">Já</option>
                 <option [ngValue]="false">Nei</option>
             </select>
-        </label>
-        <label class="form-input">
+        </label> -->
+
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Síðasta athugun</mat-label>
+            <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
+            <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
+        </mat-form-field>
+
+        <!-- <label class="form-input">
             Síðasta athugun
             <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
             <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
-        </label>
+        </label> -->
         
-        <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
+        <button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
+        <button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
+
+    <div *ngIf="dialogData.action == 'assign'">
+        <div *ngIf="unassignedUsers.length > 0">
+            <form [formGroup]="assignmentForm" (ngSubmit)="onSubmit()">
+                <mat-form-field >
+                    <mat-label>Úthluta</mat-label>
+                    <mat-select formControlName="userId">
+                        <mat-option [value]="null">-</mat-option>
+                        <mat-option *ngFor="let user of unassignedUsers" [value]="user.id">{{user.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="form-submition" type="submit" [disabled]="!assignmentForm.valid"> {{editMode}} </button>
+            </form>
+        </div>
+        <div>
+            <ejs-grid #grid  [dataSource]="assignedUsers" 
+            [allowPaging]='true' [allowSorting]='true' [allowResizing]="true" [allowPdfExport]='true' >
+                <e-columns >
+                    <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+                    <!-- <e-column field='jobId' headerText='Notandi' width="90px" ></e-column> -->
+                    <e-column field='name' headerText='Skráðir notendur'></e-column>
+                    <e-column field="operations" headerText="Aðgerðir" width="110">
+                        <ng-template #template let-jobs>
+                            <i class="fas fa-hand-holding-box" matTooltip="Útdeila"></i>
+                            <i class="fas fa-trash-alt action-icon" matTooltip="Eyða"></i>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+    </div>
+
 </mat-dialog-content>

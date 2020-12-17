@@ -44,26 +44,36 @@ export class AdminPlantsDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.plantForm.value);
-    let requestModel: Plant = this.plantForm.value;
-    this.dataService.addPlant(requestModel).subscribe(result => {
-      console.log(result);
-    }, error => console.error(error));
+    switch (this.dialogData.action.toLowerCase()){
+      case 'insert':
+        let requestModel: Plant = this.plantForm.value;
+        this.dataService.addPlant(requestModel).subscribe(result => {
+          console.log(result);
+        }, error => console.error(error));
+        break;
+      case 'update':
+        let requestModelUpdate: Plant = this.plantForm.value;
+        requestModelUpdate.id = this.selectedRow.id;
+        this.dataService.updatePlant(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
+          console.log(result, this.selectedRow.id.toString());
+        }, error => console.error(error));
+        break;
+      case 'delete':
+        let requestModelDelete: Plant = this.plantForm.value;
+        requestModelDelete.id = this.selectedRow.id;
+        this.dataService.deletePlant(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
+          console.log(result, this.selectedRow.id.toString(), "deleted");
+        }, error => console.error(error));
+        break;
+      
+    }
+      this.closeDialog();
    }
 
-  //  getJobs(): void {
-  //   this.dataService.getHeroes()
-  //   .subscribe(heroes => this.heroes = heroes);
-  // }
+   closeDialog() {
+    this.dialogRef.close('Closed');
+  }
 
-  // add(name: string): void {
-  //   name = name.trim();
-  //   if (!name) { return; }
-  //   this.dataService.addHero({ name } as Hero)
-  //     .subscribe(hero => {
-  //       this.jobs.push(hero);
-  //     });
-  // }
 
   setMode() {
     switch (this.dialogData.action.toLowerCase()) {

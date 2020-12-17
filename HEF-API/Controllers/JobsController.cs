@@ -60,7 +60,7 @@ namespace HEF_API.Controllers
             return NoContent();
         }
 
-        // GET api/users/{jobId}/users
+        // GET api/jobs/{jobId}/users
         [HttpGet("{jobId}/users")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers(int jobId)
         {

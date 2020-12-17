@@ -20,15 +20,15 @@ namespace HEF_API.Models
         public enum Role
         {
             Undefined = 0,
-            Worker = 1,
-            Admin = 2
+            Verkaðili = 1,
+            Stjórnandi = 2
         }
 
         public enum UserStatus
         {
             Undefined = 0,
-            Available = 1,
-            UnAvailable = 2
+            Tiltækur = 1,
+            Ótiltækur = 2
         }
 
         public enum JobStatus
