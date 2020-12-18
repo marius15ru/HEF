@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using HEF_API.Models;
 using HEF_API.Services;
@@ -11,32 +14,54 @@ namespace HEF_API.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private readonly IServiceWrapper _serviceWrapper;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public UserController(IServiceWrapper service)
+        public UserController(IRepositoryWrapper repositoryWrapper)
         {
-            _serviceWrapper = service;
+            _repositoryWrapper = repositoryWrapper;
         }
 
         // GET: api/users?sortby=column
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> Get([FromQuery(Name = "sortby")] string sortBy)
         {
-            return await _serviceWrapper.User.GetAllUsers(sortBy);
+            // filter: y => y.Id == 2;
+            sortBy ??= "id";
+            var result = await _repositoryWrapper.User.Get(null, x => x.OrderBy(sortBy));
+            return Ok(result);
         }
 
         // GET api/users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            return await _serviceWrapper.User.GetUserById(id);
+            var result = await _repositoryWrapper.User.GetByID(id);
+            if (result == null)
+                return NotFound("Object with given Id not found.");
+
+            return Ok(result);
         }
 
         // POST api/users
         [HttpPost]
         public async Task<ActionResult<User>> Post([FromBody] User value)
         {
-            await _serviceWrapper.User.AddUser(value);
+            if (value == null)
+                return BadRequest("Object is null");
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model object");
+
+            try
+            {
+                _repositoryWrapper.User.Insert(value);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
@@ -44,7 +69,22 @@ namespace HEF_API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] User value)
         {
-            await _serviceWrapper.User.UpdateUser(id, value);
+            if (value == null)
+                return BadRequest("Object er null");
+            if (!id.Equals(value.Id))
+                return BadRequest("Id does not match object.");
+
+            try
+            {
+                _repositoryWrapper.User.Update(value);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return NoContent();
         }
 
@@ -52,15 +92,30 @@ namespace HEF_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await _serviceWrapper.User.RemoveUser(id);
+            try
+            {
+                _repositoryWrapper.User.Delete(id);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return NoContent();
         }
-        
-        // GET api/users/{userId}/jobs
+
+        // - - Job Assignments - -
+
+        // GET api/users/5/jobs
         [HttpGet("{userId}/jobs")]
-        public async Task<ActionResult<IEnumerable<Job>>> GetJobs(int userId)
+        public async Task<ActionResult<Job>> GetUsersByJobId(int userId)
         {
-            return await _serviceWrapper.User.GetUserJobsByUserId(userId);
+            var UserJobs = await _repositoryWrapper.UserJobs.Get(x => x.UserId == userId);
+            var JobIDs = UserJobs.ToList().Select(x => x.JobId);
+            var Jobs = await _repositoryWrapper.Job.Get(x => JobIDs.Contains(x.Id));
+            return Ok(Jobs);
         }
     }
 }

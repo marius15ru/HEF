@@ -11,31 +11,19 @@ namespace HEF_Test.Services
 {
     public class PlantTests : TestDbContext
     {
-        private readonly IServiceWrapper _service;
-        private readonly RepoContext _context;
-        private readonly Faker<Plant> _plantGenerator;
-
+        private readonly Faker<Plant> Faker;
         public PlantTests()
+            : base()
         {
-            _context = dbContext;
-            _service = new ServiceWrapper(_context);
-
-            IModelGenerator _modelGen = new ModelGenerator();
-            _plantGenerator = _modelGen.GetPlantGenerator;
-
-            PopulateDB();
-        }
-
-        private void PopulateDB()
-        {
-            dbContext.AddRange(_plantGenerator.Generate(2));
+            Faker = ModelGenerator.PlantGenerator();
+            dbContext.AddRange(Faker.Generate(2));
             dbContext.SaveChanges();
         }
 
         [Fact]
         public async Task GetAllPlants()
         {
-            var result = await _service.Plant.GetAllPlants();
+            var result = await _repositoryWrapper.Plant.Get();
 
             Assert.IsType<List<Plant>>(result);
             Assert.Equal(2, result.Count());
@@ -45,7 +33,8 @@ namespace HEF_Test.Services
         public async Task GetPlantById()
         {
             var id = 1;
-            var result = await _service.Plant.GetPlantById(id);
+
+            var result = await _repositoryWrapper.Plant.GetByID(id);
 
             Assert.IsType<Plant>(result);
             Assert.Equal(id, result.Id);
@@ -54,44 +43,49 @@ namespace HEF_Test.Services
         [Fact]
         public async Task GiveValidRequest_CreatesPlant()
         {
-            var enitity = _plantGenerator.Generate();
+            var enitity = Faker.Generate(1).Single();
 
-            await _service.Plant.AddPlant(enitity);
+            _repositoryWrapper.Plant.Insert(enitity);
+            await _repositoryWrapper.Save();
+            var lastId = dbContext.Plant.OrderBy(x => x.Id).Last().Id;
 
-            var lastId = _context.Plant.OrderBy(x => x.Id).Last().Id;
-
-            Assert.Equal(3, _context.Plant.Count());
+            Assert.Equal(3, dbContext.Plant.Count());
             Assert.Equal(enitity.Id, lastId);
         }
 
         [Fact]
         public async Task GivenValidInput_UpdatesPlant()
         {
-            int id = 2;
-            var enitity = await _service.Plant.GetPlantById(id);
-            enitity.Name = "Vogur";
+            int id = 1;
+            string newStr = "<updated string>";
+            var enitity = await _repositoryWrapper.Plant.GetByID(id);
+            enitity.Name = newStr;
 
-            await _service.Plant.UpdatePlant(id, enitity);
-            var result = _context.Plant.Find(id).Name;
+            _repositoryWrapper.Plant.Update(enitity);
+            await _repositoryWrapper.Save();
+            var result = dbContext.Plant.Find(id).Name;
 
-            Assert.Equal("Vogur", result);
+            Assert.Equal(newStr, result);
         }
 
         [Fact]
         public async Task GivenValidId_DeletesPlant()
         {
-            int id = 2;
-            await _service.Plant.RemovePlant(id);
-            var after_delete = await _service.Plant.GetPlantById(id);
+            int id = 1;
+
+            _repositoryWrapper.Plant.Delete(id);
+            await _repositoryWrapper.Save();
+            var after_delete = await _repositoryWrapper.Plant.GetByID(id);
 
             Assert.Null(after_delete);
         }
 
         [Fact]
-        public async Task GivenInvalidId_ThrowsArgumentNullException()
+        public void GivenInvalidId_ThrowsArgumentNullException()
         {
             int id = -1;
-            // await Assert.ThrowsAsync<ArgumentNullException>(() => _service.Plant.RemovePlant(id));
+
+            Assert.Throws<ArgumentNullException>(() => _repositoryWrapper.Plant.Delete(id));
         }
     }
 }

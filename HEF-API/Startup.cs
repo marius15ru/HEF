@@ -51,7 +51,7 @@ namespace HEF_API
                         errorNumbersToAdd: null);
                     }));
 
-            services.AddScoped<IServiceWrapper, ServiceWrapper>();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             //services.AddMvc().AddJsonOptions(options =>
             //{

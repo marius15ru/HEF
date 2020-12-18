@@ -11,31 +11,19 @@ namespace HEF_Test.Services
 {
     public class CommentTests : TestDbContext
     {
-        private readonly IServiceWrapper _service;
-        private readonly RepoContext _context;
-        private readonly Faker<Comment> _commentGenerator;
-
+        private readonly Faker<Comment> Faker;
         public CommentTests()
+            : base()
         {
-            _context = dbContext;
-            _service = new ServiceWrapper(_context);
-
-            IModelGenerator _modelGen = new ModelGenerator();
-            _commentGenerator = _modelGen.GetCommentGenerator;
-
-            PopulateDB();
-        }
-
-        private void PopulateDB()
-        {
-            dbContext.AddRange(_commentGenerator.Generate(2));
+            Faker = ModelGenerator.CommentGenerator();
+            dbContext.AddRange(Faker.Generate(2));
             dbContext.SaveChanges();
         }
 
         [Fact]
         public async Task GetAllComments()
         {
-            var result = await _service.Comment.GetAllComments();
+            var result = await _repositoryWrapper.Comment.Get();
 
             Assert.IsType<List<Comment>>(result);
             Assert.Equal(2, result.Count());
@@ -45,7 +33,8 @@ namespace HEF_Test.Services
         public async Task GetCommentById()
         {
             var id = 1;
-            var result = await _service.Comment.GetCommentById(id);
+
+            var result = await _repositoryWrapper.Comment.GetByID(id);
 
             Assert.IsType<Comment>(result);
             Assert.Equal(id, result.Id);
@@ -54,45 +43,49 @@ namespace HEF_Test.Services
         [Fact]
         public async Task GiveValidRequest_CreatesComment()
         {
-            var enitity = _commentGenerator.Generate();
+            var enitity = Faker.Generate(1).Single();
 
-            await _service.Comment.AddComment(enitity);
+            _repositoryWrapper.Comment.Insert(enitity);
+            await _repositoryWrapper.Save();
+            var lastId = dbContext.Comment.OrderBy(x => x.Id).Last().Id;
 
-            var lastId = _context.Comment.OrderBy(x => x.Id).Last().Id;
-
-            Assert.Equal(3, _context.Comment.Count());
+            Assert.Equal(3, dbContext.Comment.Count());
             Assert.Equal(enitity.Id, lastId);
         }
 
         [Fact]
         public async Task GivenValidInput_UpdatesComment()
         {
-            int id = 2;
-            var enitity = await _service.Comment.GetCommentById(id);
-            var Text = "Ný Comment";
-            enitity.Text = Text;
+            int id = 1;
+            string newStr = "<updated string>";
+            var enitity = await _repositoryWrapper.Comment.GetByID(id);
+            enitity.Text = newStr;
 
-            await _service.Comment.UpdateComment(id, enitity);
-            var result = _context.Comment.Find(id).Text;
+            _repositoryWrapper.Comment.Update(enitity);
+            await _repositoryWrapper.Save();
+            var result = dbContext.Comment.Find(id).Text;
 
-            Assert.Equal(Text, result);
+            Assert.Equal(newStr, result);
         }
 
         [Fact]
         public async Task GivenValidId_DeletesComment()
         {
-            int id = 2;
-            await _service.Comment.RemoveComment(id);
-            var after_delete = await _service.Comment.GetCommentById(id);
+            int id = 1;
+
+            _repositoryWrapper.Comment.Delete(id);
+            await _repositoryWrapper.Save();
+            var after_delete = await _repositoryWrapper.Comment.GetByID(id);
 
             Assert.Null(after_delete);
         }
 
         [Fact]
-        public async Task GivenInvalidId_ThrowsArgumentNullException()
+        public void GivenInvalidId_ThrowsArgumentNullException()
         {
             int id = -1;
-            // await _service.Comment.RemoveComment(id);
+
+            Assert.Throws<ArgumentNullException>(() => _repositoryWrapper.Comment.Delete(id));
         }
     }
 }

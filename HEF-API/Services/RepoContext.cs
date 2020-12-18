@@ -30,14 +30,6 @@ namespace HEF_API.Services
             modelBuilder.Entity<User>()
                         .Property(e => e.Status)
                         .HasConversion<string>();
-            
-            modelBuilder.Entity<SubJob>()
-                        .Property(e => e.Status)
-                        .HasConversion<string>();
-
-            modelBuilder.Entity<SubJob>()
-                        .Property(e => e.Unit)
-                        .HasConversion<string>();
 
             modelBuilder.Entity<Job_Assignments>().HasKey(uj => new { uj.JobId, uj.UserId });
             

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Dynamic.Core;
+using System.Linq;
 using System.Threading.Tasks;
 using HEF_API.Models;
 using HEF_API.Services;
@@ -11,32 +14,54 @@ namespace HEF_API.Controllers
     [Route("api/comments")]
     public class CommentController : ControllerBase
     {
-        private readonly IServiceWrapper _service;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public CommentController(IServiceWrapper service)
+        public CommentController(IRepositoryWrapper repositoryWrapper)
         {
-            _service = service;
+            _repositoryWrapper = repositoryWrapper;
         }
 
         // GET: api/comments?sortby=column
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> Get([FromQuery(Name = "sortby")] string sortBy)
         {
-            return await _service.Comment.GetAllComments(sortBy);
+            // filter: y => y.Id == 2;
+            sortBy ??= "id";
+            var result = await _repositoryWrapper.Comment.Get(null, x => x.OrderBy(sortBy));
+            return Ok(result);
         }
 
         // GET api/comments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> Get(int id)
         {
-            return await _service.Comment.GetCommentById(id);
+            var result = await _repositoryWrapper.Comment.GetByID(id);
+            if (result == null)
+                return NotFound("Object with given Id not found.");
+
+            return Ok(result);
         }
 
         // POST api/comments
         [HttpPost]
         public async Task<ActionResult<Comment>> Post([FromBody] Comment value)
         {
-            await _service.Comment.AddComment(value);
+            if (value == null)
+                return BadRequest("Object is null");
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model object");
+
+            try
+            {
+                _repositoryWrapper.Comment.Insert(value);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
@@ -44,7 +69,22 @@ namespace HEF_API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Comment value)
         {
-            await _service.Comment.UpdateComment(id, value);
+            if (value == null)
+                return BadRequest("Object er null");
+            if (!id.Equals(value.Id))
+                return BadRequest("Id does not match object.");
+
+            try
+            {
+                _repositoryWrapper.Comment.Update(value);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return NoContent();
         }
 
@@ -52,7 +92,17 @@ namespace HEF_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await _service.Comment.RemoveComment(id);
+            try
+            {
+                _repositoryWrapper.Comment.Delete(id);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return NoContent();
         }
     }

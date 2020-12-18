@@ -12,96 +12,81 @@ namespace HEF_Test.Services
 {
     public class SubJobTests : TestDbContext
     {
-        private readonly ITestOutputHelper output;
-        private readonly IServiceWrapper _service;
-
-        private readonly IModelGenerator _modelGen;
-        private readonly Faker<SubJob> _SubJobGenerator;
-
-        public SubJobTests(ITestOutputHelper output)
+        private readonly Faker<SubJob> Faker;
+        public SubJobTests()
+            : base()
         {
-            this.output = output;
-            _service = new ServiceWrapper(dbContext);
-
-            _modelGen = new ModelGenerator();
-            _SubJobGenerator = _modelGen.GetSubJobGenerator;
-
-            PopulateDB();
-        }
-
-        private void PopulateDB()
-        {
-            dbContext.SubJob.AddRange(_SubJobGenerator.Generate(2));
+            Faker = ModelGenerator.SubJobGenerator();
+            dbContext.AddRange(Faker.Generate(2));
             dbContext.SaveChanges();
         }
 
         [Fact]
-        public async Task TestGetAllSubJob()
+        public async Task GetAllSubJobs()
         {
-            var result = await _service.SubJob.GetAllSubJobs();
+            var result = await _repositoryWrapper.SubJob.Get();
 
             Assert.IsType<List<SubJob>>(result);
             Assert.Equal(2, result.Count());
         }
 
         [Fact]
-        public async Task TestGetByIdSubJob()
+        public async Task GetSubJobById()
         {
             var id = 1;
-            var result = await _service.SubJob.GetSubJobById(id);
+
+            var result = await _repositoryWrapper.SubJob.GetByID(id);
 
             Assert.IsType<SubJob>(result);
             Assert.Equal(id, result.Id);
         }
 
         [Fact]
-        public async Task TestCreateSubJob()
+        public async Task GiveValidRequest_CreatesSubJob()
         {
-            var enitity = _SubJobGenerator.Generate();
+            var enitity = Faker.Generate(1).Single();
 
-            await _service.SubJob.AddSubJob(enitity);
-
-            var dbCount = dbContext.SubJob.Count();
+            _repositoryWrapper.SubJob.Insert(enitity);
+            await _repositoryWrapper.Save();
             var lastId = dbContext.SubJob.OrderBy(x => x.Id).Last().Id;
 
-            Assert.Equal(3, dbCount);
+            Assert.Equal(3, dbContext.SubJob.Count());
             Assert.Equal(enitity.Id, lastId);
         }
 
         [Fact]
-        public async Task TestUpdateSubJob()
+        public async Task GivenValidInput_UpdatesSubJob()
         {
-            int id = 2;
-            var name = "New Name";
-            var enitity = await _service.SubJob.GetSubJobById(id);
-            enitity.Name = name;
+            int id = 1;
+            string newStr = "<updated string>";
+            var enitity = await _repositoryWrapper.SubJob.GetByID(id);
+            enitity.Name = newStr;
 
-            await _service.SubJob.UpdateSubJob(id, enitity);
+            _repositoryWrapper.SubJob.Update(enitity);
+            await _repositoryWrapper.Save();
+            var result = dbContext.SubJob.Find(id).Name;
 
-            var result = dbContext.SubJob.Find(id);
-
-            Assert.Equal(id, result.Id);
-            Assert.Equal(name, result.Name);
-        }
-        
-        [Fact]
-        public async Task TestDeleteSubJob()
-        {
-            int id = 2;
-
-            await _service.SubJob.RemoveSubJob(id);
-
-            var subjob = dbContext.SubJob.Find(id);
-
-            Assert.Null(subjob);
+            Assert.Equal(newStr, result);
         }
 
         [Fact]
-        public async Task TestInvalidDeleteSubJob()
+        public async Task GivenValidId_DeletesSubJob()
+        {
+            int id = 1;
+
+            _repositoryWrapper.SubJob.Delete(id);
+            await _repositoryWrapper.Save();
+            var after_delete = await _repositoryWrapper.SubJob.GetByID(id);
+
+            Assert.Null(after_delete);
+        }
+
+        [Fact]
+        public void GivenInvalidId_ThrowsArgumentNullException()
         {
             int id = -1;
 
-            // await Assert.ThrowsAsync<ArgumentNullException>(() => _service.SubJob.RemoveSubJob(id));
+            Assert.Throws<ArgumentNullException>(() => _repositoryWrapper.SubJob.Delete(id));
         }
     }
 }

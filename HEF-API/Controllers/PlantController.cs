@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using HEF_API.Models;
 using HEF_API.Services;
@@ -11,32 +13,54 @@ namespace HEF_API.Controllers
     [Route("api/plants")]
     public class PlantController : ControllerBase
     {
-        private readonly IServiceWrapper _service;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public PlantController(IServiceWrapper service)
+        public PlantController(IRepositoryWrapper repositoryWrapper)
         {
-            _service = service;
+            _repositoryWrapper = repositoryWrapper;
         }
 
         // GET: api/plants?sortby=column
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Plant>>> Get([FromQuery(Name = "sortby")] string sortBy)
         {
-            return await _service.Plant.GetAllPlants(sortBy);
+            // filter: y => y.Id == 2;
+            sortBy ??= "id";
+            var result = await _repositoryWrapper.Plant.Get(null, x => x.OrderBy(sortBy));
+            return Ok(result);
         }
 
         // GET api/plants/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Plant>> Get(int id)
         {
-            return await _service.Plant.GetPlantById(id);
+            var result = await _repositoryWrapper.Plant.GetByID(id);
+            if (result == null)
+                return NotFound("Object with given Id not found.");
+
+            return Ok(result);
         }
 
         // POST api/plants
         [HttpPost]
         public async Task<ActionResult<Plant>> Post([FromBody] Plant value)
         {
-            await _service.Plant.AddPlant(value);
+            if (value == null)
+                return BadRequest("Object is null");
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model object");
+
+            try
+            {
+                _repositoryWrapper.Plant.Insert(value);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
@@ -44,7 +68,22 @@ namespace HEF_API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Plant value)
         {
-            await _service.Plant.UpdatePlant(id, value);
+            if (value == null)
+                return BadRequest("Object er null");
+            if (!id.Equals(value.Id))
+                return BadRequest("Id does not match object.");
+
+            try
+            {
+                _repositoryWrapper.Plant.Update(value);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return NoContent();
         }
 
@@ -52,7 +91,17 @@ namespace HEF_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await _service.Plant.RemovePlant(id);
+            try
+            {
+                _repositoryWrapper.Plant.Delete(id);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return NoContent();
         }
     }

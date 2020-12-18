@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using HEF_API.Models;
 using HEF_API.Services;
@@ -15,32 +16,54 @@ namespace HEF_API.Controllers
     [Route("api/jobs")]
     public class JobController : ControllerBase
     {
-        private readonly IServiceWrapper _service;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public JobController(IServiceWrapper service)
+        public JobController(IRepositoryWrapper repositoryWrapper)
         {
-            _service = service;
+            _repositoryWrapper = repositoryWrapper;
         }
 
         // GET: api/jobs?sortby=column
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Job>>> Get([FromQuery(Name = "sortby")] string sortBy)
         {
-            return await _service.Job.GetAllJobs(sortBy);
+            // filter: y => y.Id == 2;
+            sortBy ??= "id";
+            var result = await _repositoryWrapper.Job.Get(null, x => x.OrderBy(sortBy));
+            return Ok(result);
         }
 
         // GET api/jobs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Job>> Get(int id)
         {
-            return await _service.Job.GetJobById(id);
+            var result = await _repositoryWrapper.Job.GetByID(id);
+            if (result == null)
+                return NotFound("Object with given Id not found.");
+
+            return Ok(result);
         }
 
         // POST api/jobs
         [HttpPost]
         public async Task<ActionResult<Job>> Post([FromBody] Job value)
         {
-            await _service.Job.AddJob(value);
+            if (value == null)
+                return BadRequest("Object is null");
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model object");
+
+            try
+            {
+                _repositoryWrapper.Job.Insert(value);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
@@ -48,7 +71,22 @@ namespace HEF_API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Job value)
         {
-            await _service.Job.UpdateJob(id, value);
+            if (value == null)
+                return BadRequest("Object er null");
+            if (!id.Equals(value.Id))
+                return BadRequest("Id does not match object.");
+
+            try
+            {
+                _repositoryWrapper.Job.Update(value);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return NoContent();
         }
 
@@ -56,30 +94,71 @@ namespace HEF_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await _service.Job.RemoveJob(id);
+            try
+            {
+                _repositoryWrapper.Job.Delete(id);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
             return NoContent();
         }
 
-        // GET api/jobs/{jobId}/users
+        // - - Job Assignments - -
+
+        // GET api/jobs/5/users
         [HttpGet("{jobId}/users")]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers(int jobId)
+        public async Task<ActionResult<User>> GetUsersByJobId(int jobId)
         {
-            return await _service.Job.GetJobUsersByJobId(jobId);
+            var UserJobs = await _repositoryWrapper.UserJobs.Get(x => x.JobId == jobId);
+            var UserIDs = UserJobs.ToList().Select(x => x.UserId);
+            var Users = await _repositoryWrapper.User.Get(x => UserIDs.Contains(x.Id));
+            return Ok(Users);
         }
 
-        // POST api/users/{userId}/jobs
-        [HttpPost("{userId}/jobs")]
-        public async Task<ActionResult> PostUser([FromBody] Job_Assignments value)
+        // POST api/jobs/5/users
+        [HttpPost("{jobId}/users")]
+        public async Task<ActionResult<Job_Assignments>> AddJobUser(int jobId, [FromBody] User values)
         {
-            await _service.Job.AddJobUser(value);
-            return NoContent();
+            if (values == null)
+                return BadRequest("Object is null");
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model object");
+
+            try
+            {
+                Job_Assignments jobUser = new Job_Assignments
+                {
+                    UserId = values.Id,
+                    JobId = jobId
+                };
+                _repositoryWrapper.UserJobs.Insert(jobUser);
+                await _repositoryWrapper.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error number: " + ex.HResult);
+                Console.WriteLine("Error info: " + ex.Message);
+            }
+
+            return CreatedAtAction("Get", values);
         }
 
-        // DELETE api/users/{userId}/jobs
-        [HttpPost("{userId}/jobs")]
-        public async Task<ActionResult> DeleteJob(int userId, [FromBody] Job_Assignments value)
+        // DELETE api/jobs/5/users/1
+        [HttpDelete("{jobId}/users/{userId}")]
+        public async Task<ActionResult> RemoveJobUser(int jobId, int userId)
         {
-            await _service.Job.RemoveJobUser(userId, value.JobId);
+            var UserJob = new Job_Assignments
+            {
+                JobId = jobId,
+                UserId = userId
+            };
+            _repositoryWrapper.UserJobs.Delete(UserJob);
+            await _repositoryWrapper.Save();
             return NoContent();
         }
     }

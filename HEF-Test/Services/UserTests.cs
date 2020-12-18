@@ -11,31 +11,19 @@ namespace HEF_Test.Services
 {
     public class UserTests: TestDbContext
     {
-        private readonly IServiceWrapper _service;
-        private readonly RepoContext _context;
-        private readonly Faker<User> _userGenerator;
-
+        private readonly Faker<User> Faker;
         public UserTests()
+            : base()
         {
-            _context = dbContext;
-            _service = new ServiceWrapper(_context);
-
-            IModelGenerator _modelGen = new ModelGenerator();
-            _userGenerator = _modelGen.GetUserGenerator;
-
-            PopulateDB();
-        }
-
-        private void PopulateDB()
-        {
-            dbContext.AddRange( _userGenerator.Generate(2) );
+            Faker = ModelGenerator.UserGenerator();
+            dbContext.AddRange(Faker.Generate(2));
             dbContext.SaveChanges();
         }
 
         [Fact]
         public async Task GetAllUsers()
         {
-            var result = await _service.User.GetAllUsers();
+            var result = await _repositoryWrapper.User.Get();
 
             Assert.IsType<List<User>>(result);
             Assert.Equal(2, result.Count());
@@ -45,7 +33,8 @@ namespace HEF_Test.Services
         public async Task GetUserById()
         {
             var id = 1;
-            var result = await _service.User.GetUserById(id);
+
+            var result = await _repositoryWrapper.User.GetByID(id);
 
             Assert.IsType<User>(result);
             Assert.Equal(id, result.Id);
@@ -54,44 +43,49 @@ namespace HEF_Test.Services
         [Fact]
         public async Task GiveValidRequest_CreatesUser()
         {
-            var enitity = _userGenerator.Generate();
+            var enitity = Faker.Generate(1).Single();
 
-            await _service.User.AddUser(enitity);
+            _repositoryWrapper.User.Insert(enitity);
+            await _repositoryWrapper.Save();
+            var lastId = dbContext.User.OrderBy(x => x.Id).Last().Id;
 
-            var lastId = _context.User.OrderBy(x => x.Id).Last().Id;
-
-            Assert.Equal(3, _context.User.Count());
+            Assert.Equal(3, dbContext.User.Count());
             Assert.Equal(enitity.Id, lastId);
         }
 
         [Fact]
         public async Task GivenValidInput_UpdatesUser()
         {
-            int id = 2;
-            var entity = await _service.User.GetUserById(id);
-            entity.Name = "Vogur";
+            int id = 1;
+            string newStr = "<updated string>";
+            var enitity = await _repositoryWrapper.User.GetByID(id);
+            enitity.Name = newStr;
 
-            await _service.User.UpdateUser(id, entity);
-            var result = _context.User.Find(id).Name;
+            _repositoryWrapper.User.Update(enitity);
+            await _repositoryWrapper.Save();
+            var result = dbContext.User.Find(id).Name;
 
-            Assert.Equal(entity.Name, result);
+            Assert.Equal(newStr, result);
         }
 
         [Fact]
         public async Task GivenValidId_DeletesUser()
         {
-            int id = 2;
-            await _service.User.RemoveUser(id);
-            var after_delete = await _service.User.GetUserById(id);
+            int id = 1;
+
+            _repositoryWrapper.User.Delete(id);
+            await _repositoryWrapper.Save();
+            var after_delete = await _repositoryWrapper.User.GetByID(id);
 
             Assert.Null(after_delete);
         }
 
         [Fact]
-        public async Task GivenInvalidId_ThrowsArgumentNullException()
+        public void GivenInvalidId_ThrowsArgumentNullException()
         {
             int id = -1;
-            //await Assert.ThrowsAsync<ArgumentNullException>(() => _service.User.RemoveUser(id));
+
+            Assert.Throws<ArgumentNullException>(() => _repositoryWrapper.User.Delete(id));
         }
     }
 }

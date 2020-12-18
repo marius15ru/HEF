@@ -11,31 +11,19 @@ namespace HEF_Test.Services
 {
     public class JobTests : TestDbContext
     {
-        private readonly IServiceWrapper _service;
-        private readonly RepoContext _context;
-        private readonly Faker<Job> _jobGenerator;
-
+        private readonly Faker<Job> Faker;
         public JobTests()
+            : base()
         {
-            _context = dbContext;
-            _service = new ServiceWrapper(_context);
-
-            IModelGenerator _modelGen = new ModelGenerator();
-            _jobGenerator = _modelGen.GetJobGenerator;
-
-            PopulateDB();
-        }
-
-        private void PopulateDB()
-        {
-            dbContext.AddRange(_jobGenerator.Generate(2));
+            Faker = ModelGenerator.JobGenerator();
+            dbContext.AddRange(Faker.Generate(2));
             dbContext.SaveChanges();
         }
 
         [Fact]
         public async Task GetAllJobs()
         {
-            var result = await _service.Job.GetAllJobs();
+            var result = await _repositoryWrapper.Job.Get();
 
             Assert.IsType<List<Job>>(result);
             Assert.Equal(2, result.Count());
@@ -45,7 +33,8 @@ namespace HEF_Test.Services
         public async Task GetJobById()
         {
             var id = 1;
-            var result = await _service.Job.GetJobById(id);
+
+            var result = await _repositoryWrapper.Job.GetByID(id);
 
             Assert.IsType<Job>(result);
             Assert.Equal(id, result.Id);
@@ -54,44 +43,49 @@ namespace HEF_Test.Services
         [Fact]
         public async Task GiveValidRequest_CreatesJob()
         {
-            var enitity = _jobGenerator.Generate();
+            var enitity = Faker.Generate(1).Single();
 
-            await _service.Job.AddJob(enitity);
+            _repositoryWrapper.Job.Insert(enitity);
+            await _repositoryWrapper.Save();
+            var lastId = dbContext.Job.OrderBy(x => x.Id).Last().Id;
 
-            var lastId = _context.Job.OrderBy(x => x.Id).Last().Id;
-
-            Assert.Equal(3, _context.Job.Count());
+            Assert.Equal(3, dbContext.Job.Count());
             Assert.Equal(enitity.Id, lastId);
         }
 
         [Fact]
         public async Task GivenValidInput_UpdatesJob()
         {
-            int id = 2;
-            var enitity = await _service.Job.GetJobById(id);
-            enitity.Name = "Vogur";
+            int id = 1;
+            string newStr = "<updated string>";
+            var enitity = await _repositoryWrapper.Job.GetByID(id);
+            enitity.Name = newStr;
 
-            await _service.Job.UpdateJob(id, enitity);
-            var result = _context.Job.Find(id).Name;
+            _repositoryWrapper.Job.Update(enitity);
+            await _repositoryWrapper.Save();
+            var result = dbContext.Job.Find(id).Name;
 
-            Assert.Equal(enitity.Name, result);
+            Assert.Equal(newStr, result);
         }
 
         [Fact]
         public async Task GivenValidId_DeletesJob()
         {
-            int id = 2;
-            await _service.Job.RemoveJob(id);
-            var after_delete = await _service.Job.GetJobById(id);
+            int id = 1;
+
+            _repositoryWrapper.Job.Delete(id);
+            await _repositoryWrapper.Save();
+            var after_delete = await _repositoryWrapper.Job.GetByID(id);
 
             Assert.Null(after_delete);
         }
 
         [Fact]
-        public async Task GivenInvalidId_ThrowsArgumentNullException()
+        public void GivenInvalidId_ThrowsArgumentNullException()
         {
             int id = -1;
-            // await Assert.ThrowsAsync<ArgumentNullException>(() => _service.Job.RemoveJob(id));
+
+            Assert.Throws<ArgumentNullException>(() => _repositoryWrapper.Job.Delete(id));
         }
     }
 }

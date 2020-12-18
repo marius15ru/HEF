@@ -11,31 +11,19 @@ namespace HEF_Test.Services
 {
     public class EquipmentTests : TestDbContext
     {
-        private readonly IServiceWrapper _service;
-        private readonly RepoContext _context;
-        private readonly Faker<Equipment> _equipmentGenerator;
-
+        private readonly Faker<Equipment> Faker;
         public EquipmentTests()
+            : base()
         {
-            _context = dbContext;
-            _service = new ServiceWrapper(_context);
-
-            IModelGenerator _modelGen = new ModelGenerator();
-            _equipmentGenerator = _modelGen.GetEquipmentGenerator;
-
-            PopulateDB();
-        }
-
-        private void PopulateDB()
-        {
-            dbContext.AddRange(_equipmentGenerator.Generate(2));
+            Faker = ModelGenerator.EquipmentGenerator();
+            dbContext.AddRange(Faker.Generate(2));
             dbContext.SaveChanges();
         }
 
         [Fact]
         public async Task GetAllEquipments()
         {
-            var result = await _service.Equipment.GetAllEquipments();
+            var result = await _repositoryWrapper.Equipment.Get();
 
             Assert.IsType<List<Equipment>>(result);
             Assert.Equal(2, result.Count());
@@ -45,7 +33,8 @@ namespace HEF_Test.Services
         public async Task GetEquipmentById()
         {
             var id = 1;
-            var result = await _service.Equipment.GetEquipmentById(id);
+
+            var result = await _repositoryWrapper.Equipment.GetByID(id);
 
             Assert.IsType<Equipment>(result);
             Assert.Equal(id, result.Id);
@@ -54,44 +43,49 @@ namespace HEF_Test.Services
         [Fact]
         public async Task GiveValidRequest_CreatesEquipment()
         {
-            var enitity = _equipmentGenerator.Generate();
+            var enitity = Faker.Generate(1).Single();
 
-            await _service.Equipment.AddEquipment(enitity);
+            _repositoryWrapper.Equipment.Insert(enitity);
+            await _repositoryWrapper.Save();
+            var lastId = dbContext.Equipment.OrderBy(x => x.Id).Last().Id;
 
-            var lastId = _context.Equipment.OrderBy(x => x.Id).Last().Id;
-
-            Assert.Equal(3, _context.Equipment.Count());
+            Assert.Equal(3, dbContext.Equipment.Count());
             Assert.Equal(enitity.Id, lastId);
         }
 
         [Fact]
         public async Task GivenValidInput_UpdatesEquipment()
         {
-            int id = 2;
-            var enitity = await _service.Equipment.GetEquipmentById(id);
-            enitity.Name = "Vogur";
+            int id = 1;
+            string newStr = "<updated string>";
+            var enitity = await _repositoryWrapper.Equipment.GetByID(id);
+            enitity.Name = newStr;
 
-            await _service.Equipment.UpdateEquipment(id, enitity);
-            var result = _context.Equipment.Find(id).Name;
+            _repositoryWrapper.Equipment.Update(enitity);
+            await _repositoryWrapper.Save();
+            var result = dbContext.Equipment.Find(id).Name;
 
-            Assert.Equal(enitity.Name, result);
+            Assert.Equal(newStr, result);
         }
 
         [Fact]
         public async Task GivenValidId_DeletesEquipment()
         {
-            int id = 2;
-            await _service.Equipment.RemoveEquipment(id);
-            var after_delete = await _service.Equipment.GetEquipmentById(id);
+            int id = 1;
+
+            _repositoryWrapper.Equipment.Delete(id);
+            await _repositoryWrapper.Save();
+            var after_delete = await _repositoryWrapper.Equipment.GetByID(id);
 
             Assert.Null(after_delete);
         }
 
         [Fact]
-        public async Task GivenInvalidId_ThrowsArgumentNullException()
+        public void GivenInvalidId_ThrowsArgumentNullException()
         {
             int id = -1;
-            //await Assert.ThrowsAsync<ArgumentNullException>(() => _service.Equipment.RemoveEquipment(id));
+
+            Assert.Throws<ArgumentNullException>(() => _repositoryWrapper.Equipment.Delete(id));
         }
     }
 }

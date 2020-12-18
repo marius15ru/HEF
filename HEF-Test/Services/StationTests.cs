@@ -11,31 +11,19 @@ namespace HEF_Test.Services
 {
     public class StationTests: TestDbContext
     {
-        private readonly IServiceWrapper _service;
-        private readonly RepoContext _context;
-        private readonly Faker<Station> _stationGenerator;
-
+        private readonly Faker<Station> Faker;
         public StationTests()
+            : base()
         {
-            _context = dbContext;
-            _service = new ServiceWrapper(_context);
-
-            IModelGenerator _modelGen = new ModelGenerator();
-            _stationGenerator = _modelGen.GetStationGenerator;
-
-            PopulateDB();
-        }
-
-        private void PopulateDB()
-        {
-            dbContext.AddRange( _stationGenerator.Generate(2) );
+            Faker = ModelGenerator.StationGenerator();
+            dbContext.AddRange(Faker.Generate(2));
             dbContext.SaveChanges();
         }
 
         [Fact]
         public async Task GetAllStations()
         {
-            var result = await _service.Station.GetAllStations();
+            var result = await _repositoryWrapper.Station.Get();
 
             Assert.IsType<List<Station>>(result);
             Assert.Equal(2, result.Count());
@@ -45,7 +33,8 @@ namespace HEF_Test.Services
         public async Task GetStationById()
         {
             var id = 1;
-            var result = await _service.Station.GetStationById(id);
+
+            var result = await _repositoryWrapper.Station.GetByID(id);
 
             Assert.IsType<Station>(result);
             Assert.Equal(id, result.Id);
@@ -54,44 +43,49 @@ namespace HEF_Test.Services
         [Fact]
         public async Task GiveValidRequest_CreatesStation()
         {
-            var enitity = _stationGenerator.Generate();
+            var enitity = Faker.Generate(1).Single();
 
-            await _service.Station.AddStation(enitity);
+            _repositoryWrapper.Station.Insert(enitity);
+            await _repositoryWrapper.Save();
+            var lastId = dbContext.Station.OrderBy(x => x.Id).Last().Id;
 
-            var lastId = _context.Station.OrderBy(x => x.Id).Last().Id;
-
-            Assert.Equal(3, _context.Station.Count());
+            Assert.Equal(3, dbContext.Station.Count());
             Assert.Equal(enitity.Id, lastId);
         }
 
         [Fact]
         public async Task GivenValidInput_UpdatesStation()
         {
-            int id = 2;
-            var enitity = await _service.Station.GetStationById(id);
-            enitity.Name = "Vogur";
+            int id = 1;
+            string newStr = "<updated string>";
+            var enitity = await _repositoryWrapper.Station.GetByID(id);
+            enitity.Name = newStr;
 
-            await _service.Station.UpdateStation(id, enitity);
-            var result = _context.Station.Find(id).Name;
+            _repositoryWrapper.Station.Update(enitity);
+            await _repositoryWrapper.Save();
+            var result = dbContext.Station.Find(id).Name;
 
-            Assert.Equal("Vogur", result);
+            Assert.Equal(newStr, result);
         }
 
         [Fact]
         public async Task GivenValidId_DeletesStation()
         {
-            int id = 2;
-            await _service.Station.RemoveStation(id);
-            var after_delete = await _service.Station.GetStationById(id);
+            int id = 1;
+
+            _repositoryWrapper.Station.Delete(id);
+            await _repositoryWrapper.Save();
+            var after_delete = await _repositoryWrapper.Station.GetByID(id);
 
             Assert.Null(after_delete);
         }
 
         [Fact]
-        public async Task GivenInvalidId_ThrowsArgumentNullException()
+        public void GivenInvalidId_ThrowsArgumentNullException()
         {
             int id = -1;
-            // await Assert.ThrowsAsync<ArgumentNullException>(() => _service.Station.RemoveStation(id));
+
+            Assert.Throws<ArgumentNullException>(() => _repositoryWrapper.Station.Delete(id));
         }
     }
 }
