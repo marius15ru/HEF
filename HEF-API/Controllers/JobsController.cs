@@ -120,22 +120,18 @@ namespace HEF_API.Controllers
             return Ok(Users);
         }
 
-        // POST api/jobs/5/users
-        [HttpPost("{jobId}/users")]
-        public async Task<ActionResult<Job_Assignments>> AddJobUser(int jobId, [FromBody] User values)
+        // POST api/jobs/5/users/1
+        [HttpPost("{jobId}/users/{userId}")]
+        public async Task<ActionResult<Job_Assignments>> AddJobUser(int jobId, int userId)
         {
-            if (values == null)
-                return BadRequest("Object is null");
-            if (!ModelState.IsValid)
-                return BadRequest("Invalid model object");
 
-            try
-            {
-                Job_Assignments jobUser = new Job_Assignments
+            Job_Assignments jobUser = new Job_Assignments
                 {
-                    UserId = values.Id,
+                    UserId = userId,
                     JobId = jobId
                 };
+            try
+            {
                 _repositoryWrapper.UserJobs.Insert(jobUser);
                 await _repositoryWrapper.Save();
             }
@@ -145,7 +141,7 @@ namespace HEF_API.Controllers
                 Console.WriteLine("Error info: " + ex.Message);
             }
 
-            return CreatedAtAction("Get", values);
+            return CreatedAtAction("Get", jobUser);
         }
 
         // DELETE api/jobs/5/users/1

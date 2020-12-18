@@ -140,18 +140,36 @@ export class AdminTasksDialogComponent implements OnInit {
           console.log(result, this.selectedRow.id.toString(), "deleted");
         }, error => console.error(error));
         break;
-      case 'assign':
-        console.log("assign");
-        let requestModelAssign: JobAssignments = this.assignmentForm.value;
-        requestModelAssign.jobId = this.selectedRow.id;
-        let userId: string = requestModelAssign.userId.toString() + '/';
-        console.log(requestModelAssign);
-        this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
-          console.log(result, this.selectedRow.id.toString(), "assigned");
-        }, error => console.error(error));
-        break;
+        
     }
       this.closeDialog();
+   }
+
+   onSubmitAssignment(assignOption: string, index: User){
+     console.log("assign");
+     switch(assignOption){
+       case 'insert':
+         console.log('assignedInsert')
+         let requestModelAssign: JobAssignments = this.assignmentForm.value;
+         requestModelAssign.jobId = this.selectedRow.id;
+         let userId: string = requestModelAssign.userId.toString() + '/';
+         console.log(requestModelAssign);
+         this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
+           console.log(result, this.selectedRow.id.toString(), "assigned insert");
+         }, error => console.error(error));
+         break;
+      case 'delete':
+        console.log('assignedDelete');
+        let requestModelAssignDelete = new JobAssignments;
+        requestModelAssignDelete.jobId = this.selectedRow.id;
+        requestModelAssignDelete.userId = index.id
+
+        this.dataService.deleteJobAssignment(requestModelAssignDelete).subscribe(result => {
+          console.log(result, "assigned delete");
+        }, error => console.error(error));
+        break;
+     }
+     this.closeDialog();
    }
 
    closeDialog() {

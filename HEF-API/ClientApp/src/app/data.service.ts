@@ -146,9 +146,20 @@ export class DataService {
   }
 
   addJobAssignment(jobAssignment: JobAssignments, userId: string){
-    let url = this.usersUrl + userId + 'jobs/';
+    let url = this.jobsUrl + jobAssignment.jobId.toString() + '/users/' + userId;
     console.log(url);
+    console.log(jobAssignment, "From dataService");
     return this.http.post<JobAssignments>(url, jobAssignment, this.httpOptions);
+  }
+
+  deleteJobAssignment(jobAssignment: JobAssignments){
+    let jobId = jobAssignment.jobId.toString();
+    let userId = jobAssignment.userId.toString();
+    let url = this.jobsUrl + jobId + '/users/' + userId;
+    return this.http.delete(url, this.httpOptions)
+    .pipe(
+      catchError(this.handleError('deleteJobAssignment'))
+    );
   }
 
 
