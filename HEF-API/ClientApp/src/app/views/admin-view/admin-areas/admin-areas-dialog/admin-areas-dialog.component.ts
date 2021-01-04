@@ -44,10 +44,10 @@ export class AdminAreasDialogComponent implements OnInit {
 
   onSubmit() {
     console.log(this.areaForm.value);
-    let requestModel: Area = this.areaForm.value;
+    const requestModel: Area = this.areaForm.value;
     this.dataService.addArea(requestModel).subscribe(result => {
       console.log(result);
-    this.openSnackBar(requestModel.name + " bætt við", "Loka");
+    this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
     }, error => console.error(error));
    }
 

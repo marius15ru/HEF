@@ -100,11 +100,11 @@ import { ObtainTaskDialogComponent } from './views/user-view/obtain-task/obtain-
     MatCardModule,
     MatExpansionModule
   ],
-  providers: 
-  [EnumToArrayPipe, 
-    SortService, 
-    ResizeService, 
-    PdfExportService, 
+  providers:
+  [EnumToArrayPipe,
+    SortService,
+    ResizeService,
+    PdfExportService,
     ToolbarService,
     PageService],
   bootstrap: [AppComponent],

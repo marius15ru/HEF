@@ -52,33 +52,32 @@ export class AdminPlantsDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    switch (this.dialogData.action.toLowerCase()){
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
-        let requestModel: Plant = this.plantForm.value;
+        const requestModel: Plant = this.plantForm.value;
         this.dataService.addPlant(requestModel).subscribe(result => {
           console.log(result);
-          this.openSnackBar(requestModel.name + " bætt við", "Loka");
+          this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
         }, error => console.error(error));
         break;
       case 'update':
-        let requestModelUpdate: Plant = this.plantForm.value;
+        const requestModelUpdate: Plant = this.plantForm.value;
         requestModelUpdate.id = this.selectedRow.id;
         requestModelUpdate.name = this.selectedRow.name;
         this.dataService.updatePlant(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
           console.log(result, this.selectedRow.id.toString());
-        this.openSnackBar(requestModelUpdate.name + " uppfærð", "Loka");
+        this.openSnackBar(requestModelUpdate.name + ' uppfærð', 'Loka');
         }, error => console.error(error));
         break;
       case 'delete':
-        let requestModelDelete: Plant = this.plantForm.value;
+        const requestModelDelete: Plant = this.plantForm.value;
         requestModelDelete.id = this.selectedRow.id;
         requestModelDelete.name = this.selectedRow.name;
         this.dataService.deletePlant(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
-          console.log(result, this.selectedRow.id.toString(), "deleted");
-        this.openSnackBar(requestModelDelete.name + " eytt", "Loka");
+          console.log(result, this.selectedRow.id.toString(), 'deleted');
+        this.openSnackBar(requestModelDelete.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
-      
     }
       this.closeDialog();
    }

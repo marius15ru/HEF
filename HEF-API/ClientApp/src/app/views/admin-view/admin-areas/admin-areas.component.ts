@@ -22,7 +22,7 @@ export class AdminAreasComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
   }
 
-  getData(){
+  getData() {
     this.http.get<Area[]>('api/areas').subscribe(result => {
       console.log(result);
       this.areas = result;

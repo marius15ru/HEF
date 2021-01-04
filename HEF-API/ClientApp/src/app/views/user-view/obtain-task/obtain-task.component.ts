@@ -25,7 +25,7 @@ export class ObtainTaskComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
   }
 
-  getData(){
+  getData() {
     this.http.get<Job[]>('api/jobs').subscribe(result => {
       console.log(result);
       this.jobs = result;
@@ -42,17 +42,15 @@ export class ObtainTaskComponent implements OnInit {
   }
 
   boolFormatter(field: string, data: Object, column: Object) {
-    if(data[field] == true){
+    if (data[field] === true) {
       return 'Já';
-    }else{
+    } else {
       return 'Nei';
     }
   }
 
   openDialog(jobs: Job, action: string) {
-    
     const refUser = this.dialogItem.open(ObtainTaskDialogComponent, {
-      
       data: {
         action: action,
         job: jobs

@@ -24,12 +24,12 @@ export enum UserStatus {
 }
 
 export enum JobStatus {
-    "Undefined" = 0,
-    "Óúthlutað" = 1,
-    "Úthlutað" = 2,
-    "Í vinnslu" = 3,
-    "Í bið" = 4,
-    "Lokið" = 5,
+    'Undefined' = 0,
+    'Óúthlutað' = 1,
+    'Úthlutað' = 2,
+    'Í vinnslu' = 3,
+    'Í bið' = 4,
+    'Lokið' = 5,
 }
 
 export enum MeasurementType {
@@ -51,18 +51,18 @@ export enum PlantType {
 }
 
 export enum Recurring {
-    "Undefined" = 0,
-    "Vikulega" = 1,
-    "Tveggja vikna fresti" = 2,
-    "Mánaðarlega" = 3,
-    "Tveggja mánaða fresti" = 4,
-    "Þriggja mánaða fresti" = 5,
-    "Hálfs árs fresti" = 6,
-    "Árlega" = 7,
-    "Tveggja ára fresti" = 8,
-    "Þriggja ára fresti" = 9,
-    "Fimm ára fresti" = 10,
-    "Tíu ára fresti" = 11
+    'Undefined' = 0,
+    'Vikulega' = 1,
+    'Tveggja vikna fresti' = 2,
+    'Mánaðarlega' = 3,
+    'Tveggja mánaða fresti' = 4,
+    'Þriggja mánaða fresti' = 5,
+    'Hálfs árs fresti' = 6,
+    'Árlega' = 7,
+    'Tveggja ára fresti' = 8,
+    'Þriggja ára fresti' = 9,
+    'Fimm ára fresti' = 10,
+    'Tíu ára fresti' = 11
 }
 
 export namespace Recurring {

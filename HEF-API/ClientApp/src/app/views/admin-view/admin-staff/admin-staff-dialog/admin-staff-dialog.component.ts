@@ -31,14 +31,14 @@ export class AdminStaffDialogComponent implements OnInit {
     if (this.dialogData.action.toLowerCase() === 'insert') {
       this.selectedRow = new User();
       this.selectedRow.name = '';
-      this.selectedRow.role = null,
-      this.selectedRow.status = null
+      this.selectedRow.role = null;
+      this.selectedRow.status = null;
     }
    }
 
   onSubmit() {
     console.log(this.staffForm.value);
-    let requestModel: User = this.staffForm.value;
+    const requestModel: User = this.staffForm.value;
     this.dataService.addUser(requestModel).subscribe(result => {
       console.log(result);
     }, error => console.error(error));

@@ -21,7 +21,7 @@ export class UserTasksComponent implements OnInit {
   jobsFinished: Job[] = [];
   stations: Station[] = [];
   comments: Comment[] = [];
-  
+
   public customAttributes: Object;
 
   constructor(private http: HttpClient, private dataService: DataService, public dialogItem: MatDialog) { }
@@ -40,15 +40,14 @@ export class UserTasksComponent implements OnInit {
   }
 
   boolFormatter(field: string, data: Object, column: Object) {
-    if(data[field] == true){
+    if (data[field] === true) {
       return 'Já';
-    }else{
+    } else {
       return 'Nei';
     }
   }
-  
 
-  getData(){
+  getData() {
     this.http.get<Job[]>('api/users/1/jobs').subscribe(result => {
       console.log(result);
       this.userJobs = result;
@@ -70,9 +69,7 @@ export class UserTasksComponent implements OnInit {
   }
 
   openDialog(jobs: Job, action: string) {
-    
     const refUser = this.dialogItem.open(UserTaskDialogComponent, {
-      
       data: {
         action: action,
         job: jobs,

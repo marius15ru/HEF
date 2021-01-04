@@ -16,14 +16,12 @@ export class DataService {
   private areasUrl = '/api/areas/';
   private usersUrl = '/api/users/';
   private commentsUrl = '/api/comments/';
-  
-  
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor( private http: HttpClient,  private messageService: MessageService, 
+  constructor( private http: HttpClient,  private messageService: MessageService,
     @Inject('BASE_URL') baseUrl: string
     ) { }
 
@@ -35,142 +33,142 @@ export class DataService {
       );
   }
 
-  addJob(job: Job){
-    console.log("DataService - AddJob", job);
+  addJob(job: Job) {
+    console.log('DataService - AddJob', job);
     console.log(this.jobsUrl);
     return this.http.post<Job>(this.jobsUrl, job, this.httpOptions);
   }
 
   updateJob(job: Job, jobId: string): Observable<Job> {
-    let url = this.jobsUrl + jobId + "/";
+    const url = this.jobsUrl + jobId + '/';
     return this.http.put<Job>(url, job, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateJob', job))
       );
   }
 
-  deleteJob(job: Job, jobId:string): Observable<{}>{
-      let url = this.jobsUrl + jobId + "/";   
+  deleteJob(job: Job, jobId: string): Observable<{}> {
+      const url = this.jobsUrl + jobId + '/';
       return this.http.delete(url, this.httpOptions)
         .pipe(
           catchError(this.handleError('deleteJob'))
         );
   }
 
-  addPlant(plant: Plant){
-    console.log("DataService - AddPlant", plant);
+  addPlant(plant: Plant) {
+    console.log('DataService - AddPlant', plant);
     console.log(this.plantsUrl);
     return this.http.post<Plant>(this.plantsUrl, plant, this.httpOptions);
   }
 
   updatePlant(plant: Plant, plantId: string): Observable<Plant> {
-    let url = this.plantsUrl + plantId + "/";
+    const url = this.plantsUrl + plantId + '/';
     return this.http.put<Plant>(url, plant, this.httpOptions)
       .pipe(
         catchError(this.handleError('updatePlant', plant))
       );
   }
 
-  deletePlant(plant: Plant, plantId:string): Observable<{}>{
-      let url = this.plantsUrl + plantId + "/";   
+  deletePlant(plant: Plant, plantId: string): Observable<{}> {
+      const url = this.plantsUrl + plantId + '/';
       return this.http.delete(url, this.httpOptions)
         .pipe(
           catchError(this.handleError('deletePlant'))
         );
   }
 
-  addEquipment(equipment: Equipment){
-    console.log("DataService - AddEquipment", equipment);
+  addEquipment(equipment: Equipment) {
+    console.log('DataService - AddEquipment', equipment);
     console.log(this.equipmentsUrl);
     return this.http.post<Equipment>(this.equipmentsUrl, equipment, this.httpOptions);
   }
 
   updateEquipment(equipment: Equipment, equipmentId: string): Observable<Equipment> {
-    let url = this.equipmentsUrl + equipmentId + "/";
+    const url = this.equipmentsUrl + equipmentId + '/';
     return this.http.put<Equipment>(url, equipment, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateEquipment', equipment))
       );
   }
 
-  deleteEquipment(equipment: Equipment, equipmentId:string): Observable<{}>{
-      let url = this.equipmentsUrl + equipmentId + "/";   
+  deleteEquipment(equipment: Equipment, equipmentId: string): Observable<{}> {
+      const url = this.equipmentsUrl + equipmentId + '/';
       return this.http.delete(url, this.httpOptions)
         .pipe(
           catchError(this.handleError('deleteEquipment'))
         );
   }
 
-  addArea(area: Area){
-    console.log("DataService - AddArea", area);
+  addArea(area: Area) {
+    console.log('DataService - AddArea', area);
     console.log(this.areasUrl);
     return this.http.post<Area>(this.areasUrl, area, this.httpOptions);
   }
 
   updateArea(area: Area, areaId: string): Observable<Area> {
-    let url = this.areasUrl + areaId + "/";
+    const url = this.areasUrl + areaId + '/';
     return this.http.put<Area>(url, area, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateArea', area))
       );
   }
 
-  deleteArea(area: Area, areaId:string): Observable<{}>{
-      let url = this.areasUrl + areaId + "/";   
+  deleteArea(area: Area, areaId: string): Observable<{}> {
+      const url = this.areasUrl + areaId + '/';
       return this.http.delete(url, this.httpOptions)
         .pipe(
           catchError(this.handleError('deleteArea'))
         );
   }
 
-  addUser(user: User){
-    console.log("DataService - AddUser", user);
+  addUser(user: User) {
+    console.log('DataService - AddUser', user);
     console.log(this.usersUrl);
     return this.http.post<User>(this.usersUrl, user, this.httpOptions);
   }
 
   updateUser(user: User, userId: string): Observable<User> {
-    let url = this.usersUrl + userId + "/";
+    const url = this.usersUrl + userId + '/';
     return this.http.put<User>(url, user, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateUser', user))
       );
   }
 
-  deleteUser(user: User, userId:string): Observable<{}>{
-      let url = this.usersUrl + userId + "/";   
+  deleteUser(user: User, userId: string): Observable<{}> {
+      const url = this.usersUrl + userId + '/';
       return this.http.delete(url, this.httpOptions)
         .pipe(
           catchError(this.handleError('deleteUser'))
         );
   }
 
-  addJobAssignment(jobAssignment: JobAssignments, userId: string){
-    let url = this.jobsUrl + jobAssignment.jobId.toString() + '/users/' + userId;
+  addJobAssignment(jobAssignment: JobAssignments, userId: string) {
+    const url = this.jobsUrl + jobAssignment.jobId.toString() + '/users/' + userId;
     console.log(url);
-    console.log(jobAssignment, "From dataService");
+    console.log(jobAssignment, 'From dataService');
     return this.http.post<JobAssignments>(url, jobAssignment, this.httpOptions);
   }
 
-  deleteJobAssignment(jobAssignment: JobAssignments){
-    let jobId = jobAssignment.jobId.toString();
-    let userId = jobAssignment.userId.toString();
-    let url = this.jobsUrl + jobId + '/users/' + userId;
+  deleteJobAssignment(jobAssignment: JobAssignments) {
+    const jobId = jobAssignment.jobId.toString();
+    const userId = jobAssignment.userId.toString();
+    const url = this.jobsUrl + jobId + '/users/' + userId;
     return this.http.delete(url, this.httpOptions)
     .pipe(
       catchError(this.handleError('deleteJobAssignment'))
     );
   }
 
-  addJobComment(comment: Comment){
+  addJobComment(comment: Comment) {
     console.log(comment);
     return this.http.post<Comment>(this.commentsUrl, comment, this.httpOptions);
   }
 
-  getUserJobs(userId: number){
-    let id = userId.toString();
+  getUserJobs(userId: number) {
+    const id = userId.toString();
 
-    let url = this.usersUrl + id + '/jobs';
+    const url = this.usersUrl + id + '/jobs';
     return this.http.get<Job[]>(url).subscribe(result => {
       console.log(result);
     }, error => console.error(error));

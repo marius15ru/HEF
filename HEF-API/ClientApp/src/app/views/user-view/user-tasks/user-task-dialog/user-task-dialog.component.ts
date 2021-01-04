@@ -49,23 +49,23 @@ export class UserTaskDialogComponent implements OnInit {
     this.setMode();
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.jobForm.value);
   }
 
-  onSubmitComment(){
-    let requestModel = new Comment;
+  onSubmitComment() {
+    const requestModel = new Comment;
     requestModel.text = this.commentForm.value.comment;
     requestModel.jobId = this.selectedRow.id;
     requestModel.userId = 1;
     console.log(requestModel);
-    
+
     this.dataService.addJobComment(requestModel).subscribe(result => {
       console.log(result);
     });
   }
 
-  setMode(){
+  setMode() {
     switch (this.dialogData.action.toLowerCase()) {
       case 'update':
         this.jobForm = new FormGroup({
@@ -92,7 +92,7 @@ export class UserTaskDialogComponent implements OnInit {
         });
         // this.actionButtonVisible = false;
         // this.dialogTitle = "Skoða: ";
-        this.editMode = 'Uppfæra'; 
+        this.editMode = 'Uppfæra';
         break;
       case 'view':
         this.jobForm = new FormGroup({
@@ -100,7 +100,7 @@ export class UserTaskDialogComponent implements OnInit {
           ),
           name: new FormControl({ value: this.selectedRow.name, disabled: true},
           ),
-          description: new FormControl({ value: this.selectedRow.description, disabled: true}, 
+          description: new FormControl({ value: this.selectedRow.description, disabled: true},
           ),
           status: new FormControl({ value: this.selectedRow.status, disabled: true},
           ),
@@ -129,7 +129,6 @@ export class UserTaskDialogComponent implements OnInit {
           comment: new FormControl('')
         });
         break;
-    };
+    }
   }
-
 }

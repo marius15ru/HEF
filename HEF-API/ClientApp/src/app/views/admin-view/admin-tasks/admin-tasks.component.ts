@@ -25,7 +25,7 @@ export class AdminTasksComponent implements OnInit {
   comments: Comment[];
 
   public customAttributes: Object;
-  @Inject('BASE_URL') baseUrl: string
+  @Inject('BASE_URL') baseUrl: string;
 
   public toolbarOptions: ToolbarItems[];
   @ViewChild('grid', {static: false})
@@ -40,7 +40,7 @@ export class AdminTasksComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
   }
 
-  getData(){
+  getData() {
     this.http.get<Job[]>('api/jobs').subscribe(result => {
       console.log(result);
       this.jobs = result;
@@ -54,7 +54,7 @@ export class AdminTasksComponent implements OnInit {
   }
 
   toolbarClick(args: ClickEventArgs): void {
-    console.log('toolbarClick',args);
+    console.log('toolbarClick', args);
     console.log(this.grid);
     if (args.item.id.indexOf('pdfexport') > -1) { // 'Grid_pdfexport' -> Grid component id + _ + toolbar item name
         this.grid.pdfExport();
@@ -70,24 +70,22 @@ export class AdminTasksComponent implements OnInit {
   }
 
   boolFormatter(field: string, data: Object, column: Object) {
-    if(data[field] == true){
+    if (data[field] === true) {
       return 'Já';
-    }else{
+    } else {
       return 'Nei';
     }
   }
 
-  rowDataBound(args: RowDataBoundEventArgs){
+  rowDataBound(args: RowDataBoundEventArgs) {
     const status = 'status';
-    if(args.data[status] == 1){
+    if (args.data[status] === 1) {
       args.row.classList.add('e-unassigned-color');
     }
   }
 
   openDialog(jobs: Job, action: string) {
-    
     const refUser = this.dialogItem.open(AdminTasksDialogComponent, {
-      
       data: {
         action: action,
         job: jobs

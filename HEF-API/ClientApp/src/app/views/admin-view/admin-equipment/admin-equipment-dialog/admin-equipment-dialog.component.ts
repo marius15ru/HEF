@@ -56,7 +56,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
     });
   }
 
-  getData(){
+  getData() {
     this.http.get<Station[]>('api/stations').subscribe(result => {
       console.log(result);
       this.stations = result;
@@ -64,34 +64,33 @@ export class AdminEquipmentDialogComponent implements OnInit {
   }
 
    onSubmit() {
-    switch (this.dialogData.action.toLowerCase()){
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
         console.log(this.equipmentForm.value);
-        let requestModel: Equipment = this.equipmentForm.value;
+        const requestModel: Equipment = this.equipmentForm.value;
         requestModel.model = new Date(requestModel.model);
         requestModel.lastCheck = new Date(requestModel.lastCheck);
         this.dataService.addEquipment(requestModel).subscribe(result => {
           console.log(result);
-        this.openSnackBar(requestModel.name + " bætt við", "Loka");
+        this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
         }, error => console.error(error));
         break;
       case 'update':
-        let requestModelUpdate: Equipment = this.equipmentForm.value;
+        const requestModelUpdate: Equipment = this.equipmentForm.value;
         requestModelUpdate.id = this.selectedRow.id;
         this.dataService.updateEquipment(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
           console.log(result, this.selectedRow.id.toString());
-        this.openSnackBar(requestModelUpdate.name + " uppfært", "Loka");
+        this.openSnackBar(requestModelUpdate.name + ' uppfært', 'Loka');
         }, error => console.error(error));
         break;
       case 'delete':
-        let requestModelDelete: Equipment = this.equipmentForm.value;
+        const requestModelDelete: Equipment = this.equipmentForm.value;
         requestModelDelete.id = this.selectedRow.id;
         this.dataService.deleteEquipment(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
-          console.log(result, this.selectedRow.id.toString(), "deleted");
-        this.openSnackBar(requestModelDelete.name + " eytt", "Loka");
+          console.log(result, this.selectedRow.id.toString(), 'deleted');
+        this.openSnackBar(requestModelDelete.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
-      
     }
       this.closeDialog();
    }

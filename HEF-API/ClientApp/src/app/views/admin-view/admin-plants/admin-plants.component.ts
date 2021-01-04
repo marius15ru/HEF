@@ -21,7 +21,7 @@ export class AdminPlantsComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
   }
 
-  getData(){
+  getData() {
     this.http.get<Plant[]>('api/plants').subscribe(result => {
       console.log(result);
       this.plants = result;

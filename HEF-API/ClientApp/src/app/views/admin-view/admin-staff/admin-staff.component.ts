@@ -31,7 +31,7 @@ export class AdminStaffComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
   }
 
-  getData(){
+  getData() {
     this.http.get<User[]>('api/users').subscribe(result => {
       console.log(result);
       this.users = result;

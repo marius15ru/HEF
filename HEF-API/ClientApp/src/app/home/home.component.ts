@@ -23,24 +23,24 @@ export class HomeComponent {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient,  
+  constructor(private http: HttpClient,
               private route: ActivatedRoute,
               private router: Router ) { }
 
-  onSubmit(){
+  onSubmit() {
     const credentials = JSON.stringify(this.loginForm.value);
-    this.http.post("/api/auth/login", credentials, this.httpOptions).subscribe(response => {
+    this.http.post('/api/auth/login', credentials, this.httpOptions).subscribe(response => {
       const token = (<any>response).token;
       const role = (<any>response).role;
       const userId = (<any>response).id;
-      localStorage.setItem("role", role);
-      localStorage.setItem("jwt", token);
-      localStorage.setItem("user", userId);
+      localStorage.setItem('role', role);
+      localStorage.setItem('jwt', token);
+      localStorage.setItem('user', userId);
       this.invalidLogin = false;
-      if(role == 1){
-        this.router.navigate(["/verkadili"]);
-      }else if(role == 2){
-        this.router.navigate(["/stjornandi"]);
+      if (role === 1) {
+        this.router.navigate(['/verkadili']);
+      } else if (role === 2) {
+        this.router.navigate(['/stjornandi']);
       }
     }, err => {
       this.invalidLogin = true;

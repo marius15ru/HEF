@@ -31,7 +31,7 @@ export class AdminLocationComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
   }
 
-  getData(){
+  getData() {
     this.http.get<Station[]>('api/stations').subscribe(result => {
       console.log(result);
       this.stations = result;
@@ -39,7 +39,7 @@ export class AdminLocationComponent implements OnInit {
   }
 
   toolbarClick(args: ClickEventArgs): void {
-    console.log('toolbarClick',args);
+    console.log('toolbarClick', args);
     console.log(this.grid);
     if (args.item.id.indexOf('pdfexport') > -1) { // 'Grid_pdfexport' -> Grid component id + _ + toolbar item name
         this.grid.pdfExport();
