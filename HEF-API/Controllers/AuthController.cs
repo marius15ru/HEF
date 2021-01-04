@@ -50,7 +50,7 @@ namespace HEF_API.Controllers
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                return Ok(new { Token = tokenString });
+                return Ok(new { Token = tokenString, Role = account.Role, Id = account.Id });
             }
 
             return Unauthorized("Username or password incorrect.");

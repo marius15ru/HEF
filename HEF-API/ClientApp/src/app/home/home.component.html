@@ -4,9 +4,20 @@
     <div class="log-in-box">
       <img class="log-in-logo" src="../../assets/images/HEF-logo.jpeg">
       <h1 class="text-center log-in-header">Innskráning</h1>
-      <input class="log-in-input" placeholder="Netfang" type="email">
-      <input class="log-in-input" placeholder="Lykilorð" type="password">
-      <button class="log-in-button" routerLink="/verkadili" routerLinkActive="active">Innskrá</button>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="form-input" appearance="outline">
+          <mat-label class="form-input">Netfang</mat-label>
+          <input matInput class="form-input" type="email" formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field class="form-input" appearance="outline">
+          <mat-label class="form-input">Lykilorð</mat-label>
+          <input matInput class="form-input" type="password" formControlName="password">
+        </mat-form-field>
+        <button mat-raised-button class="log-in-button" type="submit">Innskrá</button>
+
+        <!-- <button mat-raised-button class="log-in-button" type="submit" routerLink="/verkadili" routerLinkActive="active">Innskrá</button> -->
+      </form>
     </div>
   </div>
 </div>

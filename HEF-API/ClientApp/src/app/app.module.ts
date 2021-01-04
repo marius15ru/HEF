@@ -101,7 +101,7 @@ import { ObtainTaskDialogComponent } from './views/user-view/obtain-task/obtain-
     MatExpansionModule
   ],
   providers: 
-    [EnumToArrayPipe, 
+  [EnumToArrayPipe, 
     SortService, 
     ResizeService, 
     PdfExportService, 

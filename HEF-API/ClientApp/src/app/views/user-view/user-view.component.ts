@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-user-view',
@@ -8,9 +9,15 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class UserViewComponent implements OnInit {
 
+  user: User;
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  // getUser(){
+
+  // }
 
 }
