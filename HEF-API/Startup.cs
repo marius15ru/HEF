@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using MySql.Data.MySqlClient;
 using System;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HEF_API
 {
@@ -22,12 +24,26 @@ namespace HEF_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+
+            // Database connection
 
             var connectionStringBuilder = new MySqlConnectionStringBuilder
             {
@@ -40,24 +56,38 @@ namespace HEF_API
 
             services.AddDbContext<RepoContext>(
                 options
-                => options.UseMySql(
-                    connectionStringBuilder.ConnectionString,
-                    mySqlOptions =>
-                    {
-                        mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
-                        .EnableRetryOnFailure(
-                        maxRetryCount: 10,
-                        maxRetryDelay: TimeSpan.FromSeconds(30),
-                        errorNumbersToAdd: null);
-                    }));
+                    => options.UseMySql(
+                        connectionStringBuilder.ConnectionString,
+                        mySqlOptions =>
+                        {
+                            mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
+                            .EnableRetryOnFailure(
+                            maxRetryCount: 10,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
+                        }));
 
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            // Authentication
 
-            //services.AddMvc().AddJsonOptions(options =>
-            //{
-            //    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            //    options.JsonSerializerOptions.IgnoreNullValues = true;
-            //});
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = "http://localhost:5001",
+                    ValidAudience = "http://localhost:5001",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSevretKey@345")) // Store secret key in environment variable
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,7 +111,12 @@ namespace HEF_API
                 app.UseSpaStaticFiles();
             }
 
+            app.UseCors("EnableCORS");
+
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

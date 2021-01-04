@@ -126,10 +126,10 @@ namespace HEF_API.Controllers
         {
 
             Job_Assignments jobUser = new Job_Assignments
-                {
-                    UserId = userId,
-                    JobId = jobId
-                };
+            {
+                UserId = userId,
+                JobId = jobId
+            };
             try
             {
                 _repositoryWrapper.UserJobs.Insert(jobUser);

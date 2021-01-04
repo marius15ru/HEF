@@ -19,16 +19,16 @@ namespace HEF_API.Services
 
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private RepoContext _context = null;
+        private readonly RepoContext _context;
         private IRepository<Area> _area;
-        private IRepository<Comment> _comment = null;
-        private IRepository<Equipment> _equipment = null;
-        private IRepository<Job> _job = null;
-        private IRepository<Plant> _plant = null;
-        private IRepository<Station> _station = null;
-        private IRepository<SubJob> _subjob = null;
-        private IRepository<User> _user = null;
-        private IRepository<Job_Assignments> _userjobs = null;
+        private IRepository<Comment> _comment;
+        private IRepository<Equipment> _equipment;
+        private IRepository<Job> _job;
+        private IRepository<Plant> _plant;
+        private IRepository<Station> _station;
+        private IRepository<SubJob> _subjob;
+        private IRepository<User> _user;
+        private IRepository<Job_Assignments> _userjobs;
 
         public RepositoryWrapper(RepoContext context) => _context = context;
         public async Task Save() => await _context.SaveChangesAsync();

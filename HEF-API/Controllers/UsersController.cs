@@ -5,6 +5,7 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using HEF_API.Models;
 using HEF_API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HEF_API.Controllers
 {
     [Route("api/users")]
+    //[Authorize]
     public class UserController : ControllerBase
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
