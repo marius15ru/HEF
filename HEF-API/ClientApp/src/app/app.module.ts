@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
-import { MatDialogModule, MatGridListModule, MatSelectModule } from '@angular/material';
+import { MatCardModule, MatDialogModule, MatGridListModule, MatSelectModule, MatSnackBarModule } from '@angular/material';
 import { UserViewComponent } from './views/user-view/user-view.component';
 import { AdminViewComponent } from './views/admin-view/admin-view.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -37,6 +37,10 @@ import { AdminAreasComponent } from './views/admin-view/admin-areas/admin-areas.
 import { AdminAreasDialogComponent } from './views/admin-view/admin-areas/admin-areas-dialog/admin-areas-dialog.component';
 import { EnumToArrayPipe } from './shared/models';
 import { MessagesComponent } from './messages/messages.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { UserTaskDialogComponent } from './views/user-view/user-tasks/user-task-dialog/user-task-dialog.component';
+import { ObtainTaskDialogComponent } from './views/user-view/obtain-task/obtain-task-dialog/obtain-task-dialog.component';
+
 
 
 @NgModule({
@@ -65,7 +69,9 @@ import { MessagesComponent } from './messages/messages.component';
     AdminAreasComponent,
     AdminAreasDialogComponent,
     EnumToArrayPipe,
-    MessagesComponent
+    MessagesComponent,
+    UserTaskDialogComponent,
+    ObtainTaskDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -89,7 +95,10 @@ import { MessagesComponent } from './messages/messages.component';
     MatDialogModule,
     GridModule,
     ChartModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatExpansionModule
   ],
   providers: 
     [EnumToArrayPipe, 
@@ -105,7 +114,9 @@ import { MessagesComponent } from './messages/messages.component';
     AdminPlantsDialogComponent,
     AdminLocationDialogComponent,
     AdminEquipmentDialogComponent,
-    AdminAreasDialogComponent
+    AdminAreasDialogComponent,
+    UserTaskDialogComponent,
+    ObtainTaskDialogComponent
   ],
 })
 export class AppModule { }

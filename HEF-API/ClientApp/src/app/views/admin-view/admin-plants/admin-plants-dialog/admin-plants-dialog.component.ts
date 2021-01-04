@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/data.service';
 import { PlantType } from 'src/app/shared/enums';
@@ -31,7 +32,7 @@ export class AdminPlantsDialogComponent implements OnInit {
 
   constructor(
     private dataService: DataService, public dialogRef: MatDialogRef<AdminPlantsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, plant: Plant}
+    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, plant: Plant}, private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -43,26 +44,38 @@ export class AdminPlantsDialogComponent implements OnInit {
     this.setMode();
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: ['snackbar-success']
+    });
+  }
+
   onSubmit() {
     switch (this.dialogData.action.toLowerCase()){
       case 'insert':
         let requestModel: Plant = this.plantForm.value;
         this.dataService.addPlant(requestModel).subscribe(result => {
           console.log(result);
+          this.openSnackBar(requestModel.name + " bætt við", "Loka");
         }, error => console.error(error));
         break;
       case 'update':
         let requestModelUpdate: Plant = this.plantForm.value;
         requestModelUpdate.id = this.selectedRow.id;
+        requestModelUpdate.name = this.selectedRow.name;
         this.dataService.updatePlant(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
           console.log(result, this.selectedRow.id.toString());
+        this.openSnackBar(requestModelUpdate.name + " uppfærð", "Loka");
         }, error => console.error(error));
         break;
       case 'delete':
         let requestModelDelete: Plant = this.plantForm.value;
         requestModelDelete.id = this.selectedRow.id;
+        requestModelDelete.name = this.selectedRow.name;
         this.dataService.deletePlant(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
           console.log(result, this.selectedRow.id.toString(), "deleted");
+        this.openSnackBar(requestModelDelete.name + " eytt", "Loka");
         }, error => console.error(error));
         break;
       

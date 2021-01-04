@@ -22,9 +22,9 @@
     
     <ejs-grid #grid [dataSource]="plants">
         <e-columns >
-            <e-column field='id' headerText='Auðkenni' width=" 200" isPrimaryKey='true'></e-column>
-            <e-column field='name' headerText='Nafn'></e-column>
-            <e-column field="operations" headerText="Aðgerðir" width="100">
+            <e-column field='id' headerText='Auðkenni' width=" 200" isPrimaryKey='true' [customAttributes]='customAttributes'></e-column>
+            <e-column field='name' headerText='Nafn' [customAttributes]='customAttributes'></e-column>
+            <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                 <ng-template #template let-plants>
                     <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(plants, 'view')"></i>
                     <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(plants, 'update')"></i>

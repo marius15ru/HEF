@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/data.service';
 import { Equipment, Station } from 'src/app/shared/models';
@@ -30,6 +31,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
   constructor(
     private dataService: DataService, public dialogRef: MatDialogRef<AdminEquipmentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, equipments: Equipment}, private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -45,6 +47,13 @@ export class AdminEquipmentDialogComponent implements OnInit {
       this.selectedRow.lastCheck = null;
     }
     this.setMode();
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: ['snackbar-success']
+    });
   }
 
   getData(){
@@ -63,6 +72,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
         requestModel.lastCheck = new Date(requestModel.lastCheck);
         this.dataService.addEquipment(requestModel).subscribe(result => {
           console.log(result);
+        this.openSnackBar(requestModel.name + " bætt við", "Loka");
         }, error => console.error(error));
         break;
       case 'update':
@@ -70,6 +80,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
         requestModelUpdate.id = this.selectedRow.id;
         this.dataService.updateEquipment(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
           console.log(result, this.selectedRow.id.toString());
+        this.openSnackBar(requestModelUpdate.name + " uppfært", "Loka");
         }, error => console.error(error));
         break;
       case 'delete':
@@ -77,6 +88,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
         requestModelDelete.id = this.selectedRow.id;
         this.dataService.deleteEquipment(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
           console.log(result, this.selectedRow.id.toString(), "deleted");
+        this.openSnackBar(requestModelDelete.name + " eytt", "Loka");
         }, error => console.error(error));
         break;
       

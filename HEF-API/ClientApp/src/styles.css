@@ -25,10 +25,6 @@ code {
   transition-duration: 1ms;
 }
 
-::ng-deep .mat-ink-bar {
-  background-color: #0182d4 !important;
-}
-
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -152,12 +148,25 @@ mat-grid-tile {
 
 .action-icon{
   margin-right: 5px;
+  color: rgb(33, 115, 166);
 }
 
 .action-icon:hover{
   cursor: pointer;
 }
 
+.snackbar-success{
+  background: #4a934a !important;
+}
+
+.e-grid .e-headercell.customcss{
+  background: rgb(88 175 228);
+  color: white;
+}
+
+.container{
+  min-width: 90%;
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
-import { Job, Station } from 'src/app/shared/models';
+import { Comment, Job, Station } from 'src/app/shared/models';
 import { AdminTasksDialogComponent } from './admin-tasks-dialog/admin-tasks-dialog.component';
 import { GridComponent, RowDataBoundEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
@@ -21,6 +21,10 @@ export class AdminTasksComponent implements OnInit {
   currentPage: number;
   stationFormat: Station[];
   stations: Station[];
+  jobsOnHold: Job[];
+  comments: Comment[];
+
+  public customAttributes: Object;
   @Inject('BASE_URL') baseUrl: string
 
   public toolbarOptions: ToolbarItems[];
@@ -33,12 +37,18 @@ export class AdminTasksComponent implements OnInit {
     this.getData();
     this.toolbarOptions = ['PdfExport'];
     this.pageSettings = { pageSizes: [25, 50, 100, 200, 300, 'All'], pageSize: 25};
+    this.customAttributes = {class: 'customcss'};
   }
 
   getData(){
     this.http.get<Job[]>('api/jobs').subscribe(result => {
       console.log(result);
       this.jobs = result;
+      this.jobsOnHold = this.jobs.filter(item => item.status === 4);
+    }, error => console.error(error));
+
+    this.http.get<Comment[]>('api/comments').subscribe(result => {
+      this.comments = result;
     }, error => console.error(error));
 
   }

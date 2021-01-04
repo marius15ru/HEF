@@ -26,9 +26,10 @@ export enum UserStatus {
 export enum JobStatus {
     "Undefined" = 0,
     "Óúthlutað" = 1,
-    "Í vinnslu" = 2,
-    "Í bið" = 3,
-    "Lokið" = 4,
+    "Úthlutað" = 2,
+    "Í vinnslu" = 3,
+    "Í bið" = 4,
+    "Lokið" = 5,
 }
 
 export enum MeasurementType {

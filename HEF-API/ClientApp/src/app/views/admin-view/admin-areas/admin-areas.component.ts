@@ -13,10 +13,13 @@ export class AdminAreasComponent implements OnInit {
 
   public areas: Area[];
 
+  public customAttributes: Object;
+
   constructor(public dialogItem: MatDialog, private http: HttpClient) {}
 
   ngOnInit() {
     this.getData();
+    this.customAttributes = {class: 'customcss'};
   }
 
   getData(){

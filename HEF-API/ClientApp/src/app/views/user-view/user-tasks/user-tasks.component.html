@@ -1,86 +1,182 @@
 <div class="main-content-holder">
     <h2 class="user-view-header">Mín verk</h2>
-    <h2 class="routing-header" routerLink="/" routerLinkActive="active">Öll mín verk<i
-            class="far fa-arrow-alt-circle-right grid-header-routing-icon"></i></h2>
+    <!-- <h2 class="routing-header" routerLink="/" routerLinkActive="active">Öll mín verk<i
+            class="far fa-arrow-alt-circle-right grid-header-routing-icon"></i></h2> -->
 </div>
-<mat-grid-list cols="2" rowHeight="3:2" [gutterSize]="'20px'">
-    <mat-grid-tile>
-        <div class="grid-tile-header">
-            <h5>
-                Í vinnslu
-            </h5>
-        </div>
-        <div class="col-md-12">
-            <ul>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-            </ul>
-        </div>
-        <div class="grid-tile-button">
-            <span class="grid-tile-button-text" routerLink="/" routerLinkActive="active">Öll verk í vinnslu<i
-                    class="far fa-arrow-alt-circle-right grid-tile-routing-icon"></i></span>
-        </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <div class="grid-tile-header">
-            <h5>
-                Í bið
-            </h5>
-        </div>
-        <div class="col-md-12">
-            <ul>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-            </ul>
-        </div>
-        <div class="grid-tile-button">
-            <span class="grid-tile-button-text" routerLink="/" routerLinkActive="active">Öll verk í bið<i
-                    class="far fa-arrow-alt-circle-right grid-tile-routing-icon"></i></span>
-        </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <div class="grid-tile-header">
-            <h5>
-                Lokið
-            </h5>
-        </div>
-        <div class="col-md-12">
-            <ul>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-            </ul>
-        </div>
-        <div class="grid-tile-button">
-            <span class="grid-tile-button-text" routerLink="/" routerLinkActive="active">Öll lokin verk<i
-                    class="far fa-arrow-alt-circle-right grid-tile-routing-icon"></i></span>
-        </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <div class="grid-tile-header">
-            <h5 class="">
-                Á eindaga í vikunni
-            </h5>
-        </div>
-        <div class="col-md-12">
-            <ul>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-            </ul>
-        </div>
-        <div class="grid-tile-button">
-            <span class="grid-tile-button-text" routerLink="/" routerLinkActive="active">Öll verk á eindaga<i
-                    class="far fa-arrow-alt-circle-right grid-tile-routing-icon"></i></span>
-        </div>
-    </mat-grid-tile>
-</mat-grid-list>
+
+<mat-accordion>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="col-md-6">
+                Öll mín verk
+            </mat-panel-title>
+            <mat-panel-description class="col-md-6">
+                Fjöldi: {{userJobs.length}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ejs-grid 
+            #grid [dataSource]="userJobs" 
+            allowPaging='true' 
+            allowSorting='true'
+            [allowResizing]='true'
+            [allowTextWrap]='true'>
+                <e-columns >
+                    <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
+                    <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
+                        <ng-template #template let-userJobs>
+                            <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
+                            <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(userJobs, 'view')"></i>
+                            <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(userJobs, 'update')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="col-md-6">
+                Verk í vinnslu
+            </mat-panel-title>
+            <mat-panel-description class="col-md-6">
+                Fjöldi: {{jobsInProgress.length}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ejs-grid 
+            #grid [dataSource]="jobsInProgress" 
+            allowPaging='true' 
+            allowSorting='true'
+            [allowResizing]='true'
+            [allowTextWrap]='true'>
+                <e-columns >
+                    <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
+                    <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
+                        <ng-template #template let-jobsInProgress>
+                            <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
+                            <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsInProgress, 'view')"></i>
+                            <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsInProgress, 'update')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                            <!-- <i class="far fa-comment"></i> -->
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="col-md-6">
+                Úthlutuð verk
+            </mat-panel-title>
+            <mat-panel-description class="col-md-6">
+                Fjöldi: {{jobsAssigned.length}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ejs-grid 
+            #grid [dataSource]="jobsAssigned" 
+            allowPaging='true' 
+            allowSorting='true'
+            [allowResizing]='true'
+            [allowTextWrap]='true'>
+                <e-columns >
+                    <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="100px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='emergencyJob' headerText='Neyðarverk?' width="100px" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='status' headerText='Staða' width="100px" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
+                    <e-column field="operations" headerText="Aðgerðir" width="100px" [customAttributes]='customAttributes'>
+                        <ng-template #template let-jobsAssigned>
+                            <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
+                            <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsAssigned, 'view')"></i>
+                            <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsAssigned, 'update')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="col-md-6">
+                Verk í bið
+            </mat-panel-title>
+            <mat-panel-description class="col-md-6">
+                Fjöldi: {{jobsOnHold.length}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ejs-grid 
+            #grid [dataSource]="jobsOnHold" 
+            allowPaging='true' 
+            allowSorting='true'
+            [allowResizing]='true'
+            [allowTextWrap]='true'>
+                <e-columns >
+                    <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
+                    <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
+                        <ng-template #template let-jobsOnHold>
+                            <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
+                            <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsOnHold, 'view')"></i>
+                            <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsOnHold, 'update')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="col-md-6">
+                Kláruð verk
+            </mat-panel-title>
+            <mat-panel-description class="col-md-6">
+                Fjöldi: {{jobsFinished.length}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ejs-grid 
+            #grid [dataSource]="jobsFinished" 
+            allowPaging='true' 
+            allowSorting='true'
+            [allowResizing]='true'
+            [allowTextWrap]='true'>
+                <e-columns >
+                    <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
+                    <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
+                        <ng-template #template let-jobsFinished>
+                            <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
+                            <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsFinished, 'view')"></i>
+                            <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsFinished, 'update')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+    </mat-expansion-panel>
+</mat-accordion>

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/data.service';
 import { Area } from 'src/app/shared/models';
@@ -22,7 +23,7 @@ export class AdminAreasDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AdminAreasDialogComponent>, private dataService: DataService,
-    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, areas: Area}
+    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, areas: Area}, private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -34,11 +35,19 @@ export class AdminAreasDialogComponent implements OnInit {
     this.setMode();
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: ['snackbar-success']
+    });
+  }
+
   onSubmit() {
     console.log(this.areaForm.value);
     let requestModel: Area = this.areaForm.value;
     this.dataService.addArea(requestModel).subscribe(result => {
       console.log(result);
+    this.openSnackBar(requestModel.name + " bætt við", "Loka");
     }, error => console.error(error));
    }
 

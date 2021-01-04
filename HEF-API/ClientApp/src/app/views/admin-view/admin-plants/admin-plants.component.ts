@@ -12,11 +12,13 @@ import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-d
 export class AdminPlantsComponent implements OnInit {
 
   public plants: Plant[];
+  public customAttributes: Object;
 
   constructor(public dialogItem: MatDialog, private http: HttpClient) {}
 
   ngOnInit() {
     this.getData();
+    this.customAttributes = {class: 'customcss'};
   }
 
   getData(){

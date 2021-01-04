@@ -19,6 +19,7 @@ export class AdminLocationComponent implements OnInit {
   public toolbarOptions: ToolbarItems[];
   @ViewChild('grid', {static: false})
   public grid: GridComponent;
+  public customAttributes: Object;
 
   constructor(public dialogItem: MatDialog, private http: HttpClient) {}
 
@@ -27,6 +28,7 @@ export class AdminLocationComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.toolbarOptions = ['PdfExport'];
+    this.customAttributes = {class: 'customcss'};
   }
 
   getData(){

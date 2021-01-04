@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, JsonpClientBackend } from '@angular/common/htt
 import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Area, Equipment, Job, JobAssignments, Plant, User } from './shared/models';
+import { Area, Equipment, Job, JobAssignments, Comment, Plant, User } from './shared/models';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class DataService {
   private plantsUrl = '/api/plants/';
   private areasUrl = '/api/areas/';
   private usersUrl = '/api/users/';
-  
+  private commentsUrl = '/api/comments/';
   
   
 
@@ -160,6 +160,20 @@ export class DataService {
     .pipe(
       catchError(this.handleError('deleteJobAssignment'))
     );
+  }
+
+  addJobComment(comment: Comment){
+    console.log(comment);
+    return this.http.post<Comment>(this.commentsUrl, comment, this.httpOptions);
+  }
+
+  getUserJobs(userId: number){
+    let id = userId.toString();
+
+    let url = this.usersUrl + id + '/jobs';
+    return this.http.get<Job[]>(url).subscribe(result => {
+      console.log(result);
+    }, error => console.error(error));
   }
 
 

@@ -10,13 +10,13 @@
     
     <ejs-grid #grid [dataSource]="equipments">
         <e-columns >
-            <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column>
-            <e-column field='stationId' headerText='Auðk. Stöðvar' width="120px"></e-column>
-            <e-column field='name' headerText='Nafn'></e-column>
-            <e-column field='model' headerText='Árgerð' type='date' format="yyyy"></e-column>
-            <e-column field='manufacturer' headerText='Framleiðandi'></e-column>
-            <e-column field='lastCheck' headerText='Síðasta ath' type='date' format="dd.MM.yyyy"></e-column>
-            <e-column field="operations" headerText="Aðgerðir" width="100">
+            <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px" [customAttributes]='customAttributes'></e-column> -->
+            <e-column field='stationId' headerText="Stöð" width="120px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='name' headerText='Nafn' [customAttributes]='customAttributes'></e-column>
+            <e-column field='model' headerText='Árgerð' type='date' format="yyyy" [customAttributes]='customAttributes'></e-column>
+            <e-column field='manufacturer' headerText='Framleiðandi' [customAttributes]='customAttributes'></e-column>
+            <e-column field='lastCheck' headerText='Síðasta ath' type='date' format="dd.MM.yyyy" [customAttributes]='customAttributes'></e-column>
+            <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                 <ng-template #template let-equipments>
                     <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(equipments, 'view')"></i>
                     <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(equipments, 'update')"></i>

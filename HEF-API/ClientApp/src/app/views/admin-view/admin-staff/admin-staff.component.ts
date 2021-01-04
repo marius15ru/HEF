@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { User } from 'src/app/shared/models';
+import { Observable } from 'rxjs';
+import { DataService } from 'src/app/data.service';
+import { Job, User } from 'src/app/shared/models';
 import { AdminStaffDialogComponent } from './admin-staff-dialog/admin-staff-dialog.component';
 
 @Component({
@@ -11,12 +13,22 @@ import { AdminStaffDialogComponent } from './admin-staff-dialog/admin-staff-dial
 })
 export class AdminStaffComponent implements OnInit {
 
-  public users: User[];
+  public users: User[] = [];
+  jobsAssigned: Job[] = [];
+  userJobs: Job[] = [];
+  jobsOnHold: Job[] = [];
+  jobsInProgress: Job[] = [];
+  jobsFinished: Job[] = [];
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
+  public customAttributes: Object;
+
+  // allUsers: Observable<User[]>;
+
+  constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
 
   ngOnInit() {
     this.getData();
+    this.customAttributes = {class: 'customcss'};
   }
 
   getData(){
@@ -24,6 +36,7 @@ export class AdminStaffComponent implements OnInit {
       console.log(result);
       this.users = result;
     }, error => console.error(error));
+
   }
 
   openDialog(action: string) {
