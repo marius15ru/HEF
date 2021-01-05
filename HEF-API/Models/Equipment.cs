@@ -14,5 +14,6 @@ namespace HEF_API.Models
         public string Manufacturer { get; set; }
         public string Operation { get; set; }
         public DateTime? LastCheck { get; set; }
+        public virtual Station Station { get; set; }
     }
 }

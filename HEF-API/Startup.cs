@@ -56,15 +56,16 @@ namespace HEF_API
 
             services.AddDbContext<RepoContext>(
                 options
-                    => options.UseMySql(
-                        connectionStringBuilder.ConnectionString,
-                        mySqlOptions =>
-                        {
-                            mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
-                            .EnableRetryOnFailure(
-                            maxRetryCount: 10,
-                            maxRetryDelay: TimeSpan.FromSeconds(30),
-                            errorNumbersToAdd: null);
+                    => options.UseLazyLoadingProxies()
+                        .UseMySql(
+                            connectionStringBuilder.ConnectionString,
+                            mySqlOptions =>
+                            {
+                                mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
+                                .EnableRetryOnFailure(
+                                maxRetryCount: 10,
+                                maxRetryDelay: TimeSpan.FromSeconds(30),
+                                errorNumbersToAdd: null);
                         }));
 
             // Authentication

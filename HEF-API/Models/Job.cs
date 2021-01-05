@@ -17,5 +17,7 @@ namespace HEF_API.Models
         public bool EmergencyJob { get; set; }
         public bool HasComments { get; set; }
         public DateTime? LastCheck { get; set; }
+
+        public virtual Station Station { get; set; }
     }
 }
