@@ -97,15 +97,9 @@ export class AdminTasksDialogComponent implements OnInit {
     });
   }
 
-  getData() {
-    this.http.get<Station[]>('api/stations').subscribe(result => {
-      console.log(result);
-      this.stations = result;
-    }, error => console.error(error));
-
-    this.http.get<User[]>('api/users').subscribe(result => {
-      this.users = result;
-    }, error => console.error(error));
+  getData(){
+    this.stations = this.dataService.stations;
+    this.users = this.dataService.users;
   }
 
   getJobAssignments() {
@@ -122,12 +116,14 @@ export class AdminTasksDialogComponent implements OnInit {
     });
   }
 
-  getJobComments() {
-    this.http.get<Comment[]>('api/comments').subscribe(result => {
-      this.allComments = result;
-      this.jobComments = this.allComments.filter(item => item.jobId === this.selectedRow.id);
-      console.log(this.jobComments, 'athugasemdir');
-    }, error => console.error(error));
+  getJobComments(){
+    // this.http.get<Comment[]>('api/comments').subscribe(result => {
+    //   this.allComments = result;
+    //   this.jobComments = this.allComments.filter(item => item.jobId == this.selectedRow.id);
+    //   console.log(this.jobComments, "athugasemdir");
+    // }, error => console.error(error));
+    this.allComments = this.dataService.comments;
+    this.jobComments = this.allComments.filter(item => item.jobId == this.selectedRow.id);
   }
 
   assignUser() {
@@ -164,7 +160,7 @@ export class AdminTasksDialogComponent implements OnInit {
         break;
         case 'comment':
           this.commentForm = new FormGroup({
-            user: new FormControl({ value: 1, disabled: true}),
+            user: new FormControl({ value: parseInt(localStorage.getItem("user")) , disabled: true}),
             job: new FormControl({  value: this.selectedRow.id, disabled: true}),
             comment: new FormControl('')
           });
@@ -212,7 +208,7 @@ export class AdminTasksDialogComponent implements OnInit {
     const requestModel = new Comment;
     requestModel.text = this.commentForm.value.comment;
     requestModel.jobId = this.selectedRow.id;
-    requestModel.userId = 1;
+    requestModel.userId = parseInt(localStorage.getItem("user"));
     console.log(requestModel);
 
     this.dataService.addJobComment(requestModel).subscribe(result => {

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { GridModel, DetailRowService, GridComponent } from '@syncfusion/ej2-angular-grids';
 import { DataService } from 'src/app/data.service';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
-import { Comment, Job, Station } from 'src/app/shared/models';
+import { Comment, Job, Station, User } from 'src/app/shared/models';
 import { UserTaskDialogComponent } from './user-task-dialog/user-task-dialog.component';
 
 @Component({
@@ -22,12 +22,21 @@ export class UserTasksComponent implements OnInit {
   stations: Station[] = [];
   comments: Comment[] = [];
 
+<<<<<<< HEAD
+=======
+  pageSettings: object;
+
+  user: User;
+  userId: string = localStorage.getItem("user").toString();
+  
+>>>>>>> bætti síum við stjórnendaverk
   public customAttributes: Object;
 
   constructor(private http: HttpClient, private dataService: DataService, public dialogItem: MatDialog) { }
 
   ngOnInit() {
     this.getData();
+    this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
     this.customAttributes = {class: 'customcss'};
   }
 
@@ -47,8 +56,13 @@ export class UserTasksComponent implements OnInit {
     }
   }
 
+<<<<<<< HEAD
   getData() {
     this.http.get<Job[]>('api/users/1/jobs').subscribe(result => {
+=======
+  getData(){
+    this.http.get<Job[]>('api/users/' + this.userId + '/jobs').subscribe(result => {
+>>>>>>> bætti síum við stjórnendaverk
       console.log(result);
       this.userJobs = result;
       this.jobsAssigned = this.userJobs.filter(item => item.status === 2);

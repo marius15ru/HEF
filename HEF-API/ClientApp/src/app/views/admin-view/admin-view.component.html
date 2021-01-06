@@ -1,4 +1,4 @@
-<mat-tab-group mat-stretch-tabs>
+<mat-tab-group mat-stretch-tabs *ngIf="user?.role == 2">
     <mat-tab label="Verk">
         <app-admin-tasks></app-admin-tasks>
         <!-- Hér kemur yfirlit yfir verk -->

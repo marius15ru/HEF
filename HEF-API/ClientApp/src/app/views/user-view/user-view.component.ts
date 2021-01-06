@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { User } from 'src/app/shared/models';
 
@@ -9,15 +10,20 @@ import { User } from 'src/app/shared/models';
 })
 export class UserViewComponent implements OnInit {
 
-  user: User;
+  user: User = null;
+  userId: string = localStorage.getItem("user").toString();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.getUser();
   }
 
-  // getUser(){
-
-  // }
+  getUser(){
+    this.http.get<User>('api/users/' + this.userId + "/").subscribe(result => {
+      console.log(result);
+      this.user = result;
+    })
+  }
 
 }

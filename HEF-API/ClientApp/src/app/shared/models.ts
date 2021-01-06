@@ -11,6 +11,7 @@ export class Comment {
     userId: number;
     jobId: number;
     text: string;
+    seen: boolean;
 }
 
 export class Equipment {

@@ -1,4 +1,4 @@
-<mat-tab-group mat-stretch-tabs>
+<mat-tab-group mat-stretch-tabs *ngIf="user?.role == 1 || user?.role == 2">
     <mat-tab label="Mín verk">
         <app-user-tasks></app-user-tasks>
     </mat-tab>

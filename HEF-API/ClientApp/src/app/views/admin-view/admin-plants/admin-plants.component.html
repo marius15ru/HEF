@@ -22,7 +22,7 @@
     
     <ejs-grid #grid [dataSource]="plants">
         <e-columns >
-            <e-column field='id' headerText='Auðkenni' width=" 200" isPrimaryKey='true' [customAttributes]='customAttributes'></e-column>
+            <!-- <e-column field='id' headerText='Auðkenni' width=" 200" isPrimaryKey='true' [customAttributes]='customAttributes'></e-column> -->
             <e-column field='name' headerText='Nafn' [customAttributes]='customAttributes'></e-column>
             <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                 <ng-template #template let-plants>

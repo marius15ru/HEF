@@ -1,9 +1,9 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 navbar-style"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">HEF_API</a>
+      <a class="navbar-brand">HEF_API</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -25,11 +25,15 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/stjornandi']"
               >Stjórnandi</a
+            >
+          </li>
+          <li class="nav-item" (click)="logOut()" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark"  [routerLink]="['/']"
+              >Útskrá</a
             >
           </li>
         </ul>

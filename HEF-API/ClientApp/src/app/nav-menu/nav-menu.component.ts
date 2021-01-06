@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Role } from '../shared/enums';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
+  role = localStorage.getItem("role");
 
   collapse() {
     this.isExpanded = false;
@@ -15,4 +17,10 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
+  logOut() {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    localStorage.removeItem("role");
+ }
 }

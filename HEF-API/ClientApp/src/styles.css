@@ -20,6 +20,10 @@ code {
   color: #e01a76;
 }
 
+.navbar-style{
+  background-color: rgb(88 175 228) !important;
+}
+
 .mat-tab-group{
   animation-duration: 1ms;
   transition-duration: 1ms;
