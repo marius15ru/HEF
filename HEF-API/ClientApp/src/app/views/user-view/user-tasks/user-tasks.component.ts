@@ -22,14 +22,11 @@ export class UserTasksComponent implements OnInit {
   stations: Station[] = [];
   comments: Comment[] = [];
 
-<<<<<<< HEAD
-=======
   pageSettings: object;
 
   user: User;
   userId: string = localStorage.getItem("user").toString();
   
->>>>>>> bætti síum við stjórnendaverk
   public customAttributes: Object;
 
   constructor(private http: HttpClient, private dataService: DataService, public dialogItem: MatDialog) { }
@@ -56,13 +53,8 @@ export class UserTasksComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
-  getData() {
-    this.http.get<Job[]>('api/users/1/jobs').subscribe(result => {
-=======
   getData(){
     this.http.get<Job[]>('api/users/' + this.userId + '/jobs').subscribe(result => {
->>>>>>> bætti síum við stjórnendaverk
       console.log(result);
       this.userJobs = result;
       this.jobsAssigned = this.userJobs.filter(item => item.status === 2);

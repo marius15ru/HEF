@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DataService } from 'src/app/data.service';
 import { Area } from 'src/app/shared/models';
 import { AdminAreasDialogComponent } from './admin-areas-dialog/admin-areas-dialog.component';
 
@@ -15,7 +16,7 @@ export class AdminAreasComponent implements OnInit {
 
   public customAttributes: Object;
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
+  constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
 
   ngOnInit() {
     this.getData();
@@ -23,10 +24,11 @@ export class AdminAreasComponent implements OnInit {
   }
 
   getData() {
-    this.http.get<Area[]>('api/areas').subscribe(result => {
-      console.log(result);
-      this.areas = result;
-    }, error => console.error(error));
+    // this.http.get<Area[]>('api/areas').subscribe(result => {
+    //   console.log(result);
+    //   this.areas = result;
+    // }, error => console.error(error));
+    this.dataService.getAreas();
   }
 
   openDialog(area: Area, action: string) {
