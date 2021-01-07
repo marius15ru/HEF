@@ -100,6 +100,14 @@ export class AdminTasksComponent implements OnInit {
     }
   }
 
+  userFormatter(field: string, data: Object, column: Object) {
+    return data[field].name;
+  }
+
+  jobFormatter(field: string, data: Object, column: Object) {
+    return data[field].name;
+  }
+
   
 
   rowDataBound(args: RowDataBoundEventArgs) {

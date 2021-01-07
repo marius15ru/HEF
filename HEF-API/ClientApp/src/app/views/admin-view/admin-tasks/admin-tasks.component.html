@@ -85,8 +85,8 @@
     [pageSettings]='pageSettings'>
         <e-columns>
             <!-- <e-column field="id" headerText='Verk' [customAttributes]='customAttributes'></e-column> -->
-            <e-column field="jobId" headerText='Verk' [customAttributes]='customAttributes'></e-column>
-            <e-column field="userId" headerText='Notandi' [customAttributes]='customAttributes'></e-column>
+            <e-column field="job" headerText='Verk' [valueAccessor]="jobFormatter" [customAttributes]='customAttributes'></e-column>
+            <e-column field="user" headerText='Notandi' [valueAccessor]="userFormatter" [customAttributes]='customAttributes'></e-column>
             <e-column field="text" headerText='Athugasemd' [customAttributes]='customAttributes'></e-column>
             <e-column field="seen" headerText='Séð' [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
         </e-columns>

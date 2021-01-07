@@ -146,15 +146,6 @@ export class AdminTasksDialogComponent implements OnInit {
           console.log(result);
         this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
         }, error => console.error(error));
-        //     console.log(this.jobForm.value);
-        //     const requestModelInsert: Job = this.jobForm.value;
-        //     requestModelInsert.completeBy = new Date(requestModelInsert.completeBy);
-        //     requestModelInsert.lastCheck = new Date(requestModelInsert.lastCheck);
-        //     this.dataService.addJob(requestModelInsert).subscribe(result => {
-        //       console.log(result);
-        //     this.openSnackBar(requestModelInsert.name + ' bætt við', 'Loka');
-        //     }, error => console.error(error));
-        //     break;
         break;
       case 'update':
         const updateId: string = this.selectedRow.id.toString();
@@ -164,16 +155,6 @@ export class AdminTasksDialogComponent implements OnInit {
         this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
         break;
-        // switch (this.dialogData.action.toLowerCase()) {
-        //   case 'insert':
-        //   case 'update':
-        //     const requestModelUpdate: Job = this.jobForm.value;
-        //     requestModelUpdate.id = this.selectedRow.id;
-        //     this.dataService.updateJob(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
-        //       console.log(result, this.selectedRow.id.toString());
-        //     this.openSnackBar(requestModelUpdate.name + ' uppfært', 'Loka');
-        //     }, error => console.error(error));
-        //     break;
       case 'delete':
         const deleteId: string = this.selectedRow.id.toString();
         requestModel.id = this.selectedRow.id;
@@ -182,14 +163,6 @@ export class AdminTasksDialogComponent implements OnInit {
         this.openSnackBar(requestModel.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
-    //   case 'delete':
-    //     const requestModelDelete: Job = this.jobForm.value;
-    //     requestModelDelete.id = this.selectedRow.id;
-    //     this.dataService.deleteJob(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
-    //       console.log(result, this.selectedRow.id.toString(), 'deleted');
-    //     this.openSnackBar(requestModelDelete.name + ' eytt', 'Loka');
-    //     }, error => console.error(error));
-    //     break;
         case 'comment':
           this.commentForm = new FormGroup({
             user: new FormControl({ value: parseInt(localStorage.getItem("user")) , disabled: true}),
@@ -227,7 +200,6 @@ export class AdminTasksDialogComponent implements OnInit {
           requestModelAssignDelete.jobId = this.selectedRow.id;
           requestModelAssignDelete.userId = index.id;
 
-          // console.log("Fyrir: ", this.assignedUsers);
           this.assignedUsers = this.assignedUsers.filter(item => item.id !== index.id);
 
           this.dataService.deleteJobAssignment(requestModelAssignDelete).subscribe(result => {
