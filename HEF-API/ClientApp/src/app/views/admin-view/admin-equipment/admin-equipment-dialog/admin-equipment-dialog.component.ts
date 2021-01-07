@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/data.service';
 import { Equipment, Station } from 'src/app/shared/models';
+// import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-admin-equipment-dialog',
@@ -36,7 +37,6 @@ export class AdminEquipmentDialogComponent implements OnInit {
 
   ngOnInit() {
     this.getData();
-    this.selectedRow = this.dialogData.equipments;
     if (this.dialogData.action.toLowerCase() === 'insert') {
       this.selectedRow = new Equipment();
       this.selectedRow.stationId = null;
@@ -45,6 +45,8 @@ export class AdminEquipmentDialogComponent implements OnInit {
       this.selectedRow.manufacturer = '';
       this.selectedRow.operation = '';
       this.selectedRow.lastCheck = null;
+    }else{
+      this.selectedRow = this.dialogData.equipments;
     }
     this.setMode();
   }
@@ -57,41 +59,45 @@ export class AdminEquipmentDialogComponent implements OnInit {
   }
 
   getData() {
-    this.http.get<Station[]>('api/stations').subscribe(result => {
-      console.log(result);
-      this.stations = result;
-    }, error => console.error(error));
+    this.stations = this.dataService.stations;
   }
 
    onSubmit() {
+    const requestModel: Equipment = this.equipmentForm.value;
+
     switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
-        console.log(this.equipmentForm.value);
-        const requestModel: Equipment = this.equipmentForm.value;
-        requestModel.model = new Date(requestModel.model);
         requestModel.lastCheck = new Date(requestModel.lastCheck);
         this.dataService.addEquipment(requestModel).subscribe(result => {
           console.log(result);
         this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
-        }, error => console.error(error));
+        }, error => console.error(error));       
         break;
+
       case 'update':
-        const requestModelUpdate: Equipment = this.equipmentForm.value;
-        requestModelUpdate.id = this.selectedRow.id;
-        this.dataService.updateEquipment(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
-          console.log(result, this.selectedRow.id.toString());
-        this.openSnackBar(requestModelUpdate.name + ' uppfært', 'Loka');
+        const updateId: string = this.selectedRow.id.toString();
+        requestModel.id = this.selectedRow.id;
+        console.log(updateId);
+        this.dataService.updateEquipment(requestModel, updateId).subscribe(result => {
+          console.log(result, updateId);
+        this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
         break;
+
       case 'delete':
-        const requestModelDelete: Equipment = this.equipmentForm.value;
-        requestModelDelete.id = this.selectedRow.id;
-        this.dataService.deleteEquipment(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
-          console.log(result, this.selectedRow.id.toString(), 'deleted');
-        this.openSnackBar(requestModelDelete.name + ' eytt', 'Loka');
+        const deleteId: string = this.selectedRow.id.toString();
+        requestModel.id = this.selectedRow.id;
+        this.dataService.deleteEquipment(requestModel, deleteId).subscribe(result => {
+          console.log(result, deleteId, 'deleted');
+        this.openSnackBar(requestModel.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
     }
+
+      setTimeout(()=> {
+        this.dataService.getEquipments();
+      }, 500);
+      
       this.closeDialog();
    }
 
@@ -120,53 +126,53 @@ export class AdminEquipmentDialogComponent implements OnInit {
         break;
       case 'update':
         this.equipmentForm = new FormGroup({
-          stationId: new FormControl({ value: '', disabled: false},
+          stationId: new FormControl({ value: this.selectedRow.stationId, disabled: false},
           ),
-          name: new FormControl({ value: '', disabled: false},
+          name: new FormControl({ value: this.selectedRow.name, disabled: false},
           ),
-          model: new FormControl({ value: '', disabled: false},
+          model: new FormControl({ value: this.selectedRow.model, disabled: false},
           ),
-          manufacturer: new FormControl({ value: '', disabled: false},
+          manufacturer: new FormControl({ value: this.selectedRow.manufacturer, disabled: false},
           ),
-          operation: new FormControl({ value: '', disabled: false},
+          operation: new FormControl({ value: this.selectedRow.operation, disabled: false},
           ),
-          lastCheck: new FormControl({ value: '', disabled: false},
+          lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: false},
           ),
         });
         this.editMode = 'Uppfæra';
         break;
       case 'view':
         this.equipmentForm = new FormGroup({
-          stationId: new FormControl({ value: '', disabled: true},
-          ),
-          name: new FormControl({ value: '', disabled: true},
-          ),
-          model: new FormControl({ value: '', disabled: true},
-          ),
-          manufacturer: new FormControl({ value: '', disabled: true},
-          ),
-          operation: new FormControl({ value: '', disabled: true},
-          ),
-          lastCheck: new FormControl({ value: '', disabled: true},
-          ),
+        stationId: new FormControl({ value: this.selectedRow.stationId, disabled: true},
+        ),
+        name: new FormControl({ value: this.selectedRow.name, disabled: true},
+        ),
+        model: new FormControl({ value: this.selectedRow.model, disabled: true},
+        ),
+        manufacturer: new FormControl({ value: this.selectedRow.manufacturer, disabled: true},
+        ),
+        operation: new FormControl({ value: this.selectedRow.operation, disabled: true},
+        ),
+        lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: true},
+        ),
         });
         this.editMode = 'Skoða';
         this.editDisabled = true;
         break;
       case 'delete':
         this.equipmentForm = new FormGroup({
-          stationId: new FormControl({ value: '', disabled: true},
-          ),
-          name: new FormControl({ value: '', disabled: true},
-          ),
-          model: new FormControl({ value: '', disabled: true},
-          ),
-          manufacturer: new FormControl({ value: '', disabled: true},
-          ),
-          operation: new FormControl({ value: '', disabled: true},
-          ),
-          lastCheck: new FormControl({ value: '', disabled: true},
-          ),
+        stationId: new FormControl({ value: this.selectedRow.stationId, disabled: true},
+        ),
+        name: new FormControl({ value: this.selectedRow.name, disabled: true},
+        ),
+        model: new FormControl({ value: this.selectedRow.model, disabled: true},
+        ),
+        manufacturer: new FormControl({ value: this.selectedRow.manufacturer, disabled: true},
+        ),
+        operation: new FormControl({ value: this.selectedRow.operation, disabled: true},
+        ),
+        lastCheck: new FormControl({ value: this.selectedRow.lastCheck, disabled: true},
+        ),
         });
         this.editMode = 'Eyða';
         this.editDisabled = true;

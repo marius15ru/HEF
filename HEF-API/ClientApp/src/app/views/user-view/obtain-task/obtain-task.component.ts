@@ -49,6 +49,10 @@ export class ObtainTaskComponent implements OnInit {
     }
   }
 
+  stationFormatter(field: string, data: Object, column: Object) {
+    return data[field].name;
+  }
+
   openDialog(jobs: Job, action: string) {
     const refUser = this.dialogItem.open(ObtainTaskDialogComponent, {
       data: {

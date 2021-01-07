@@ -1,37 +1,46 @@
-<h2>{{dialogData.action}} Stöð</h2>
+<h2 *ngIf="dialogData.action.toLowerCase() != 'insert'">{{editMode}} {{dialogData.station.name}}</h2>
+<h2 *ngIf="dialogData.action.toLowerCase() == 'insert'">{{editMode}} Stöð</h2>
 
 <mat-dialog-content>
     <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
-        <label class="form-input">
-            Nafn
-            <input type="text" class="form-input" formControlName="name">
-        </label>
-        <label class="form-input">
-            Veita
-            <input type="text" class="form-input" formControlName="plant">
-        </label>
-        <label class="form-input">
-            Municipal
-            <input type="text" class="form-input" formControlName="municipal">
-        </label>
-        <label class="form-input">
-            Heimilisfang
-            <input type="text" class="form-input" formControlName="address">
-        </label>
-        <label class="form-input">
-            Hnit
-            <input type="text" class="form-input" formControlName="coOrdinates">
-        </label>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Nafn</mat-label>
+            <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
+        </mat-form-field>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Veita</mat-label>
+            <mat-select formControlName="plantId" class="form-input" value="selectedRow.plantId">
+                <mat-option [value]="null">-</mat-option>
+                <mat-option *ngFor="let plant of (plants$ | async)" [value]="plant.id">{{plant.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Svæði</mat-label>
+            <mat-select formControlName="areaId" class="form-input" value="selectedRow.areaId">
+                <mat-option [value]="null">-</mat-option>
+                <mat-option *ngFor="let area of (areas$ | async)" [value]="area.id">{{area.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-        <label class="form-input">
-            Nánari staðsetning
-            <input type="text" class="form-input" formControlName="preciseLocation">
-        </label>
-        <label class="form-input">
-            Lýsing
-            <input type="text" class="form-input" formControlName="description">
-        </label>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Heimilisfang</mat-label>
+            <input matInput type="text" class="form-input" formControlName="address" [value]="selectedRow.address" >
+        </mat-form-field>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Hnit</mat-label>
+            <input matInput type="text" class="form-input" formControlName="coOrdinates" [value]="selectedRow.coOrdinates" >
+        </mat-form-field>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Nánari staðsetning</mat-label>
+            <input matInput type="text" class="form-input" formControlName="locationPrecise" [value]="selectedRow.locationPrecise" >
+        </mat-form-field>
 
-        <button class="form-submition" type="submit" [disabled]="!locationForm.valid">{{dialogData.action}}</button>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Lýsing</mat-label>
+            <input matInput type="text" class="form-input" formControlName="description" [value]="selectedRow.description" >
+        </mat-form-field>
+
+        <button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!locationForm.valid">{{editMode}}</button>
+        <button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
 </mat-dialog-content>

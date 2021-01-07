@@ -1,26 +1,15 @@
+
 <div>
     <div class="row ml-1">
         <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Sía</mat-label>
-                <mat-select multiple>
-                    <mat-option *ngFor="let plant of plants"> {{plant.name}} </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <h2 >Allar Veitur</h2>
         </div>
         <div class="ml-auto mr-3">
-            <button (click)="openDialog(null,'insert')">Stofna</button>
-        </div>
-    </div>
-</div>
-<div>
-    <div class="row ml-1">
-        <div>
-            <h2>Allar veitur</h2>
+            <button (click)="openDialog(null, 'insert')">Stofna</button>
         </div>
     </div>
     
-    <ejs-grid #grid [dataSource]="plants">
+    <ejs-grid #grid [dataSource]="(plants$ | async)">
         <e-columns >
             <!-- <e-column field='id' headerText='Auðkenni' width=" 200" isPrimaryKey='true' [customAttributes]='customAttributes'></e-column> -->
             <e-column field='name' headerText='Nafn' [customAttributes]='customAttributes'></e-column>

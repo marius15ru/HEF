@@ -9,24 +9,24 @@
             </div>
         </div>
         
-        <ejs-grid #grid id='OllVerk' [toolbar]='toolbarOptions'  [dataSource]="stations" 
+        <ejs-grid #grid id='OllVerk' [toolbar]='toolbarOptions'  [dataSource]="(stations$ | async)" 
         [allowPaging]='true' [allowSorting]='true' [allowResizing]="true" [allowPdfExport]='true' 
         (toolbarClick)='toolbarClick($event)'>
             <e-columns >
                 <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-                <e-column field='plantId' headerText='Veita' width="90px" [customAttributes]='customAttributes'></e-column>
-                <e-column field='areaId' headerText='Svæði' width="120px" [customAttributes]='customAttributes'></e-column>
+                <e-column field='plant' headerText='Veita' width="90px" [valueAccessor]='plantFormatter' [customAttributes]='customAttributes'></e-column>
+                <e-column field='area' headerText='Svæði' width="120px" [valueAccessor]='areaFormatter' [customAttributes]='customAttributes'></e-column>
                 <e-column field='name' headerText='Nafn' width="110px" [customAttributes]='customAttributes'></e-column>
                 <e-column field='address' headerText='Heimilisfang' [customAttributes]='customAttributes'></e-column>
                 <e-column field='coordinates' headerText='Hnit' width="95px" [customAttributes]='customAttributes'></e-column>
-                <e-column field='locationPrecise' headerText='Nákv. staðsetning' format="dd.MM.yy" type="date" width="110px" [customAttributes]='customAttributes'></e-column>
+                <e-column field='locationPrecise' headerText='Nákv. staðsetning' type="text" width="110px" [customAttributes]='customAttributes'></e-column>
                 <e-column field='description' headerText='Lýsing' width="95px" [customAttributes]='customAttributes'></e-column>
                 <e-column field="operations" headerText="Aðgerðir" width="110" [customAttributes]='customAttributes'>
-                    <ng-template #template let-jobs>
+                    <ng-template #template let-stations>
                         <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
-                        <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobs, 'view')"></i>
-                        <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobs, 'update')"></i>
-                        <i class="fas fa-trash-alt action-icon" matTooltip="Eyða" (click)="openDialog(jobs, 'delete')"></i>
+                        <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(stations, 'view')"></i>
+                        <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(stations, 'update')"></i>
+                        <i class="fas fa-trash-alt action-icon" matTooltip="Eyða" (click)="openDialog(stations, 'delete')"></i>
                     </ng-template>
                 </e-column>
             </e-columns>

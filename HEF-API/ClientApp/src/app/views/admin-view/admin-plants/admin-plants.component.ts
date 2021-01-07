@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { DataService } from 'src/app/data.service';
 import { Plant } from 'src/app/shared/models';
 import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-dialog.component';
 
@@ -11,10 +13,13 @@ import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-d
 })
 export class AdminPlantsComponent implements OnInit {
 
+  plants$: Observable<Plant[]> = this.dataService.plants$;
+
+
   public plants: Plant[];
   public customAttributes: Object;
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
+  constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
 
   ngOnInit() {
     this.getData();
@@ -22,10 +27,7 @@ export class AdminPlantsComponent implements OnInit {
   }
 
   getData() {
-    this.http.get<Plant[]>('api/plants').subscribe(result => {
-      console.log(result);
-      this.plants = result;
-    }, error => console.error(error));
+    this.plants = this.dataService.plants;
   }
 
   openDialog(plants: Plant, action: string) {
@@ -40,7 +42,7 @@ export class AdminPlantsComponent implements OnInit {
 
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
-      this.getData();
+      // this.getData();
     });
   }
 

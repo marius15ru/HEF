@@ -18,7 +18,7 @@
     <mat-form-field>
         <mat-label>Sía Stöð</mat-label>
         <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedStations">
-            <mat-option *ngFor="let item of stations" [value]="item.id">{{item.name}}</mat-option>
+            <mat-option *ngFor="let item of (stations$ | async)" [value]="item.id">{{item.name}}</mat-option>
         </mat-select>
     </mat-form-field>
     
@@ -28,7 +28,7 @@
     <ejs-grid 
     #grid id='OllVerk' 
     [allowPaging]='true'
-    [dataSource]="filteredJobs$ | async" 
+    [dataSource]="(filteredJobs$ | async)" 
     [allowPaging]='true' 
     [allowSorting]='true' 
     [allowResizing]="true" 
@@ -39,7 +39,7 @@
     >
         <e-columns >
             <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-            <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
             <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
             <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yy" width="110px" [customAttributes]='customAttributes'></e-column>
             <e-column field='description' headerText='Lýsing' [customAttributes]='customAttributes'></e-column>
@@ -75,7 +75,7 @@
     <ejs-grid
     #grid id='AllarAthugasemdir' 
     [allowPaging]='true' 
-    [dataSource]="comments" 
+    [dataSource]="(comments$ | async)" 
     [allowPaging]='true' 
     [allowSorting]='true' 
     [allowResizing]="true" 

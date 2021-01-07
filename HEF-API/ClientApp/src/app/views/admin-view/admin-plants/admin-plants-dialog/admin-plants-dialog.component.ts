@@ -52,33 +52,35 @@ export class AdminPlantsDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    switch (this.dialogData.action.toLowerCase()) {
+    const requestModel: Plant = this.plantForm.value;
+
+    switch(this.dialogData.action.toLowerCase()){
       case 'insert':
-        const requestModel: Plant = this.plantForm.value;
         this.dataService.addPlant(requestModel).subscribe(result => {
           console.log(result);
-          this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
+        this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
         }, error => console.error(error));
         break;
       case 'update':
-        const requestModelUpdate: Plant = this.plantForm.value;
-        requestModelUpdate.id = this.selectedRow.id;
-        requestModelUpdate.name = this.selectedRow.name;
-        this.dataService.updatePlant(requestModelUpdate, this.selectedRow.id.toString()).subscribe(result => {
-          console.log(result, this.selectedRow.id.toString());
-        this.openSnackBar(requestModelUpdate.name + ' uppfærð', 'Loka');
+        const updateId: string = this.selectedRow.id.toString();
+        requestModel.id = this.selectedRow.id;
+        this.dataService.updatePlant(requestModel, updateId).subscribe(result => {
+          console.log(result);
+        this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
         break;
       case 'delete':
-        const requestModelDelete: Plant = this.plantForm.value;
-        requestModelDelete.id = this.selectedRow.id;
-        requestModelDelete.name = this.selectedRow.name;
-        this.dataService.deletePlant(requestModelDelete, this.selectedRow.id.toString()).subscribe(result => {
-          console.log(result, this.selectedRow.id.toString(), 'deleted');
-        this.openSnackBar(requestModelDelete.name + ' eytt', 'Loka');
+        const deleteId: string = this.selectedRow.id.toString();
+        requestModel.id = this.selectedRow.id;
+        this.dataService.deletePlant(requestModel, deleteId).subscribe(result => {
+          console.log(result);
+        this.openSnackBar(requestModel.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
     }
+    setTimeout(()=> {
+      this.dataService.getPlants();
+    }, 500);
       this.closeDialog();
    }
 
@@ -109,7 +111,6 @@ export class AdminPlantsDialogComponent implements OnInit {
           ),
         });
         this.editMode = 'Skoða';
-        this.editDisabled = true;
         break;
       case 'delete':
         this.plantForm = new FormGroup({
@@ -117,7 +118,6 @@ export class AdminPlantsDialogComponent implements OnInit {
           ),
         });
         this.editMode = 'Eyða';
-        this.editDisabled = true;
         break;
     }
   }

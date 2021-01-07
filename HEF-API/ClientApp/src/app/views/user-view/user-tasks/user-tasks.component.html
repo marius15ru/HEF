@@ -23,7 +23,7 @@
             [allowTextWrap]='true'>
                 <e-columns >
                     <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter"[customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
@@ -61,7 +61,7 @@
             [allowTextWrap]='true'>
                 <e-columns >
                     <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
@@ -97,7 +97,7 @@
             [allowTextWrap]='true'>
                 <e-columns >
                     <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100px" [customAttributes]='customAttributes'></e-column>
@@ -132,7 +132,7 @@
             [allowTextWrap]='true'>
                 <e-columns >
                     <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
@@ -167,7 +167,7 @@
             [allowTextWrap]='true'>
                 <e-columns >
                     <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-                    <e-column field='stationId' headerText='Stöð' width="90px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>

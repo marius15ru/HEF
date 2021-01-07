@@ -16,10 +16,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AdminTasksComponent implements OnInit {
 
-
+  // jobs$: Observable<Job[]> = this.dataService.jobs$;
   filteredJobs$: Observable<Job[]> = this.dataService.filteredJobs$;
+  stations$: Observable<Station[]> = this.dataService.stations$;
+  comments$: Observable<Comment[]> = this.dataService.comments$;
 
-  jobs: Job[];
+
+  jobs: Job[] = [];
   alteredJobs: any[];
   recur: Recurring;
   pageSettings: Object;
@@ -47,7 +50,11 @@ export class AdminTasksComponent implements OnInit {
     this.toolbarOptions = ['PdfExport'];
     this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
     this.customAttributes = {class: 'customcss'};
+    
+    this.getData();
+  }
 
+  getData(){
     this.jobs = this.dataService.jobs;
     this.comments = this.dataService.comments;
     this.stations = this.dataService.stations;
@@ -60,7 +67,8 @@ export class AdminTasksComponent implements OnInit {
   }
 
   filterJobs(){
-    this.dataService.filterJobs(this.selectedJobStatuses, this.selectedStations, this.jobs);
+    // console.log(this.selectedJobStatuses, this.selectedStations, this.dataService.jobs);
+    this.dataService.filterJobs(this.selectedJobStatuses, this.selectedStations, this.dataService.jobs);
   }
 
 
@@ -79,6 +87,10 @@ export class AdminTasksComponent implements OnInit {
   statusFormatter(field: string, data: Object, column: Object) {
     return JobStatus[data[field]];
   }
+  
+  stationFormatter(field: string, data: Object, column: Object) {
+    return data[field].name;
+  }
 
   boolFormatter(field: string, data: Object, column: Object) {
     if (data[field] === true) {
@@ -87,6 +99,8 @@ export class AdminTasksComponent implements OnInit {
       return 'Nei';
     }
   }
+
+  
 
   rowDataBound(args: RowDataBoundEventArgs) {
     const status = 'status';

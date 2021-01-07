@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { DataService } from 'src/app/data.service';
 import { Equipment, Station } from 'src/app/shared/models';
 import { AdminEquipmentDialogComponent } from './admin-equipment-dialog/admin-equipment-dialog.component';
 
@@ -11,12 +13,14 @@ import { AdminEquipmentDialogComponent } from './admin-equipment-dialog/admin-eq
 })
 export class AdminEquipmentComponent implements OnInit {
 
+  equipments$: Observable<Equipment[]> = this.dataService.equipments$;
+
   public equipments: Equipment[];
   public stations: Station[];
 
   public customAttributes: Object;
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
+  constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
 
   ngOnInit() {
     this.getData();
@@ -24,15 +28,12 @@ export class AdminEquipmentComponent implements OnInit {
   }
 
   getData() {
-    this.http.get<Equipment[]>('api/equipments').subscribe(result => {
-      console.log(result);
-      this.equipments = result;
-    }, error => console.error(error));
+    this.stations = this.dataService.stations;
+    this.equipments = this.dataService.equipments;
+  }
 
-    this.http.get<Station[]>('api/stations').subscribe(result => {
-      console.log(result);
-      this.stations = result;
-    }, error => console.error(error));
+  stationFormatter(field: string, data: Object, column: Object) {
+    return data[field].name;
   }
 
   openDialog(equipment: Equipment, action: string) {
@@ -46,8 +47,8 @@ export class AdminEquipmentComponent implements OnInit {
 
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
-      this.getData();
     });
+    // this.getData();
   }
 
 }

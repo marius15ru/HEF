@@ -3,19 +3,10 @@
 
 <mat-dialog-content>
     <form [formGroup]="areaForm" (ngSubmit)="onSubmit()">
-        <!-- <label class="form-input">
-            Auðkenni
-            <input type="text" class="form-input" formControlName="id" [value]="">
-        </label> -->
         <mat-form-field class="form-input">
             <mat-label class="form-input">Nafn</mat-label>
             <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
         </mat-form-field>
-        <!-- <label class="form-input">
-            Nafn
-            <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name">
-        </label> -->
-
-        <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!areaForm.valid">{{editMode}}</button>
-    </form>
+        <button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!areaForm.valid">{{editMode}}</button>
+        <button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>    </form>
 </mat-dialog-content>

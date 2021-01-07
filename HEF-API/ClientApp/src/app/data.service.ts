@@ -17,7 +17,7 @@ export class DataService {
   private areasUrl = '/api/areas/';
   private usersUrl = '/api/users/';
   private commentsUrl = '/api/comments/';
-  private stationsUrl = 'api/stations';
+  private stationsUrl = 'api/stations/';
 
   //Jobs
 
@@ -78,6 +78,16 @@ export class DataService {
     this._commentsSource.next(newValue);    
   }
 
+  //comments for current open job
+
+  private _jobCommentsSource: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>(null);
+  private _jobComments$: Observable<Comment[]> = this._jobCommentsSource.asObservable();
+  get jobComments$(): Observable<Comment[]> { return this._jobComments$ }
+  get jobComments(): Comment[] { return this._jobCommentsSource.getValue()}
+  set jobComments(newValue: Comment[]){
+    this._jobCommentsSource.next(newValue);    
+  }
+
   private _jobAssignmentsSource: BehaviorSubject<JobAssignments[]> = new BehaviorSubject<JobAssignments[]>(null);
   private _jobAssignments$: Observable<JobAssignments[]> = this._jobAssignmentsSource.asObservable();
   get jobAssignments$(): Observable<JobAssignments[]> { return this._jobAssignments$ }
@@ -111,9 +121,7 @@ export class DataService {
     this.http.get<Job[]>('api/jobs').subscribe(result => {
       console.log(result);
       this.jobs = result;
-      if(!this.filteredJobs){
-        this.filteredJobs = result;
-      }
+      this.filteredJobs = result;
     }, error => console.error(error));
   }
 
@@ -138,7 +146,9 @@ export class DataService {
         );
   }
 
-  filterJobs(jobStatuses: JobStatus[], stationIds: number[], jobs: Job[]){
+  //Filters
+  
+  filterJobs(jobStatuses: number[], stationIds: number[], jobs: Job[]){
     let tempJobs = [];
 
     tempJobs = this.filterByJobStatus(jobStatuses, jobs);
@@ -176,7 +186,7 @@ export class DataService {
   //Stations
 
   getStations(){
-    this.http.get<Station[]>('api/stations').subscribe(result => {
+    this.http.get<Station[]>('api/stations/').subscribe(result => {
       console.log(result);
       this.stations = result;
     }, error => console.error(error));
@@ -192,7 +202,7 @@ export class DataService {
     let url = this.stationsUrl + stationId + "/";
     return this.http.put<Plant>(url, station, this.httpOptions)
       .pipe(
-        catchError(this.handleError('updatePlant', station))
+        catchError(this.handleError('updateStation', station))
       );
   }
 
@@ -200,7 +210,7 @@ export class DataService {
       let url = this.stationsUrl + stationId + "/";   
       return this.http.delete(url, this.httpOptions)
         .pipe(
-          catchError(this.handleError('deletePlant'))
+          catchError(this.handleError('deleteStation'))
         );
   }
 
@@ -252,6 +262,7 @@ export class DataService {
 
   updateEquipment(equipment: Equipment, equipmentId: string): Observable<Equipment> {
     const url = this.equipmentsUrl + equipmentId + '/';
+    console.log(url);
     return this.http.put<Equipment>(url, equipment, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateEquipment', equipment))
@@ -283,6 +294,7 @@ export class DataService {
 
   updateArea(area: Area, areaId: string): Observable<Area> {
     const url = this.areasUrl + areaId + '/';
+    console.log(url);
     return this.http.put<Area>(url, area, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateArea', area))
@@ -315,6 +327,7 @@ export class DataService {
 
   updateUser(user: User, userId: string): Observable<User> {
     const url = this.usersUrl + userId + '/';
+    // console.log(url);
     return this.http.put<User>(url, user, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateUser', user))
@@ -369,8 +382,11 @@ export class DataService {
   getComments(){
     return this.http.get<Comment[]>('api/comments').subscribe(result => {
       this.comments = result;
+      console.log(result);
     }, error => console.error(error));
   }
+
+
 
 
 

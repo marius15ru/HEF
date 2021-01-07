@@ -16,9 +16,9 @@ export class AdminViewComponent implements OnInit {
   constructor(private http: HttpClient, private dataService: DataService) { }
 
   ngOnInit() {
+    this.dataService.getJobs();
     this.dataService.getStations();
     this.dataService.getComments();
-    this.dataService.getJobs();
     this.dataService.getEquipments();
     this.dataService.getAreas();
     this.dataService.getPlants();

@@ -12,15 +12,15 @@ export enum DataOperation {
 }
 
 export enum Role {
-    Undefined = 0,
-    Verkaðili = 1,
-    Stjórnandi = 2,
+    "Undefined" = 0,
+    "Verkaðili" = 1,
+    "Stjórnandi" = 2,
 }
 
 export enum UserStatus {
-    Undefined = 0,
-    Tiltækur = 1,
-    Ótiltækur = 2,
+    "Undefined" = 0,
+    "Tiltæk/ur" = 1,
+    "Ótiltæk/ur" = 2,
 }
 
 export enum JobStatus {

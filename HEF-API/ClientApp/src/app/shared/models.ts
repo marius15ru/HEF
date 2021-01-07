@@ -60,6 +60,9 @@ export class Station {
     plantId: number;
     areaId: number;
 
+    plant: Plant;
+    area: Area;
+
     address: string;
     description: string;
     name: string;

@@ -45,11 +45,41 @@ export class AdminAreasDialogComponent implements OnInit {
   onSubmit() {
     console.log(this.areaForm.value);
     const requestModel: Area = this.areaForm.value;
-    this.dataService.addArea(requestModel).subscribe(result => {
-      console.log(result);
-    this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
-    }, error => console.error(error));
+
+    switch(this.dialogData.action.toLowerCase()){
+      case 'insert':
+        this.dataService.addArea(requestModel).subscribe(result => {
+          console.log(result);
+        this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
+        }, error => console.error(error));
+        break;
+      case 'update':
+        const updateId: string = this.selectedRow.id.toString();
+        requestModel.id = this.selectedRow.id;
+        this.dataService.updateArea(requestModel, updateId).subscribe(result => {
+          console.log(result);
+        this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
+        }, error => console.error(error));
+        break;
+      case 'delete':
+        const deleteId: string = this.selectedRow.id.toString();
+        requestModel.id = this.selectedRow.id;
+        this.dataService.deleteArea(requestModel, deleteId).subscribe(result => {
+          console.log(result);
+        this.openSnackBar(requestModel.name + ' eytt', 'Loka');
+        }, error => console.error(error));
+        break;
+    }
+    setTimeout(()=> {
+      this.dataService.getAreas();
+    }, 500);
+
+    this.closeDialog();
    }
+
+   closeDialog() {
+    this.dialogRef.close('Closed');
+  }
 
   setMode() {
     switch (this.dialogData.action.toLowerCase()) {
@@ -62,26 +92,28 @@ export class AdminAreasDialogComponent implements OnInit {
         break;
       case 'update':
         this.areaForm = new FormGroup({
-          name: new FormControl({ value: '', disabled: false},
+          name: new FormControl({ value: this.selectedRow.name, disabled: false},
           ),
         });
         this.editMode = 'Uppfæra';
         break;
       case 'view':
         this.areaForm = new FormGroup({
-          name: new FormControl({ value: '', disabled: true},
+          name: new FormControl({ value: this.selectedRow.name, disabled: true},
           ),
         });
         this.editMode = 'Skoða';
-        this.editDisabled = true;
+        console.log(this.areaForm.valid);
+        // this.editDisabled = true;
         break;
       case 'delete':
         this.areaForm = new FormGroup({
-          name: new FormControl({ value: '', disabled: true},
+          name: new FormControl({ value: this.selectedRow.name, disabled: true},
           ),
         });
         this.editMode = 'Eyða';
-        this.editDisabled = true;
+        console.log(this.areaForm.valid);
+        // this.editDisabled = true;
         break;
     }
   }

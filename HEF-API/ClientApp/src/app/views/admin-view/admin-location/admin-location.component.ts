@@ -3,8 +3,10 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
+import { Observable } from 'rxjs';
+import { DataService } from 'src/app/data.service';
 import { DataOperation } from 'src/app/shared/enums';
-import { Station } from 'src/app/shared/models';
+import { Plant, Station } from 'src/app/shared/models';
 import { AdminLocationDialogComponent } from './admin-location-dialog/admin-location-dialog.component';
 
 @Component({
@@ -14,6 +16,8 @@ import { AdminLocationDialogComponent } from './admin-location-dialog/admin-loca
 })
 export class AdminLocationComponent implements OnInit {
 
+  stations$: Observable<Station[]> = this.dataService.stations$;
+
   public stations: Station[];
 
   public toolbarOptions: ToolbarItems[];
@@ -21,7 +25,7 @@ export class AdminLocationComponent implements OnInit {
   public grid: GridComponent;
   public customAttributes: Object;
 
-  constructor(public dialogItem: MatDialog, private http: HttpClient) {}
+  constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
 
 
 
@@ -38,6 +42,15 @@ export class AdminLocationComponent implements OnInit {
     }, error => console.error(error));
   }
 
+  plantFormatter(field: string, data: Object, column: Object) {
+    return data[field].name;
+  }
+
+
+  areaFormatter(field: string, data: Object, column: Object) {
+    return data[field].name;
+  }
+
   toolbarClick(args: ClickEventArgs): void {
     console.log('toolbarClick', args);
     console.log(this.grid);
@@ -46,11 +59,12 @@ export class AdminLocationComponent implements OnInit {
     }
   }
 
-  openDialog(action: string) {
+  openDialog(station: Station, action: string) {
 
     const refUser = this.dialogItem.open(AdminLocationDialogComponent, {
       data: {
-        action: 'Stofna'
+        action: action,
+        station: station
       },
       width: '800px'
     });

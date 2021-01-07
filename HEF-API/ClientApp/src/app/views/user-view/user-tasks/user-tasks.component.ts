@@ -53,6 +53,10 @@ export class UserTasksComponent implements OnInit {
     }
   }
 
+  stationFormatter(field: string, data: Object, column: Object) {
+    return data[field].name;
+  }
+
   getData(){
     this.http.get<Job[]>('api/users/' + this.userId + '/jobs').subscribe(result => {
       console.log(result);
