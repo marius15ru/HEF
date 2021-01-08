@@ -23,7 +23,7 @@
     </mat-form-field>
     
 
-    <button (click)="clearFilter()">Hreinsa síur</button>
+    <button (click)="clearJobFilter()">Hreinsa síur</button>
     
     <ejs-grid 
     #grid id='OllVerk' 
@@ -71,11 +71,27 @@
             <h2 >Athugasemdir við verk</h2>
         </div>
     </div>
+
+    <mat-form-field>
+        <mat-label>Sía Verk</mat-label>
+        <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="selectedJobs">
+            <mat-option *ngFor="let item of (jobs$ | async)" [value]="item.id" >{{item.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Sía Starfsmann</mat-label>
+        <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="selectedUsers">
+            <mat-option *ngFor="let item of (users$ | async)" [value]="item.id">{{item.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+
+    <button (click)="clearCommentFilter()">Hreinsa síur</button>
     
     <ejs-grid
     #grid id='AllarAthugasemdir' 
-    [allowPaging]='true' 
-    [dataSource]="(comments$ | async)" 
+    [dataSource]="(filteredComments$ | async)" 
     [allowPaging]='true' 
     [allowSorting]='true' 
     [allowResizing]="true" 

@@ -172,5 +172,17 @@ mat-grid-tile {
   min-width: 90%;
 }
 
+/* .e-grid .e-gridheader {
+  border:2px solid #ffff;
+} */
+
+/* .e-grid .e-pagercontainer {
+  background-color: #1a88f0;
+} */
+
+.e-grid .e-gridpager .e-currentitem {
+  background-color:#f23035;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

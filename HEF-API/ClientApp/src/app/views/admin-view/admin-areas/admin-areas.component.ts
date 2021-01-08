@@ -18,6 +18,7 @@ export class AdminAreasComponent implements OnInit {
   areas$: Observable<Area[]> = this.dataService.areas$;
   
   public customAttributes: Object;
+  pageSettings: Object;
 
   constructor(
     public dialogItem: MatDialog, 
@@ -27,6 +28,7 @@ export class AdminAreasComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.customAttributes = {class: 'customcss'};
+    this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
   }
 
   getData() {

@@ -9,8 +9,11 @@
             </div>
         </div>
         
-        <ejs-grid #grid id='OllVerk' [toolbar]='toolbarOptions'  [dataSource]="(stations$ | async)" 
-        [allowPaging]='true' [allowSorting]='true' [allowResizing]="true" [allowPdfExport]='true' 
+        <ejs-grid #grid id='OllVerk'  
+        [dataSource]="(stations$ | async)" 
+        [allowPaging]='true' 
+        [allowSorting]='true' 
+        [allowResizing]="true" 
         (toolbarClick)='toolbarClick($event)'>
             <e-columns >
                 <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->

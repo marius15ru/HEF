@@ -78,6 +78,14 @@ export class DataService {
     this._commentsSource.next(newValue);    
   }
 
+  private _filteredCommentsSource: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>(null);
+  private _filteredComments$: Observable<Comment[]> = this._filteredCommentsSource.asObservable();
+  get filteredComments$(): Observable<Comment[]> { return this._filteredComments$ }
+  get filteredComments(): Comment[] { return this._filteredCommentsSource.getValue()}
+  set filteredComments(newValue: Comment[]){
+    this._filteredCommentsSource.next(newValue);    
+  }
+
   //comments for current open job
 
   private _jobCommentsSource: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>(null);
@@ -178,6 +186,41 @@ export class DataService {
     // }
     return jobs.filter((job: Job) => {
       return stationIds.find(stationId => stationId == job.stationId);
+    });
+  }
+
+  // this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.dataService.comments)
+  
+  filterComments(users: number[], jobs: number[], comments: Comment[]){
+    let tempJobs = [];
+
+    tempJobs = this.filterByCommentUser(users, comments);
+    tempJobs = this.filterByCommentJob(jobs, tempJobs);
+
+    this.filteredComments = tempJobs;
+  }
+
+  filterByCommentUser(users: number[], comments: Comment[]): Comment[]{
+    if(!users || users.length == 0 ){
+      return comments;
+    }
+    // if(!jobs){
+    //   jobs = [];
+    // }
+    return comments.filter((comment: Comment) => {
+      return users.find(jobId => jobId == comment.userId);
+    });
+  }
+
+  filterByCommentJob(jobs: number[], comments: Comment[]): Comment[]{
+    if(!jobs || jobs.length == 0){
+      return comments;
+    }
+    // if(!jobs){
+    //   jobs = [];
+    // }
+    return comments.filter((comments: Comment) => {
+      return jobs.find(jobIds => jobIds == comments.jobId);
     });
   }
 
@@ -382,6 +425,7 @@ export class DataService {
   getComments(){
     return this.http.get<Comment[]>('api/comments').subscribe(result => {
       this.comments = result;
+      this.filteredComments = result;
       console.log(result);
     }, error => console.error(error));
   }

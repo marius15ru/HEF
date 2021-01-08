@@ -40,8 +40,12 @@ import { MessagesComponent } from './messages/messages.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { UserTaskDialogComponent } from './views/user-view/user-tasks/user-task-dialog/user-task-dialog.component';
 import { ObtainTaskDialogComponent } from './views/user-view/obtain-task/obtain-task-dialog/obtain-task-dialog.component';
+import { JwtModule } from "@auth0/angular-jwt";
+import { AuthGuardService } from './auth-guard.service';
 
-
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
 
 @NgModule({
   declarations: [
@@ -79,11 +83,18 @@ import { ObtainTaskDialogComponent } from './views/user-view/obtain-task/obtain-
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'verkadili', component: UserViewComponent},
-      { path: 'stjornandi', component: AdminViewComponent},
+      // { path: 'counter', component: CounterComponent },
+      // { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'verkadili', component: UserViewComponent, canActivate: [AuthGuardService] },
+      { path: 'stjornandi', component: AdminViewComponent, canActivate: [AuthGuardService] },
     ]),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:5001"],
+        blacklistedRoutes: []
+      }
+    }),
     BrowserAnimationsModule,
     MatInputModule,
     MatFormFieldModule,
@@ -106,7 +117,8 @@ import { ObtainTaskDialogComponent } from './views/user-view/obtain-task/obtain-
     ResizeService,
     PdfExportService,
     ToolbarService,
-    PageService],
+    PageService,
+    AuthGuardService],
   bootstrap: [AppComponent],
   entryComponents: [
     AdminTasksDialogComponent,

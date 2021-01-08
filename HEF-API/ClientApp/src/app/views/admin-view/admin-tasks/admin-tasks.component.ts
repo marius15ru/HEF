@@ -2,12 +2,32 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
-import { Comment, Job, Station } from 'src/app/shared/models';
+import { Comment, Job, Station, User } from 'src/app/shared/models';
 import { AdminTasksDialogComponent } from './admin-tasks-dialog/admin-tasks-dialog.component';
 import { FilterSettings, FilterSettingsModel, GridComponent, RowDataBoundEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { DataService } from 'src/app/data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { L10n, setCulture } from '@syncfusion/ej2-base';
+
+setCulture('is'); 
+
+L10n.load({ 
+    'is': { 
+        grid: { 
+           EmptyRecord:"Engar raðir í töflu",
+        },
+        pager: {
+          pagerDropDown: 'Raðir á hverri síðu',
+          currentPageInfo: '{0} af {1} Síðum',
+          totalItemsInfo: '({0} Raðir)',
+          firstPageTooltip: 'Fara á fyrstu síðu',
+          lastPageTooltip: 'Fara á öftustu síðu',
+          nextPageTooltip: 'Færa á næstu síðu',
+          previousPageTooltip: 'Fara á fyrri síðu',
+        }
+    } 
+}); 
 
 @Component({
   selector: 'app-admin-tasks',
@@ -20,6 +40,9 @@ export class AdminTasksComponent implements OnInit {
   filteredJobs$: Observable<Job[]> = this.dataService.filteredJobs$;
   stations$: Observable<Station[]> = this.dataService.stations$;
   comments$: Observable<Comment[]> = this.dataService.comments$;
+  filteredComments$: Observable<Comment[]> = this.dataService.filteredComments$;
+  jobs$: Observable<Job[]> = this.dataService.jobs$;
+  users$: Observable<User[]> = this.dataService.users$;
 
 
   jobs: Job[] = [];
@@ -34,8 +57,11 @@ export class AdminTasksComponent implements OnInit {
   comments: Comment[];
   initialGridLoad = true;
   jobStatus = JobStatus;
+
   selectedJobStatuses: number[] = [];
   selectedStations: number[] = [];
+  selectedUsers: number[] = [];
+  selectedJobs: number[] = [];
 
   public customAttributes: Object;
   @Inject('BASE_URL') baseUrl: string;
@@ -60,17 +86,27 @@ export class AdminTasksComponent implements OnInit {
     this.stations = this.dataService.stations;
   }
 
-  clearFilter(){
+  clearJobFilter(){
     this.selectedJobStatuses = [];
     this.selectedStations = [];
     this.filterJobs();
   }
 
+  
   filterJobs(){
     // console.log(this.selectedJobStatuses, this.selectedStations, this.dataService.jobs);
     this.dataService.filterJobs(this.selectedJobStatuses, this.selectedStations, this.dataService.jobs);
   }
+  
+  clearCommentFilter(){
+    this.selectedUsers = [];
+    this.selectedJobs = [];
+    this.filterComments();
+  }
 
+  filterComments(){
+    this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.dataService.comments)
+  }
 
   toolbarClick(args: ClickEventArgs): void {
     console.log('toolbarClick', args);

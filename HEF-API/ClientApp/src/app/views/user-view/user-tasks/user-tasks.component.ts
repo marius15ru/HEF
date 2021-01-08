@@ -6,6 +6,26 @@ import { DataService } from 'src/app/data.service';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
 import { Comment, Job, Station, User } from 'src/app/shared/models';
 import { UserTaskDialogComponent } from './user-task-dialog/user-task-dialog.component';
+import { L10n, setCulture } from '@syncfusion/ej2-base';
+
+setCulture('is'); 
+
+L10n.load({ 
+    'is': { 
+        grid: { 
+           EmptyRecord:"Engar raðir í töflu",
+        },
+        pager: {
+          pagerDropDown: 'Raðir á hverri síðu',
+          currentPageInfo: '{0} af {1} Síðum',
+          totalItemsInfo: '({0} Raðir)',
+          firstPageTooltip: 'Fara á fyrstu síðu',
+          lastPageTooltip: 'Fara á öftustu síðu',
+          nextPageTooltip: 'Færa á næstu síðu',
+          previousPageTooltip: 'Fara á fyrri síðu',
+        }
+    } 
+}); 
 
 @Component({
   selector: 'app-user-tasks',
@@ -22,6 +42,8 @@ export class UserTasksComponent implements OnInit {
   stations: Station[] = [];
   comments: Comment[] = [];
 
+
+
   pageSettings: object;
 
   user: User;
@@ -36,6 +58,16 @@ export class UserTasksComponent implements OnInit {
     this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
     this.customAttributes = {class: 'customcss'};
   }
+
+
+
+  // dataBound(args:any){ 
+  //   var obj = $(".e-grid").ejGrid("instance") 
+  //   if(obj.getContentTable().find("td").hasClass("emptyrecord")) 
+  //   { 
+  //       obj.getContentTable().find("td").text("Engin verk") 
+  //   } 
+  // } 
 
   recurFormatter(field: string, data: Object, column: Object) {
     return Recurring[data[field]];

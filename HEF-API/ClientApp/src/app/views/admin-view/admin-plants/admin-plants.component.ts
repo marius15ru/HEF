@@ -6,6 +6,7 @@ import { DataService } from 'src/app/data.service';
 import { Plant } from 'src/app/shared/models';
 import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-dialog.component';
 
+
 @Component({
   selector: 'app-admin-plants',
   templateUrl: './admin-plants.component.html',
@@ -18,12 +19,15 @@ export class AdminPlantsComponent implements OnInit {
 
   public plants: Plant[];
   public customAttributes: Object;
+  pageSettings: Object;
+
 
   constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
 
   ngOnInit() {
     this.getData();
     this.customAttributes = {class: 'customcss'};
+    this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
   }
 
   getData() {

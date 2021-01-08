@@ -19,12 +19,15 @@ export class AdminEquipmentComponent implements OnInit {
   public stations: Station[];
 
   public customAttributes: Object;
-
+  pageSettings: Object;
+  
+  
   constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
-
+  
   ngOnInit() {
     this.getData();
     this.customAttributes = {class: 'customcss'};
+    this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
   }
 
   getData() {

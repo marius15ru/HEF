@@ -8,7 +8,12 @@
         </div>
     </div>
     
-    <ejs-grid #grid [dataSource]="equipments$ | async">
+    <ejs-grid #grid 
+    [dataSource]="equipments$ | async"
+    [allowPaging]='true' 
+    [allowSorting]='true' 
+    [allowResizing]="true" 
+    [allowTextWrap]='true'>
         <e-columns >
             <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px" [customAttributes]='customAttributes'></e-column> -->
             <e-column field='station' headerText="Stöð" width="120px" [valueAccessor]='stationFormatter' [customAttributes]='customAttributes'></e-column>

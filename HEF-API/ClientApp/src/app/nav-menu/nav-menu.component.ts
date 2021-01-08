@@ -18,9 +18,11 @@ export class NavMenuComponent {
     this.isExpanded = !this.isExpanded;
   }
 
+
   logOut() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("user");
     localStorage.removeItem("role");
+    console.log(localStorage.getItem("jwt"));
  }
 }

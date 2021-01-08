@@ -181,18 +181,19 @@ export class AdminTasksDialogComponent implements OnInit {
 
    onSubmitAssignment(assignOption: string, index: User) {
      console.log('assign');
+     
      switch (assignOption) {
        case 'insert':
+         const requestModelAssign: JobAssignments = this.assignmentForm.value;
          console.log('assignedInsert');
-          const requestModelAssign: JobAssignments = this.assignmentForm.value;
           requestModelAssign.jobId = this.selectedRow.id;
           const userId: string = requestModelAssign.userId.toString() + '/';
           this.assignedUsers.push(index);
 
           this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
-            console.log(result, this.selectedRow.id.toString(), 'assigned insert');
-          this.openSnackBar(requestModelAssign.userId.toString() + ' úthlutað verki ' + requestModelAssign.jobId.toString(), 'Loka');
-          }, error => console.error(error));
+            console.log(result, this.selectedRow.name, 'assigned insert');
+            this.openSnackBar(index.name + ' úthlutað verki ' + this.selectedRow.name, 'Loka');
+            }, error => console.error(error));
           break;
       case 'delete':
           console.log('assignedDelete');
@@ -204,8 +205,8 @@ export class AdminTasksDialogComponent implements OnInit {
 
           this.dataService.deleteJobAssignment(requestModelAssignDelete).subscribe(result => {
             console.log(result, 'assigned delete');
-            this.openSnackBar('Úthlutun ' + requestModelAssignDelete.userId.toString() + ' á verki ' +
-            requestModelAssignDelete.jobId.toString() + ' fjarlægð', 'Loka');
+            this.openSnackBar('Úthlutun ' + index.name + ' á verki ' +
+            this.selectedRow.name + ' fjarlægð', 'Loka');
           }, error => console.error(error));
           break;
      }
