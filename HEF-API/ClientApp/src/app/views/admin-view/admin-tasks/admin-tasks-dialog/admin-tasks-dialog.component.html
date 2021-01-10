@@ -36,7 +36,7 @@
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Klára fyrir</mat-label>
-            <input matInput [matDatepicker]="picker1" [value]="selectedRow.completeBy" formControlName="completeBy">
+            <input matInput [min]="getCurrentDate()" [matDatepicker]="picker1" [value]="selectedRow.completeBy" formControlName="completeBy">
             <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
             <mat-datepicker [startAt]="selectedRow.completeBy" #picker1></mat-datepicker>
         </mat-form-field>
@@ -68,7 +68,7 @@
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Síðasta athugun</mat-label>
-            <input matInput [matDatepicker]="picker2" [value]="selectedRow.lastCheck" formControlName="lastCheck">
+            <input matInput [max]="getCurrentDate()"  [matDatepicker]="picker2" [value]="selectedRow.lastCheck" formControlName="lastCheck">
             <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
             <mat-datepicker [startAt]="selectedRow.lastCheck" #picker2></mat-datepicker>
         </mat-form-field>

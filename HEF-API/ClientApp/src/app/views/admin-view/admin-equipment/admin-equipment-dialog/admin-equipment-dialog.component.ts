@@ -62,6 +62,11 @@ export class AdminEquipmentDialogComponent implements OnInit {
     this.stations = this.dataService.stations;
   }
 
+  getCurrentDate(){
+    const today = new Date();
+    return today;
+  }
+
    onSubmit() {
     const requestModel: Equipment = this.equipmentForm.value;
 

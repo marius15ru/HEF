@@ -61,15 +61,16 @@
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Síðasta athugun</mat-label>
-            <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck">
-            <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck">
+            <input matInput [max]="getCurrentDate()"  [matDatepicker]="picker2" [value]="selectedRow.lastCheck" formControlName="lastCheck">
+            <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
+            <mat-datepicker [startAt]="selectedRow.lastCheck" #picker2></mat-datepicker>
         </mat-form-field>
 
-        <!-- <label class="form-input">
-            Síðasta athugun
-            <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
-            <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
-        </label> -->
+        <!-- <mat-form-field class="form-input">
+            <mat-label class="form-input">Síðasta athugun</mat-label>
+            <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck">
+            <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck">
+        </mat-form-field> -->
         
         <button mat-raised-button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{editMode}}</button>
     </form>

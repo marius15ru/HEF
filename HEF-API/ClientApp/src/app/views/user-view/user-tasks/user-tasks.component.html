@@ -28,13 +28,14 @@
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
                     <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                         <ng-template #template let-userJobs>
                             <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(userJobs, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(userJobs, 'update')"></i>
-                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(userJobs, 'comment')"></i>
                         </ng-template>
                     </e-column>
                 </e-columns>
@@ -66,13 +67,14 @@
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100px" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
                     <e-column field='status' headerText='Staða' width="100px" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100px" [customAttributes]='customAttributes'>
                         <ng-template #template let-jobsAssigned>
                             <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsAssigned, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsAssigned, 'update')"></i>
-                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsAssigned, 'comment')"></i>
                         </ng-template>
                     </e-column>
                 </e-columns>
@@ -101,6 +103,7 @@
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
                     <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                         <ng-template #template let-jobsInProgress>
@@ -137,13 +140,14 @@
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
                     <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                         <ng-template #template let-jobsOnHold>
                             <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsOnHold, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsOnHold, 'update')"></i>
-                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsOnHold, 'comment')"></i>
                         </ng-template>
                     </e-column>
                 </e-columns>
@@ -172,13 +176,14 @@
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
                     <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                         <ng-template #template let-jobsFinished>
                             <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsFinished, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsFinished, 'update')"></i>
-                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsFinished, 'comment')"></i>
                         </ng-template>
                     </e-column>
                 </e-columns>

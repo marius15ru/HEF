@@ -215,11 +215,18 @@ export class DataService {
 
   //Filters
   
-  filterJobs(jobStatuses: number[], stationIds: number[], jobs: Job[]){
+  filterJobs(jobStatuses: number[], stationIds: number[], hasComments: boolean, emergencyJobs: boolean, lastCheckFrom: Date, lastCheckTo: Date, completeByFrom: Date, completeByTo: Date, jobs: Job[]){
     let tempJobs = [];
 
     tempJobs = this.filterByJobStatus(jobStatuses, jobs);
     tempJobs = this.filterByStation(stationIds, tempJobs);
+    tempJobs = this.filterByHasComments(hasComments, tempJobs);
+    tempJobs = this.filterByEmergencyJob(emergencyJobs, tempJobs);
+    tempJobs = this.filterByLastCheckFrom(lastCheckFrom, tempJobs);
+    tempJobs = this.filterByLastCheckTo(lastCheckTo, tempJobs);
+    tempJobs = this.filterByCompleteByFrom(completeByFrom, tempJobs);
+    tempJobs = this.filterByCompleteByTo(completeByTo, tempJobs);
+
 
     this.filteredJobs = tempJobs;
   }
@@ -228,9 +235,6 @@ export class DataService {
     if(!jobStatuses || jobStatuses.length == 0 ){
       return jobs;
     }
-    // if(!jobs){
-    //   jobs = [];
-    // }
     return jobs.filter((job: Job) => {
       return jobStatuses.find(status => status == job.status.valueOf());
     });
@@ -240,12 +244,54 @@ export class DataService {
     if(!stationIds || stationIds.length == 0){
       return jobs;
     }
-    // if(!jobs){
-    //   jobs = [];
-    // }
     return jobs.filter((job: Job) => {
       return stationIds.find(stationId => stationId == job.stationId);
     });
+  }
+
+  filterByHasComments(hasComments: boolean, jobs: Job[]): Job[]{
+    // ÞARF AÐ ÚTFÆRA
+    if(hasComments === null){
+      return jobs;
+    }
+    return jobs.filter((job: Job) => job.hasComments === hasComments)
+  }
+
+  filterByEmergencyJob(emergencyJob: boolean, jobs: Job[]): Job[]{
+    // ÞARF AÐ ÚTFÆRA
+    if(emergencyJob === null){
+      return jobs;
+    }
+    return jobs.filter((job: Job) => job.emergencyJob === emergencyJob)
+  }
+
+  filterByLastCheckFrom(lastCheckFrom: Date, jobs: Job[]): Job[]{
+    if(lastCheckFrom === null){
+      return jobs;
+    }
+    return jobs.filter((job: Job) => new Date(job.lastCheck) > lastCheckFrom)
+  }
+
+  filterByLastCheckTo(lastCheckTo: Date, jobs: Job[]): Job[]{
+    if(lastCheckTo === null){
+      return jobs;
+    }
+    return jobs.filter((job: Job) => new Date(job.lastCheck) < lastCheckTo)
+  }
+
+  filterByCompleteByFrom(completeByFrom: Date, jobs: Job[]): Job[]{
+    if(completeByFrom === null){
+      return jobs;
+    }
+    return jobs.filter((job: Job) => new Date(job.completeBy) > completeByFrom)
+  }
+
+  filterByCompleteByTo(completeByTo: Date, jobs: Job[]): Job[]{
+    if(completeByTo === null){
+      return jobs;
+    }
+    return jobs.filter((job: Job) => new Date(job.completeBy) < completeByTo)
+  
   }
 
   // this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.dataService.comments)

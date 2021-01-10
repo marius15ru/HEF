@@ -9,6 +9,8 @@ import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { DataService } from 'src/app/data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
+import {FormGroup, FormControl} from '@angular/forms';
+
 
 setCulture('is'); 
 
@@ -62,6 +64,15 @@ export class AdminTasksComponent implements OnInit {
   selectedStations: number[] = [];
   selectedUsers: number[] = [];
   selectedJobs: number[] = [];
+  hasComments: boolean;
+  emergencyJobs: boolean;
+
+
+  lastCheckFrom: Date = null;
+  lastCheckTo: Date = null;
+
+  completeByFrom: Date = null;
+  completeByTo: Date = null;
 
   public customAttributes: Object;
   @Inject('BASE_URL') baseUrl: string;
@@ -86,16 +97,37 @@ export class AdminTasksComponent implements OnInit {
     this.stations = this.dataService.stations;
   }
 
+  getCurrentDate(){
+    const today = new Date();
+    return today;
+  }
+
   clearJobFilter(){
     this.selectedJobStatuses = [];
     this.selectedStations = [];
+    this.hasComments = null;
+    this.emergencyJobs = null;
+    this.lastCheckFrom = null;
+    this.lastCheckTo = null;
+    this.completeByFrom = null;
+    this.completeByTo = null;
     this.filterJobs();
   }
 
-  
   filterJobs(){
-    // console.log(this.selectedJobStatuses, this.selectedStations, this.dataService.jobs);
-    this.dataService.filterJobs(this.selectedJobStatuses, this.selectedStations, this.dataService.jobs);
+    console.log(this.completeByFrom);
+    console.log(this.completeByTo);
+
+    this.dataService.filterJobs(
+      this.selectedJobStatuses, 
+      this.selectedStations, 
+      this.hasComments, 
+      this.emergencyJobs, 
+      this.lastCheckFrom, 
+      this.lastCheckTo, 
+      this.completeByFrom, 
+      this.completeByTo , 
+      this.dataService.jobs);
   }
   
   clearCommentFilter(){

@@ -108,6 +108,11 @@ export class AdminTasksDialogComponent implements OnInit {
     });
   }
 
+  getCurrentDate(){
+    const today = new Date();
+    return today;
+  }
+
   getData(){
     this.stations = this.dataService.stations;
     this.users = this.dataService.users;

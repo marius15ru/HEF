@@ -21,6 +21,9 @@ export class UserTaskDialogComponent implements OnInit {
   recur = Recurring;
   jobStatus = JobStatus;
 
+  allComments: Comment[] = [];
+  jobComments: Comment[] = [];
+
   userId: number = parseInt(localStorage.getItem("user"));
 
 
@@ -53,6 +56,7 @@ export class UserTaskDialogComponent implements OnInit {
   ngOnInit() {
     this.selectedRow = this.dialogData.job;
     this.stations = this.dialogData.stations;
+    this.getJobComments(this.dialogData.job);
     this.setMode();
   }
 
@@ -61,6 +65,11 @@ export class UserTaskDialogComponent implements OnInit {
       duration: 2000,
       panelClass: ['snackbar-success']
     });
+  }
+
+  getJobComments(job: Job){
+    this.allComments = this.dataService.comments;
+    this.jobComments = this.allComments.filter(item => item.jobId == job.id);
   }
 
   onSubmit() {
@@ -175,7 +184,7 @@ export class UserTaskDialogComponent implements OnInit {
       case 'comment':
         this.commentForm = new FormGroup({
           user: new FormControl({ value: 1, disabled: true}),
-          job: new FormControl({  value: this.selectedRow.id, disabled: true}),
+          job: new FormControl({  value: this.dialogData.job.id, disabled: true}),
           comment: new FormControl('')
         });
         break;

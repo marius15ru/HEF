@@ -10,65 +10,39 @@
                 <mat-option *ngFor="let item of stations" [value]="item.id">{{item.name}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <!-- <label class="form-input">
-            Stöð
-            <select type="number" formControlName="stationId" class="form-input">
-                <option [value]="null">-</option>
-                <option *ngFor="let item of stations" [ngValue]="item.id">{{item.name}}</option>
-            </select>
-        </label> -->
+
         <mat-form-field class="form-input">
             <mat-label class="form-input">Nafn</mat-label>
             <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
         </mat-form-field>
-        <!-- <label class="form-input">
-            Nafn
-            <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
-        </label> -->
+
         <mat-form-field class="form-input">
             <mat-label class="form-input">Lýsing</mat-label>
             <textarea matInput type="text" class="form-input" formControlName="description" [value]="selectedRow.description"></textarea>
         </mat-form-field>
-        <!-- <label class="form-input">
-            Lýsing
-            <textarea type="text" class="form-input" formControlName="description" [value]="selectedRow.description" >
-                
-            </textarea>
-        </label> -->
+
         <mat-form-field class="form-input">
             <mat-label class="form-input">Endurtekningar</mat-label>
             <mat-select type="number" formControlName="recurring" class="form-input" value="selectedRow.recurring">
                 <mat-option *ngFor="let item of recur | enumToArray" [value]="item.index">{{item.name}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <!-- <label class="form-input">
-            Endurtekningar
-            <select type="number" formControlName="recurring" class="form-input" value="selectedRow.recurring">
-                <option *ngFor="let item of recur | enumToArray" [ngValue]="item.index">
-                    {{item.name}}
-                </option>
-            </select>
-        </label> -->
         <mat-form-field class="form-input">
             <mat-label class="form-input">Lengd verks(mín)</mat-label>
             <input matInput type="text" class="form-input" formControlName="duration" [value]="selectedRow.duration" >
         </mat-form-field>
-        <!-- <label class="form-input">
-            Lengd verks(mín)
-            <input type="text" class="form-input" formControlName="duration" [value]="selectedRow.duration" >
-        </label> -->
+
         <mat-form-field class="form-input">
+            <mat-label class="form-input">Klára fyrir</mat-label>
+            <input matInput [matDatepicker]="picker1" [value]="selectedRow.completeBy" formControlName="completeBy">
+            <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
+            <mat-datepicker [startAt]="selectedRow.completeBy" #picker1></mat-datepicker>
+        </mat-form-field>
+        <!-- <mat-form-field class="form-input">
             <mat-label class="form-inut">Klára fyrir</mat-label>
             <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
             <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
-        </mat-form-field>
-
-        <!-- <label class="form-input">
-            Klára fyrir
-            <!-- <input type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" > -->
-            <!-- <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
-            <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="completeBy" [value]="selectedRow.completeBy" >
-        </label> -->
+        </mat-form-field> -->
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Staða</mat-label>
@@ -76,15 +50,6 @@
                 <mat-option *ngFor="let item of jobStatus | enumToArray" [value]="item.index">{{item.name}}</mat-option>
             </mat-select>
         </mat-form-field>
-
-        <!-- <label class="form-input">
-            Staða
-            <select type="number" formControlName="status" class="form-input" value="selectedRow.status">
-                <option *ngFor="let item of jobStatus | enumToArray" [ngValue]="item.index">
-                    {{item.name}}
-                </option>
-            </select>
-        </label> -->
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Neyðarverk?</mat-label>
@@ -95,15 +60,6 @@
             </mat-select>
         </mat-form-field>
 
-        <!-- <label class="form-input">
-            Neyðarverk?
-            <select formControlName="emergencyJob" class="form-input" value="selectedRow.emergencyJob">
-                <option [ngValue]="null">-</option>
-                <option [ngValue]="true">Já</option>
-                <option [ngValue]="false">Nei</option>
-            </select>
-        </label> -->
-
         <mat-form-field class="form-input">
             <mat-label class="form-input">Athugasemdir?</mat-label>
             <mat-select formControlName="hasComments" class="form-input" value="selectedRow.hasComments">
@@ -113,34 +69,30 @@
             </mat-select>
         </mat-form-field>
 
-        <!-- <label class="form-input">
-            Athugasemdir?
-            <select formControlName="hasComments" class="form-input" value="selectedRow.hasComments">
-                <option [ngValue]="null">-</option>
-                <option [ngValue]="true">Já</option>
-                <option [ngValue]="false">Nei</option>
-            </select>
-        </label> -->
-
         <mat-form-field class="form-input">
+            <mat-label class="form-input">Síðasta athugun</mat-label>
+            <input matInput [matDatepicker]="picker2" [value]="selectedRow.lastCheck" formControlName="lastCheck">
+            <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
+            <mat-datepicker [startAt]="selectedRow.lastCheck" #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <!-- <mat-form-field class="form-input">
             <mat-label class="form-input">Síðasta athugun</mat-label>
             <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
             <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
-        </mat-form-field>
-
-        <!-- <label class="form-input">
-            Síðasta athugun
-            <input *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
-            <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
-        </label> -->
+        </mat-form-field> -->
         
         <button mat-raised-button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
         <button mat-raised-button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
 
     <form [formGroup]="commentForm" *ngIf="dialogData.action == 'comment'" (ngSubmit)="onSubmitComment()">
-        <mat-form-field>
-            <mat-label class="form-input">Athugasemd</mat-label>
+        <mat-form-field *ngFor="let comment of jobComments; let i = index" class="form-input">
+            <mat-label class="form-input">Athugasemd {{i}}: gerð af {{comment.user.name}} </mat-label>
+            <textarea matInput class="form-input" [disabled]="true" [value]="comment.text"></textarea>
+        </mat-form-field>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Ný athugasemd</mat-label>
             <textarea matInput class="form-input" formControlName="comment"></textarea>
         </mat-form-field>
         <button mat-raised-button class="form-submition" type="submit">Skrá athugasemd</button>

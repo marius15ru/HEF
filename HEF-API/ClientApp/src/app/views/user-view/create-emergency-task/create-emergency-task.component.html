@@ -8,7 +8,7 @@
                     <input matInput type="text" formControlName="name">
                 </mat-form-field>
                 <br>
-                <mat-form-field appearance="fill">
+                <mat-form-field >
                     <mat-label>Verkaðilar</mat-label>
                     <mat-select formControlName="jobUser">
                         <mat-option *ngFor="let user of users" [value]="user.id">{{user.name}}</mat-option>
@@ -16,14 +16,14 @@
                 </mat-form-field>
             </div>
             <div class="col-md-4">
-                <mat-form-field appearance="fill">
+                <mat-form-field >
                     <mat-label>Veita</mat-label>
                     <mat-select formControlName="plant">
                         <mat-option *ngFor="let plant of plants" [value]="plant.id">{{plant.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <br>
-                <mat-form-field appearance="fill">
+                <mat-form-field >
                     <mat-label>Svæði</mat-label>
                     <mat-select formControlName="area">
                         <mat-option *ngFor="let area of areas" [value]="area.id">{{area.name}}</mat-option>
@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-4">
                 <!-- Þarf nokkuð að hafa dagsetningu? er ekki að taka það inn í grunninn þegar að beiðni verður til? -->
-                <mat-form-field appearance="fill">
+                <mat-form-field >
                     <mat-label>Lýsing</mat-label>
                     <textarea matInput formControlName="text"></textarea>
                 </mat-form-field>
