@@ -134,8 +134,8 @@
             <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
         </label> -->
         
-        <button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
-        <button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
+        <button mat-raised-button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
+        <button mat-raised-button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
 
     <form [formGroup]="commentForm" *ngIf="dialogData.action == 'comment'" (ngSubmit)="onSubmitComment()">
@@ -143,6 +143,6 @@
             <mat-label class="form-input">Athugasemd</mat-label>
             <textarea matInput class="form-input" formControlName="comment"></textarea>
         </mat-form-field>
-        <button class="form-submition" type="submit">Skrá athugasemd</button>
+        <button mat-raised-button class="form-submition" type="submit">Skrá athugasemd</button>
     </form>
 </mat-dialog-content >

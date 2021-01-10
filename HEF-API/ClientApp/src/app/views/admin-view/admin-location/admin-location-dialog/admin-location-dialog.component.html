@@ -40,7 +40,7 @@
             <input matInput type="text" class="form-input" formControlName="description" [value]="selectedRow.description" >
         </mat-form-field>
 
-        <button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!locationForm.valid">{{editMode}}</button>
-        <button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
+        <button mat-raised-button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!locationForm.valid">{{editMode}}</button>
+        <button mat-raised-button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
 </mat-dialog-content>

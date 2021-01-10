@@ -14,6 +14,9 @@ export class ObtainTaskDialogComponent implements OnInit {
 
   selectedRow: Job;
 
+  public customAttributes: Object;
+
+
   jobAssignment: JobAssignments[];
   assignedIds: number[] = [];
   users: User[] = [];
@@ -31,6 +34,7 @@ export class ObtainTaskDialogComponent implements OnInit {
 
   ngOnInit() {
     this.selectedRow = this.dialogData.job;
+    this.customAttributes = {class: 'customcss'};
     this.getData();
     this.getJobAssignments();
   }

@@ -7,6 +7,6 @@
             <mat-label class="form-input">Nafn</mat-label>
             <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
         </mat-form-field>
-        <button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!areaForm.valid">{{editMode}}</button>
-        <button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>    </form>
+        <button mat-raised-button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!areaForm.valid">{{editMode}}</button>
+        <button mat-raised-button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>    </form>
 </mat-dialog-content>

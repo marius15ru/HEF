@@ -7,6 +7,7 @@ import { JobStatus, Recurring } from 'src/app/shared/enums';
 import { Comment, Job, Station, User } from 'src/app/shared/models';
 import { UserTaskDialogComponent } from './user-task-dialog/user-task-dialog.component';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
+import { Observable } from 'rxjs';
 
 setCulture('is'); 
 
@@ -34,6 +35,19 @@ L10n.load({
   encapsulation: ViewEncapsulation.None
 })
 export class UserTasksComponent implements OnInit {
+  userJobs$: Observable<Job[]> = this.dataService.userJobs$;
+  // availableJobs$: Observable<Job[]> = this.dataService.availableJobs$;
+  jobsAssigned$: Observable<Job[]> = this.dataService.jobsAssigned$;
+  jobsInProgress$: Observable<Job[]> = this.dataService.jobsInProgress$;
+  jobsOnHold$: Observable<Job[]> = this.dataService.jobsOnHold$;
+  jobsFinished$: Observable<Job[]> = this.dataService.jobsFinished$;
+
+  stations$: Observable<Station[]> = this.dataService.stations$;
+  comments$: Observable<Comment[]> = this.dataService.comments$;
+
+
+
+
   userJobs: Job[] = [];
   jobsAssigned: Job[] = [];
   jobsOnHold: Job[] = [];
@@ -54,20 +68,16 @@ export class UserTasksComponent implements OnInit {
   constructor(private http: HttpClient, private dataService: DataService, public dialogItem: MatDialog) { }
 
   ngOnInit() {
-    this.getData();
+    // this.getData();
     this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
     this.customAttributes = {class: 'customcss'};
+    this.stations = this.dataService.stations;
+    this.comments = this.dataService.comments;
+    // this.jobsAssigned = this.dataService.jobsAssigned;
+    // this.jobsInProgress = this.dataService.jobsInProgress;
+    // this.jobsOnHold = this.dataService.jobsOnHold;
+    // this.jobsFinished = this.dataService.jobsFinished;
   }
-
-
-
-  // dataBound(args:any){ 
-  //   var obj = $(".e-grid").ejGrid("instance") 
-  //   if(obj.getContentTable().find("td").hasClass("emptyrecord")) 
-  //   { 
-  //       obj.getContentTable().find("td").text("Engin verk") 
-  //   } 
-  // } 
 
   recurFormatter(field: string, data: Object, column: Object) {
     return Recurring[data[field]];
@@ -122,7 +132,8 @@ export class UserTasksComponent implements OnInit {
 
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
-      this.getData();
+      this.dataService.getUserJobs(parseInt(this.userId));
+      
     });
   }
 

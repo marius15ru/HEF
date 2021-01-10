@@ -1,4 +1,4 @@
-<mat-accordion *ngFor="let user of (users$ | async); let i = index">
+<mat-accordion *ngFor="let user of (users$ | async); let i = index" style="text-align: center;">
     <mat-expansion-panel hideToggle >
         <mat-expansion-panel-header>
             <mat-panel-title class="col-md-6">
@@ -20,7 +20,7 @@
                 <mat-option *ngFor="let item of role | enumToArray" [value]="item.index">{{item.name}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <button type="submit" (click)="updateUser(user)">Uppfæra</button>
+        <button mat-raised-button type="submit" (click)="updateUser(user)">Uppfæra</button>
     </mat-expansion-panel>
 </mat-accordion>
 

@@ -1,7 +1,7 @@
 <div>
     <h2>Sækja nýtt verk</h2>
     <ejs-grid 
-    #grid [dataSource]="availableJobs" 
+    #grid [dataSource]="(availableJobs$ | async)" 
     allowPaging='true' 
     allowSorting='true'
     [allowResizing]='true'
@@ -20,7 +20,7 @@
             <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                 <ng-template #template let-availableJobs>
                     <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
-                    <i class="fas fa-hand-holding-box action-icon" matTooltip="Sækja" (click)="openDialog(availableJobs, 'assign')"></i>
+                    <i class="fas fa-hand-holding-box action-icon" matTooltip="Sækja" (click)="onSubmit(availableJobs)"></i>
                 </ng-template>
             </e-column>
         </e-columns>

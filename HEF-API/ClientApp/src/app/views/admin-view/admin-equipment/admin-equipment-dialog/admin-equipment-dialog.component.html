@@ -71,6 +71,6 @@
             <input *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
         </label> -->
         
-        <button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{editMode}}</button>
+        <button mat-raised-button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{editMode}}</button>
     </form>
 </mat-dialog-content>

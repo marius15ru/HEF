@@ -69,8 +69,8 @@ code {
   border-radius: 5px;
   margin-top: 10px;
   margin-bottom: 20px;
-  background-color: #0182d4;
-  color: white;
+  /* background: rgb(88 175 228); */
+
 }
 
 .task-status-box{
@@ -185,4 +185,4 @@ mat-grid-tile {
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #f9f9f9 !important; }

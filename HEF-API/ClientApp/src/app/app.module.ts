@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
-import { MatCardModule, MatDialogModule, MatGridListModule, MatSelectModule, MatSnackBarModule } from '@angular/material';
+import { MatCardModule, MatDialogModule, MatGridListModule, MatSelectModule, MatSnackBarModule, MatNativeDateModule } from '@angular/material';
 import { UserViewComponent } from './views/user-view/user-view.component';
 import { AdminViewComponent } from './views/admin-view/admin-view.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -40,11 +40,17 @@ import { MessagesComponent } from './messages/messages.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { UserTaskDialogComponent } from './views/user-view/user-tasks/user-task-dialog/user-task-dialog.component';
 import { ObtainTaskDialogComponent } from './views/user-view/obtain-task/obtain-task-dialog/obtain-task-dialog.component';
-import { JwtModule } from "@auth0/angular-jwt";
+import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuardService } from './auth-guard.service';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+// import { MatMomentDateModule } from "@angular/material-moment-adapter";
+
+
+
 
 export function tokenGetter() {
-  return localStorage.getItem("jwt");
+  return localStorage.getItem('jwt');
 }
 
 @NgModule({
@@ -91,7 +97,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ["localhost:5001"],
+        whitelistedDomains: ['localhost:5001'],
         blacklistedRoutes: []
       }
     }),
@@ -109,7 +115,10 @@ export function tokenGetter() {
     ReactiveFormsModule,
     MatSnackBarModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatNativeDateModule
   ],
   providers:
   [EnumToArrayPipe,

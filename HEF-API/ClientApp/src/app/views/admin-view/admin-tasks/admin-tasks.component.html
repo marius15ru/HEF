@@ -4,7 +4,7 @@
             <h2 >Öll verk</h2>
         </div>
         <div class="ml-auto mr-3">
-            <button (click)="openDialog(null, 'insert')">Stofna</button>
+            <button mat-raised-button (click)="openDialog(null, 'insert')">Stofna</button>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
     </mat-form-field>
     
 
-    <button (click)="clearJobFilter()">Hreinsa síur</button>
+    <button mat-raised-button (click)="clearJobFilter()">Hreinsa síur</button>
     
     <ejs-grid 
     #grid id='OllVerk' 
@@ -44,7 +44,8 @@
             <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yy" width="110px" [customAttributes]='customAttributes'></e-column>
             <e-column field='description' headerText='Lýsing' [customAttributes]='customAttributes'></e-column>
             <e-column field='emergencyJob' headerText='Neyðarverk?' width="95px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
-            <e-column field='lastCheck' headerText='Síðasta ath' format="dd.MM.yy" type="date" width="110px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='hasComments' headerText='athugasemdir?' width="95px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
+            <e-column field='lastCheck' headerText='Síðasta athugun' format="dd.MM.yy" type="date" width="110px" [customAttributes]='customAttributes'></e-column>
             <e-column field='recurring' headerText='Endurtekið?' width="95px" [valueAccessor]='recurFormatter' [customAttributes]='customAttributes'></e-column>
             <e-column field='duration' headerText='Lengd(mín)' width="95px" [customAttributes]='customAttributes'></e-column>
             <e-column field='status' headerText='Staða' width="95px" [valueAccessor]='statusFormatter' [customAttributes]='customAttributes'></e-column>
@@ -87,7 +88,7 @@
     </mat-form-field>
     
 
-    <button (click)="clearCommentFilter()">Hreinsa síur</button>
+    <button mat-raised-button (click)="clearCommentFilter()">Hreinsa síur</button>
     
     <ejs-grid
     #grid id='AllarAthugasemdir' 

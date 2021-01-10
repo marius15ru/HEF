@@ -19,7 +19,7 @@ export class DataService {
   private commentsUrl = '/api/comments/';
   private stationsUrl = 'api/stations/';
 
-  //Jobs
+  // Jobs
 
   private _jobsSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
   private _jobs$: Observable<Job[]> = this._jobsSource.asObservable();
@@ -28,11 +28,10 @@ export class DataService {
   set jobs(newValue: Job[]){
     this._jobsSource.next(newValue);    
   }
-
   private _filteredJobsSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
   private _filteredJobs$: Observable<Job[]> = this._filteredJobsSource.asObservable();
-  get filteredJobs$(): Observable<Job[]> { return this._filteredJobs$ }
-  get filteredJobs(): Job[] { return this._filteredJobsSource.getValue()}
+  get filteredJobs$(): Observable<Job[]> { return this._filteredJobs$; }
+  get filteredJobs(): Job[] { return this._filteredJobsSource.getValue()};
   set filteredJobs(newValue: Job[]){
     this._filteredJobsSource.next(newValue);    
   }
@@ -52,6 +51,70 @@ export class DataService {
   get users(): User[] { return this._usersSource.getValue()}
   set users(newValue: User[]){
     this._usersSource.next(newValue);    
+  }
+
+  private _assignedUsersSource: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(null);
+  private _assignedUsers$: Observable<User[]> = this._assignedUsersSource.asObservable();
+  get assignedUsers$(): Observable<User[]> { return this._assignedUsers$ }
+  get assignedUsers(): User[] { return this._assignedUsersSource.getValue()}
+  set assignedUsers(newValue: User[]){
+    this._assignedUsersSource.next(newValue);    
+  }
+
+  private _unassignedUsersSource: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(null);
+  private _unassignedUsers$: Observable<User[]> = this._unassignedUsersSource.asObservable();
+  get unassignedUsers$(): Observable<User[]> { return this._unassignedUsers$ }
+  get unassignedUsers(): User[] { return this._unassignedUsersSource.getValue()}
+  set unassignedUsers(newValue: User[]){
+    this._unassignedUsersSource.next(newValue);    
+  }
+
+  private _userJobsSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
+  private _userJobs$: Observable<Job[]> = this._userJobsSource.asObservable();
+  get userJobs$(): Observable<Job[]> { return this._userJobs$ }
+  get userJobs(): Job[] { return this._userJobsSource.getValue()}
+  set userJobs(newValue: Job[]){
+    this._userJobsSource.next(newValue);    
+  }
+
+  private _availableJobsSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
+  private _availableJobs$: Observable<Job[]> = this._availableJobsSource.asObservable();
+  get availableJobs$(): Observable<Job[]> { return this._availableJobs$ }
+  get availableJobs(): Job[] { return this._availableJobsSource.getValue()}
+  set availableJobs(newValue: Job[]){
+    this._availableJobsSource.next(newValue);    
+  }
+
+  private _jobsAssignedSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
+  private _jobsAssigned$: Observable<Job[]> = this._jobsAssignedSource.asObservable();
+  get jobsAssigned$(): Observable<Job[]> { return this._jobsAssigned$ }
+  get jobsAssigned(): Job[] { return this._jobsAssignedSource.getValue()}
+  set jobsAssigned(newValue: Job[]){
+    this._jobsAssignedSource.next(newValue);    
+  }
+
+  private _jobsInProgressSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
+  private _jobsInProgress$: Observable<Job[]> = this._jobsInProgressSource.asObservable();
+  get jobsInProgress$(): Observable<Job[]> { return this._jobsInProgress$ }
+  get jobsInProgress(): Job[] { return this._jobsInProgressSource.getValue()}
+  set jobsInProgress(newValue: Job[]){
+    this._jobsInProgressSource.next(newValue);    
+  }
+
+  private _jobsOnHoldSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
+  private _jobsOnHold$: Observable<Job[]> = this._jobsOnHoldSource.asObservable();
+  get jobsOnHold$(): Observable<Job[]> { return this._jobsOnHold$ }
+  get jobsOnHold(): Job[] { return this._jobsOnHoldSource.getValue()}
+  set jobsOnHold(newValue: Job[]){
+    this._jobsOnHoldSource.next(newValue);    
+  }
+
+  private _jobsFinishedSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
+  private _jobsFinished$: Observable<Job[]> = this._jobsFinishedSource.asObservable();
+  get jobsFinished$(): Observable<Job[]> { return this._jobsFinished$ }
+  get jobsFinished(): Job[] { return this._jobsFinishedSource.getValue()}
+  set jobsFinished(newValue: Job[]){
+    this._jobsFinishedSource.next(newValue);    
   }
 
   private _plantsSource: BehaviorSubject<Plant[]> = new BehaviorSubject<Plant[]>(null);
@@ -86,7 +149,7 @@ export class DataService {
     this._filteredCommentsSource.next(newValue);    
   }
 
-  //comments for current open job
+  // Comments for current open job
 
   private _jobCommentsSource: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>(null);
   private _jobComments$: Observable<Comment[]> = this._jobCommentsSource.asObservable();
@@ -112,9 +175,6 @@ export class DataService {
     this._equipmentsSource.next(newValue);    
   }
   
-  
-  
-
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -122,7 +182,6 @@ export class DataService {
   constructor( private http: HttpClient,  private messageService: MessageService,
     @Inject('BASE_URL') baseUrl: string
     ) { }
-
 
   //Jobs
   getJobs(){
@@ -387,6 +446,21 @@ export class DataService {
 
   //JobAssignments
 
+  getJobAssignments(job: Job) {
+    let assignedIds: number[] = [];
+    console.log(job.id.toString());
+    this.http.get<JobAssignments[]>('api/jobs/' + job.id.toString() + '/users').subscribe(result => {
+      console.log(result);
+      // this.jobAssignment = result;
+      for (let i = 0; i < result.length; i++) {
+        assignedIds[i] = result[i].id;
+      }
+      this.assignedUsers = this.users.filter((item) => assignedIds.includes(item.id));
+      this.unassignedUsers = this.users.filter((item) => !assignedIds.includes(item.id));
+
+    });
+  }
+
   addJobAssignment(jobAssignment: JobAssignments, userId: string){
     let url = this.jobsUrl + jobAssignment.jobId.toString() + '/users/' + userId;
     console.log(url);
@@ -411,14 +485,28 @@ export class DataService {
     return this.http.post<Comment>(this.commentsUrl, comment, this.httpOptions);
   }
 
-  getUserJobs(userId: number) {
-    const id = userId.toString();
+  // getUserJobs(userId: number) {
+  //   const id = userId.toString();
 
-    const url = this.usersUrl + id + '/jobs';
-    return this.http.get<Job[]>(url).subscribe(result => {
+  //   const url = this.usersUrl + id + '/jobs';
+  //   return this.http.get<Job[]>(url).subscribe(result => {
+  //     console.log(result);
+  //   }, error => console.error(error));
+  // }
+
+  getUserJobs(userId: number){
+    this.http.get<Job[]>('api/users/' + userId + '/jobs').subscribe(result => {
       console.log(result);
+      this.userJobs = result;
+      this.availableJobs = this.jobs.filter(item => item.status === 1);
+      this.jobsAssigned = this.userJobs.filter(item => item.status === 2);
+      this.jobsInProgress = this.userJobs.filter(item => item.status === 3);
+      this.jobsOnHold = this.userJobs.filter(item => item.status === 4);
+      this.jobsFinished = this.userJobs.filter(item => item.status === 5);
     }, error => console.error(error));
   }
+
+  
 
   //Comments
 

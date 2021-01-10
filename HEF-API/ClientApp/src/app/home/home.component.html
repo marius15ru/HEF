@@ -1,24 +1,43 @@
-<div class="row">
-  <div class="col-md-3"></div>
-  <div class="border-box col-md-6">
-    <div class="log-in-box">
-      <img class="log-in-logo" src="../../assets/images/HEF-logo.jpeg">
-      <h1 class="text-center log-in-header">Innskráning</h1>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field class="form-input" appearance="outline">
-          <mat-label class="form-input">Netfang</mat-label>
-          <input matInput class="form-input" type="email" formControlName="email">
-        </mat-form-field>
-
-        <mat-form-field class="form-input" appearance="outline">
-          <mat-label class="form-input">Lykilorð</mat-label>
-          <input matInput class="form-input" type="password" formControlName="password">
-        </mat-form-field>
-        <button mat-raised-button class="log-in-button" type="submit">Innskrá</button>
-
-        <!-- <button mat-raised-button class="log-in-button" type="submit" routerLink="/verkadili" routerLinkActive="active">Innskrá</button> -->
-      </form>
-    </div>
+<div class="row" >
+  <div class="col-md-12" style="margin-bottom: 5%; background: #f8f8f9;"></div>
+</div>
+<div class="row" >
+  <div class="col-md-4" ></div>
+  <div class="col-md-4" >
+  <mat-card id="card" style="text-align: center;">
+    <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> -->
+      <mat-card-content>
+        <img class="log-in-logo" src="../../assets/images/HEF-logo.jpeg">
+        <mat-card-title>
+          Innskráning
+        </mat-card-title>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  
+          <mat-form-field appearance="outline" class="form-input">
+            <mat-label >Netfang</mat-label>
+            <input matInput class="form-input" type="email" formControlName="email">
+          </mat-form-field>
+    
+          <mat-form-field appearance="outline" class="form-input">
+            <mat-label>Lykilorð</mat-label>
+            <input matInput type="password" formControlName="password">
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" class="log-in-button">Innskrá</button>
+  
+          <!-- <mat-form-field>
+            <input matInput placeholder="email">
+          </mat-form-field><br/>
+    
+          <mat-form-field>
+            <input matInput placeholder="password">
+          </mat-form-field><br/> -->
+        </form>
+    </mat-card-content>
+  </mat-card>
   </div>
 </div>
+
+
+
 
