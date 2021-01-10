@@ -46,6 +46,11 @@ export class AdminTasksComponent implements OnInit {
   jobs$: Observable<Job[]> = this.dataService.jobs$;
   users$: Observable<User[]> = this.dataService.users$;
 
+  filtersVisible: boolean = false;
+  filterAction: string = 'Sýna síur';
+
+  commentFiltersVisible: boolean = false;
+  commentFilterAction: string = 'Sýna síur';
 
   jobs: Job[] = [];
   alteredJobs: any[];
@@ -60,17 +65,16 @@ export class AdminTasksComponent implements OnInit {
   initialGridLoad = true;
   jobStatus = JobStatus;
 
+  seen: boolean = null;
+
   selectedJobStatuses: number[] = [];
   selectedStations: number[] = [];
   selectedUsers: number[] = [];
   selectedJobs: number[] = [];
   hasComments: boolean;
   emergencyJobs: boolean;
-
-
   lastCheckFrom: Date = null;
   lastCheckTo: Date = null;
-
   completeByFrom: Date = null;
   completeByTo: Date = null;
 
@@ -100,6 +104,27 @@ export class AdminTasksComponent implements OnInit {
   getCurrentDate(){
     const today = new Date();
     return today;
+  }
+
+  filtersVisibleToggle(data: string){
+    switch(data){
+      case 'jobs':
+        if(!this.filtersVisible){
+          this.filterAction = 'Fela síur';
+          return this.filtersVisible = true;
+        }
+        this.filterAction = 'Sýna síur';
+        return this.filtersVisible = false;
+        break;
+      case 'comments':
+        if(!this.commentFiltersVisible){
+          this.filterAction = 'Fela síur';
+          return this.commentFiltersVisible = true;
+        }
+        this.filterAction = 'Sýna síur';
+        return this.commentFiltersVisible = false;
+        break;      
+    }
   }
 
   clearJobFilter(){
@@ -133,11 +158,12 @@ export class AdminTasksComponent implements OnInit {
   clearCommentFilter(){
     this.selectedUsers = [];
     this.selectedJobs = [];
+    this.seen = null;
     this.filterComments();
   }
 
   filterComments(){
-    this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.dataService.comments)
+    this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.seen, this.dataService.comments)
   }
 
   toolbarClick(args: ClickEventArgs): void {

@@ -14,13 +14,24 @@ import { AdminEquipmentDialogComponent } from './admin-equipment-dialog/admin-eq
 export class AdminEquipmentComponent implements OnInit {
 
   equipments$: Observable<Equipment[]> = this.dataService.equipments$;
+  filteredEquipments$: Observable<Equipment[]> = this.dataService.filteredEquipments$;
+  stations$: Observable<Station[]> = this.dataService.stations$;
+
 
   public equipments: Equipment[];
   public stations: Station[];
 
   public customAttributes: Object;
   pageSettings: Object;
-  
+
+  filtersVisible: boolean = false;
+  filterAction: string = 'Sýna síur';
+
+  selectedStations: number[] = [];
+
+
+  lastCheckFrom: Date = null;
+  lastCheckTo: Date = null;
   
   constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
   
@@ -28,6 +39,31 @@ export class AdminEquipmentComponent implements OnInit {
     this.getData();
     this.customAttributes = {class: 'customcss'};
     this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
+  }
+
+  getCurrentDate(){
+    const today = new Date();
+    return today;
+  }
+
+  filtersVisibleToggle(){
+    if(!this.filtersVisible){
+      this.filterAction = 'Fela síur';
+      return this.filtersVisible = true;
+    }
+    this.filterAction = 'Sýna síur';
+    return this.filtersVisible = false;
+  }
+
+  filterEquipment(){
+    this.dataService.filterEquipments(this.selectedStations, this.lastCheckFrom, this.lastCheckTo, this.dataService.equipments);
+  }
+
+  clearEquipmentFilter(){
+    this.selectedStations = [];
+    this.lastCheckFrom = null;
+    this.lastCheckTo = null;
+    this.filterEquipment();
   }
 
   getData() {

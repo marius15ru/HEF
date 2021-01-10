@@ -6,7 +6,7 @@ import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { DataOperation } from 'src/app/shared/enums';
-import { Plant, Station } from 'src/app/shared/models';
+import { Area, Plant, Station } from 'src/app/shared/models';
 import { AdminLocationDialogComponent } from './admin-location-dialog/admin-location-dialog.component';
 
 @Component({
@@ -16,8 +16,17 @@ import { AdminLocationDialogComponent } from './admin-location-dialog/admin-loca
 })
 export class AdminLocationComponent implements OnInit {
 
+  filteredStations$: Observable<Station[]> = this.dataService.filteredStations$;
   stations$: Observable<Station[]> = this.dataService.stations$;
+  plants$: Observable<Plant[]> = this.dataService.plants$;
+  areas$: Observable<Area[]> = this.dataService.areas$;
 
+  selectedPlants: number[] = [];
+  selectedAreas: number[] = [];
+
+  filtersVisible: boolean = false;
+  filterAction: string = 'Sýna síur';
+  
   public stations: Station[];
 
   public toolbarOptions: ToolbarItems[];
@@ -30,7 +39,7 @@ export class AdminLocationComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getData();
+    // this.getData();
     this.toolbarOptions = ['PdfExport'];
     this.customAttributes = {class: 'customcss'};
   }
@@ -40,6 +49,26 @@ export class AdminLocationComponent implements OnInit {
       console.log(result);
       this.stations = result;
     }, error => console.error(error));
+  }
+
+  filtersVisibleToggle(){
+    if(!this.filtersVisible){
+      this.filterAction = 'Fela síur';
+      return this.filtersVisible = true;
+    }
+    this.filterAction = 'Sýna síur';
+    return this.filtersVisible = false;
+  }
+
+  filterStations(){
+    this.dataService.filterStations(this.selectedPlants, this.selectedAreas, this.dataService.stations);
+  }
+
+  clearStationFilter(){
+    this.selectedAreas = [];
+    this.selectedPlants = [];
+
+    this.filterStations();
   }
 
   plantFormatter(field: string, data: Object, column: Object) {

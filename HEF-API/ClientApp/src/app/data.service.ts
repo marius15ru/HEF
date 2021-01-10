@@ -174,6 +174,22 @@ export class DataService {
   set equipments(newValue: Equipment[]){
     this._equipmentsSource.next(newValue);    
   }
+
+  private _filteredEquipmentsSource: BehaviorSubject<Equipment[]> = new BehaviorSubject<Equipment[]>(null);
+  private _filteredEquipments$: Observable<Equipment[]> = this._filteredEquipmentsSource.asObservable();
+  get filteredEquipments$(): Observable<Equipment[]> { return this._filteredEquipments$ }
+  get filteredEquipments(): Equipment[] { return this._filteredEquipmentsSource.getValue()}
+  set filteredEquipments(newValue: Equipment[]){
+    this._filteredEquipmentsSource.next(newValue);    
+  }
+
+  private _filteredStationsSource: BehaviorSubject<Station[]> = new BehaviorSubject<Station[]>(null);
+  private _filteredStations$: Observable<Station[]> = this._filteredStationsSource.asObservable();
+  get filteredStations$(): Observable<Station[]> { return this._filteredStations$ }
+  get filteredStations(): Station[] { return this._filteredStationsSource.getValue()}
+  set filteredStations(newValue: Station[]){
+    this._filteredStationsSource.next(newValue);    
+  }
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -214,6 +230,8 @@ export class DataService {
   }
 
   //Filters
+
+  //Job Filtering
   
   filterJobs(jobStatuses: number[], stationIds: number[], hasComments: boolean, emergencyJobs: boolean, lastCheckFrom: Date, lastCheckTo: Date, completeByFrom: Date, completeByTo: Date, jobs: Job[]){
     let tempJobs = [];
@@ -226,7 +244,6 @@ export class DataService {
     tempJobs = this.filterByLastCheckTo(lastCheckTo, tempJobs);
     tempJobs = this.filterByCompleteByFrom(completeByFrom, tempJobs);
     tempJobs = this.filterByCompleteByTo(completeByTo, tempJobs);
-
 
     this.filteredJobs = tempJobs;
   }
@@ -250,7 +267,6 @@ export class DataService {
   }
 
   filterByHasComments(hasComments: boolean, jobs: Job[]): Job[]{
-    // ÞARF AÐ ÚTFÆRA
     if(hasComments === null){
       return jobs;
     }
@@ -258,7 +274,6 @@ export class DataService {
   }
 
   filterByEmergencyJob(emergencyJob: boolean, jobs: Job[]): Job[]{
-    // ÞARF AÐ ÚTFÆRA
     if(emergencyJob === null){
       return jobs;
     }
@@ -294,24 +309,22 @@ export class DataService {
   
   }
 
-  // this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.dataService.comments)
+  // Comment filtering
   
-  filterComments(users: number[], jobs: number[], comments: Comment[]){
-    let tempJobs = [];
+  filterComments(users: number[], jobs: number[], seen: boolean, comments: Comment[]){
+    let tempComments = [];
 
-    tempJobs = this.filterByCommentUser(users, comments);
-    tempJobs = this.filterByCommentJob(jobs, tempJobs);
+    tempComments = this.filterByCommentUser(users, comments);
+    tempComments = this.filterByCommentJob(jobs, tempComments);
+    tempComments = this.filterBySeenComments(seen, tempComments);
 
-    this.filteredComments = tempJobs;
+    this.filteredComments = tempComments;
   }
 
   filterByCommentUser(users: number[], comments: Comment[]): Comment[]{
     if(!users || users.length == 0 ){
       return comments;
     }
-    // if(!jobs){
-    //   jobs = [];
-    // }
     return comments.filter((comment: Comment) => {
       return users.find(jobId => jobId == comment.userId);
     });
@@ -321,14 +334,82 @@ export class DataService {
     if(!jobs || jobs.length == 0){
       return comments;
     }
-    // if(!jobs){
-    //   jobs = [];
-    // }
     return comments.filter((comments: Comment) => {
       return jobs.find(jobIds => jobIds == comments.jobId);
     });
   }
 
+  filterBySeenComments(seen: boolean, comments: Comment[]): Comment[]{
+    if(seen === null){
+      return comments;
+    }
+    return comments.filter((comment: Comment) => comment.seen === seen)
+  }
+
+  // Equipment filtering
+
+  filterEquipments(stations: number[], lastCheckFrom: Date, lastCheckTo: Date, equipments: Equipment[]){
+    let tempEquipments = [];
+
+    tempEquipments = this.filterEquipmentByStation(stations, equipments);
+    tempEquipments = this.filterEquipmentByLastCheckFrom(lastCheckFrom, tempEquipments);
+    tempEquipments = this.filterEquipmentByLastCheckTo(lastCheckTo, tempEquipments);
+
+    this.filteredEquipments = tempEquipments;
+  }
+
+  filterEquipmentByStation(stations: number[], equipments: Equipment[]): Equipment[]{
+    if(!stations || stations.length == 0){
+      return equipments;
+    }
+    return equipments.filter((equipment: Equipment) => {
+      return stations.find(stationId => stationId == equipment.stationId);
+    });
+  }
+
+  filterEquipmentByLastCheckFrom(lastCheckFrom: Date, equipments: Equipment[]): Equipment[]{
+    if(lastCheckFrom === null){
+      return equipments;
+    }
+    return equipments.filter((equipment: Equipment) => new Date(equipment.lastCheck) >= lastCheckFrom)
+  }
+
+  filterEquipmentByLastCheckTo(lastCheckTo: Date, equipments: Equipment[]): Equipment[]{
+    if(lastCheckTo === null){
+      return equipments;
+    }
+    return equipments.filter((equipment: Equipment) => new Date(equipment.lastCheck) <= lastCheckTo)
+  }
+
+
+  // Station filtering
+
+  filterStations(plants: number[], areas: number[], stations: Station[]){
+    let tempStations = [];
+
+    tempStations = this.filterStationsByPlant(plants, stations);
+    tempStations = this.filterStationsByArea(areas, tempStations);
+
+    this.filteredStations = tempStations;
+  } 
+
+  filterStationsByPlant(plants: number[], stations: Station[]): Station[]{
+    if(!plants || plants.length == 0){
+      return stations;
+    }
+    return stations.filter((station: Station) => {
+      return plants.find(plantId => plantId == station.plantId);
+    });
+  }
+
+  filterStationsByArea(areas: number[], stations: Station[]): Station[]{
+    if(!areas || areas.length == 0){
+      return stations;
+    }
+    return stations.filter((station: Station) => {
+      return areas.find(areaId => areaId == station.areaId);
+    });
+  }
 
 
   //Stations
@@ -337,6 +418,7 @@ export class DataService {
     this.http.get<Station[]>('api/stations/').subscribe(result => {
       console.log(result);
       this.stations = result;
+      this.filteredStations = result;
     }, error => console.error(error));
   }
 
@@ -399,6 +481,7 @@ export class DataService {
     this.http.get<Equipment[]>('api/equipments').subscribe(result => {
       console.log(result);
       this.equipments = result;
+      this.filteredEquipments = result;
     }, error => console.error(error));
   }
 
