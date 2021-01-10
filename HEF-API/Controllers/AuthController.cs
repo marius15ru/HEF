@@ -45,7 +45,7 @@ namespace HEF_API.Controllers
                     issuer: "http://localhost:5001",
                     audience: "http://localhost:5001",
                     claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
+                    expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: signingCredentials
                 );
 
