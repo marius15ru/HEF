@@ -184,5 +184,15 @@ mat-grid-tile {
   background-color:#f23035;
 }
 
+/* .mat-tab-label.mat-tab-label-active {
+  min-width: 25px !important;
+  font-size: 18px;
+  font-weight: 700;
+} */
+
+.mat-ink-bar {
+  background: rgb(88 175 228) !important;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #f9f9f9 !important; }

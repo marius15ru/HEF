@@ -71,8 +71,8 @@ export class AdminTasksComponent implements OnInit {
   selectedStations: number[] = [];
   selectedUsers: number[] = [];
   selectedJobs: number[] = [];
-  hasComments: boolean;
-  emergencyJobs: boolean;
+  hasComments: boolean = null;
+  emergencyJobs: boolean = null;
   lastCheckFrom: Date = null;
   lastCheckTo: Date = null;
   completeByFrom: Date = null;
