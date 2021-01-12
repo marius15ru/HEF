@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HEF_API.Models;
 using HEF_API.Services;
 using Microsoft.AspNetCore.Authorization;
+using BC = BCrypt.Net.BCrypt;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -53,6 +54,9 @@ namespace HEF_API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("Invalid model object");
 
+            var hashed_password = BC.HashPassword(value.Password, BC.GenerateSalt());
+            value.Password = hashed_password;
+
             try
             {
                 _repositoryWrapper.User.Insert(value);
@@ -75,6 +79,9 @@ namespace HEF_API.Controllers
                 return BadRequest("Object er null");
             if (!id.Equals(value.Id))
                 return BadRequest("Id does not match object.");
+
+            var hashed_password = BC.HashPassword(value.Password, BC.GenerateSalt());
+            value.Password = hashed_password;
 
             try
             {
