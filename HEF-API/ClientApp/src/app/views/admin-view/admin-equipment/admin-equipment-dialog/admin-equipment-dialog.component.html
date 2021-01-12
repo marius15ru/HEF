@@ -5,7 +5,7 @@
     <form [formGroup]="equipmentForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="form-input">
             <mat-label class="form-input">Stöð</mat-label>
-            <mat-select type="number" formControlName="stationId" class="form-input">
+            <mat-select type="number" formControlName="stationId" class="form-input" disableOptionCentering panelClass="material-select-box">
                 <mat-option [value]="null">-</mat-option>
                 <mat-option *ngFor="let item of stations" [value]="item.id">{{item.name}}</mat-option>
             </mat-select>
@@ -72,6 +72,6 @@
             <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck">
         </mat-form-field> -->
         
-        <button mat-raised-button *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{editMode}}</button>
+        <button mat-raised-button color="primary" *ngIf="dialogData.action != 'view'" class="form-submition" type="submit" [disabled]="!equipmentForm.valid">{{editMode}}</button>
     </form>
 </mat-dialog-content>

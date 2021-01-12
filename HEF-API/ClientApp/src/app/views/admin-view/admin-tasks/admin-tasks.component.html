@@ -1,27 +1,27 @@
 <div>
-    <div class="row ml-1">
+    <h2>Öll verk</h2>
+    <div class="row ml-1 grid-action-buttons">
         <div>
-            <h2 >Öll verk</h2>
+            <button color="accent" mat-raised-button (click)="filtersVisibleToggle('jobs')">{{filterAction}}</button>
         </div>
         <div class="ml-auto mr-3">
-            <button mat-raised-button (click)="openDialog(null, 'insert')">Stofna</button>
+            <button color="primary" mat-raised-button (click)="openDialog(null, 'insert')">Stofna</button>
         </div>
     </div>
-    <button mat-raised-button (click)="filtersVisibleToggle('jobs')">{{filterAction}}</button>
     
     <mat-card *ngIf="filtersVisible" class="row" style="text-align: center;">
         <mat-card-content>
             <div class="col-md-12">
                 <mat-form-field>
                     <mat-label>Sía Stöðu</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedJobStatuses">
+                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedJobStatuses" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let item of jobStatus | enumToArray" [value]="item.index" >{{item.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 
                 <mat-form-field>
                     <mat-label>Sía Stöð</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedStations">
+                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedStations" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let item of (stations$ | async)" [value]="item.id">{{item.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <mat-form-field>
                     <mat-label>Sía Athugasemdir</mat-label>
-                    <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="hasComments">
+                    <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="hasComments" disableOptionCentering panelClass="material-select-box">
                         <mat-option [value]="null">-</mat-option>
                         <mat-option [value]="true">Já</mat-option>
                         <mat-option [value]="false">Nei</mat-option>
@@ -52,7 +52,7 @@
                 
                 <mat-form-field>
                     <mat-label>Sía Neyðarverk</mat-label>
-                    <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="emergencyJobs">
+                    <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="emergencyJobs" disableOptionCentering panelClass="material-select-box">
                         <mat-option [value]="null">-</mat-option>
                         <mat-option [value]="true">Já</mat-option>
                         <mat-option [value]="false">Nei</mat-option>
@@ -72,7 +72,7 @@
                     <mat-datepicker [startAt]="getCurrentDate()" #picker4></mat-datepicker>
                 </mat-form-field>
             </div>
-            <button mat-raised-button (click)="clearJobFilter()">Hreinsa síur</button>
+            <button color="accent" mat-raised-button (click)="clearJobFilter()">Hreinsa síur</button>
         </mat-card-content>
     </mat-card>
 
@@ -84,6 +84,7 @@
     [allowSorting]='true' 
     [allowResizing]="true" 
     [allowTextWrap]='true'
+
     (toolbarClick)='toolbarClick($event)'
     (rowDataBound)="rowDataBound($event)"
     [pageSettings]='pageSettings'
@@ -92,23 +93,23 @@
             <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
             <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
             <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yy" width="110px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yy" width="85px" [customAttributes]='customAttributes'></e-column>
             <e-column field='description' headerText='Lýsing' [customAttributes]='customAttributes'></e-column>
-            <e-column field='emergencyJob' headerText='Neyðarverk?' width="95px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
-            <e-column field='hasComments' headerText='athugasemdir?' width="95px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
+            <e-column field='emergencyJob' headerText='Neyðarverk?' width="105px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
+            <e-column field='hasComments' headerText='athugasemdir?' width="115px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
             <e-column field='lastCheck' headerText='Síðasta athugun' format="dd.MM.yy" type="date" width="110px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='recurring' headerText='Endurtekið?' width="95px" [valueAccessor]='recurFormatter' [customAttributes]='customAttributes'></e-column>
-            <e-column field='duration' headerText='Lengd(mín)' width="95px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='status' headerText='Staða' width="95px" [valueAccessor]='statusFormatter' [customAttributes]='customAttributes'></e-column>
-            <e-column field="operations" headerText="Aðgerðir" width="140px" [customAttributes]='customAttributes'>
+            <e-column field='recurring' headerText='Endurtekið?' width="105px" [valueAccessor]='recurFormatter' [customAttributes]='customAttributes'></e-column>
+            <e-column field='duration' headerText='Lengd(mín)' width="100px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='status' headerText='Staða' width="85px" [valueAccessor]='statusFormatter' [customAttributes]='customAttributes'></e-column>
+            <e-column field="operations" headerText="Aðgerðir" width="125px" [customAttributes]='customAttributes'>
                 <ng-template #template let-jobs>
                     <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
                     <!-- <i class="fas fa-edit action-icon" matTooltip="Sækja" (click)="openDialog(jobs, 'obtain')"></i> -->
                     <i class="fas fa-hand-holding-box action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i>
+                    <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobs, 'comment')"></i>
                     <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobs, 'view')"></i>
                     <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobs, 'update')"></i>
                     <i class="fas fa-trash-alt action-icon" matTooltip="Eyða" (click)="openDialog(jobs, 'delete')"></i>
-                    <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobs, 'comment')"></i>
                 </ng-template>
             </e-column>
         </e-columns>
@@ -118,41 +119,41 @@
 
 
 <div>
-    <div class="row ml-1">
+    <div class="row ml-1 grid-action-buttons">
         <div>
             <h2 >Athugasemdir við verk</h2>
         </div>
     </div>
 
-    <button mat-raised-button (click)="filtersVisibleToggle('comments')">{{filterAction}}</button>
+    <button color="accent" mat-raised-button (click)="filtersVisibleToggle('comments')">{{filterAction}}</button>
 
     <mat-card *ngIf="commentFiltersVisible" class="row" style="text-align: center;">
         <mat-card-content>
             <div class="col-md-12">
                 <mat-form-field>
                     <mat-label>Sía Verk</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="selectedJobs">
+                    <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="selectedJobs" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let item of (jobs$ | async)" [value]="item.id" >{{item.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             
                 <mat-form-field>
                     <mat-label>Sía Starfsmann</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="selectedUsers">
+                    <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="selectedUsers" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let item of (users$ | async)" [value]="item.id">{{item.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             
                 <mat-form-field>
                     <mat-label>Séð athugasemd?</mat-label>
-                    <mat-select value='null' (selectionChange)="filterComments()" [(ngModel)]="seen">
+                    <mat-select value='null' (selectionChange)="filterComments()" [(ngModel)]="seen" disableOptionCentering panelClass="material-select-box">
                         <mat-option [value]="null">-</mat-option>
                         <mat-option [value]="true">Já</mat-option>
                         <mat-option [value]="false">Nei</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <button mat-raised-button (click)="clearCommentFilter()">Hreinsa síur</button>
+            <button color="accent" mat-raised-button (click)="clearCommentFilter()">Hreinsa síur</button>
         </mat-card-content>
     </mat-card>
  
@@ -163,6 +164,7 @@
     [allowSorting]='true' 
     [allowResizing]="true" 
     [allowTextWrap]='true'
+
     (toolbarClick)='toolbarClick($event)'
     (rowDataBound)="rowDataBound($event)"
     [pageSettings]='pageSettings'>

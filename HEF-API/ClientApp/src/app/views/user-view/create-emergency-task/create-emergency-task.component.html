@@ -10,7 +10,7 @@
                 <br>
                 <mat-form-field >
                     <mat-label>Verkaðilar</mat-label>
-                    <mat-select formControlName="jobUser">
+                    <mat-select formControlName="jobUser" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let user of users" [value]="user.id">{{user.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -18,14 +18,14 @@
             <div class="col-md-4">
                 <mat-form-field >
                     <mat-label>Veita</mat-label>
-                    <mat-select formControlName="plant">
+                    <mat-select formControlName="plant" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let plant of plants" [value]="plant.id">{{plant.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <br>
                 <mat-form-field >
                     <mat-label>Svæði</mat-label>
-                    <mat-select formControlName="area">
+                    <mat-select formControlName="area" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let area of areas" [value]="area.id">{{area.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -36,7 +36,7 @@
                     <mat-label>Lýsing</mat-label>
                     <textarea matInput formControlName="text"></textarea>
                 </mat-form-field>
-                <button mat-raised-button type="submit">Stofna</button>
+                <button mat-raised-button color="primary" type="submit">Stofna</button>
             </div>
         </div>
     </form>

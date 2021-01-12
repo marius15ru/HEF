@@ -10,17 +10,17 @@
         </mat-expansion-panel-header>
         <mat-form-field>
             <mat-label>Staða</mat-label>
-            <mat-select type="number"  [(ngModel)]="user.status">
+            <mat-select type="number"  [(ngModel)]="user.status" disableOptionCentering panelClass="material-select-box">
                 <mat-option *ngFor="let item of userStatus | enumToArray" [value]="item.index">{{item.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Hlutverk</mat-label>
-            <mat-select  type="number" [(ngModel)]="user.role">
+            <mat-select  type="number" [(ngModel)]="user.role" disableOptionCentering panelClass="material-select-box">
                 <mat-option *ngFor="let item of role | enumToArray" [value]="item.index">{{item.name}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-raised-button type="submit" (click)="updateUser(user)">Uppfæra</button>
+        <button mat-raised-button color="primary" type="submit" (click)="updateUser(user)">Uppfæra</button>
     </mat-expansion-panel>
 </mat-accordion>
 
@@ -28,7 +28,7 @@
 
 
 <!-- <mat-grid-list cols="2" rowHeight="3:2" [gutterSize]="'20px'">
-    <div class="row ml-1">
+    <div class="row ml-1 grid-action-buttons">
         <div>
             <h2>Starfsmenn</h2>
         </div>

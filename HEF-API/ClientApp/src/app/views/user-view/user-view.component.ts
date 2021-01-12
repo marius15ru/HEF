@@ -6,8 +6,7 @@ import { User } from 'src/app/shared/models';
 @Component({
   selector: 'app-user-view',
   templateUrl: './user-view.component.html',
-  styleUrls: ['./user-view.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent implements OnInit {
 

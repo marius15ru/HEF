@@ -13,8 +13,8 @@
             <input type="text" class="form-input" formControlName="name" [value]="selectedRow.name">
         </label> -->
   
-        <button mat-raised-button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!plantForm.valid">{{editMode}}</button>
-        <button mat-raised-button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
+        <button mat-raised-button color="primary" *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!plantForm.valid">{{editMode}}</button>
+        <button mat-raised-button color="primary" *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
 
 </mat-dialog-content>

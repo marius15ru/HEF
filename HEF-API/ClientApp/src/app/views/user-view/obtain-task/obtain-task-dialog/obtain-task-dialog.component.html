@@ -3,12 +3,12 @@
         <form [formGroup]="assignmentForm" (ngSubmit)="onSubmitAssignment('insert')">
             <mat-form-field >
                 <mat-label>Úthluta</mat-label>
-                <mat-select formControlName="userId">
+                <mat-select formControlName="userId" disableOptionCentering panelClass="material-select-box">
                     <mat-option [value]="null">-</mat-option>
                     <mat-option *ngFor="let user of unassignedUsers" [value]="user.id">{{user.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-raised-button class="form-submition" type="submit" [disabled]="!assignmentForm.valid"> Taka við verki </button>
+            <button mat-raised-button color="primary" class="form-submition" type="submit" [disabled]="!assignmentForm.valid"> Taka við verki </button>
         </form>
     </div>
     <!-- <div>

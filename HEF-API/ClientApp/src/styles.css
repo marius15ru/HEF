@@ -152,7 +152,8 @@ mat-grid-tile {
 
 .action-icon{
   margin-right: 5px;
-  color: rgb(33, 115, 166);
+  color: #424242;
+  font-size: 14px;
 }
 
 .action-icon:hover{
@@ -164,7 +165,7 @@ mat-grid-tile {
 }
 
 .e-grid .e-headercell.customcss{
-  background: rgb(88 175 228);
+  background: #039BE5;
   color: white;
 }
 
@@ -190,8 +191,21 @@ mat-grid-tile {
   font-weight: 700;
 } */
 
-.mat-ink-bar {
+.filter{
+  color: rgb(88 175 228) !important;
+}
+
+/* .mat-ink-bar {
   background: rgb(88 175 228) !important;
+} */
+
+.material-select-box{
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+.grid-action-buttons{
+  margin-bottom: 5px;
 }
 
 html, body { height: 100%; }

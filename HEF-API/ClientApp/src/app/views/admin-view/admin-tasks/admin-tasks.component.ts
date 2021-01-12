@@ -4,12 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
 import { Comment, Job, Station, User } from 'src/app/shared/models';
 import { AdminTasksDialogComponent } from './admin-tasks-dialog/admin-tasks-dialog.component';
-import { FilterSettings, FilterSettingsModel, GridComponent, RowDataBoundEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { FilterSettings, FilterSettingsModel, GridComponent, QueryCellInfoEventArgs, RowDataBoundEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { DataService } from 'src/app/data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
 import {FormGroup, FormControl} from '@angular/forms';
+import { Tooltip } from '@syncfusion/ej2-popups';;
 
 
 setCulture('is'); 
@@ -93,6 +94,10 @@ export class AdminTasksComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
     
     this.getData();
+  }
+
+  deleteComment(comment: Comment){
+    this.dataService.deleteJobComment(comment);
   }
 
   getData(){
@@ -201,6 +206,12 @@ export class AdminTasksComponent implements OnInit {
   jobFormatter(field: string, data: Object, column: Object) {
     return data[field].name;
   }
+
+  tooltip (args: QueryCellInfoEventArgs) {
+    let tooltip: Tooltip = new Tooltip({
+        content: args.data[args.column.field].toString()
+    }, args.cell as HTMLTableCellElement);
+}
 
   
 

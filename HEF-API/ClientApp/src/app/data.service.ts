@@ -190,6 +190,8 @@ export class DataService {
   set filteredStations(newValue: Station[]){
     this._filteredStationsSource.next(newValue);    
   }
+
+
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -222,6 +224,7 @@ export class DataService {
   }
 
   deleteJob(job: Job, jobId: string): Observable<{}> {
+    console.log(job, jobId);
       const url = this.jobsUrl + jobId + '/';
       return this.http.delete(url, this.httpOptions)
         .pipe(
@@ -579,8 +582,8 @@ export class DataService {
     let assignedIds: number[] = [];
     console.log(job.id.toString());
     this.http.get<JobAssignments[]>('api/jobs/' + job.id.toString() + '/users').subscribe(result => {
-      console.log(result);
-      // this.jobAssignment = result;
+      console.log("Job Assignments",result);
+      this.jobAssignments = result;
       for (let i = 0; i < result.length; i++) {
         assignedIds[i] = result[i].id;
       }
@@ -608,20 +611,28 @@ export class DataService {
   }
 
   //Comments
+  getComments(jobId = null){
+    return this.http.get<Comment[]>('api/comments').subscribe(result => {
+      this.comments = result;
+      this.filteredComments = result;
+      if(jobId){
+        this.jobComments = this.comments.filter(item => item.jobId == jobId);
+      }
+    }, error => console.error(error));
+  }
 
   addJobComment(comment: Comment){
-    console.log(comment);
     return this.http.post<Comment>(this.commentsUrl, comment, this.httpOptions);
   }
 
-  // getUserJobs(userId: number) {
-  //   const id = userId.toString();
-
-  //   const url = this.usersUrl + id + '/jobs';
-  //   return this.http.get<Job[]>(url).subscribe(result => {
-  //     console.log(result);
-  //   }, error => console.error(error));
-  // }
+  deleteJobComment(comment: Comment): Observable<{}>{
+    const url = this.commentsUrl + comment.id.toString();
+    console.log(url);
+    return this.http.delete(url, this.httpOptions)
+    .pipe(
+      catchError(this.handleError('deleteJobComment'))
+    );
+  }
 
   getUserJobs(userId: number){
     this.http.get<Job[]>('api/users/' + userId + '/jobs').subscribe(result => {
@@ -639,13 +650,7 @@ export class DataService {
 
   //Comments
 
-  getComments(){
-    return this.http.get<Comment[]>('api/comments').subscribe(result => {
-      this.comments = result;
-      this.filteredComments = result;
-      console.log(result);
-    }, error => console.error(error));
-  }
+
 
 
 

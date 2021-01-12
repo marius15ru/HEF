@@ -5,7 +5,7 @@
     <form [formGroup]="jobForm" (ngSubmit)="onSubmit()" *ngIf="dialogData.action != 'comment'">
         <mat-form-field class="form-input">
             <mat-label class="form-input">Stöð</mat-label>
-            <mat-select type="number" formControlName="stationId" class="form-input">
+            <mat-select type="number" formControlName="stationId" class="form-input" disableOptionCentering panelClass="material-select-box">
                 <mat-option [value]="null">-</mat-option>
                 <mat-option *ngFor="let item of stations" [value]="item.id">{{item.name}}</mat-option>
             </mat-select>
@@ -23,7 +23,7 @@
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Endurtekningar</mat-label>
-            <mat-select type="number" formControlName="recurring" class="form-input" value="selectedRow.recurring">
+            <mat-select type="number" formControlName="recurring" class="form-input" value="selectedRow.recurring" disableOptionCentering panelClass="material-select-box">
                 <mat-option *ngFor="let item of recur | enumToArray" [value]="item.index">{{item.name}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -46,14 +46,14 @@
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Staða</mat-label>
-            <mat-select type="number" formControlName="status" class="form-input" value="selectedRow.status">
+            <mat-select type="number" formControlName="status" class="form-input" value="selectedRow.status" disableOptionCentering panelClass="material-select-box">
                 <mat-option *ngFor="let item of jobStatus | enumToArray" [value]="item.index">{{item.name}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Neyðarverk?</mat-label>
-            <mat-select formControlName="emergencyJob" class="form-input" value="selectedRow.emergencyJob">
+            <mat-select formControlName="emergencyJob" class="form-input" value="selectedRow.emergencyJob" disableOptionCentering panelClass="material-select-box">
                 <mat-option [value]="null">-</mat-option>
                 <mat-option [value]="true">Já</mat-option>
                 <mat-option [value]="false">Nei</mat-option>
@@ -62,7 +62,7 @@
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Athugasemdir?</mat-label>
-            <mat-select formControlName="hasComments" class="form-input" value="selectedRow.hasComments">
+            <mat-select formControlName="hasComments" class="form-input" value="selectedRow.hasComments" disableOptionCentering panelClass="material-select-box">
                 <mat-option [value]="null">-</mat-option>
                 <mat-option [value]="true">Já</mat-option>
                 <mat-option [value]="false">Nei</mat-option>
@@ -82,8 +82,8 @@
             <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
         </mat-form-field> -->
         
-        <button mat-raised-button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
-        <button mat-raised-button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
+        <button mat-raised-button color="primary" *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
+        <button mat-raised-button color="primary" *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
 
     <form [formGroup]="commentForm" *ngIf="dialogData.action == 'comment'" (ngSubmit)="onSubmitComment()">
@@ -95,6 +95,6 @@
             <mat-label class="form-input">Ný athugasemd</mat-label>
             <textarea matInput class="form-input" formControlName="comment"></textarea>
         </mat-form-field>
-        <button mat-raised-button class="form-submition" type="submit">Skrá athugasemd</button>
+        <button mat-raised-button color="primary" class="form-submition" type="submit">Skrá athugasemd</button>
     </form>
 </mat-dialog-content >

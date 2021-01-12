@@ -9,14 +9,14 @@
         </mat-form-field>
         <mat-form-field class="form-input">
             <mat-label class="form-input">Veita</mat-label>
-            <mat-select formControlName="plantId" class="form-input" value="selectedRow.plantId">
+            <mat-select formControlName="plantId" class="form-input" value="selectedRow.plantId" disableOptionCentering panelClass="material-select-box">
                 <mat-option [value]="null">-</mat-option>
                 <mat-option *ngFor="let plant of (plants$ | async)" [value]="plant.id">{{plant.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="form-input">
             <mat-label class="form-input">Svæði</mat-label>
-            <mat-select formControlName="areaId" class="form-input" value="selectedRow.areaId">
+            <mat-select formControlName="areaId" class="form-input" value="selectedRow.areaId" disableOptionCentering panelClass="material-select-box">
                 <mat-option [value]="null">-</mat-option>
                 <mat-option *ngFor="let area of (areas$ | async)" [value]="area.id">{{area.name}}</mat-option>
             </mat-select>
@@ -40,7 +40,7 @@
             <input matInput type="text" class="form-input" formControlName="description" [value]="selectedRow.description" >
         </mat-form-field>
 
-        <button mat-raised-button *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!locationForm.valid">{{editMode}}</button>
-        <button mat-raised-button *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
+        <button mat-raised-button color="primary" *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!locationForm.valid">{{editMode}}</button>
+        <button mat-raised-button color="primary" *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>
 </mat-dialog-content>
