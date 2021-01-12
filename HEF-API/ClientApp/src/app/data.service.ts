@@ -236,11 +236,13 @@ export class DataService {
 
   //Job Filtering
   
-  filterJobs(jobStatuses: number[], stationIds: number[], hasComments: boolean, emergencyJobs: boolean, lastCheckFrom: Date, lastCheckTo: Date, completeByFrom: Date, completeByTo: Date, jobs: Job[]){
+  filterJobs(jobStatuses: number[], stationIds: number[], plantIds: number[] , areaIds: number[], hasComments: boolean, emergencyJobs: boolean, lastCheckFrom: Date, lastCheckTo: Date, completeByFrom: Date, completeByTo: Date, jobs: Job[]){
     let tempJobs = [];
 
     tempJobs = this.filterByJobStatus(jobStatuses, jobs);
     tempJobs = this.filterByStation(stationIds, tempJobs);
+    tempJobs = this.filterByPlant(plantIds, tempJobs);
+    tempJobs = this.filterByArea(areaIds, tempJobs);
     tempJobs = this.filterByHasComments(hasComments, tempJobs);
     tempJobs = this.filterByEmergencyJob(emergencyJobs, tempJobs);
     tempJobs = this.filterByLastCheckFrom(lastCheckFrom, tempJobs);
@@ -259,7 +261,7 @@ export class DataService {
       return jobStatuses.find(status => status == job.status.valueOf());
     });
   }
-
+  
   filterByStation(stationIds: number[], jobs: Job[]): Job[]{
     if(!stationIds || stationIds.length == 0){
       return jobs;
@@ -268,6 +270,25 @@ export class DataService {
       return stationIds.find(stationId => stationId == job.stationId);
     });
   }
+
+  filterByPlant(plantIds: number[], jobs: Job[]): Job[]{
+    if(!plantIds || plantIds.length == 0){
+      return jobs;
+    }
+    return jobs.filter((job: Job) => {
+      return plantIds.find(plantId => plantId == job.station.plantId);
+    });
+  }
+
+  filterByArea(areaIds: number[], jobs: Job[]): Job[]{
+    if(!areaIds || areaIds.length == 0){
+      return jobs;
+    }
+    return jobs.filter((job: Job) => {
+      return areaIds.find(areaId => areaId == job.station.areaId);
+    });
+  }
+
 
   filterByHasComments(hasComments: boolean, jobs: Job[]): Job[]{
     if(hasComments === null){

@@ -1,28 +1,39 @@
-<mat-accordion *ngFor="let user of (users$ | async); let i = index" style="text-align: center;">
-    <mat-expansion-panel hideToggle >
-        <mat-expansion-panel-header>
-            <mat-panel-title class="col-md-6">
-                {{user.name}}
-            </mat-panel-title>
-            <mat-panel-description class="col-md-6">
-                Staða: {{userStatus[user.status]}}
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <mat-form-field>
-            <mat-label>Staða</mat-label>
-            <mat-select type="number"  [(ngModel)]="user.status" disableOptionCentering panelClass="material-select-box">
-                <mat-option *ngFor="let item of userStatus | enumToArray" [value]="item.index">{{item.name}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Hlutverk</mat-label>
-            <mat-select  type="number" [(ngModel)]="user.role" disableOptionCentering panelClass="material-select-box">
-                <mat-option *ngFor="let item of role | enumToArray" [value]="item.index">{{item.name}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" (click)="updateUser(user)">Uppfæra</button>
-    </mat-expansion-panel>
-</mat-accordion>
+<div>
+    <div class="row ml-1 grid-action-buttons">
+        <div>
+            <h2 >Allar Veitur</h2>
+        </div>
+        <div class="ml-auto mr-3">
+            <button mat-raised-button color="primary" (click)="openDialog(null, 'insert')">Stofna</button>
+        </div>
+    </div>
+    <mat-accordion *ngFor="let user of (users$ | async); let i = index" style="text-align: center;">
+        <mat-expansion-panel hideToggle >
+            <mat-expansion-panel-header>
+                <mat-panel-title class="col-md-6">
+                    {{user.name}}
+                </mat-panel-title>
+                <mat-panel-description class="col-md-6">
+                    Staða: {{userStatus[user.status]}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-form-field>
+                <mat-label>Staða</mat-label>
+                <mat-select type="number"  [(ngModel)]="user.status" disableOptionCentering panelClass="material-select-box">
+                    <mat-option *ngFor="let item of userStatus | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Hlutverk</mat-label>
+                <mat-select  type="number" [(ngModel)]="user.role" disableOptionCentering panelClass="material-select-box">
+                    <mat-option *ngFor="let item of role | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" (click)="updateUser(user)">Uppfæra</button>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+
 
 
 

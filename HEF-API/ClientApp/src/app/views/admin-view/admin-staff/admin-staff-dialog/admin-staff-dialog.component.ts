@@ -12,11 +12,13 @@ import { User } from 'src/app/shared/models';
 })
 export class AdminStaffDialogComponent implements OnInit {
 
+  editMode: string = '';
+
   staffForm = new FormGroup({
     name: new FormControl(''),
     role: new FormControl(''),
     status: new FormControl(''),
-
+    email: new FormControl('')
   });
   role = Role;
   status = UserStatus;
@@ -33,11 +35,27 @@ export class AdminStaffDialogComponent implements OnInit {
       this.selectedRow.name = '';
       this.selectedRow.role = null;
       this.selectedRow.status = null;
+      this.selectedRow.email = '';
+      this.selectedRow.password = '';
     }
+    this.setMode();
    }
 
+  setMode(){
+    if (this.dialogData.action.toLowerCase() === 'insert') {
+      this.staffForm = new FormGroup({
+        name: new FormControl({ value: '', disabled: false}),
+        email: new FormControl({ value: '', disabled: false}),
+        status: new FormControl({ value: null, disabled: false}),
+        role: new FormControl({ value: null, disabled: false}),
+        password: new FormControl({ value: '', disabled: false}), 
+      });
+      this.editMode = 'Stofna';
+      return
+    }
+  }
+  
   onSubmit() {
-    console.log(this.staffForm.value);
     const requestModel: User = this.staffForm.value;
     this.dataService.addUser(requestModel).subscribe(result => {
       console.log(result);

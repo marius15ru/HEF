@@ -87,7 +87,7 @@ export class AdminStaffComponent implements OnInit {
 
     const refUser = this.dialogItem.open(AdminStaffDialogComponent, {
       data: {
-        action: 'Stofna',
+        action: 'insert',
       },
       width: '800px'
     });

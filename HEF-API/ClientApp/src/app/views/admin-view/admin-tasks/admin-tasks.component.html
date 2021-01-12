@@ -13,34 +13,49 @@
         <mat-card-content>
             <div class="col-md-12">
                 <mat-form-field>
-                    <mat-label>Sía Stöðu</mat-label>
+                    <mat-label>Sía Veitur</mat-label>
+                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedPlants" disableOptionCentering panelClass="material-select-box">
+                        <mat-option *ngFor="let item of (plants$ | async)" [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Sía Stöður</mat-label>
                     <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedJobStatuses" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let item of jobStatus | enumToArray" [value]="item.index" >{{item.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 
                 <mat-form-field>
-                    <mat-label>Sía Stöð</mat-label>
+                    <mat-label>Sía Stöðvar</mat-label>
                     <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedStations" disableOptionCentering panelClass="material-select-box">
                         <mat-option *ngFor="let item of (stations$ | async)" [value]="item.id">{{item.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+
                 
                 <mat-form-field >
-                    <mat-label >Sía Síðustu athugun (frá)</mat-label>
+                    <mat-label >Sía Síðustu athugunanir (frá)</mat-label>
                     <input matInput  [max]="lastCheckTo"  [matDatepicker]="picker1" (dateChange)="filterJobs()" [(ngModel)]="lastCheckFrom">
                     <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
                     <mat-datepicker [startAt]="getCurrentDate()" #picker1></mat-datepicker>
                 </mat-form-field>
                 
                 <mat-form-field >
-                    <mat-label >Sía Síðustu athugun (til)</mat-label>
+                    <mat-label >Sía Síðustu athugunanir (til)</mat-label>
                     <input matInput [min]="lastCheckFrom" [max]="getCurrentDate()"  [matDatepicker]="picker2" (dateChange)="filterJobs()" [(ngModel)]="lastCheckTo">
                     <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
                     <mat-datepicker [startAt]="getCurrentDate()" #picker2></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="col-md-12">
+                <mat-form-field>
+                    <mat-label>Sía Svæði</mat-label>
+                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="selectedAreas" disableOptionCentering panelClass="material-select-box">
+                        <mat-option *ngFor="let item of (areas$ | async)" [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>Sía Athugasemdir</mat-label>
                     <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="hasComments" disableOptionCentering panelClass="material-select-box">
@@ -59,14 +74,14 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field >
-                    <mat-label >Sía Klára fyrir (frá)</mat-label>
+                    <mat-label >Sía Eindaga (frá)</mat-label>
                     <input matInput  [max]="completeByTo"  [matDatepicker]="picker3" (dateChange)="filterJobs()" [(ngModel)]="completeByFrom">
                     <mat-datepicker-toggle matSuffix [for]="picker3" ></mat-datepicker-toggle>
                     <mat-datepicker [startAt]="getCurrentDate()" #picker3></mat-datepicker>
                 </mat-form-field>
                 
                 <mat-form-field >
-                    <mat-label >Sía Klára fyrir (til)</mat-label>
+                    <mat-label >Sía Eindaga (til)</mat-label>
                     <input matInput [min]="completeByFrom"  [matDatepicker]="picker4" (dateChange)="filterJobs()" [(ngModel)]="completeByTo">
                     <mat-datepicker-toggle matSuffix [for]="picker4" ></mat-datepicker-toggle>
                     <mat-datepicker [startAt]="getCurrentDate()" #picker4></mat-datepicker>

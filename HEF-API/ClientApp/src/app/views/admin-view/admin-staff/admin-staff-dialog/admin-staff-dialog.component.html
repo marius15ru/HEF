@@ -1,47 +1,37 @@
-<h2>{{dialogData.action}} Starfsmann</h2>
+<h2>{{editMode}} Starfsmann</h2>
 <mat-dialog-content>
     <form [formGroup]="staffForm" (ngSubmit)="onSubmit()">
-            <label class="form-input">
-                Nafn
-                <input type="text" class="form-input" formControlName="name">
-            </label>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Nafn</mat-label>
+            <input matInput type="text" class="form-input" formControlName="name" [value]="selectedRow.name" >
+        </mat-form-field>
 
-            <label class="form-input">
-                Staða
-                <select type="number" formControlName="status" class="form-input" value="selectedRow.status">
-                    <option *ngFor="let item of status | enumToArray" [ngValue]="item.index">
-                        {{item.name}}
-                    </option>
-                </select>
-            </label>
+        <mat-form-field class="form-input">
+            <mat-label class="form-input">Netfang</mat-label>
+            <input matInput type="email" class="form-input" formControlName="email" [value]="selectedRow.email" >
+        </mat-form-field>
 
-            <label class="form-input">
-                Hlutverk
-                <select type="number" formControlName="role" class="form-input" value="selectedRow.role">
-                    <option *ngFor="let item of role | enumToArray" [ngValue]="item.index">
-                        {{item.name}}
-                    </option>
-                </select>
-            </label>
-            
-            <!-- <label class="form-input">
-                Hlutverk
-                <select formControlName="role" class="form-input">
-                    <option *ngFor="let item of keys()">
-                        {{item}}
-                    </option>
-                </select>
-            </label>
-            
-            <label class="form-input">
-                Staða
-                <select formControlName="status" class="form-input">
-                    <option *ngFor="let item of keys2()">
-                        {{item}}
-                    </option>
-                </select>
-            </label> -->
-            <button mat-raised-button color="primary" class="form-submition" type="submit" [disabled]="!staffForm.valid">{{dialogData.action}}</button>
+        <mat-form-field class="form-input" *ngIf="dialogData.action == 'insert'">
+            <mat-label class="form-input">Lykilorð</mat-label>
+            <input matInput type="password" class="form-input" formControlName="password" [value]="selectedRow.password" >
+        </mat-form-field>
+
+        <mat-form-field class="form-input" *ngIf="dialogData.action.toLowerCase() == 'insert'">
+            <mat-label class="form-input">Staða</mat-label>
+            <mat-select type="number" formControlName="status" class="form-input" value="selectedRow.status" disableOptionCentering panelClass="material-select-box">
+                <mat-option *ngFor="let item of status | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="form-input" *ngIf="dialogData.action.toLowerCase() == 'insert'">
+            <mat-label class="form-input">Hlutverk</mat-label>
+            <mat-select type="number" formControlName="role" class="form-input" value="selectedRow.role" disableOptionCentering panelClass="material-select-box">
+                <mat-option *ngFor="let item of role | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <button mat-raised-button color="primary" class="form-submition" type="submit" [disabled]="!staffForm.valid">{{editMode}}</button>
     </form>
 </mat-dialog-content>
 

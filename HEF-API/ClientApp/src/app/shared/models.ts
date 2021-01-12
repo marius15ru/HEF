@@ -31,7 +31,8 @@ export class Job {
     id: number;
     // Foreign keys
     stationId: number;
-
+    station: Station;
+    
     completeBy: Date;
     description: string;
     duration: string;
@@ -98,6 +99,8 @@ export class User {
     name: string;
     role: Role;
     status: UserStatus;
+    email: string;
+    password: string;
 }
 
 @Pipe({name: 'enumToArray'})

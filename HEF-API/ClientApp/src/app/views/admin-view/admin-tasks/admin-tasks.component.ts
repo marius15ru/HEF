@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
-import { Comment, Job, Station, User } from 'src/app/shared/models';
+import { Area, Comment, Job, Plant, Station, User } from 'src/app/shared/models';
 import { AdminTasksDialogComponent } from './admin-tasks-dialog/admin-tasks-dialog.component';
 import { FilterSettings, FilterSettingsModel, GridComponent, QueryCellInfoEventArgs, RowDataBoundEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
@@ -46,6 +46,9 @@ export class AdminTasksComponent implements OnInit {
   filteredComments$: Observable<Comment[]> = this.dataService.filteredComments$;
   jobs$: Observable<Job[]> = this.dataService.jobs$;
   users$: Observable<User[]> = this.dataService.users$;
+  plants$: Observable<Plant[]> = this.dataService.plants$;
+  areas$: Observable<Area[]> = this.dataService.areas$;
+
 
   filtersVisible: boolean = false;
   filterAction: string = 'Sýna síur';
@@ -70,6 +73,8 @@ export class AdminTasksComponent implements OnInit {
 
   selectedJobStatuses: number[] = [];
   selectedStations: number[] = [];
+  selectedPlants: number[] = [];
+  selectedAreas: number[] = [];
   selectedUsers: number[] = [];
   selectedJobs: number[] = [];
   hasComments: boolean = null;
@@ -135,6 +140,8 @@ export class AdminTasksComponent implements OnInit {
   clearJobFilter(){
     this.selectedJobStatuses = [];
     this.selectedStations = [];
+    this.selectedPlants = [];
+    this.selectedAreas = [];
     this.hasComments = null;
     this.emergencyJobs = null;
     this.lastCheckFrom = null;
@@ -150,7 +157,9 @@ export class AdminTasksComponent implements OnInit {
 
     this.dataService.filterJobs(
       this.selectedJobStatuses, 
-      this.selectedStations, 
+      this.selectedStations,
+      this.selectedPlants,
+      this.selectedAreas, 
       this.hasComments, 
       this.emergencyJobs, 
       this.lastCheckFrom, 
