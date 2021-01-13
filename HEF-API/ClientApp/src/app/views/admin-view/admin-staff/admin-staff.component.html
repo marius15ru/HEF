@@ -32,6 +32,24 @@
             <button mat-raised-button color="primary" type="submit" (click)="updateUser(user)">Uppfæra</button>
         </mat-expansion-panel>
     </mat-accordion>
+    <button mat-raised-button color="accent" type="submit" (click)="toggleKeyView()">Breyta lykilorði starfsmanns</button>
+
+    <mat-card *ngIf="updatePwToggle" class="row" style="text-align: center;">
+        <mat-form-field>
+            <mat-label>Notandi</mat-label>
+            <mat-select type="number"  [(ngModel)]="selectedUser" disableOptionCentering panelClass="material-select-box">
+                <mat-option [value]="null">-</mat-option>
+                <mat-option *ngFor="let item of (users$ | async)" [value]="item">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <form [formGroup]="userForm">
+            <mat-form-field>
+                <mat-label>Breyta lykilorði</mat-label>
+                <input matInput formControlName="password" type="password">
+            </mat-form-field>
+        </form>
+        <button mat-raised-button color="primary" (click)="updateUserKey(selectedUser)" >Uppfæra lykilorð</button>
+    </mat-card>
 </div>
 
 

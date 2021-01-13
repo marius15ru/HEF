@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
 import { Job, Comment, Station } from 'src/app/shared/models';
@@ -12,6 +13,8 @@ import { UserTasksComponent } from '../user-tasks.component';
   styleUrls: ['./user-task-dialog.component.css']
 })
 export class UserTaskDialogComponent implements OnInit {
+  jobComments$: Observable<Comment[]> = this.dataService.jobComments$;
+
   selectedRow: Job;
   stations: Station[];
 

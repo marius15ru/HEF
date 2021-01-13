@@ -18,6 +18,10 @@ export class AdminStaffComponent implements OnInit {
 
   users$: Observable<User[]> = this.dataService.users$;
 
+  updatePwToggle: boolean = false;
+  formInitialized: boolean = false;
+  selectedUser: User = null;
+
 
   public users: User[] = [];
   jobsAssigned: Job[] = [];
@@ -32,12 +36,10 @@ export class AdminStaffComponent implements OnInit {
   usersForm = new FormArray([]);
   
   userForm = new FormGroup({
-    id: new FormControl(''),
-    name: new FormControl(''),
-    status: new FormControl(''),
-    role: new FormControl(''),
-    email: new FormControl('')
+    password: new FormControl('')
   });
+
+
 
   public customAttributes: Object;
 
@@ -49,24 +51,48 @@ export class AdminStaffComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.customAttributes = {class: 'customcss'};
+    this.userForm = new FormGroup({
+      password: new FormControl({ value: '', disabled: false},
+      )
+    });
+
+
   }
 
   getData() {
-    // this.http.get<User[]>('api/users').subscribe(result => {
-    //   console.log(result);
-    //   this.users = result;
-    // }, error => console.error(error));
     this.users = this.dataService.users;
+  }
 
+  toggleKeyView(){
+    if(this.updatePwToggle){
+      this.updatePwToggle = false;
+    }else{
+      this.updatePwToggle = true;
+    }
   }
 
   updateUser(user: User){
-    console.log("NOTANDI: ", user, user.id.toString());
     const id = user.id.toString();
     this.dataService.updateUser(user, id).subscribe(result => {
       console.log(result);
     this.openSnackBar(user.name + ' uppfærð/ur', 'Loka');
     }, error => console.error(error));
+  }
+
+  updateUserKey(user: User){
+    user.password = this.userForm.value.password;
+    const id = user.id.toString();
+    this.dataService.updateUser(user, id).subscribe(result => {
+      console.log(result);
+    this.openSnackBar(user.name + ' uppfærð/ur', 'Loka');
+    }, error => console.error(error));
+    this.selectedUser = null;
+    this.userForm.reset();
+    this.toggleKeyView();
+      this.userForm = new FormGroup({
+        password: new FormControl({ value: '', disabled: false},
+        )
+      });
   }
 
   openSnackBar(message: string, action: string) {
@@ -82,6 +108,10 @@ export class AdminStaffComponent implements OnInit {
       ),
     });
   }
+
+  // updateUser(user: User){
+
+  // }
 
   openDialog(action: string) {
 
