@@ -19,6 +19,7 @@ namespace HEF_API.Services
         Task<T> GetByID(object id);
         void Insert(T entity);
         void Update(T entity);
+        Task Save();
     }
 
     public class BaseRepository<T> : IRepository<T> where T : class
