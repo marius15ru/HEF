@@ -4,7 +4,7 @@
             <h2 >Allir starfsmenn</h2>
         </div>
         <div class="ml-auto mr-3">
-            <button mat-raised-button color="primary" (click)="openDialog(null, 'insert')">Stofna</button>
+            <button mat-raised-button color="primary" (click)="openDialog('insert')">Stofna</button>
         </div>
     </div>
     <mat-accordion *ngFor="let user of (users$ | async); let i = index" style="text-align: center;">
@@ -65,7 +65,7 @@
             <button (click)="openDialog('insert')">Stofna</button>
         </div>
     </div>
-    <mat-grid-tile *ngFor="let user of users"> 
+    <mat-grid-tile *ngFor="let user of users">
         <div class="grid-tile-header">
             <h5>
                 {{user.name}}
