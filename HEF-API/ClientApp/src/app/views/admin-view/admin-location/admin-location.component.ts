@@ -29,6 +29,8 @@ export class AdminLocationComponent implements OnInit {
   
   public stations: Station[];
 
+  pageSettings: Object;
+
   public toolbarOptions: ToolbarItems[];
   @ViewChild('grid', {static: false})
   public grid: GridComponent;
@@ -42,6 +44,7 @@ export class AdminLocationComponent implements OnInit {
     // this.getData();
     this.toolbarOptions = ['PdfExport'];
     this.customAttributes = {class: 'customcss'};
+    this.pageSettings = { pageSizes: [5, 10, 20, 50, 100, 200, 'All'], pageSize: 10};
   }
 
   getData() {

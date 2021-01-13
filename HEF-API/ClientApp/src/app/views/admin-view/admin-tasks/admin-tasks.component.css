@@ -11,3 +11,15 @@
 .e-unassigned-color{
     background-color: rgba(187, 189, 183);
 }
+
+.e-on-hold-color{
+    background-color:  #FFE082;
+}
+
+.e-finished-color{
+    background-color:  #9CCC65;
+}
+
+.e-overdue-color{
+    background-color: #EF9A9A;
+}

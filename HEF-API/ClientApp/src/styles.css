@@ -173,6 +173,19 @@ mat-grid-tile {
   min-width: 90%;
 }
 
+/* .mat-expansion-panel-header {
+  background: #90CAF9;
+  }
+
+.mat-expansion-panel-header:hover {
+  background: #039BE5;
+  }
+
+
+.mat-expansion-panel-header-title {
+  color: white;
+} */
+
 /* .e-grid .e-gridheader {
   border:2px solid #ffff;
 } */

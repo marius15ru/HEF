@@ -222,13 +222,24 @@ export class AdminTasksComponent implements OnInit {
     }, args.cell as HTMLTableCellElement);
 }
 
-  
-
   rowDataBound(args: RowDataBoundEventArgs) {
     const status = 'status';
+    const completeBy = 'completeBy';
+    const today = new Date();
+    const dueDate = new Date(args.data[completeBy]);
     if (args.data[status] === 1) {
       args.row.classList.add('e-unassigned-color');
     }
+    if (args.data[status] === 4) {
+      args.row.classList.add('e-on-hold-color');
+    }
+    if(today > dueDate && args.data[status] != 5){
+      args.row.classList.add('e-overdue-color');
+    }
+    if(args.data[status] == 5){
+      args.row.classList.add('e-finished-color');
+    }
+
   }
 
   openDialog(jobs: Job, action: string) {
