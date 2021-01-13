@@ -36,11 +36,13 @@ jobs:
       - name: Run Tests on Services
         working-directory: HEF-API/
         run: dotnet test --filter FullyQualifiedName~HEF_Test.Services 
-
-      # Unit test
-      #- name: Unit Tests
-      #  run: npm run test
-
-      # Acceptance Test
-      #- name: Acceptance Test
-      #  run: npm run e2e
+      
+      - name: Run API tests
+        run: npm run postman
+      
+      #- name: Deploy with ftp
+      #- uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      #  with:
+      #    server: servername.com
+      #    username: ftp_user
+      #    password: ${{ secrets.ftp_password }}
