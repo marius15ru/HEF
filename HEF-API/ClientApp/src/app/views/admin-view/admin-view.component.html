@@ -1,6 +1,6 @@
 <app-nav-menu></app-nav-menu>
 <div class="container">
-    <mat-tab-group mat-stretch-tabs *ngIf="user?.role == 2">
+    <mat-tab-group mat-stretch-tabs *ngIf="(user$ | async)?.role == 2">
         <mat-tab label="Verk">
             <app-admin-tasks></app-admin-tasks>
             <!-- Hér kemur yfirlit yfir verk -->

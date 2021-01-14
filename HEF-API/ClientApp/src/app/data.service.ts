@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Area, Equipment, Job, JobAssignments, Comment, Plant, User, Station } from './shared/models';
 import { MessageService } from './message.service';
 import { JobStatus } from './shared/enums';
+import { Item } from '@syncfusion/ej2-angular-navigations';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,9 @@ export class DataService {
   private usersUrl = '/api/users/';
   private commentsUrl = '/api/comments/';
   private stationsUrl = 'api/stations/';
-
+  private unSeenComments: Comment[] = [];
   // Jobs
-
+  
   private _jobsSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
   private _jobs$: Observable<Job[]> = this._jobsSource.asObservable();
   get jobs$(): Observable<Job[]> { return this._jobs$ }
@@ -191,6 +192,13 @@ export class DataService {
     this._filteredStationsSource.next(newValue);    
   }
 
+  private _userSource: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  private _user$: Observable<User> = this._userSource.asObservable();
+  get user$(): Observable<User> { return this._user$ }
+  get user(): User { return this._userSource.getValue()}
+  set user(newValue: User){
+    this._userSource.next(newValue);    
+  }
 
   
   httpOptions = {
@@ -201,12 +209,21 @@ export class DataService {
     @Inject('BASE_URL') baseUrl: string
     ) { }
 
+  //Get current User
+
+  getCurrentUser(userId: string){
+    this.http.get<User>('api/users/' + userId + "/").subscribe(result => {
+      this.user = result;
+    })
+  }
+
   //Jobs
   getJobs(){
     this.http.get<Job[]>('api/jobs').subscribe(result => {
       console.log(result);
       this.jobs = result;
       this.filteredJobs = result;
+      this.availableJobs = this.jobs.filter(item => item.status === 1);
     }, error => console.error(error));
   }
 
@@ -632,18 +649,37 @@ export class DataService {
   }
 
   //Comments
-  getComments(jobId = null){
+  getComments(jobId = null, userId = null){
     return this.http.get<Comment[]>('api/comments').subscribe(result => {
       this.comments = result;
       this.filteredComments = result;
       if(jobId){
         this.jobComments = this.comments.filter(item => item.jobId == jobId);
+        if(this.jobComments.length > 0){
+          this.unSeenComments = this.jobComments.filter(comment => comment.seen === false);
+          this.unSeenComments.forEach(comment => {
+            if((this.user.id != comment.userId) && !comment.seen ){
+              comment.seen = true;
+              this.updateJobComment(comment).subscribe(result => {
+                this.getComments();
+              });
+            }
+          });
+        }
       }
     }, error => console.error(error));
   }
 
   addJobComment(comment: Comment){
     return this.http.post<Comment>(this.commentsUrl, comment, this.httpOptions);
+  }
+
+  updateJobComment(comment: Comment){
+    const url = this.commentsUrl + comment.id + '/';
+    return this.http.put<Job>(url, comment, this.httpOptions)
+      .pipe(
+        catchError(this.handleError('updateJob', comment))
+      );
   }
 
   deleteJobComment(comment: Comment): Observable<{}>{
@@ -659,7 +695,6 @@ export class DataService {
     this.http.get<Job[]>('api/users/' + userId + '/jobs').subscribe(result => {
       console.log(result);
       this.userJobs = result;
-      this.availableJobs = this.jobs.filter(item => item.status === 1);
       this.jobsAssigned = this.userJobs.filter(item => item.status === 2);
       this.jobsInProgress = this.userJobs.filter(item => item.status === 3);
       this.jobsOnHold = this.userJobs.filter(item => item.status === 4);

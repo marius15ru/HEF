@@ -56,13 +56,13 @@ export class ObtainTaskComponent implements OnInit {
   }
 
 
-  getData() {
-    this.http.get<Job[]>('api/jobs').subscribe(result => {
-      console.log(result);
-      this.jobs = result;
-      this.availableJobs = this.jobs.filter(item => item.status === 1);
-    }, error => console.error(error));
-  }
+  // getData() {
+  //   this.http.get<Job[]>('api/jobs').subscribe(result => {
+  //     console.log(result);
+  //     this.jobs = result;
+  //     this.availableJobs = this.jobs.filter(item => item.status === 1);
+  //   }, error => console.error(error));
+  // }
 
   onSubmit(job: Job){
     const requestModelAssign: JobAssignments = new JobAssignments;
@@ -75,21 +75,15 @@ export class ObtainTaskComponent implements OnInit {
       const requestModelJob = job;
       requestModelJob.status = 2;
       this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
-
+        this.dataService.getJobs();
       });
     }
     this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
       console.log(result, job.name, 'assigned insert');
+      this.dataService.getUserJobs(parseInt(this.userId));
       this.openSnackBar('Þér hefur verið úthlutað verki ' + job.name, 'Loka');
       }, error => console.error(error));
 
-    setTimeout(() => {
-      this.dataService.getJobs();
-      }, 300);
-
-      setTimeout(() => {
-        this.dataService.getUserJobs(parseInt(this.userId));
-      }, 300);
   }
 
   // onSubmit(job: Job) {
@@ -178,7 +172,6 @@ export class ObtainTaskComponent implements OnInit {
 
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
-      this.getData();
     });
   }
 

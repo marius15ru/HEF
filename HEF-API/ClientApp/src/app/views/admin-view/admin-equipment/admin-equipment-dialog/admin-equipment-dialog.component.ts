@@ -75,7 +75,8 @@ export class AdminEquipmentDialogComponent implements OnInit {
         requestModel.lastCheck = new Date(requestModel.lastCheck);
         this.dataService.addEquipment(requestModel).subscribe(result => {
           console.log(result);
-        this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
+          this.dataService.getEquipments();
+          this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
         }, error => console.error(error));       
         break;
 
@@ -85,7 +86,8 @@ export class AdminEquipmentDialogComponent implements OnInit {
         console.log(updateId);
         this.dataService.updateEquipment(requestModel, updateId).subscribe(result => {
           console.log(result, updateId);
-        this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
+          this.dataService.getEquipments();
+          this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
         break;
 
@@ -94,14 +96,11 @@ export class AdminEquipmentDialogComponent implements OnInit {
         requestModel.id = this.selectedRow.id;
         this.dataService.deleteEquipment(requestModel, deleteId).subscribe(result => {
           console.log(result, deleteId, 'deleted');
-        this.openSnackBar(requestModel.name + ' eytt', 'Loka');
+          this.dataService.getEquipments();
+          this.openSnackBar(requestModel.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
     }
-
-      setTimeout(()=> {
-        this.dataService.getEquipments();
-      }, 500);
       
       this.closeDialog();
    }
