@@ -3,20 +3,6 @@ namespace HEF_API.Models
 {
     public class Enums
     {
-        public enum DataOperation
-        {
-            Undefined = 0,
-            Insert = 1,
-            Read = 2,
-            Update = 3,
-            Delete = 4,
-            List = 5,
-            ListByPlant = 6,
-            ListByUser = 7,
-            ListByJob = 8
-
-        }
-
         public enum Role
         {
             Undefined = 0,
@@ -50,14 +36,7 @@ namespace HEF_API.Models
             LitersPerSecond = 5
 
         }
-        public enum PlantType
-        {
-            Undefined = 0,
-            Water = 1,
-            Data = 2,
-            Heat = 3,
-            Drainage = 4
-        }
+
         public enum Recurring
         {
             Undefined = 0,
@@ -73,19 +52,5 @@ namespace HEF_API.Models
             FiveYears = 10,
             TenYears = 11
         }
-
-        public enum Tasks
-        {
-            Undefined = 0,
-            Clean = 1,
-            Vacuum = 2,
-            Drawdown = 3,
-            MeasureOil = 4,
-            MeasureHeat = 5,
-            MeasureHeight = 6,
-            Mop = 7,
-            CheckMotor = 8
-        }
-
     }
 }

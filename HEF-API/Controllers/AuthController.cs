@@ -40,17 +40,23 @@ namespace HEF_API.Controllers
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")); // Environment variable
                 var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                
+
+                var claims = new List<Claim>
+                {
+                    new Claim("User", account.Id.ToString()),
+                    new Claim("Role", account.Role.ToString())
+                };
+
                 var tokenOptions = new JwtSecurityToken(
                     issuer: "http://localhost:5001",
                     audience: "http://localhost:5001",
-                    claims: new List<Claim>(),
+                    claims: claims,
                     expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: signingCredentials
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                return Ok(new { Token = tokenString, Role = account.Role, Id = account.Id });
+                return Ok(new { Token = tokenString });
             }
 
             return Unauthorized("Username or password incorrect.");
@@ -64,13 +70,16 @@ namespace HEF_API.Controllers
             var newp = HttpContext.Request.Form["new_password"];
             var oldp = HttpContext.Request.Form["old_password"];
 
-            if (account != null && (String.IsNullOrEmpty(account.Password) || BC.Verify(oldp, account?.Password)))
+            if (account != null)
             {
-                var hashed_password = BC.HashPassword(newp, BC.GenerateSalt());
-                account.Password = hashed_password;
-                _repository.User.Update(account);
-                await _repository.Save();
-                return Ok();
+                if ((String.IsNullOrEmpty(account.Password) && String.IsNullOrEmpty(oldp)) || BC.Verify(oldp, account?.Password))
+                {
+                    var hashed_password = BC.HashPassword(newp, BC.GenerateSalt());
+                    account.Password = hashed_password;
+                    _repository.User.Update(account);
+                    await _repository.Save();
+                    return Ok();
+                }
             }
 
             return NoContent();

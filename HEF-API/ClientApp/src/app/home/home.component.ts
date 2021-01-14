@@ -4,16 +4,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-
-  invalidLogin: boolean = null;
-
   loginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
@@ -25,25 +22,39 @@ export class HomeComponent {
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
-              private router: Router ) { }
+    private router: Router,
+    private jwtHelper: JwtHelperService) { }
+
+  getNavStr(value: string): string {
+    return value === "Stjórnandi" ? "stjornandi"
+         : value === "Verkaðili"  ? "verkadili"
+         : null;
+  }
+
+  ngOnInit() {
+    const token = localStorage.getItem('jwt');
+    if (!this.jwtHelper.isTokenExpired(token)) {
+      const role = localStorage.getItem('role');
+      this.router.navigate(['/' + this.getNavStr(role)]);
+    }
+  }
 
   onSubmit() {
     const credentials = JSON.stringify(this.loginForm.value);
     this.http.post('/api/auth/login', credentials, this.httpOptions).subscribe(response => {
       const token = (<any>response).token;
-      const role = (<any>response).role;
-      const userId = (<any>response).id;
-      localStorage.setItem('role', role);
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      const role = decodedToken["Role"];
+      const user = decodedToken["User"];
+
       localStorage.setItem('jwt', token);
-      localStorage.setItem('user', userId);
-      this.invalidLogin = false;
-      if (role === 1) {
-        this.router.navigate(['/verkadili']);
-      } else if (role === 2) {
-        this.router.navigate(['/stjornandi']);
-      }
+      localStorage.setItem('role', role);
+      localStorage.setItem('user', user);
+
+      this.router.navigate(['/' + this.getNavStr(role)]);
+
     }, err => {
-      this.invalidLogin = true;
+        console.log("Invalid login");
     });
   }
 

@@ -11,7 +11,7 @@ import { User } from 'src/app/shared/models';
 export class AdminViewComponent implements OnInit {
 
   user: User = null;
-  userId: string = localStorage.getItem("user").toString();
+  userId: string = localStorage.getItem("user");
 
   constructor(private http: HttpClient, private dataService: DataService) { }
 

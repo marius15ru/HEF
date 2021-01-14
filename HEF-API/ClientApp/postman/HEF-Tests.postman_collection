@@ -1,0 +1,2291 @@
+{
+	"info": {
+		"_postman_id": "084b9df5-dd65-4bd9-bf4d-24d0a837cb1a",
+		"name": "HEF-Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "PostArea",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"areaID\");\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"areaID\", jsonData.id);\r",
+									"console.log(jsonData.id);\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Area 1\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"Name\": \"Area 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/areas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostUser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"userID\");\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"userID\", jsonData.id);\r",
+									"console.log(jsonData.id);\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Kalli\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Kalli\", \r\n    \"Role\": 1, \r\n    \"Status\": 1,\r\n    \"Email\": \"kalli@hef.is\",\r\n    \"Password\": \"My Shit Password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostPlant",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"plantID\");\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"plantID\", jsonData.id);\r",
+									"console.log(jsonData.id);\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Veita nr. 1\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Veita nr. 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/plants",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"plants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostStation",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"stationsID\");\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"stationsID\", jsonData.id);\r",
+									"console.log(jsonData.id);\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Stöð 1\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"PlantId\": {{plantID}},\r\n    \"AreaId\": {{areaID}},\r\n    \"Name\": \"Stöð 1\",\r\n    \"Address\": \"Gata 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/stations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"stations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"jobID\");\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"jobID\", jsonData.id);\r",
+									"console.log(jsonData.id);\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Leki\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stationId\": {{stationsID}},\r\n    \"name\": \"Leki\",\r\n    \"completeBy\": \"2020-12-31T00:00:00\",\r\n    \"recurring\": 5,\r\n    \"hasComments\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/jobs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostComment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"commentsID\");\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"commentsID\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert id is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.text).to.eql(\"A comment\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserID\": {{userID}},\r\n    \"JobID\": {{jobID}},\r\n    \"Text\": \"A comment\",\r\n    \"Seen\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostEquipment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"equipmentID\");\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"equipmentID\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Lögn\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"StationId\": {{stationsID}},\r\n    \"Name\": \"Lögn\",\r\n    \"Model\": \"2018-01-01\",\r\n    \"Manufacturer\": \"Pipes PLC\",\r\n    \"Operation\": \"Flytur vökva.\",\r\n    \"LastCheck\": \"2020-01-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/equipments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"equipments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostSubJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.unset(\"subjobID\");\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"subjobID\", jsonData.id);\r",
+									"console.log(jsonData.id);\r",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+									"tests[\"Name is correct\"] = jsonData.name === \"Skrá mælingar\";\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"JobId\":{{jobID}}, \r\n    \"EquipmentId\": {{equipmentID}}, \r\n    \"Name\": \"Skrá mælingar\", \r\n    \"Description\": \"Lýsingar á verki\", \r\n    \"Status\": 1, \r\n    \"Unit\": \"metri\", \r\n    \"Value\": 10.0 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/subjobs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjobs"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Get",
+			"item": [
+				{
+					"name": "GetArea",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorize",
+								"value": "Bearer{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/areas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Comments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/comments",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"id\": 1,\r\n        \"userId\": 1,\r\n        \"jobId\": 1,\r\n        \"text\": \"Þetta eru athugasemdir vegna hitamælis\",\r\n        \"seen\": true\r\n    }\r\n]"
+						}
+					]
+				},
+				{
+					"name": "GetPlant",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/plants",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"plants"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Comments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/comments",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"id\": 1,\r\n        \"userId\": 1,\r\n        \"jobId\": 1,\r\n        \"text\": \"Þetta eru athugasemdir vegna hitamælis\",\r\n        \"seen\": true\r\n    }\r\n]"
+						}
+					]
+				},
+				{
+					"name": "GetStation",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/stations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"stations"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Comments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/comments",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"id\": 1,\r\n        \"userId\": 1,\r\n        \"jobId\": 1,\r\n        \"text\": \"Þetta eru athugasemdir vegna hitamælis\",\r\n        \"seen\": true\r\n    }\r\n]"
+						}
+					]
+				},
+				{
+					"name": "GetJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/jobs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Comments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/comments",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"id\": 1,\r\n        \"userId\": 1,\r\n        \"jobId\": 1,\r\n        \"text\": \"Þetta eru athugasemdir vegna hitamælis\",\r\n        \"seen\": true\r\n    }\r\n]"
+						}
+					]
+				},
+				{
+					"name": "GetComment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"comments"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Comments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/comments",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"id\": 1,\r\n        \"userId\": 1,\r\n        \"jobId\": 1,\r\n        \"text\": \"Þetta eru athugasemdir vegna hitamælis\",\r\n        \"seen\": true\r\n    }\r\n]"
+						}
+					]
+				},
+				{
+					"name": "GetEquipment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/equipments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"equipments"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Comments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/comments",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"id\": 1,\r\n        \"userId\": 1,\r\n        \"jobId\": 1,\r\n        \"text\": \"Þetta eru athugasemdir vegna hitamælis\",\r\n        \"seen\": true\r\n    }\r\n]"
+						}
+					]
+				},
+				{
+					"name": "GetSubJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"var id = pm.collectionVariables.get(\"subjobID\");\r",
+									"console.log(id);\r",
+									"var obj = pm.response.json().find(x => x.id == id);\r",
+									"console.log(obj);\r",
+									"tests[\"Name is correct\"] = obj.name === \"Skrá mælingar\";"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/subjobs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjobs"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Comments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/comments",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"id\": 1,\r\n        \"userId\": 1,\r\n        \"jobId\": 1,\r\n        \"text\": \"Þetta eru athugasemdir vegna hitamælis\",\r\n        \"seen\": true\r\n    }\r\n]"
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Put",
+			"item": [
+				{
+					"name": "PutArea",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"areaID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": {{areaID}},\r\n    \"name\": \"MyArea\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/areas/{{areaID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"{{areaID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutUser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var id = pm.collectionVariables.get(\"userID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": {{userID}},\r\n    \"Name\": \"Kalli\", \r\n    \"Role\": 1, \r\n    \"Status\": 1,\r\n    \"Email\": \"kalli@hef.is\",\r\n    \"Password\": \"My Shit Password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users/{{userID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutPlant",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var id = pm.collectionVariables.get(\"plantID\");\r",
+									"/*\r",
+									"var entity = pm.collectionVariables.get(\"entity\");\r",
+									"entity.id = id;\r",
+									"entity.name = \"Ný Stöð\";\r",
+									"pm.collectionVariables.set(\"entity\", entity);\r",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": {{plantID}},\r\n\t\"Name\": \"Veita nr. 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/plants/{{plantID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"plants",
+								"{{plantID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutStation",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"stationsID\");\r",
+									"\r",
+									"/*\r",
+									"var entity = pm.collectionVariables.get(\"entity\");\r",
+									"entity.name = \"Ný Stöð\";\r",
+									"pm.collectionVariables.set(\"entity\", entity);\r",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": {{stationsID}},\r\n    \"PlantId\": 1,\r\n    \"AreaId\": 2,\r\n    \"Name\": \"Stöð 1\",\r\n    \"Address\": \"Götustræti 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/stations/{{stationsID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"stations",
+								"{{stationsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"jobID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": {{jobID}},\r\n    \"stationId\": 1,\r\n    \"name\": \"Leki Stór\",\r\n    \"completeBy\": \"2020-12-31T00:00:00\",\r\n    \"recurring\": 5,\r\n    \"hasComments\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/jobs/{{jobID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"{{jobID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutComment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"commentsID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"Id\": {{commentsID}},\r\n    \"UserId\": 1,\r\n    \"JobId\": 1,\r\n    \"Text\": \"Edited comment\",\r\n    \"Seen\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/comments/{{commentsID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"{{commentsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutEquipment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"equipmentID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": {{equipmentID}},\r\n    \"StationId\": 1,\r\n    \"Name\": \"Lögn 1600mm\",\r\n    \"Model\": \"2018-01-01\",\r\n    \"Manufacturer\": \"Pipes PLC\",\r\n    \"Operation\": \"Flytur vökva.\",\r\n    \"LastCheck\": \"2020-01-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/equipments/{{equipmentID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"equipments",
+								"{{equipmentID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutSubJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var id = pm.collectionVariables.get(\"subjobID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 204\"] = responseCode.code === 204;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": {{subjobID}},\r\n    \"JobId\": 1, \r\n    \"EquipmentId\": 1, \r\n    \"Name\": \"Skrá verk\", \r\n    \"Description\": \"Lýsingar á verki\", \r\n    \"Status\": 1, \r\n    \"Unit\": \"metri\", \r\n    \"Value\": 10.0 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/subjobs/{{subjobID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjobs",
+								"{{subjobID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "GetById",
+			"item": [
+				{
+					"name": "GetAreaById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"areaID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"MyArea\");\r",
+									"});\r",
+									"\r",
+									"var areaID = pm.collectionVariables.get(\"areaID\");\r",
+									"\r",
+									"pm.test(\"Assert ID is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(areaID);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/areas/{{areaID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"{{areaID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"userID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Kalli\");\r",
+									"});\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"userID\");\r",
+									"\r",
+									"pm.test(\"Assert id is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/{{userID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPlantById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"plantID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Veita nr. 1\");\r",
+									"});\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"plantID\");\r",
+									"\r",
+									"pm.test(\"Assert id is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/plants/{{plantID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"plants",
+								"{{plantID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStationById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"stationsID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Stöð 1\");\r",
+									"});\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"stationsID\");\r",
+									"\r",
+									"pm.test(\"Assert id is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/stations/{{stationsID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"stations",
+								"{{stationsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetJobById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"jobID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Leki Stór\");\r",
+									"});\r",
+									"\r",
+									"console.log(\"GetById Job: \" + JSON.stringify(pm.response.json()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/jobs/{{jobID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"{{jobID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCommentById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"commentsID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert text is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.text).to.eql(\"A comment\");\r",
+									"});\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"commentsID\");\r",
+									"\r",
+									"pm.test(\"Assert id is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/comments/{{commentsID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"{{commentsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEquipmentById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"equipmentID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert name is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(\"Lögn 1600mm\");\r",
+									"});\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"equipmentID\");\r",
+									"\r",
+									"pm.test(\"Assert id is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/equipments/{{equipmentID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"equipments",
+								"{{equipmentID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSubJobById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var id = pm.collectionVariables.get(\"subjobID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"// tests[\"Name is correct\"] = jsonData.name === \"Skrá verk\";\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === pm.collectionVariables.get(\"subjobID\");\r",
+									"    jsonData.jobid === 1;\r",
+									"    jsonData.equipmentid === 1;\r",
+									"    jsonData.name === \"Skrá verk\";\r",
+									"    jsonData.description === \"Lýsingar á verki\";\r",
+									"    jsonData.status === 1;\r",
+									"    jsonData.unit === \"metri\";\r",
+									"    jsonData.value === 10.0;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/subjobs/{{subjobID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjobs",
+								"{{subjobID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "DeleteArea",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"areaID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"areaID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/areas/{{areaID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"{{areaID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"userID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"userID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/{{userID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePlant",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"plantID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"plantID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/plants/{{plantID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"plants",
+								"{{plantID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteStation",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"stationsID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"stationsID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/stations/{{stationsID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"stations",
+								"{{stationsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"jobID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"jobID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/jobs/{{jobID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"{{jobID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteComment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"commentsID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"commentsID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/comments/{{commentsID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"{{commentsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEquipment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"equipmentID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"equipmentID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/equipments/{{equipmentID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"equipments",
+								"{{equipmentID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteSubJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"subjobID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 204\"] = responseCode.code === 204;\r",
+									"\r",
+									"pm.collectionVariables.unset(\"subjobID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/subjobs/{{subjobID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjobs",
+								"{{subjobID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://3730b626-4fcc-41bd-ad5c-e9ea687f1fef.mock.pstmn.io",
+			"disabled": true
+		},
+		{
+			"key": "url",
+			"value": "https://localhost:5001"
+		},
+		{
+			"key": "Id",
+			"value": ""
+		},
+		{
+			"key": "model",
+			"value": ""
+		},
+		{
+			"key": "entity",
+			"value": ""
+		}
+	]
+}
