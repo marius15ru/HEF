@@ -12,19 +12,19 @@ export enum DataOperation {
 }
 
 export enum Role {
-    "Undefined" = 0,
+    "Óskilgreint" = 0,
     "Verkaðili" = 1,
     "Stjórnandi" = 2,
 }
 
 export enum UserStatus {
-    "Undefined" = 0,
+    "Óskilgreint" = 0,
     "Tiltæk/ur" = 1,
     "Ótiltæk/ur" = 2,
 }
 
 export enum JobStatus {
-    'Undefined' = 0,
+    'Óskilgreint' = 0,
     'Óúthlutað' = 1,
     'Úthlutað' = 2,
     'Í vinnslu' = 3,
@@ -51,7 +51,7 @@ export enum PlantType {
 }
 
 export enum Recurring {
-    'Undefined' = 0,
+    'Óskilgreint' = 0,
     'Vikulega' = 1,
     'Tveggja vikna fresti' = 2,
     'Mánaðarlega' = 3,

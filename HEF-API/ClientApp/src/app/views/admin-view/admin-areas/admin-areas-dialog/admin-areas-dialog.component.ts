@@ -50,7 +50,8 @@ export class AdminAreasDialogComponent implements OnInit {
       case 'insert':
         this.dataService.addArea(requestModel).subscribe(result => {
           console.log(result);
-        this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
+          this.dataService.getAreas();
+          this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
         }, error => console.error(error));
         break;
       case 'update':
@@ -58,7 +59,8 @@ export class AdminAreasDialogComponent implements OnInit {
         requestModel.id = this.selectedRow.id;
         this.dataService.updateArea(requestModel, updateId).subscribe(result => {
           console.log(result);
-        this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
+          this.dataService.getAreas();
+          this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
         break;
       case 'delete':
@@ -66,13 +68,11 @@ export class AdminAreasDialogComponent implements OnInit {
         requestModel.id = this.selectedRow.id;
         this.dataService.deleteArea(requestModel, deleteId).subscribe(result => {
           console.log(result);
-        this.openSnackBar(requestModel.name + ' eytt', 'Loka');
+          this.dataService.getAreas();
+          this.openSnackBar(requestModel.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
     }
-    setTimeout(()=> {
-      this.dataService.getAreas();
-    }, 500);
 
     this.closeDialog();
    }

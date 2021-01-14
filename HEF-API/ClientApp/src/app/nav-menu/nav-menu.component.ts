@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthGuardService } from '../auth-guard.service';
 import { Role } from '../shared/enums';
 
 @Component({
@@ -7,8 +8,10 @@ import { Role } from '../shared/enums';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+  constructor(public authGuard: AuthGuardService) {}
+
   isExpanded = false;
-  role = localStorage.getItem("role");
+  role: Role = parseInt(localStorage.getItem("role"));
 
   collapse() {
     this.isExpanded = false;
@@ -17,6 +20,7 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
 
 
   logOut() {

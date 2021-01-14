@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
 import { Job, Comment, Station } from 'src/app/shared/models';
@@ -12,6 +13,9 @@ import { UserTasksComponent } from '../user-tasks.component';
   styleUrls: ['./user-task-dialog.component.css']
 })
 export class UserTaskDialogComponent implements OnInit {
+  jobComments$: Observable<Comment[]> = this.dataService.jobComments$;
+  
+
   selectedRow: Job;
   stations: Station[];
 
@@ -56,7 +60,6 @@ export class UserTaskDialogComponent implements OnInit {
   ngOnInit() {
     this.selectedRow = this.dialogData.job;
     this.stations = this.dialogData.stations;
-    this.getJobComments(this.dialogData.job);
     this.setMode();
   }
 
@@ -104,23 +107,18 @@ export class UserTaskDialogComponent implements OnInit {
     requestModel.userId = this.userId;
     // console.log(requestModel);
 
-    if(this.selectedRow.hasComments == false){
-      const requestModelJob = this.selectedRow;
-      requestModelJob.hasComments = true;
-      this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
-
-      });
-    }
-
     this.dataService.addJobComment(requestModel).subscribe(result => {
-      console.log(result);
+      this.commentForm.reset();
+      this.dataService.getComments(this.selectedRow.id);
+      if(this.selectedRow.hasComments === false){
+        const requestModelJob = this.selectedRow;
+        requestModelJob.hasComments = true;
+        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+          this.dataService.getJobs();
+          this.dataService.getUserJobs(requestModel.userId);
+        });
+      }
     });
-
-    setTimeout(() => {
-      this.dataService.getComments();
-    }, 300);
-    
-    this.dataService.getUserJobs(requestModel.userId);
   }
 
   setMode() {
@@ -182,11 +180,7 @@ export class UserTaskDialogComponent implements OnInit {
         this.editDisabled = true;
         break;
       case 'comment':
-        this.commentForm = new FormGroup({
-          user: new FormControl({ value: 1, disabled: true}),
-          job: new FormControl({  value: this.dialogData.job.id, disabled: true}),
-          comment: new FormControl('')
-        });
+        this.dataService.getComments(this.dialogData.job.id, this.dataService.user.id);
         break;
     }
   }

@@ -22,7 +22,7 @@ export class AdminTasksDialogComponent implements OnInit {
   unassignedUsers$: Observable<User[]> = this.dataService.unassignedUsers$;
   jobComments$: Observable<Comment[]> = this.dataService.jobComments$;
 
-
+  unSeenComments: Comment[] = [];
   editMode: string;
   editDisabled = false;
   selectedRow: Job;
@@ -96,10 +96,7 @@ export class AdminTasksDialogComponent implements OnInit {
       this.selectedRow.lastCheck = null;
     } else {
       this.selectedRow = this.dialogData.job;
-      this.dataService.getJobAssignments(this.dialogData.job);
-      this.dataService.getComments(this.dialogData.job.id);
     }
-
     this.setMode();
   }
 
@@ -120,36 +117,27 @@ export class AdminTasksDialogComponent implements OnInit {
     this.users = this.dataService.users;
   }
 
-  // getJobComments(){
-  //   this.allComments = this.dataService.comments;
-  //   this.jobComments = this.allComments.filter(item => item.jobId == this.selectedRow.id);
-  // }
-
   onSubmit() {
-
     const requestModel: Job = this.jobForm.value;
-
     switch(this.dialogData.action.toLowerCase()){
       case 'insert':
         requestModel.completeBy = new Date(requestModel.completeBy);
         requestModel.lastCheck = new Date(requestModel.lastCheck);
-
         this.dataService.addJob(requestModel).subscribe(result => {
-          console.log(result);
-        this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
-        }, error => console.error(error));
+          this.dataService.getJobs();
+          this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
+          }, error => console.error(error));
         break;
       case 'update':
         const updateId: string = this.selectedRow.id.toString();
         requestModel.id = this.selectedRow.id;
         this.dataService.updateJob(requestModel, this.selectedRow.id.toString()).subscribe(result => {
-          console.log(result);
-        this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
+          this.dataService.getJobs();
+          this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
         break;
       case 'delete':
         if(this.dataService.assignedUsers.length > 0){
-          //do something
           this.dataService.jobAssignments.forEach(assignment => {
             const requestModelAssignDelete = new JobAssignments;
             requestModelAssignDelete.jobId = this.selectedRow.id;
@@ -160,27 +148,19 @@ export class AdminTasksDialogComponent implements OnInit {
           });
         }
         if(this.selectedRow.hasComments === true){
-          // do something
-          console.log("ÉG ER HÉR");
-
           this.dataService.jobComments.forEach(comment => {
             this.dataService.deleteJobComment(comment).subscribe(result => {
               console.log(result);
             }), error => console.error(error);
           });
         }
-        console.log(this.selectedRow);
+
         this.dataService.deleteJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(result => {
-          console.log(result);
+          this.dataService.getJobs();
         this.openSnackBar(this.selectedRow.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
     }
-
-    setTimeout(()=> {
-      this.dataService.getJobs();
-    }, 500);
-
       this.closeDialog();
    }
 
@@ -194,45 +174,38 @@ export class AdminTasksDialogComponent implements OnInit {
           requestModelAssign.jobId = this.selectedRow.id;
           const userId: string = requestModelAssign.userId.toString() + '/';
 
-          if(this.selectedRow.status == 1){
-            const requestModelJob = this.selectedRow;
-            requestModelJob.status = 2;
-            this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
-      
-            });
-          }
           this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
+            this.dataService.getJobAssignments(this.selectedRow);
             console.log(result, this.selectedRow.name, 'assigned insert');
-            this.openSnackBar(index.name + ' úthlutað verki ' + this.dialogData.job.name, 'Loka');
-            }, error => console.error(error));
+            if(this.selectedRow.status == 1){
+              const requestModelJob = this.selectedRow;
+              requestModelJob.status = 2;
+              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+                this.dataService.getJobs();
+              });
+            }
+          }, error => console.error(error));
+          this.openSnackBar(index.name + ' úthlutað verki ' + this.dialogData.job.name, 'Loka');
           break;
       case 'delete':
           console.log('assignedDelete');
           const requestModelAssignDelete = new JobAssignments;
           requestModelAssignDelete.jobId = this.selectedRow.id;
           requestModelAssignDelete.userId = index.id;
-
-          if(this.selectedRow.status == 2){
-            const requestModelJob = this.selectedRow;
-            requestModelJob.status = 1;
-            this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
-      
-            });
-          }
-
           this.dataService.deleteJobAssignment(requestModelAssignDelete).subscribe(result => {
-            console.log(result, 'assigned delete');
+            this.dataService.getJobAssignments(this.selectedRow);
+            if(this.selectedRow.status != 1 && this.dataService.assignedUsers.length == 1){
+              const requestModelJob = this.selectedRow;
+              requestModelJob.status = 1;
+              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+                this.dataService.getJobs();
+              });
+            }
             this.openSnackBar('Úthlutun ' + index.name + ' á verki ' +
             this.selectedRow.name + ' fjarlægð', 'Loka');
           }, error => console.error(error));
           break;
      }
-     setTimeout(()=> {
-      this.dataService.getJobAssignments(this.selectedRow);
-      this.dataService.getJobs();
-    }, 500);
-     
-
    }
 
    onSubmitComment() {
@@ -242,22 +215,17 @@ export class AdminTasksDialogComponent implements OnInit {
     requestModel.userId = parseInt(localStorage.getItem("user"));
     console.log(requestModel);
 
-    if(this.selectedRow.hasComments === false){
-      const requestModelJob = this.selectedRow;
-      requestModelJob.hasComments = true;
-      this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
-        
-      });
-    }
     this.dataService.addJobComment(requestModel).subscribe(result => {
-      console.log(result);
+      this.commentForm.reset();
+      this.dataService.getComments(this.selectedRow.id);
+      if(this.selectedRow.hasComments === false){
+        const requestModelJob = this.selectedRow;
+        requestModelJob.hasComments = true;
+        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+          this.dataService.getJobs();
+        });
+      }
     });
-    setTimeout(()=> {
-      this.dataService.getComments();
-      this.dataService.getJobs();
-    }, 500);
-   
-    this.closeDialog();
   }
 
    closeDialog() {
@@ -373,13 +341,16 @@ export class AdminTasksDialogComponent implements OnInit {
         // this.editDisabled = true;
         break;
       case 'assign':
+        this.dataService.getJobAssignments(this.dialogData.job);
         this.editMode = 'Úthluta';
         this.assignmentForm = new FormGroup({
           jobId: new FormControl({ value: this.selectedRow.id}),
           userId: new FormControl({ value: null})
         });
         break;
+      case 'comment':
+        this.dataService.getComments(this.dialogData.job.id, this.dataService.user.id);
+        break;
     }
   }
-
 }

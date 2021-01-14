@@ -84,9 +84,9 @@ export class Message {
 export class SubJobs {
     id: string;
     // Foreign keys
+    name: string;
     jobId: number;
     equipmentId: number;
-    name: string;
     status: JobStatus;
     description: string;
     value: number;

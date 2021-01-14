@@ -87,7 +87,7 @@
     </form>
 
     <form [formGroup]="commentForm" *ngIf="dialogData.action == 'comment'" (ngSubmit)="onSubmitComment()">
-        <mat-form-field *ngFor="let comment of jobComments; let i = index" class="form-input">
+        <mat-form-field *ngFor="let comment of (jobComments$ | async); let i = index" class="form-input">
             <mat-label class="form-input">Athugasemd {{i}}: gerð af {{comment.user.name}} </mat-label>
             <textarea matInput class="form-input" [disabled]="true" [value]="comment.text"></textarea>
         </mat-form-field>

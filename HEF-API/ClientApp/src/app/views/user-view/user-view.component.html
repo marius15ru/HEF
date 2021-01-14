@@ -1,5 +1,5 @@
 <app-nav-menu></app-nav-menu>
-<div class="container" *ngIf="user && user?.role == 1 || user?.role == 2">
+<div class="container" *ngIf="(user$ | async)?.role == 1 || (user$ | async)?.role == 2">
     <mat-tab-group mat-stretch-tabs>
         <mat-tab label="Mín verk">
             <app-user-tasks></app-user-tasks>

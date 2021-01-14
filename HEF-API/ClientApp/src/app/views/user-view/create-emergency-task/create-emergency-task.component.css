@@ -1,0 +1,14 @@
+.emergency-task-field-left{
+    width: 40%;
+    margin-right: 10%;
+    margin-bottom: 30px;
+}
+
+.emergency-task-field-right{
+    width: 40%;
+    margin-bottom: 30px;
+}
+
+.emergency-task-text-area{
+    width: 90%;
+}
