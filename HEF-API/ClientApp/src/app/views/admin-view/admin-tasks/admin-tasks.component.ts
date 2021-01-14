@@ -10,7 +10,8 @@ import { DataService } from 'src/app/data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
 import {FormGroup, FormControl} from '@angular/forms';
-import { Tooltip } from '@syncfusion/ej2-popups';;
+import { Tooltip } from '@syncfusion/ej2-popups';import { AdminSubTaskDialogComponent } from './admin-sub-task-dialog/admin-sub-task-dialog.component';
+;
 
 
 setCulture('is'); 
@@ -253,6 +254,16 @@ export class AdminTasksComponent implements OnInit {
 
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
+    });
+  }
+
+  openSubTaskDialog(jobs: Job, action: string){
+    const refUser = this.dialogItem.open(AdminSubTaskDialogComponent, {
+      data: {
+        action: action,
+        job: jobs
+      },
+      width: '1200px'
     });
   }
 }

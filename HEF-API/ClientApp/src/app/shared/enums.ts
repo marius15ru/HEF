@@ -33,13 +33,12 @@ export enum JobStatus {
 }
 
 export enum MeasurementType {
-    Undefined = 0,
-    Celsius = 1,
-    Liters = 2,
-    Bar = 3,
-    Meters = 4,
-    LitersPerSecond = 5
-
+    "Óskilgreint" = 0,
+    "Celsíus" = 1,
+    "Lítrar" = 2,
+    "Þrýstingur(bar)" = 3,
+    "Metrar" = 4,
+    "Lítrar á sekúndu" = 5
 }
 
 export enum PlantType {
@@ -74,14 +73,14 @@ export namespace Recurring {
     }
   }
 
-export enum Task {
-    Undefined = 0,
-    Clean = 1,
-    Vacuum = 2,
-    Drawdown = 3,
-    MeasureOil = 4,
-    MeasureHeat = 5,
-    MeasureHeight = 6,
-    Mop = 7,
-    CheckMotor = 8
+export enum SubJobTask {
+    "Óskilgreint" = 0,
+    "Þrífa" = 1,
+    "Ryksuga" = 2,
+    "Niðurdráttur" = 3,
+    "Mæla olíu" = 4,
+    "Mæla hitastig" = 5,
+    "Mæla hæð" = 6,
+    "Skúra" = 7,
+    "Athuga mótor" = 8
 }

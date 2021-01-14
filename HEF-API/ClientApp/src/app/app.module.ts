@@ -44,6 +44,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuardService } from './auth-guard.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
+import { AdminSubTaskDialogComponent } from './views/admin-view/admin-tasks/admin-sub-task-dialog/admin-sub-task-dialog.component';
 
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
@@ -82,7 +83,8 @@ export function tokenGetter() {
     EnumToArrayPipe,
     MessagesComponent,
     UserTaskDialogComponent,
-    ObtainTaskDialogComponent
+    ObtainTaskDialogComponent,
+    AdminSubTaskDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -138,7 +140,8 @@ export function tokenGetter() {
     AdminEquipmentDialogComponent,
     AdminAreasDialogComponent,
     UserTaskDialogComponent,
-    ObtainTaskDialogComponent
+    ObtainTaskDialogComponent,
+    AdminSubTaskDialogComponent
   ],
 })
 export class AppModule { }

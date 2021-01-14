@@ -12,5 +12,6 @@
         public int Status { get; set; }
         public string Unit { get; set; }
         public double Value { get; set; }
+        public int SubJobTask { get; set; }
     }
 }

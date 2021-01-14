@@ -35,8 +35,6 @@ export class CreateEmergencyTaskComponent implements OnInit {
       ),
       description: new FormControl({ value: '', disabled: false},
       ),
-      // jobUser: new FormControl({  value: null, disabled: false},
-      // )
     });
   }
 
@@ -68,7 +66,7 @@ export class CreateEmergencyTaskComponent implements OnInit {
       jobAssignment.userId = parseInt(this.userId);
       this.selectedUsers.forEach(userId => {
         this.dataService.addJobAssignment(jobAssignment, userId.toString()).subscribe(result => {
-          console.log(result);
+          // console.log(result);
         });
       });
       this.dataService.getUserJobs(parseInt(this.userId));

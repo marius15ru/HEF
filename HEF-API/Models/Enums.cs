@@ -52,5 +52,18 @@ namespace HEF_API.Models
             FiveYears = 10,
             TenYears = 11
         }
+
+        public enum SubJobTask
+        {
+            Undefined = 0,
+            Clean = 1,
+            Vacuum = 2,
+            Drawdown = 3,
+            MeasureOil = 4,
+            MeasureHeat = 5,
+            MeasureHeight = 6,
+            Mop = 7,
+            CheckMotor = 8
+}
     }
 }

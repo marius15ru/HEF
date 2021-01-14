@@ -106,22 +106,23 @@
     >
         <e-columns >
             <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-            <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
             <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='description' headerText='Lýsing' width="300px"[customAttributes]='customAttributes'></e-column>
+            <e-column field='status' headerText='Staða' width="85px" [valueAccessor]='statusFormatter' [customAttributes]='customAttributes'></e-column>
+            <e-column field='recurring' headerText='Endurtekið?' width="105px" [valueAccessor]='recurFormatter' [customAttributes]='customAttributes'></e-column>
+            <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
             <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yy" width="85px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='description' headerText='Lýsing' [customAttributes]='customAttributes'></e-column>
+            <e-column field='lastCheck' headerText='Síðasta athugun' format="dd.MM.yy" type="date" width="110px" [customAttributes]='customAttributes'></e-column>
             <e-column field='emergencyJob' headerText='Neyðarverk?' width="105px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
             <e-column field='hasComments' headerText='athugasemdir?' width="115px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
-            <e-column field='lastCheck' headerText='Síðasta athugun' format="dd.MM.yy" type="date" width="110px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='recurring' headerText='Endurtekið?' width="105px" [valueAccessor]='recurFormatter' [customAttributes]='customAttributes'></e-column>
-            <e-column field='duration' headerText='Lengd(mín)' width="100px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='status' headerText='Staða' width="85px" [valueAccessor]='statusFormatter' [customAttributes]='customAttributes'></e-column>
-            <e-column field="operations" headerText="Aðgerðir" width="125px" [customAttributes]='customAttributes'>
+            <!-- <e-column field='duration' headerText='Lengd(mín)' width="100px" [customAttributes]='customAttributes'></e-column> -->
+            <e-column field="operations" headerText="Aðgerðir" width="150px" [customAttributes]='customAttributes'>
                 <ng-template #template let-jobs>
                     <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
                     <!-- <i class="fas fa-edit action-icon" matTooltip="Sækja" (click)="openDialog(jobs, 'obtain')"></i> -->
                     <i class="fas fa-hand-holding-box action-icon" matTooltip="Úthluta" (click)="openDialog(jobs, 'assign')"></i>
                     <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobs, 'comment')"></i>
+                    <i class="fas fa-baby action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobs, 'subJob')"></i>
                     <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobs, 'view')"></i>
                     <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobs, 'update')"></i>
                     <i class="fas fa-trash-alt action-icon" matTooltip="Eyða" (click)="openDialog(jobs, 'delete')"></i>

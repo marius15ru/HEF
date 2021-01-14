@@ -230,6 +230,7 @@ export class DataService {
   addJob(job: Job) {
     console.log('DataService - AddJob', job);
     console.log(this.jobsUrl);
+    job.modifiedOn = new Date();
     return this.http.post<Job>(this.jobsUrl, job, this.httpOptions);
   }
   updateJob(job: Job, jobId: string): Observable<Job> {

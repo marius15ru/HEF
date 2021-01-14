@@ -1,0 +1,51 @@
+<mat-form-field class="form-input">
+    <mat-label>Yfirverk</mat-label>
+    <input matInput [value]="selectedRow.name" [disabled]="true">
+</mat-form-field>
+<mat-form-field class="form-input">
+    <mat-label>Lýsing</mat-label>
+    <input matInput [value]="selectedRow.description" [disabled]="true">
+</mat-form-field>
+<mat-form-field class="form-input">
+    <mat-label>Endurtekið</mat-label>
+    <input matInput [value]="recurFormatter(selectedRow.recurring)" [disabled]="true">
+</mat-form-field>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="subJobs" >
+        <mat-card *ngFor="let subjob of subJobs.controls; let i = index;" [formGroupName]="i" class="col-md-12 dialog-card">
+            <mat-form-field >
+                <mat-label >Búnaður</mat-label>
+                <mat-select formControlName="equipmentId"  value="null" disableOptionCentering panelClass="material-select-box">
+                    <mat-option *ngFor="let equipment of (equipments$ | async)" [value]="equipment.id">{{equipment.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label >Aðgerð</mat-label>
+                <mat-select type="number" formControlName="task" disableOptionCentering panelClass="material-select-box">
+                    <mat-option *ngFor="let item of subJobTask | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label >Mælieining</mat-label>
+                <mat-select type="number" formControlName="unit" disableOptionCentering panelClass="material-select-box">
+                    <mat-option *ngFor="let item of measurement | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Lýsing</mat-label>
+                <input matInput formControlName="description">
+            </mat-form-field>
+
+            <button mat-raised-button color="warn" (click)="deleteSubJob(i)">Eyða línu</button>
+        </mat-card>
+    </div>
+</form>
+
+<div class="row ml-1 grid-action-buttons">
+    <div>
+        <button mat-raised-button color="accent" (click)="addSubJob()">Bæta við fleiri undirverkum</button>
+    </div>
+    <div class="ml-auto mr-3">
+        <button mat-raised-button color="primary" (click)="onSubmit()">Stofna undirverk</button>
+    </div>
+</div>

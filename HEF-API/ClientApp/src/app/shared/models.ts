@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { MeasurementType, PlantType, Role, Task, UserStatus, JobStatus, Recurring } from './enums';
+import { MeasurementType, PlantType, Role, SubJobTask, UserStatus, JobStatus, Recurring } from './enums';
 
 export class Area {
     id: number;
@@ -32,6 +32,9 @@ export class Job {
     // Foreign keys
     stationId: number;
     station: Station;
+
+    modifiedOn: Date;
+
     
     completeBy: Date;
     description: string;
@@ -82,15 +85,16 @@ export class Message {
 
 
 export class SubJobs {
-    id: string;
+    id: number;
     // Foreign keys
-    name: string;
     jobId: number;
     equipmentId: number;
+
     status: JobStatus;
     description: string;
     value: number;
     unit: MeasurementType;
+    subJobTask: SubJobTask;
 }
 
 export class User {
