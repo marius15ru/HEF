@@ -65,8 +65,9 @@
                     <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
-                    <e-column field='description' headerText='Lýsing' width="100px" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="300px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100px" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <!-- <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column> -->
                     <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
                     <e-column field='status' headerText='Staða' width="100px" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100px" [customAttributes]='customAttributes'>
@@ -101,9 +102,9 @@
                     <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
-                    <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="300px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
-                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <!-- <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column> -->
                     <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                         <ng-template #template let-jobsInProgress>
@@ -138,9 +139,9 @@
                     <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
-                    <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="300px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
-                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <!-- <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column> -->
                     <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                         <ng-template #template let-jobsOnHold>
@@ -174,9 +175,9 @@
                     <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
-                    <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="300px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
-                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <!-- <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column> -->
                     <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                         <ng-template #template let-jobsFinished>
