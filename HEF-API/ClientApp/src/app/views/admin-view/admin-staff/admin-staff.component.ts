@@ -75,7 +75,7 @@ export class AdminStaffComponent implements OnInit {
     const id = user.id.toString();
     this.dataService.updateUser(user, id).subscribe(result => {
       console.log(result);
-    this.openSnackBar(user.name + ' uppfærð/ur', 'Loka');
+      this.openSnackBar(user.name + ' uppfærð/ur', 'Loka');
     }, error => console.error(error));
   }
 
@@ -84,15 +84,15 @@ export class AdminStaffComponent implements OnInit {
     const id = user.id.toString();
     this.dataService.updateUser(user, id).subscribe(result => {
       console.log(result);
-    this.openSnackBar(user.name + ' uppfærð/ur', 'Loka');
-    }, error => console.error(error));
-    this.selectedUser = null;
-    this.userForm.reset();
-    this.toggleKeyView();
+      this.selectedUser = null;
+      this.userForm.reset();
+      this.toggleKeyView();
       this.userForm = new FormGroup({
         password: new FormControl({ value: '', disabled: false},
         )
       });
+      this.openSnackBar(user.name + ' uppfærð/ur', 'Loka');
+    }, error => console.error(error));
   }
 
   openSnackBar(message: string, action: string) {
@@ -108,10 +108,6 @@ export class AdminStaffComponent implements OnInit {
       ),
     });
   }
-
-  // updateUser(user: User){
-
-  // }
 
   openDialog(action: string) {
 

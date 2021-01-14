@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { User } from 'src/app/shared/models';
 
@@ -9,6 +10,7 @@ import { User } from 'src/app/shared/models';
   styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent implements OnInit {
+  user$: Observable<User> = this.dataService.user$;
 
   user: User = null;
   userId: string = localStorage.getItem("user").toString();
@@ -16,18 +18,12 @@ export class UserViewComponent implements OnInit {
   constructor(private http: HttpClient, private dataService: DataService) { }
 
   ngOnInit() {
-    this.getUser();
+    this.dataService.getCurrentUser(this.userId);
     this.dataService.getJobs();
     this.dataService.getComments();
     this.dataService.getStations();
+    this.dataService.getUsers();
     this.dataService.getUserJobs(parseInt(this.userId));
-  }
-
-  getUser(){
-    this.http.get<User>('api/users/' + this.userId + "/").subscribe(result => {
-      // console.log(result);
-      this.user = result;
-    })
   }
 
 }

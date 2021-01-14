@@ -61,7 +61,8 @@ export class AdminLocationDialogComponent implements OnInit {
       case 'insert':
          this.dataService.addStation(requestModel).subscribe(result => {
           console.log(result);
-        this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
+          this.dataService.getStations();
+          this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
         }, error => console.error(error));       
         break;   
       case 'update':
@@ -70,7 +71,8 @@ export class AdminLocationDialogComponent implements OnInit {
         console.log(updateId);
         this.dataService.updateStation(requestModel, updateId).subscribe(result => {
           console.log(result, updateId);
-        this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
+          this.dataService.getStations();
+          this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
         break; 
       case 'delete':
@@ -78,14 +80,11 @@ export class AdminLocationDialogComponent implements OnInit {
         requestModel.id = this.selectedRow.id;
         this.dataService.deleteStation(requestModel, deleteId).subscribe(result => {
           console.log(result, deleteId, 'deleted');
-        this.openSnackBar(requestModel.name + ' eytt', 'Loka');
+          this.dataService.getStations();
+          this.openSnackBar(requestModel.name + ' eytt', 'Loka');
         }, error => console.error(error));
         break;
     }
-
-      setTimeout(()=> {
-        this.dataService.getStations();
-      }, 500);
       
       this.closeDialog();
 
