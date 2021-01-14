@@ -18,7 +18,7 @@
 
         <mat-form-field class="form-input">
             <mat-label class="form-input">Lýsing</mat-label>
-            <textarea matInput type="text" class="form-input" formControlName="description" [value]="selectedRow.description"></textarea>
+            <textarea matInput type="text" class="form-input" rows="6" formControlName="description" [value]="selectedRow.description"></textarea>
         </mat-form-field>
 
         <mat-form-field class="form-input">
@@ -81,7 +81,7 @@
             <input matInput *ngIf="dialogData.action.toLowerCase() != 'insert'" type="text" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
             <input matInput *ngIf="dialogData.action.toLowerCase() == 'insert'" type="date" class="form-input" formControlName="lastCheck" [value]="selectedRow.lastCheck" >
         </mat-form-field> -->
-        
+
         <button mat-raised-button color="primary" *ngIf="dialogData.action != 'view' && dialogData.action != 'delete'" class="form-submition" type="submit" [disabled]="!jobForm.valid">{{editMode}}</button>
         <button mat-raised-button color="primary" *ngIf="dialogData.action == 'delete'" class="form-submition" type="submit">{{editMode}}</button>
     </form>

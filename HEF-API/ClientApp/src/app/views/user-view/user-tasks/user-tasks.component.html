@@ -14,9 +14,9 @@
                 Fjöldi: {{(userJobs$ | async)?.length}}
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <ejs-grid 
-            #grid [dataSource]="(userJobs$ | async)" 
-            allowPaging='true' 
+        <ejs-grid
+            #grid [dataSource]="(userJobs$ | async)"
+            allowPaging='true'
             allowSorting='true'
             [allowResizing]='true'
             [pageSettings]='pageSettings'
@@ -26,9 +26,9 @@
                     <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter"[customAttributes]='customAttributes'></e-column>
                     <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
-                    <e-column field='description' headerText='Lýsing' width="100" [customAttributes]='customAttributes'></e-column>
+                    <e-column field='description' headerText='Lýsing' width="300px" [customAttributes]='customAttributes'></e-column>
                     <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
-                    <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+                    <!-- <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column> -->
                     <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
                     <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                         <ng-template #template let-userJobs>
@@ -53,9 +53,9 @@
                 Fjöldi: {{(jobsAssigned$ | async)?.length}}
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <ejs-grid 
-            #grid [dataSource]="(jobsAssigned$ | async)" 
-            allowPaging='true' 
+        <ejs-grid
+            #grid [dataSource]="(jobsAssigned$ | async)"
+            allowPaging='true'
             allowSorting='true'
             [allowResizing]='true'
             [pageSettings]='pageSettings'
@@ -89,9 +89,9 @@
                 Fjöldi: {{(jobsInProgress$ | async)?.length}}
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <ejs-grid 
-            #grid [dataSource]="(jobsInProgress$ | async)" 
-            allowPaging='true' 
+        <ejs-grid
+            #grid [dataSource]="(jobsInProgress$ | async)"
+            allowPaging='true'
             allowSorting='true'
             [allowResizing]='true'
             [pageSettings]='pageSettings'
@@ -126,9 +126,9 @@
                 Fjöldi: {{(jobsOnHold$ | async)?.length}}
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <ejs-grid 
-            #grid [dataSource]="(jobsOnHold$ | async)" 
-            allowPaging='true' 
+        <ejs-grid
+            #grid [dataSource]="(jobsOnHold$ | async)"
+            allowPaging='true'
             allowSorting='true'
             [allowResizing]='true'
             [pageSettings]='pageSettings'
@@ -162,9 +162,9 @@
                 Fjöldi: {{(jobsFinished$ | async)?.length}}
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <ejs-grid 
-            #grid [dataSource]="(jobsFinished$ | async)" 
-            allowPaging='true' 
+        <ejs-grid
+            #grid [dataSource]="(jobsFinished$ | async)"
+            allowPaging='true'
             allowSorting='true'
             [allowResizing]='true'
             [pageSettings]='pageSettings'
