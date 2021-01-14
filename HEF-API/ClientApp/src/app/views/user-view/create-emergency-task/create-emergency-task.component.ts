@@ -62,24 +62,18 @@ export class CreateEmergencyTaskComponent implements OnInit {
     this.selectedUsers.push(parseInt(this.userId));
     
     this.dataService.addJob(this.job).subscribe(result => {
-      jobId = result.id;
-      console.log(jobId);
+      console.log(result.id);
       const jobAssignment = new JobAssignments;
-      jobAssignment.jobId = jobId;
+      jobAssignment.jobId = result.id;
+      jobAssignment.userId = parseInt(this.userId);
       this.selectedUsers.forEach(userId => {
-        this.dataService.addJobAssignment(jobAssignment, userId.toString());
+        this.dataService.addJobAssignment(jobAssignment, userId.toString()).subscribe(result => {
+          console.log(result);
+        });
       });
-      // this.dataService.addJobAssignment(jobAssignment, this.userId).subscribe(result => {
-        //   console.log(result);
-        // if(this.selectedUsers.length > 0){
-          //   this.selectedUsers.forEach(user => {
-            //     jobAssignment.userId = user;
-            //     this.dataService.addJobAssignment(jobAssignment, user.toString());
-            //   });
-            // }
       this.dataService.getUserJobs(parseInt(this.userId));
       this.emergencyJobForm.reset();
-      // });
+      this.selectedUsers = [];
     });
   }
 
