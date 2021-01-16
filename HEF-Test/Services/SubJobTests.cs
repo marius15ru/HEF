@@ -58,15 +58,15 @@ namespace HEF_Test.Services
         public async Task GivenValidInput_UpdatesSubJob()
         {
             int id = 1;
-            string newStr = "<updated string>";
+            int newtask = 2;
             var enitity = await _repositoryWrapper.SubJob.GetByID(id);
-            enitity.Name = newStr;
+            enitity.SubJobTask = newtask;
 
             _repositoryWrapper.SubJob.Update(enitity);
             await _repositoryWrapper.Save();
-            var result = dbContext.SubJob.Find(id).Name;
+            var result = dbContext.SubJob.Find(id).SubJobTask;
 
-            Assert.Equal(newStr, result);
+            Assert.Equal(newtask, result);
         }
 
         [Fact]

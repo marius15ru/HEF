@@ -113,10 +113,9 @@ namespace HEF_Test
                 .RuleFor(o => o.Id, f => Ids++)
                 .RuleFor(x => x.JobId, y => new Job().Id)
                 .RuleFor(x => x.EquipmentId, y => new Equipment().Id)
-                .RuleFor(x => x.Name, y => y.Lorem.Word())
                 .RuleFor(x => x.Description, y => y.Lorem.Text())
                 .RuleFor(x => x.Status, y => (int)y.PickRandom<Enums.JobStatus>())
-                .RuleFor(x => x.Unit, y => y.PickRandom<Enums.Unit>().ToString())
+                .RuleFor(x => x.Unit, y => (int)y.PickRandom<Enums.Unit>())
                 .RuleFor(x => x.Value, y => y.Random.Double(1, 100));
             return fakeSubJob;
         }

@@ -54,6 +54,7 @@ export class HomeComponent {
       this.router.navigate(['/' + this.getNavStr(role)]);
 
     }, err => {
+      console.log("Error:", err);
         console.log("Invalid login");
     });
   }

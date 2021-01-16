@@ -18,6 +18,7 @@ namespace HEF_API.Services
         public DbSet<Plant> Plant { get; set; }
         public DbSet<Station> Station { get; set; }
         public DbSet<SubJob> SubJob { get; set; }
+        public DbSet<SubJob> SubJobHistory { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Job_Assignments> Job_Assignments { get; set; }
 

@@ -1,4 +1,6 @@
-﻿namespace HEF_API.Models
+﻿using System;
+
+namespace HEF_API.Models
 {
     public class SubJob
     {
@@ -12,5 +14,6 @@
         public int Unit { get; set; }
         public double Value { get; set; }
         public int SubJobTask { get; set; }
+        public DateTime? CompletedOn { get; set; }
     }
 }
