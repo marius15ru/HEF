@@ -14,7 +14,7 @@ import { UserTasksComponent } from '../user-tasks.component';
 })
 export class UserTaskDialogComponent implements OnInit {
   jobComments$: Observable<Comment[]> = this.dataService.jobComments$;
-  
+
 
   selectedRow: Job;
   stations: Station[];
@@ -51,7 +51,7 @@ export class UserTaskDialogComponent implements OnInit {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<UserTasksComponent>, 
+    public dialogRef: MatDialogRef<UserTasksComponent>,
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA)
@@ -78,7 +78,7 @@ export class UserTaskDialogComponent implements OnInit {
   onSubmit() {
     let requestModel = this.selectedRow;
     requestModel.status = this.jobForm.value.status;
-
+    requestModel.duration = this.jobForm.value.duration;
     const updateId: string = this.selectedRow.id.toString();
 
     console.log(requestModel);
@@ -136,7 +136,7 @@ export class UserTaskDialogComponent implements OnInit {
           ),
           recurring: new FormControl({ value: this.selectedRow.recurring, disabled: true},
           ),
-          duration: new FormControl({ value: this.selectedRow.duration, disabled: true},
+          duration: new FormControl({ value: this.selectedRow.duration, disabled: false},
           ),
           completeBy: new FormControl({ value: this.selectedRow.completeBy, disabled: true},
           ),
