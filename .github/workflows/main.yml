@@ -38,7 +38,9 @@ jobs:
         run: dotnet test --filter FullyQualifiedName~HEF_Test.Services 
       
       - name: Run API tests
-        run: npm run postman
+        run: |
+          npm start
+          npm run postman
       
       #- name: Deploy with ftp
       #- uses: SamKirkland/FTP-Deploy-Action@4.0.0
