@@ -45,7 +45,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
       this.selectedRow.manufacturer = '';
       this.selectedRow.operation = '';
       this.selectedRow.lastCheck = null;
-    }else{
+    } else {
       this.selectedRow = this.dialogData.equipments;
     }
     this.setMode();
@@ -62,7 +62,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
     this.stations = this.dataService.stations;
   }
 
-  getCurrentDate(){
+  getCurrentDate() {
     const today = new Date();
     return today;
   }
@@ -77,7 +77,7 @@ export class AdminEquipmentDialogComponent implements OnInit {
           console.log(result);
           this.dataService.getEquipments();
           this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
-        }, error => console.error(error));       
+        }, error => console.error(error));
         break;
 
       case 'update':
@@ -101,7 +101,6 @@ export class AdminEquipmentDialogComponent implements OnInit {
         }, error => console.error(error));
         break;
     }
-      
       this.closeDialog();
    }
 

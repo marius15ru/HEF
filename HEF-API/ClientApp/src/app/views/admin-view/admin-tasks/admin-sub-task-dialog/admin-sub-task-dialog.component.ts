@@ -13,7 +13,6 @@ import { Equipment, Job, SubJobs } from 'src/app/shared/models';
 })
 export class AdminSubTaskDialogComponent implements OnInit {
   equipments$: Observable<Equipment[]> = this.dataService.equipments$;
-  
 
   myForm: FormGroup;
   selectedRow: Job;
@@ -23,7 +22,7 @@ export class AdminSubTaskDialogComponent implements OnInit {
   newSubJobs: SubJobs[] = [];
 
   constructor( public dialogRef: MatDialogRef<AdminSubTaskDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, job: Job}, 
+    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, job: Job},
     private _snackBar: MatSnackBar,
     private fb: FormBuilder,
     private dataService: DataService ) { }
@@ -37,11 +36,11 @@ export class AdminSubTaskDialogComponent implements OnInit {
 
   }
 
-  recurFormatter(index: number){
+  recurFormatter(index: number) {
     return Recurring[index];
   }
 
-  addSubJob(){
+  addSubJob() {
     const subJobs = this.fb.group({
       equipmentId: [],
       status: [],
@@ -49,23 +48,23 @@ export class AdminSubTaskDialogComponent implements OnInit {
       value: [],
       unit: [],
       task: []
-    })
+    });
 
     this.subJobs.push(subJobs);
   }
 
-  deleteSubJob(i){
+  deleteSubJob(i) {
     this.subJobs.removeAt(i);
   }
 
-  get subJobs(){
+  get subJobs() {
     return this.myForm.get('subJobs') as FormArray;
   }
 
-  onSubmit(){
-    let someArray = this.subJobs.controls.values();
+  onSubmit() {
+    const someArray = this.subJobs.controls.values();
 
-    for(let entry of someArray){
+    for (const entry of someArray) {
       this.newSubJobs.push(entry.value);
       console.log(this.newSubJobs);
     }

@@ -15,7 +15,6 @@ import { Comment, EnumToArrayPipe, Job, JobAssignments, Station, User } from 'sr
   styleUrls: ['./admin-tasks-dialog.component.css']
 })
 
-
 export class AdminTasksDialogComponent implements OnInit {
 
   assignedUsers$: Observable<User[]> = this.dataService.assignedUsers$;
@@ -107,19 +106,19 @@ export class AdminTasksDialogComponent implements OnInit {
     });
   }
 
-  getCurrentDate(){
+  getCurrentDate() {
     const today = new Date();
     return today;
   }
 
-  getData(){
+  getData() {
     this.stations = this.dataService.stations;
     this.users = this.dataService.users;
   }
 
   onSubmit() {
     const requestModel: Job = this.jobForm.value;
-    switch(this.dialogData.action.toLowerCase()){
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
         requestModel.completeBy = new Date(requestModel.completeBy);
         requestModel.lastCheck = new Date(requestModel.lastCheck);
@@ -137,21 +136,21 @@ export class AdminTasksDialogComponent implements OnInit {
         }, error => console.error(error));
         break;
       case 'delete':
-        if(this.dataService.assignedUsers.length > 0){
+        if (this.dataService.assignedUsers.length > 0) {
           this.dataService.jobAssignments.forEach(assignment => {
             const requestModelAssignDelete = new JobAssignments;
             requestModelAssignDelete.jobId = this.selectedRow.id;
             requestModelAssignDelete.userId = assignment.id;
             this.dataService.deleteJobAssignment(requestModelAssignDelete).subscribe(result => {
               console.log(result);
-            }), error => console.error(error);
+            }, error => console.error(error));
           });
         }
-        if(this.selectedRow.hasComments === true){
+        if (this.selectedRow.hasComments === true) {
           this.dataService.jobComments.forEach(comment => {
             this.dataService.deleteJobComment(comment).subscribe(result => {
               console.log(result);
-            }), error => console.error(error);
+            }, error => console.error(error));
           });
         }
 
@@ -177,10 +176,10 @@ export class AdminTasksDialogComponent implements OnInit {
           this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
             this.dataService.getJobAssignments(this.selectedRow);
             console.log(result, this.selectedRow.name, 'assigned insert');
-            if(this.selectedRow.status == 1){
+            if (this.selectedRow.status === 1) {
               const requestModelJob = this.selectedRow;
               requestModelJob.status = 2;
-              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(_ => {
                 this.dataService.getJobs();
               });
             }
@@ -194,10 +193,10 @@ export class AdminTasksDialogComponent implements OnInit {
           requestModelAssignDelete.userId = index.id;
           this.dataService.deleteJobAssignment(requestModelAssignDelete).subscribe(result => {
             this.dataService.getJobAssignments(this.selectedRow);
-            if(this.selectedRow.status != 1 && this.dataService.assignedUsers.length == 1){
+            if (this.selectedRow.status !== 1 && this.dataService.assignedUsers.length === 1) {
               const requestModelJob = this.selectedRow;
               requestModelJob.status = 1;
-              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(_ => {
                 this.dataService.getJobs();
               });
             }
@@ -212,16 +211,16 @@ export class AdminTasksDialogComponent implements OnInit {
     const requestModel = new Comment;
     requestModel.text = this.commentForm.value.comment;
     requestModel.jobId = this.selectedRow.id;
-    requestModel.userId = parseInt(localStorage.getItem("user"));
+    requestModel.userId = parseInt(localStorage.getItem('user'), 0);
     console.log(requestModel);
 
     this.dataService.addJobComment(requestModel).subscribe(result => {
       this.commentForm.reset();
       this.dataService.getComments(this.selectedRow.id);
-      if(this.selectedRow.hasComments === false){
+      if (this.selectedRow.hasComments === false) {
         const requestModelJob = this.selectedRow;
         requestModelJob.hasComments = true;
-        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(_ => {
           this.dataService.getJobs();
         });
       }

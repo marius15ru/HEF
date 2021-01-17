@@ -10,16 +10,16 @@ import { DataService } from 'src/app/data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
 import {FormGroup, FormControl} from '@angular/forms';
-import { Tooltip } from '@syncfusion/ej2-popups';import { AdminSubTaskDialogComponent } from './admin-sub-task-dialog/admin-sub-task-dialog.component';
-;
+import { Tooltip } from '@syncfusion/ej2-popups';
+import { AdminSubTaskDialogComponent } from './admin-sub-task-dialog/admin-sub-task-dialog.component';
 
 
-setCulture('is'); 
+setCulture('is');
 
-L10n.load({ 
-    'is': { 
-        grid: { 
-           EmptyRecord:"Engar raðir í töflu",
+L10n.load({
+    'is': {
+        grid: {
+           EmptyRecord: 'Engar raðir í töflu',
         },
         pager: {
           pagerDropDown: 'Raðir á hverri síðu',
@@ -30,8 +30,8 @@ L10n.load({
           nextPageTooltip: 'Færa á næstu síðu',
           previousPageTooltip: 'Fara á fyrri síðu',
         }
-    } 
-}); 
+    }
+});
 
 @Component({
   selector: 'app-admin-tasks',
@@ -51,11 +51,11 @@ export class AdminTasksComponent implements OnInit {
   areas$: Observable<Area[]> = this.dataService.areas$;
 
 
-  filtersVisible: boolean = false;
-  filterAction: string = 'Sýna síur';
+  filtersVisible = false;
+  filterAction = 'Sýna síur';
 
-  commentFiltersVisible: boolean = false;
-  commentFilterAction: string = 'Sýna síur';
+  commentFiltersVisible = false;
+  commentFilterAction = 'Sýna síur';
 
   jobs: Job[] = [];
   alteredJobs: any[];
@@ -98,29 +98,28 @@ export class AdminTasksComponent implements OnInit {
     this.toolbarOptions = ['PdfExport'];
     this.pageSettings = { pageSizes: [5, 25, 50, 100, 200, 300, 'All'], pageSize: 5};
     this.customAttributes = {class: 'customcss'};
-    
     this.getData();
   }
 
-  deleteComment(comment: Comment){
+  deleteComment(comment: Comment) {
     this.dataService.deleteJobComment(comment);
   }
 
-  getData(){
+  getData() {
     this.jobs = this.dataService.jobs;
     this.comments = this.dataService.comments;
     this.stations = this.dataService.stations;
   }
 
-  getCurrentDate(){
+  getCurrentDate() {
     const today = new Date();
     return today;
   }
 
-  filtersVisibleToggle(data: string){
-    switch(data){
+  filtersVisibleToggle(data: string) {
+    switch (data) {
       case 'jobs':
-        if(!this.filtersVisible){
+        if (!this.filtersVisible) {
           this.filterAction = 'Fela síur';
           return this.filtersVisible = true;
         }
@@ -128,17 +127,17 @@ export class AdminTasksComponent implements OnInit {
         return this.filtersVisible = false;
         break;
       case 'comments':
-        if(!this.commentFiltersVisible){
+        if (!this.commentFiltersVisible) {
           this.filterAction = 'Fela síur';
           return this.commentFiltersVisible = true;
         }
         this.filterAction = 'Sýna síur';
         return this.commentFiltersVisible = false;
-        break;      
+        break;
     }
   }
 
-  clearJobFilter(){
+  clearJobFilter() {
     this.selectedJobStatuses = [];
     this.selectedStations = [];
     this.selectedPlants = [];
@@ -152,33 +151,33 @@ export class AdminTasksComponent implements OnInit {
     this.filterJobs();
   }
 
-  filterJobs(){
+  filterJobs() {
     console.log(this.completeByFrom);
     console.log(this.completeByTo);
 
     this.dataService.filterJobs(
-      this.selectedJobStatuses, 
+      this.selectedJobStatuses,
       this.selectedStations,
       this.selectedPlants,
-      this.selectedAreas, 
-      this.hasComments, 
-      this.emergencyJobs, 
-      this.lastCheckFrom, 
-      this.lastCheckTo, 
-      this.completeByFrom, 
-      this.completeByTo , 
+      this.selectedAreas,
+      this.hasComments,
+      this.emergencyJobs,
+      this.lastCheckFrom,
+      this.lastCheckTo,
+      this.completeByFrom,
+      this.completeByTo,
       this.dataService.jobs);
   }
-  
-  clearCommentFilter(){
+
+  clearCommentFilter() {
     this.selectedUsers = [];
     this.selectedJobs = [];
     this.seen = null;
     this.filterComments();
   }
 
-  filterComments(){
-    this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.seen, this.dataService.comments)
+  filterComments() {
+    this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.seen, this.dataService.comments);
   }
 
   toolbarClick(args: ClickEventArgs): void {
@@ -196,7 +195,7 @@ export class AdminTasksComponent implements OnInit {
   statusFormatter(field: string, data: Object, column: Object) {
     return JobStatus[data[field]];
   }
-  
+
   stationFormatter(field: string, data: Object, column: Object) {
     return data[field].name;
   }
@@ -218,7 +217,7 @@ export class AdminTasksComponent implements OnInit {
   }
 
   tooltip (args: QueryCellInfoEventArgs) {
-    let tooltip: Tooltip = new Tooltip({
+    const tooltip: Tooltip = new Tooltip({
         content: args.data[args.column.field].toString()
     }, args.cell as HTMLTableCellElement);
 }
@@ -234,10 +233,10 @@ export class AdminTasksComponent implements OnInit {
     if (args.data[status] === 4) {
       args.row.classList.add('e-on-hold-color');
     }
-    if(today > dueDate && args.data[status] != 5){
+    if (today > dueDate && args.data[status] !== 5) {
       args.row.classList.add('e-overdue-color');
     }
-    if(args.data[status] == 5){
+    if (args.data[status] === 5) {
       args.row.classList.add('e-finished-color');
     }
 
@@ -257,7 +256,7 @@ export class AdminTasksComponent implements OnInit {
     });
   }
 
-  openSubTaskDialog(jobs: Job, action: string){
+  openSubTaskDialog(jobs: Job, action: string) {
     const refUser = this.dialogItem.open(AdminSubTaskDialogComponent, {
       data: {
         action: action,

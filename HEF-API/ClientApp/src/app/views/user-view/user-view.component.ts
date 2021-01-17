@@ -13,7 +13,7 @@ export class UserViewComponent implements OnInit {
   user$: Observable<User> = this.dataService.user$;
 
   user: User = null;
-  userId: string = localStorage.getItem("user").toString();
+  userId: string = localStorage.getItem('user').toString();
 
   constructor(private http: HttpClient, private dataService: DataService) { }
 
@@ -23,7 +23,6 @@ export class UserViewComponent implements OnInit {
     this.dataService.getComments();
     this.dataService.getStations();
     this.dataService.getUsers();
-    this.dataService.getUserJobs(parseInt(this.userId));
+    this.dataService.getUserJobs(parseInt(this.userId, 0));
   }
-
 }

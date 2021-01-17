@@ -11,7 +11,7 @@ export class NavMenuComponent {
   constructor(public authGuard: AuthGuardService) {}
 
   isExpanded = false;
-  role: Role = parseInt(localStorage.getItem("role"));
+  role: Role = parseInt(localStorage.getItem('role'), 0);
 
   collapse() {
     this.isExpanded = false;
@@ -24,9 +24,9 @@ export class NavMenuComponent {
 
 
   logOut() {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("user");
-    localStorage.removeItem("role");
-    console.log(localStorage.getItem("jwt"));
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+    console.log(localStorage.getItem('jwt'));
  }
 }

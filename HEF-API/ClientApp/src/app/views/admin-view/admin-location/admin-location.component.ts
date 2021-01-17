@@ -24,9 +24,9 @@ export class AdminLocationComponent implements OnInit {
   selectedPlants: number[] = [];
   selectedAreas: number[] = [];
 
-  filtersVisible: boolean = false;
-  filterAction: string = 'Sýna síur';
-  
+  filtersVisible = false;
+  filterAction = 'Sýna síur';
+
   public stations: Station[];
 
   pageSettings: Object;
@@ -54,8 +54,8 @@ export class AdminLocationComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  filtersVisibleToggle(){
-    if(!this.filtersVisible){
+  filtersVisibleToggle() {
+    if (!this.filtersVisible) {
       this.filterAction = 'Fela síur';
       return this.filtersVisible = true;
     }
@@ -63,11 +63,11 @@ export class AdminLocationComponent implements OnInit {
     return this.filtersVisible = false;
   }
 
-  filterStations(){
+  filterStations() {
     this.dataService.filterStations(this.selectedPlants, this.selectedAreas, this.dataService.stations);
   }
 
-  clearStationFilter(){
+  clearStationFilter() {
     this.selectedAreas = [];
     this.selectedPlants = [];
 

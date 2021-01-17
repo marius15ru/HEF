@@ -14,7 +14,7 @@ export class AdminViewComponent implements OnInit {
 
 
   user: User = null;
-  userId: string = localStorage.getItem("user");
+  userId: string = localStorage.getItem('user');
 
   constructor(private http: HttpClient, private dataService: DataService) { }
 
@@ -29,10 +29,9 @@ export class AdminViewComponent implements OnInit {
     this.dataService.getUsers();
   }
 
-  getUser(){
-    this.http.get<User>('api/users/' + this.userId + "/").subscribe(result => {
+  getUser() {
+    this.http.get<User>('api/users/' + this.userId + '/').subscribe(result => {
       this.user = result;
-    })
+    });
   }
-
 }

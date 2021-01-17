@@ -18,8 +18,8 @@ export class AdminStaffComponent implements OnInit {
 
   users$: Observable<User[]> = this.dataService.users$;
 
-  updatePwToggle: boolean = false;
-  formInitialized: boolean = false;
+  updatePwToggle = false;
+  formInitialized = false;
   selectedUser: User = null;
 
 
@@ -34,7 +34,7 @@ export class AdminStaffComponent implements OnInit {
   role = Role;
 
   usersForm = new FormArray([]);
-  
+
   userForm = new FormGroup({
     password: new FormControl('')
   });
@@ -45,7 +45,7 @@ export class AdminStaffComponent implements OnInit {
 
   // allUsers: Observable<User[]>;
 
-  constructor(public dialogItem: MatDialog, private formBuilder: FormBuilder, private http: HttpClient, 
+  constructor(public dialogItem: MatDialog, private formBuilder: FormBuilder, private http: HttpClient,
     private dataService: DataService, private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -63,15 +63,15 @@ export class AdminStaffComponent implements OnInit {
     this.users = this.dataService.users;
   }
 
-  toggleKeyView(){
-    if(this.updatePwToggle){
+  toggleKeyView() {
+    if (this.updatePwToggle) {
       this.updatePwToggle = false;
-    }else{
+    } else {
       this.updatePwToggle = true;
     }
   }
 
-  updateUser(user: User){
+  updateUser(user: User) {
     const id = user.id.toString();
     this.dataService.updateUser(user, id).subscribe(result => {
       console.log(result);
@@ -79,7 +79,7 @@ export class AdminStaffComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  updateUserKey(user: User){
+  updateUserKey(user: User) {
     user.password = this.userForm.value.password;
     const id = user.id.toString();
     this.dataService.updateUser(user, id).subscribe(result => {
@@ -102,7 +102,7 @@ export class AdminStaffComponent implements OnInit {
     });
   }
 
-  setMode(){
+  setMode() {
     this.userForm = new FormGroup({
       name: new FormControl({ value: '', disabled: false},
       ),

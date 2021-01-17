@@ -12,7 +12,7 @@ import { User } from 'src/app/shared/models';
 })
 export class AdminStaffDialogComponent implements OnInit {
 
-  editMode: string = '';
+  editMode = '';
 
   staffForm = new FormGroup({
     name: new FormControl(''),
@@ -41,20 +41,20 @@ export class AdminStaffDialogComponent implements OnInit {
     this.setMode();
    }
 
-  setMode(){
+  setMode() {
     if (this.dialogData.action.toLowerCase() === 'insert') {
       this.staffForm = new FormGroup({
         name: new FormControl({ value: '', disabled: false}),
         email: new FormControl({ value: '', disabled: false}),
         status: new FormControl({ value: null, disabled: false}),
         role: new FormControl({ value: null, disabled: false}),
-        password: new FormControl({ value: '', disabled: false}), 
+        password: new FormControl({ value: '', disabled: false}),
       });
       this.editMode = 'Stofna';
-      return
+      return;
     }
   }
-  
+
   onSubmit() {
     const requestModel: User = this.staffForm.value;
     this.dataService.addUser(requestModel).subscribe(result => {

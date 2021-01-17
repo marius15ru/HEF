@@ -54,7 +54,7 @@ export class AdminPlantsDialogComponent implements OnInit {
   onSubmit() {
     const requestModel: Plant = this.plantForm.value;
 
-    switch(this.dialogData.action.toLowerCase()){
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
         this.dataService.addPlant(requestModel).subscribe(result => {
           this.dataService.getPlants();

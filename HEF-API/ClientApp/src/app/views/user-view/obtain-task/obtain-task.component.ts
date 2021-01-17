@@ -34,8 +34,8 @@ export class ObtainTaskComponent implements OnInit {
   public customAttributes: Object;
 
   constructor(
-    private http: HttpClient, 
-    private dataService: DataService, 
+    private http: HttpClient,
+    private dataService: DataService,
     private _snackBar: MatSnackBar,
     public dialogItem: MatDialog) { }
 
@@ -64,14 +64,14 @@ export class ObtainTaskComponent implements OnInit {
   //   }, error => console.error(error));
   // }
 
-  onSubmit(job: Job){
+  onSubmit(job: Job) {
     const requestModelAssign: JobAssignments = new JobAssignments;
     console.log('assignedInsert');
     requestModelAssign.jobId = job.id;
-    requestModelAssign.userId = parseInt(this.userId);
+    requestModelAssign.userId = parseInt(this.userId, 0);
     const userId: string = requestModelAssign.userId.toString() + '/';
 
-    if(job.status == 1){
+    if (job.status === 1) {
       const requestModelJob = job;
       requestModelJob.status = 2;
       this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
@@ -80,7 +80,7 @@ export class ObtainTaskComponent implements OnInit {
     }
     this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
       console.log(result, job.name, 'assigned insert');
-      this.dataService.getUserJobs(parseInt(this.userId));
+      this.dataService.getUserJobs(parseInt(this.userId, 0));
       this.openSnackBar('Þér hefur verið úthlutað verki ' + job.name, 'Loka');
       }, error => console.error(error));
 
@@ -99,7 +99,6 @@ export class ObtainTaskComponent implements OnInit {
   //     console.log(result, job.name, 'assigned insert');
   //     this.openSnackBar(requestModelAssign.userId + ' úthlutað verki ' + job.name, 'Loka');
   //     }, error => console.error(error));
-     
   //    this.checkAssignment(job, this.dataService.assignedUsers);
   // }
 

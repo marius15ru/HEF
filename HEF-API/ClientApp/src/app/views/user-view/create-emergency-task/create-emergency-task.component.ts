@@ -14,18 +14,15 @@ export class CreateEmergencyTaskComponent implements OnInit {
   users$: Observable<User[]> = this.dataService.users$;
   stations$: Observable<Station[]> = this.dataService.stations$;
 
-  
   job = new Job;
 
   user: User;
-  userId: string = localStorage.getItem("user").toString();
+  userId: string = localStorage.getItem('user').toString();
   selectedUsers: number[] = [];
 
   emergencyJobForm: FormGroup;
 
   constructor(private dataService: DataService) { }
-
-
 
   ngOnInit() {
     this.emergencyJobForm = new FormGroup({
@@ -38,13 +35,12 @@ export class CreateEmergencyTaskComponent implements OnInit {
     });
   }
 
-  selectionChange(){
+  selectionChange() {
     console.log(this.selectedUsers);
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.emergencyJobForm.value);
-    let jobId = null; 
     // const user = this.emergencyJobForm.controls.jobUser.value;
     this.job.stationId = this.emergencyJobForm.controls.stationId.value;
     this.job.description = this.emergencyJobForm.controls.description.value;
@@ -57,19 +53,19 @@ export class CreateEmergencyTaskComponent implements OnInit {
     this.job.duration = '';
     this.job.hasComments = false;
 
-    this.selectedUsers.push(parseInt(this.userId));
-    
+    this.selectedUsers.push(parseInt(this.userId, 0));
+
     this.dataService.addJob(this.job).subscribe(result => {
       console.log(result.id);
       const jobAssignment = new JobAssignments;
       jobAssignment.jobId = result.id;
-      jobAssignment.userId = parseInt(this.userId);
+      jobAssignment.userId = parseInt(this.userId, 0);
       this.selectedUsers.forEach(userId => {
-        this.dataService.addJobAssignment(jobAssignment, userId.toString()).subscribe(result => {
-          // console.log(result);
+        this.dataService.addJobAssignment(jobAssignment, userId.toString()).subscribe(_ => {
+          // console.log(_);
         });
       });
-      this.dataService.getUserJobs(parseInt(this.userId));
+      this.dataService.getUserJobs(parseInt(this.userId, 0));
       this.emergencyJobForm.reset();
       this.selectedUsers = [];
     });

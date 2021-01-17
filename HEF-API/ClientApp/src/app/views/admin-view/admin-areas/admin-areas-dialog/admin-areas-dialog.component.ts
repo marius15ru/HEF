@@ -46,7 +46,7 @@ export class AdminAreasDialogComponent implements OnInit {
     console.log(this.areaForm.value);
     const requestModel: Area = this.areaForm.value;
 
-    switch(this.dialogData.action.toLowerCase()){
+    switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
         this.dataService.addArea(requestModel).subscribe(result => {
           console.log(result);

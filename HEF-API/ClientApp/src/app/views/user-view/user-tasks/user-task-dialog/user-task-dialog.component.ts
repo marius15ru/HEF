@@ -14,7 +14,6 @@ import { UserTasksComponent } from '../user-tasks.component';
 })
 export class UserTaskDialogComponent implements OnInit {
   jobComments$: Observable<Comment[]> = this.dataService.jobComments$;
-  
 
   selectedRow: Job;
   stations: Station[];
@@ -28,7 +27,7 @@ export class UserTaskDialogComponent implements OnInit {
   allComments: Comment[] = [];
   jobComments: Comment[] = [];
 
-  userId: number = parseInt(localStorage.getItem("user"));
+  userId: number = parseInt(localStorage.getItem('user'), 0);
 
 
   jobForm = new FormGroup({
@@ -51,7 +50,7 @@ export class UserTaskDialogComponent implements OnInit {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<UserTasksComponent>, 
+    public dialogRef: MatDialogRef<UserTasksComponent>,
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA)
@@ -70,13 +69,13 @@ export class UserTaskDialogComponent implements OnInit {
     });
   }
 
-  getJobComments(job: Job){
+  getJobComments(job: Job) {
     this.allComments = this.dataService.comments;
-    this.jobComments = this.allComments.filter(item => item.jobId == job.id);
+    this.jobComments = this.allComments.filter(item => item.jobId === job.id);
   }
 
   onSubmit() {
-    let requestModel = this.selectedRow;
+    const requestModel = this.selectedRow;
     requestModel.status = this.jobForm.value.status;
 
     const updateId: string = this.selectedRow.id.toString();
@@ -110,10 +109,10 @@ export class UserTaskDialogComponent implements OnInit {
     this.dataService.addJobComment(requestModel).subscribe(result => {
       this.commentForm.reset();
       this.dataService.getComments(this.selectedRow.id);
-      if(this.selectedRow.hasComments === false){
+      if (this.selectedRow.hasComments === false) {
         const requestModelJob = this.selectedRow;
         requestModelJob.hasComments = true;
-        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(_ => {
           this.dataService.getJobs();
           this.dataService.getUserJobs(requestModel.userId);
         });

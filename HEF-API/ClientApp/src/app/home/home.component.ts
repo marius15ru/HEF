@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -10,7 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   loginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
@@ -26,8 +26,8 @@ export class HomeComponent {
     private jwtHelper: JwtHelperService) { }
 
   getNavStr(value: string): string {
-    return value === "Stjórnandi" ? "stjornandi"
-         : value === "Verkaðili"  ? "verkadili"
+    return value === 'Stjórnandi' ? 'stjornandi'
+         : value === 'Verkaðili'  ? 'verkadili'
          : null;
   }
 
@@ -44,8 +44,8 @@ export class HomeComponent {
     this.http.post('/api/auth/login', credentials, this.httpOptions).subscribe(response => {
       const token = (<any>response).token;
       const decodedToken = this.jwtHelper.decodeToken(token);
-      const role = decodedToken["Role"];
-      const user = decodedToken["User"];
+      const role = decodedToken['Role'];
+      const user = decodedToken['User'];
 
       localStorage.setItem('jwt', token);
       localStorage.setItem('role', role);
@@ -54,8 +54,8 @@ export class HomeComponent {
       this.router.navigate(['/' + this.getNavStr(role)]);
 
     }, err => {
-      console.log("Error:", err);
-        console.log("Invalid login");
+      console.log('Error:', err);
+        console.log('Invalid login');
     });
   }
 

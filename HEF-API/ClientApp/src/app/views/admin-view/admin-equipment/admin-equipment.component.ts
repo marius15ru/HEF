@@ -24,30 +24,29 @@ export class AdminEquipmentComponent implements OnInit {
   public customAttributes: Object;
   pageSettings: Object;
 
-  filtersVisible: boolean = false;
-  filterAction: string = 'Sýna síur';
+  filtersVisible = false;
+  filterAction = 'Sýna síur';
 
   selectedStations: number[] = [];
 
-
   lastCheckFrom: Date = null;
   lastCheckTo: Date = null;
-  
+
   constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
-  
+
   ngOnInit() {
     this.getData();
     this.customAttributes = {class: 'customcss'};
     this.pageSettings = { pageSizes: [5, 10, 20, 50, 100, 200, 'All'], pageSize: 10};
   }
 
-  getCurrentDate(){
+  getCurrentDate() {
     const today = new Date();
     return today;
   }
 
-  filtersVisibleToggle(){
-    if(!this.filtersVisible){
+  filtersVisibleToggle() {
+    if (!this.filtersVisible) {
       this.filterAction = 'Fela síur';
       return this.filtersVisible = true;
     }
@@ -55,11 +54,11 @@ export class AdminEquipmentComponent implements OnInit {
     return this.filtersVisible = false;
   }
 
-  filterEquipment(){
+  filterEquipment() {
     this.dataService.filterEquipments(this.selectedStations, this.lastCheckFrom, this.lastCheckTo, this.dataService.equipments);
   }
 
-  clearEquipmentFilter(){
+  clearEquipmentFilter() {
     this.selectedStations = [];
     this.lastCheckFrom = null;
     this.lastCheckTo = null;

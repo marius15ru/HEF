@@ -16,13 +16,12 @@ export class AdminAreasComponent implements OnInit {
   public areas: Area[] = [];
 
   areas$: Observable<Area[]> = this.dataService.areas$;
-  
   public customAttributes: Object;
   pageSettings: Object;
 
   constructor(
-    public dialogItem: MatDialog, 
-    private http: HttpClient, 
+    public dialogItem: MatDialog,
+    private http: HttpClient,
     private dataService: DataService) {}
 
   ngOnInit() {

@@ -9,12 +9,12 @@ import { UserTaskDialogComponent } from './user-task-dialog/user-task-dialog.com
 import { L10n, setCulture } from '@syncfusion/ej2-base';
 import { Observable } from 'rxjs';
 
-setCulture('is'); 
+setCulture('is');
 
-L10n.load({ 
-    'is': { 
-        grid: { 
-           EmptyRecord:"Engar raðir í töflu",
+L10n.load({
+    'is': {
+        grid: {
+           EmptyRecord: 'Engar raðir í töflu',
         },
         pager: {
           pagerDropDown: 'Raðir á hverri síðu',
@@ -25,8 +25,8 @@ L10n.load({
           nextPageTooltip: 'Færa á næstu síðu',
           previousPageTooltip: 'Fara á fyrri síðu',
         }
-    } 
-}); 
+    }
+});
 
 @Component({
   selector: 'app-user-tasks',
@@ -60,8 +60,8 @@ export class UserTasksComponent implements OnInit {
   pageSettings: object;
 
   user: User;
-  userId: string = localStorage.getItem("user").toString();
-  
+  userId: string = localStorage.getItem('user').toString();
+
   public customAttributes: Object;
 
   constructor(private http: HttpClient, private dataService: DataService, public dialogItem: MatDialog) { }
@@ -98,7 +98,7 @@ export class UserTasksComponent implements OnInit {
     return data[field].name;
   }
 
-  getData(){
+  getData() {
     this.http.get<Job[]>('api/users/' + this.userId + '/jobs').subscribe(result => {
       console.log(result);
       this.userJobs = result;
@@ -131,8 +131,7 @@ export class UserTasksComponent implements OnInit {
 
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
-      this.dataService.getUserJobs(parseInt(this.userId));
-      
+      this.dataService.getUserJobs(parseInt(this.userId, 0));
     });
   }
 

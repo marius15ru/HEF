@@ -13,7 +13,7 @@ import { Area, Plant, Station } from 'src/app/shared/models';
 })
 export class AdminLocationDialogComponent implements OnInit {
 
-  editMode: string = '';
+  editMode = '';
 
   selectedRow = new Station;
   plants$: Observable<Plant[]> = this.dataService.plants$;
@@ -38,7 +38,7 @@ export class AdminLocationDialogComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.dialogData);
-    if(this.dialogData.action.toLowerCase() === 'insert'){
+    if (this.dialogData.action.toLowerCase() === 'insert') {
       this.selectedRow.name = '';
       this.selectedRow.plantId = null;
       this.selectedRow.locationPrecise = '';
@@ -46,8 +46,7 @@ export class AdminLocationDialogComponent implements OnInit {
       this.selectedRow.coOrdinates = '';
       this.selectedRow.areaId = null;
       this.selectedRow.description = '';
-      
-    }else{
+    } else {
       this.selectedRow = this.dialogData.station;
     }
     this.setMode();
@@ -63,8 +62,8 @@ export class AdminLocationDialogComponent implements OnInit {
           console.log(result);
           this.dataService.getStations();
           this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
-        }, error => console.error(error));       
-        break;   
+        }, error => console.error(error));
+        break;
       case 'update':
         const updateId: string = this.selectedRow.id.toString();
         requestModel.id = this.selectedRow.id;
@@ -74,7 +73,7 @@ export class AdminLocationDialogComponent implements OnInit {
           this.dataService.getStations();
           this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
-        break; 
+        break;
       case 'delete':
         const deleteId: string = this.selectedRow.id.toString();
         requestModel.id = this.selectedRow.id;
@@ -85,7 +84,6 @@ export class AdminLocationDialogComponent implements OnInit {
         }, error => console.error(error));
         break;
     }
-      
       this.closeDialog();
 
 
@@ -104,7 +102,7 @@ export class AdminLocationDialogComponent implements OnInit {
   //       this.dataService.addEquipment(requestModel).subscribe(result => {
   //         console.log(result);
   //       this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
-  //       }, error => console.error(error));       
+  //       }, error => console.error(error));
   //       break;
 
   //     case 'update':
@@ -130,7 +128,6 @@ export class AdminLocationDialogComponent implements OnInit {
   //     setTimeout(()=> {
   //       this.dataService.getEquipments();
   //     }, 500);
-      
   //     this.closeDialog();
   //  }
 

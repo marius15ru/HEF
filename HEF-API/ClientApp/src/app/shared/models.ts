@@ -35,7 +35,6 @@ export class Job {
 
     modifiedOn: Date;
 
-    
     completeBy: Date;
     description: string;
     duration: string;

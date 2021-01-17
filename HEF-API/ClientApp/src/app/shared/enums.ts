@@ -12,15 +12,15 @@ export enum DataOperation {
 }
 
 export enum Role {
-    "Óskilgreint" = 0,
-    "Verkaðili" = 1,
-    "Stjórnandi" = 2,
+    'Óskilgreint' = 0,
+    'Verkaðili' = 1,
+    'Stjórnandi' = 2,
 }
 
 export enum UserStatus {
-    "Óskilgreint" = 0,
-    "Tiltæk/ur" = 1,
-    "Ótiltæk/ur" = 2,
+    'Óskilgreint' = 0,
+    'Tiltæk/ur' = 1,
+    'Ótiltæk/ur' = 2,
 }
 
 export enum JobStatus {
@@ -33,12 +33,12 @@ export enum JobStatus {
 }
 
 export enum MeasurementType {
-    "Óskilgreint" = 0,
-    "Celsíus" = 1,
-    "Lítrar" = 2,
-    "Þrýstingur(bar)" = 3,
-    "Metrar" = 4,
-    "Lítrar á sekúndu" = 5
+    'Óskilgreint' = 0,
+    'Celsíus' = 1,
+    'Lítrar' = 2,
+    'Þrýstingur(bar)' = 3,
+    'Metrar' = 4,
+    'Lítrar á sekúndu' = 5
 }
 
 export enum PlantType {
@@ -74,13 +74,13 @@ export namespace Recurring {
   }
 
 export enum SubJobTask {
-    "Óskilgreint" = 0,
-    "Þrífa" = 1,
-    "Ryksuga" = 2,
-    "Niðurdráttur" = 3,
-    "Mæla olíu" = 4,
-    "Mæla hitastig" = 5,
-    "Mæla hæð" = 6,
-    "Skúra" = 7,
-    "Athuga mótor" = 8
+    'Óskilgreint' = 0,
+    'Þrífa' = 1,
+    'Ryksuga' = 2,
+    'Niðurdráttur' = 3,
+    'Mæla olíu' = 4,
+    'Mæla hitastig' = 5,
+    'Mæla hæð' = 6,
+    'Skúra' = 7,
+    'Athuga mótor' = 8
 }
