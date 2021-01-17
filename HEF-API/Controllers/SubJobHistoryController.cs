@@ -22,7 +22,7 @@ namespace HEF_API.Controllers
 
         // GET: api/subjobs/history/jobId?sortby=column
         [HttpGet("{jobId}")]
-        public async Task<ActionResult<IEnumerable<SubJob>>> Get(int jobId, [FromQuery(Name = "sortby")] string sortBy)
+        public async Task<ActionResult<IEnumerable<SubJobHistory>>> Get(int jobId, [FromQuery(Name = "sortby")] string sortBy)
         {
             // filter: y => y.Id == 2;
             try
@@ -41,7 +41,7 @@ namespace HEF_API.Controllers
 
         // POST api/subjobs
         [HttpPost]
-        public async Task<ActionResult<SubJob>> Post([FromBody] SubJob value)
+        public async Task<ActionResult<SubJobHistory>> Post([FromBody] SubJobHistory value)
         {
             if (value == null)
                 return BadRequest("Object is null");
