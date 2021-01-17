@@ -12,7 +12,7 @@ namespace HEF_API.Services
         IRepository<Plant> Plant { get; }
         IRepository<Station> Station { get; }
         IRepository<SubJob> SubJob { get; }
-        IRepository<SubJob> SubJobHistory { get; }
+        IRepository<SubJobHistory> SubJobHistory { get; }
         IRepository<User> User { get; }
         IRepository<Job_Assignments> UserJobs { get; }
         Task Save();
@@ -28,7 +28,7 @@ namespace HEF_API.Services
         private IRepository<Plant> _plant;
         private IRepository<Station> _station;
         private IRepository<SubJob> _subjob;
-        private IRepository<SubJob> _subjobhistory;
+        private IRepository<SubJobHistory> _subjobhistory;
         private IRepository<User> _user;
         private IRepository<Job_Assignments> _userjobs;
 
@@ -41,7 +41,7 @@ namespace HEF_API.Services
         public IRepository<Plant> Plant => _plant ??= new BaseRepository<Plant>(_context);
         public IRepository<Station> Station => _station ??= new BaseRepository<Station>(_context);
         public IRepository<SubJob> SubJob => _subjob ??= new BaseRepository<SubJob>(_context);
-        public IRepository<SubJob> SubJobHistory => _subjobhistory ??= new BaseRepository<SubJob>(_context);
+        public IRepository<SubJobHistory> SubJobHistory => _subjobhistory ??= new BaseRepository<SubJobHistory>(_context);
         public IRepository<User> User => _user ??= new BaseRepository<User>(_context);
         public IRepository<Job_Assignments> UserJobs => _userjobs ??= new BaseRepository<Job_Assignments>(_context);
     }

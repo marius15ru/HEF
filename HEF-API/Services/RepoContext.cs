@@ -18,7 +18,7 @@ namespace HEF_API.Services
         public DbSet<Plant> Plant { get; set; }
         public DbSet<Station> Station { get; set; }
         public DbSet<SubJob> SubJob { get; set; }
-        public DbSet<SubJob> SubJobHistory { get; set; }
+        public DbSet<SubJobHistory> SubJobHistory { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Job_Assignments> Job_Assignments { get; set; }
 
@@ -33,7 +33,7 @@ namespace HEF_API.Services
                         .HasConversion<string>();
 
             modelBuilder.Entity<Job_Assignments>().HasKey(uj => new { uj.JobId, uj.UserId });
-            
+
             base.OnModelCreating(modelBuilder);
         }
     }
