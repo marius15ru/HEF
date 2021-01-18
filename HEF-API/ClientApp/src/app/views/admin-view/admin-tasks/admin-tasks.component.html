@@ -118,14 +118,19 @@
             <!-- <e-column field='duration' headerText='Lengd(mín)' width="100px" [customAttributes]='customAttributes'></e-column> -->
             <e-column field="operations" headerText="Aðgerðir" width="150px" [customAttributes]='customAttributes'>
                 <ng-template #template let-jobs>
-                    <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
-                    <!-- <i class="fas fa-edit action-icon" matTooltip="Sækja" (click)="openDialog(jobs, 'obtain')"></i> -->
-                    <i class="fas fa-hand-holding-box action-icon" matTooltip="Úthluta" (click)="openDialog(jobs, 'assign')"></i>
-                    <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobs, 'comment')"></i>
-                    <i class="fas fa-baby action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobs, 'subJob')"></i>
-                    <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobs, 'view')"></i>
-                    <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobs, 'update')"></i>
-                    <i class="fas fa-trash-alt action-icon" matTooltip="Eyða" (click)="openDialog(jobs, 'delete')"></i>
+                    <div style="text-align: center;" class="row">
+                        <div class="col-md-12">
+                            <i class="fas fa-hand-holding-box action-icon" matTooltip="Úthluta" (click)="openDialog(jobs, 'assign')"></i>
+                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobs, 'comment')"></i>
+                            <i class="far fa-eye action-icon" matTooltip="Skoða Verk" (click)="openDialog(jobs, 'view')"></i>
+                            <i class="fas fa-edit action-icon" matTooltip="Uppfæra Verk" (click)="openDialog(jobs, 'update')"></i>
+                            <i class="fas fa-trash-alt action-icon" matTooltip="Eyða verki" (click)="openDialog(jobs, 'delete')"></i>
+                        </div>
+                        <div class="col-md-12">
+                            <i class="fas fa-baby subjob-action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobs, 'subJob')"></i>
+                            <i class="far fa-scroll subjob-action-icon" matTooltip="Skoða sögu undirverka" (click)="openSubTaskHistoryDialog(jobs, 'subJobHistory')"></i>
+                        </div>
+                    </div>
                 </ng-template>
             </e-column>
         </e-columns>

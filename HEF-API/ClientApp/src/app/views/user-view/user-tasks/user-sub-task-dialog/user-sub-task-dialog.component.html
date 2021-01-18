@@ -19,7 +19,7 @@
                 <mat-form-field>
                     <mat-label>Búnaður</mat-label>
                     <mat-select [(value)]="subjob.equipmentId" disableOptionCentering
-                        panelClass="material-select-box">
+                        panelClass="material-select-box" [disabled]="true">
                         <mat-option *ngFor="let equipment of (equipmentsByJobStation$ | async)" [value]="equipment.id">
                             {{equipment.name}}</mat-option>
                     </mat-select>
@@ -27,7 +27,7 @@
                 <mat-form-field>
                     <mat-label>Aðgerð</mat-label>
                     <mat-select type="number" [(value)]="subjob.subJobTask" disableOptionCentering
-                        panelClass="material-select-box">
+                        panelClass="material-select-box" [disabled]="true">
                         <mat-option *ngFor="let item of subJobTask | enumToArray" [value]="item.index">{{item.name}}
                         </mat-option>
                     </mat-select>
@@ -35,14 +35,14 @@
                 <mat-form-field>
                     <mat-label>Mælieining</mat-label>
                     <mat-select type="number" [(value)]="subjob.unit" disableOptionCentering
-                        panelClass="material-select-box">
+                        panelClass="material-select-box" [disabled]="true">
                         <mat-option *ngFor="let item of measurement | enumToArray" [value]="item.index">{{item.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Lýsing</mat-label>
-                    <textarea matInput [(value)]="subjob.description"></textarea>
+                    <textarea matInput [(value)]="subjob.description" [disabled]="true"></textarea>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Niðurstaða Mælingar</mat-label>
@@ -57,58 +57,7 @@
                     </mat-select>
                 </mat-form-field>
                 <button mat-raised-button color="accent" (click)="updateSubJobRow(subjob, i)">Uppfæra röð</button>
-                <!-- <button mat-raised-button color="warn" class="" (click)="deleteSubJobRow(subjob)"></button> -->
-                <button mat-fab color="warn" matTooltip="Eyða" (click)="deleteSubJobRow(subjob, i)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
             </mat-card>
         </div>
     </form>
-    <form [formGroup]="myForm">
-        <div formArrayName="subJobs">
-            <h4>Ný undirverk</h4>
-            <mat-card *ngFor="let subjob of subJobs.controls; let i = index;" [formGroupName]="i"
-                class="col-md-12 dialog-card">
-                <mat-form-field>
-                    <mat-label>Búnaður</mat-label>
-                    <mat-select formControlName="equipmentId" value="null" disableOptionCentering
-                        panelClass="material-select-box">
-                        <mat-option *ngFor="let equipment of (equipmentsByJobStation$ | async)" [value]="equipment.id">
-                            {{equipment.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Aðgerð</mat-label>
-                    <mat-select type="number" formControlName="subJobTask" disableOptionCentering
-                        panelClass="material-select-box">
-                        <mat-option *ngFor="let item of subJobTask | enumToArray" [value]="item.index">{{item.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Mælieining</mat-label>
-                    <mat-select type="number" formControlName="unit" disableOptionCentering
-                        panelClass="material-select-box">
-                        <mat-option *ngFor="let item of measurement | enumToArray" [value]="item.index">{{item.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Lýsing</mat-label>
-                    <textarea matInput formControlName="description"></textarea>
-                </mat-form-field>
-
-                <button mat-raised-button color="warn" (click)="deleteSubJob(i)">Eyða línu</button>
-            </mat-card>
-        </div>
-    </form>
-
-    <div class="row ml-1 grid-action-buttons">
-        <div>
-            <button mat-raised-button color="accent" (click)="addSubJob()">Bæta við fleiri undirverkum</button>
-        </div>
-        <div class="ml-auto mr-3">
-            <button mat-raised-button color="primary" (click)="onSubmit(myForm)">Stofna undirverk</button>
-        </div>
-    </div>
 </mat-dialog-content>

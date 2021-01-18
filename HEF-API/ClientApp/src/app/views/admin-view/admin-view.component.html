@@ -1,6 +1,6 @@
-<app-nav-menu></app-nav-menu>
-<div class="container">
-    <mat-tab-group mat-stretch-tabs *ngIf="(user$ | async)?.role == 2">
+<app-nav-menu *ngIf="(user$ | async)?.role == 2"></app-nav-menu>
+<div class="container" *ngIf="(user$ | async)?.role == 2">
+    <mat-tab-group mat-stretch-tabs>
         <mat-tab label="Verk">
             <app-admin-tasks></app-admin-tasks>
             <!-- Hér kemur yfirlit yfir verk -->
@@ -27,3 +27,4 @@
         </mat-tab>
       </mat-tab-group>
 </div>
+<div *ngIf="(user$ | async)?.role != 2">Þú hefur ekki tilskilin réttindi til að nálgast þessa vefslóð</div>

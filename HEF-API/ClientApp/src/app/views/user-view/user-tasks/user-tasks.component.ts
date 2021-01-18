@@ -8,6 +8,7 @@ import { Comment, Job, Station, User } from 'src/app/shared/models';
 import { UserTaskDialogComponent } from './user-task-dialog/user-task-dialog.component';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
 import { Observable } from 'rxjs';
+import { UserSubTaskDialogComponent } from './user-sub-task-dialog/user-sub-task-dialog.component';
 
 setCulture('is');
 
@@ -132,6 +133,16 @@ export class UserTasksComponent implements OnInit {
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
       this.dataService.getUserJobs(parseInt(this.userId, 0));
+    });
+  }
+
+  openSubTaskDialog(jobs: Job, action: string){
+    const refUser = this.dialogItem.open(UserSubTaskDialogComponent, {
+      data: {
+        action: action,
+        job: jobs
+      },
+      width: '1400px'
     });
   }
 

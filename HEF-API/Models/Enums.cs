@@ -64,6 +64,6 @@ namespace HEF_API.Models
             MeasureHeight = 6,
             Mop = 7,
             CheckMotor = 8
-}
+        }
     }
 }

@@ -1,0 +1,63 @@
+<mat-dialog-content>
+    <mat-form-field class="form-input">
+        <mat-label>Yfirverk</mat-label>
+        <input matInput [value]="selectedRow.name" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field class="form-input">
+        <mat-label>Lýsing</mat-label>
+        <input matInput [value]="selectedRow.description" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field class="form-input">
+        <mat-label>Endurtekið</mat-label>
+        <input matInput [value]="recurFormatter(selectedRow.recurring)" [disabled]="true">
+    </mat-form-field>
+
+    <form [formGroup]="currentJobSubJobs" (ngSubmit)="onSubmitCurrentSubJobs()">
+        <div formArrayName="subJobs">
+            <h4>Skráð Undirverk</h4>
+            <mat-card *ngFor="let subjob of currentJobSubJobs.value.subJobs; let i = index" class="col-md-12 dialog-subjobsforjob-card">
+                <mat-form-field>
+                    <mat-label>Búnaður</mat-label>
+                    <mat-select [(value)]="subjob.equipmentId" disableOptionCentering
+                        panelClass="material-select-box" [disabled]="true">
+                        <mat-option *ngFor="let equipment of (equipmentsByJobStation$ | async)" [value]="equipment.id">
+                            {{equipment.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Aðgerð</mat-label>
+                    <mat-select type="number" [(value)]="subjob.subJobTask" disableOptionCentering
+                        panelClass="material-select-box" [disabled]="true">
+                        <mat-option *ngFor="let item of subJobTask | enumToArray" [value]="item.index">{{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Mælieining</mat-label>
+                    <mat-select type="number" [(value)]="subjob.unit" disableOptionCentering
+                        panelClass="material-select-box" [disabled]="true">
+                        <mat-option *ngFor="let item of measurement | enumToArray" [value]="item.index">{{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Lýsing</mat-label>
+                    <textarea matInput [(value)]="subjob.description" [disabled]="true"></textarea>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Niðurstaða Mælingar</mat-label>
+                    <input #valueInput type="number" matInput [(value)]="subjob.value" (change)="onValueChange($event, i)" [disabled]="true">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Staða undirverks</mat-label>
+                    <mat-select type="number" [(value)]="subjob.status" disableOptionCentering
+                        panelClass="material-select-box" [disabled]="true">
+                        <mat-option *ngFor="let item of jobStatus | enumToArray" [value]="item.index">{{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </mat-card>
+        </div>
+    </form>
+</mat-dialog-content>

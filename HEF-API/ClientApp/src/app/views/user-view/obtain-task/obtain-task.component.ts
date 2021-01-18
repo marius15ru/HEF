@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
 import { Job, JobAssignments, Station, User, Comment } from 'src/app/shared/models';
+import { ObtainSubTaskDialogComponent } from './obtain-sub-task-dialog/obtain-sub-task-dialog.component';
 import { ObtainTaskDialogComponent } from './obtain-task-dialog/obtain-task-dialog.component';
 
 @Component({
@@ -171,6 +172,16 @@ export class ObtainTaskComponent implements OnInit {
 
     refUser.afterClosed().subscribe( (result) => {
       console.log('Dialog closed');
+    });
+  }
+
+  openSubTaskDialog(jobs: Job, action: string){
+    const refUser = this.dialogItem.open(ObtainSubTaskDialogComponent, {
+      data: {
+        action: action,
+        job: jobs
+      },
+      width: '1400px'
     });
   }
 

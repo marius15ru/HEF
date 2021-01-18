@@ -12,6 +12,7 @@ import { L10n, setCulture } from '@syncfusion/ej2-base';
 import {FormGroup, FormControl} from '@angular/forms';
 import { Tooltip } from '@syncfusion/ej2-popups';
 import { AdminSubTaskDialogComponent } from './admin-sub-task-dialog/admin-sub-task-dialog.component';
+import { AdminSubTaskHistoryDialogComponent } from './admin-sub-task-history-dialog/admin-sub-task-history-dialog.component';
 
 
 setCulture('is');
@@ -100,12 +101,12 @@ export class AdminTasksComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
     this.getData();
   }
-
-  deleteComment(comment: Comment) {
+  
+  deleteComment(comment: Comment){
     this.dataService.deleteJobComment(comment);
   }
-
-  getData() {
+  
+  getData(){
     this.jobs = this.dataService.jobs;
     this.comments = this.dataService.comments;
     this.stations = this.dataService.stations;
@@ -258,6 +259,16 @@ export class AdminTasksComponent implements OnInit {
 
   openSubTaskDialog(jobs: Job, action: string) {
     const refUser = this.dialogItem.open(AdminSubTaskDialogComponent, {
+      data: {
+        action: action,
+        job: jobs
+      },
+      width: '1400px'
+    });
+  }
+
+  openSubTaskHistoryDialog(jobs: Job, action: string){
+    const refUser = this.dialogItem.open(AdminSubTaskHistoryDialogComponent, {
       data: {
         action: action,
         job: jobs

@@ -21,6 +21,7 @@ export class UserViewComponent implements OnInit {
     this.dataService.getCurrentUser(this.userId);
     this.dataService.getJobs();
     this.dataService.getComments();
+    this.dataService.getEquipments();
     this.dataService.getStations();
     this.dataService.getUsers();
     this.dataService.getUserJobs(parseInt(this.userId, 0));

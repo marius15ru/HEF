@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
-import { MeasurementType, Recurring, SubJobTask } from 'src/app/shared/enums';
+import { JobStatus, MeasurementType, Recurring, SubJobTask } from 'src/app/shared/enums';
 import { Equipment, Job, SubJobs } from 'src/app/shared/models';
 
 @Component({
@@ -13,13 +13,21 @@ import { Equipment, Job, SubJobs } from 'src/app/shared/models';
 })
 export class AdminSubTaskDialogComponent implements OnInit {
   equipments$: Observable<Equipment[]> = this.dataService.equipments$;
-
+  subJobsForJob$: Observable<SubJobs[]> = this.dataService.subJobsForJob$;
+  equipmentsByJobStation$: Observable<Equipment[]> = this.dataService.equipmentsByJobStation$;
+  
   myForm: FormGroup;
+  currentJobSubJobs: FormGroup;
   selectedRow: Job;
 
   measurement = MeasurementType;
   subJobTask = SubJobTask;
   newSubJobs: SubJobs[] = [];
+
+  jobStatus = JobStatus;
+  equipments: Equipment[] = [];
+
+  measuredValue: number[] = [];
 
   constructor( public dialogRef: MatDialogRef<AdminSubTaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, job: Job},
@@ -29,45 +37,143 @@ export class AdminSubTaskDialogComponent implements OnInit {
 
   ngOnInit() {
     this.selectedRow = this.dialogData.job;
+    this.dataService.getSubJobsForJob(this.selectedRow.id);
+
+    this.currentJobSubJobs = this.fb.group({
+      jobId: this.selectedRow.id,
+      subJobs: this.fb.array(this.dataService.subJobsForJob.map(r => this.fb.group(r)))
+    });
+
     this.myForm = this.fb.group({
       jobId: this.selectedRow.id,
       subJobs: this.fb.array([]),
     });
 
+    this.dataService.filterEquipmentsByJobStation(this.selectedRow.stationId, this.dataService.equipments);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: ['snackbar-success']
+    });
   }
 
   recurFormatter(index: number) {
     return Recurring[index];
   }
 
-  addSubJob() {
+  subJobTaskFormatter(index: number){
+    return SubJobTask[index];
+  }
+
+  unitFormatter(index: number){
+    return MeasurementType[index];
+  }
+
+  onValueChange(args: any, index: number){
+    console.log(args.target.value);
+    this.measuredValue[index] = parseInt(args.target.value);
+  }
+
+  updateSubJobRow(subJob: SubJobs, index: number){
+    subJob.value = this.measuredValue[index];
+    this.dataService.updateSubJob(subJob, subJob.id.toString()).subscribe(result => {
+      this.dataService.getSubJobs(subJob.jobId);
+      if(subJob.status == 5){
+        this.selectedRow.lastCheck = new Date();
+        this.dataService.updateJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(result => {
+          this.dataService.getJobs();
+        });
+      }
+      this.openSnackBar('Undirverk hefur verið uppfært', 'Loka');
+    });
+  }
+
+  
+  deleteSubJobRow(subJob: SubJobs, index: number){
+    console.log(subJob);
+
+    this.dataService.deleteSubJob(subJob, subJob.id.toString()).subscribe(result => {
+      this.dataService.getSubJobs(subJob.jobId);
+      this.openSnackBar('Undirverki hefur verið eytt', 'Loka');
+      this.deleteCurrentSubJob(index);
+    });
+
+  }
+
+  
+  onSubmitCurrentSubJobs(){
+
+  }
+
+  addSubJob(){
     const subJobs = this.fb.group({
       equipmentId: [],
       status: [],
       description: [],
       value: [],
       unit: [],
-      task: []
-    });
+      subJobTask: []
+    })
 
     this.subJobs.push(subJobs);
   }
 
-  deleteSubJob(i) {
+  addCurrentSubJob(subjob){
+    this.currentSubJobs.push(subjob);
+  }
+
+  deleteSubJob(i){
     this.subJobs.removeAt(i);
   }
 
-  get subJobs() {
+  deleteCurrentSubJob(i){
+    this.currentSubJobs.removeAt(i);
+  }
+
+  get subJobs(){
     return this.myForm.get('subJobs') as FormArray;
   }
 
-  onSubmit() {
+  get currentSubJobs(){
+    return this.currentJobSubJobs.get('subJobs') as FormArray;
+  }
+
+  onSubmit(myform: FormGroup){
     const someArray = this.subJobs.controls.values();
 
-    for (const entry of someArray) {
-      this.newSubJobs.push(entry.value);
-      console.log(this.newSubJobs);
-    }
+    const anotherArray = this.myForm.value;
+    const subJobArray: SubJobs[] = anotherArray.subJobs;
+    
+    subJobArray.forEach((subJob: SubJobs) => {
+      let requestModel = new SubJobs;
+      requestModel.equipmentId = subJob.equipmentId;
+      requestModel.jobId = this.selectedRow.id;
+      requestModel.subJobTask = subJob.subJobTask;
+      requestModel.unit = subJob.unit;
+      requestModel.description = subJob.description;
+      // requestModel.value = 0.0;
+      if(this.selectedRow.status > 1){
+        requestModel.status = 2;
+      }else{
+        requestModel.status = 1;
+      }
+      console.log(requestModel);
+      if(requestModel){
+        this.dataService.addSubJob(requestModel).subscribe(result => {
+          //Hér kemur virkni fyrir breytingu á stöðu yfirverks
+          this.dataService.getSubJobs(requestModel.jobId);
+          this.openSnackBar('Nýju undirverki hefur verið bætt við', 'Loka');
+        });
+      }
+    });
+
+    this.closeDialog();
+  }
+
+  closeDialog() {
+    this.dialogRef.close('Closed');
   }
 
 }

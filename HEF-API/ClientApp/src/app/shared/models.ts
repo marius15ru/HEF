@@ -87,13 +87,32 @@ export class SubJobs {
     id: number;
     // Foreign keys
     jobId: number;
+    // job: Job;
     equipmentId: number;
+    // equipment: Equipment;
 
     status: JobStatus;
     description: string;
     value: number;
     unit: MeasurementType;
-    subJobTask: SubJobTask;
+    subJobTask: number;
+    completedOn: Date;
+}
+
+export class subJobHistory {
+    id: number;
+    // Foreign keys
+    jobId: number;
+    // job: Job;
+    equipmentId: number;
+    // equipment: Equipment;
+
+    status: JobStatus;
+    description: string;
+    value: number;
+    unit: MeasurementType;
+    subJobTask: number;
+    completedOn: Date;
 }
 
 export class User {

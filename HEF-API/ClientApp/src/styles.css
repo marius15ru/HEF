@@ -154,9 +154,22 @@ mat-grid-tile {
   margin-right: 5px;
   color: #424242;
   font-size: 14px;
+  padding-top: 5px;
+}
+
+.subjob-action-icon{
+  margin-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #424242;
+  font-size: 14px;
 }
 
 .action-icon:hover{
+  cursor: pointer;
+}
+
+.subjob-action-icon:hover{
   cursor: pointer;
 }
 

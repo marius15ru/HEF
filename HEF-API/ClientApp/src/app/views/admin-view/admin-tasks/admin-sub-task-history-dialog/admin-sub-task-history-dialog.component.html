@@ -1,0 +1,69 @@
+
+<mat-dialog-content>
+    <div *ngIf="(subJobsHistoryForJob$ | async)?.length > 0">
+        <h4>Saga Undirverka</h4>
+        <!-- <button mat-raised-button color="accent" (click)="filtersVisibleToggle()">{{filterAction}}</button> -->
+    </div>
+    <div *ngIf="(subJobsHistoryForJob$ | async)?.length > 0" class="subjobshistory-filters">
+        <mat-form-field >
+            <mat-label >Sía Eindaga (frá)</mat-label>
+            <input matInput  [max]="getCurrentDate()"  [matDatepicker]="picker3" (dateChange)="filterSubJobsHistory()" [(ngModel)]="completedOnFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker3" ></mat-datepicker-toggle>
+            <mat-datepicker [startAt]="getCurrentDate()" #picker3></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field >
+            <mat-label >Sía Eindaga (til)</mat-label>
+            <input matInput [max]="getCurrentDate()" [matDatepicker]="picker4" (dateChange)="filterSubJobsHistory()" [(ngModel)]="completedOnTo">
+            <mat-datepicker-toggle matSuffix [for]="picker4" ></mat-datepicker-toggle>
+            <mat-datepicker [startAt]="getCurrentDate()" #picker4></mat-datepicker>
+        </mat-form-field>
+        <button color="accent" mat-raised-button (click)="clearSubJobsHistoryFilter()">Hreinsa síur</button>
+    </div>
+
+    <div *ngFor="let subjob of (filteredSubJobsHistoryForJob$ | async)" class="subjobshistory-data">
+        <mat-form-field >
+            <mat-label>Dagsetning</mat-label>
+            <input matInput [matDatepicker]="picker1" [value]="subjob.completedOn" [disabled] ="true">
+            <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Búnaður</mat-label>
+            <mat-select type="number" [value]="subjob.equipmentId" disableOptionCentering panelClass="material-select-box" [disabled]="true">
+                <mat-option *ngFor="let item of (equipments$ | async)" [value]="item.id">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label >Staða</mat-label>
+            <mat-select type="number" [value]="subjob.status" disableOptionCentering panelClass="material-select-box" [disabled]="true">
+                <mat-option *ngFor="let item of status | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label >Aðgerð</mat-label>
+            <mat-select type="number" [value]="subjob.subJobTask" disableOptionCentering panelClass="material-select-box" [disabled]="true">
+                <mat-option *ngFor="let item of task | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label >Mælieining</mat-label>
+            <mat-select type="number" [value]="subjob.unit" disableOptionCentering panelClass="material-select-box" [disabled]="true">
+                <mat-option *ngFor="let item of unit | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Niðurstaða mælingar</mat-label>
+            <input matInput [value]="subjob.value" [disabled]="true">
+        </mat-form-field>
+        
+    </div>
+    <mat-card *ngIf="(subJobsHistoryForJob$ | async)?.length == 0" style="text-align: center;">
+        <h4>Þetta verk hefur enga sögu fyrir undirverk</h4>
+    </mat-card>
+</mat-dialog-content>

@@ -36,6 +36,7 @@
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(userJobs, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(userJobs, 'update')"></i>
                             <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(userJobs, 'comment')"></i>
+                            <i class="fas fa-baby subjob-action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(userJobs, 'subJob')"></i>
                         </ng-template>
                     </e-column>
                 </e-columns>
@@ -76,6 +77,7 @@
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsAssigned, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsAssigned, 'update')"></i>
                             <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsAssigned, 'comment')"></i>
+                            <i class="fas fa-baby subjob-action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobsAssigned, 'subJob')"></i>
                         </ng-template>
                     </e-column>
                 </e-columns>
@@ -112,6 +114,7 @@
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsInProgress, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsInProgress, 'update')"></i>
                             <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsInProgress, 'comment')"></i>
+                            <i class="fas fa-baby subjob-action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobsInProgress, 'subJob')"></i>
                             <!-- <i class="far fa-comment"></i> -->
                         </ng-template>
                     </e-column>
@@ -149,6 +152,7 @@
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsOnHold, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsOnHold, 'update')"></i>
                             <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsOnHold, 'comment')"></i>
+                            <i class="fas fa-baby subjob-action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobsOnHold, 'subJob')"></i>
                         </ng-template>
                     </e-column>
                 </e-columns>
@@ -185,6 +189,7 @@
                             <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(jobsFinished, 'view')"></i>
                             <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(jobsFinished, 'update')"></i>
                             <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobsFinished, 'comment')"></i>
+                            <i class="fas fa-baby subjob-action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobsFinished, 'subJob')"></i>
                         </ng-template>
                     </e-column>
                 </e-columns>

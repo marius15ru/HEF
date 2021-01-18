@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
-import { MatCardModule, MatDialogModule, MatGridListModule, MatSelectModule, MatSnackBarModule, MatNativeDateModule } from '@angular/material';
+import { MatCardModule, MatDialogModule, MatGridListModule, MatSelectModule, MatSnackBarModule, MatNativeDateModule, MatIconModule } from '@angular/material';
 import { UserViewComponent } from './views/user-view/user-view.component';
 import { AdminViewComponent } from './views/admin-view/admin-view.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -45,6 +45,9 @@ import { AuthGuardService } from './auth-guard.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import { AdminSubTaskDialogComponent } from './views/admin-view/admin-tasks/admin-sub-task-dialog/admin-sub-task-dialog.component';
+import { AdminSubTaskHistoryDialogComponent } from './views/admin-view/admin-tasks/admin-sub-task-history-dialog/admin-sub-task-history-dialog.component';
+import { UserSubTaskDialogComponent } from './views/user-view/user-tasks/user-sub-task-dialog/user-sub-task-dialog.component';
+import { ObtainSubTaskDialogComponent } from './views/user-view/obtain-task/obtain-sub-task-dialog/obtain-sub-task-dialog.component';
 
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
@@ -84,7 +87,10 @@ export function tokenGetter() {
     MessagesComponent,
     UserTaskDialogComponent,
     ObtainTaskDialogComponent,
-    AdminSubTaskDialogComponent
+    AdminSubTaskDialogComponent,
+    AdminSubTaskHistoryDialogComponent,
+    UserSubTaskDialogComponent,
+    ObtainSubTaskDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -121,7 +127,8 @@ export function tokenGetter() {
     MatExpansionModule,
     MatTooltipModule,
     MatButtonModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatIconModule
   ],
   providers:
   [EnumToArrayPipe,
@@ -141,7 +148,10 @@ export function tokenGetter() {
     AdminAreasDialogComponent,
     UserTaskDialogComponent,
     ObtainTaskDialogComponent,
-    AdminSubTaskDialogComponent
+    AdminSubTaskDialogComponent,
+    AdminSubTaskHistoryDialogComponent,
+    UserSubTaskDialogComponent,
+    ObtainSubTaskDialogComponent
   ],
 })
 export class AppModule { }
