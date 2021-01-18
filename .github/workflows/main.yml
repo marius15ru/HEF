@@ -39,7 +39,10 @@ jobs:
       
       - name: Run API tests
         run: |
-          npm start & npm run postman
+          npm start
+          npm run postman
+        env:
+          CI: true
       
       #- name: Deploy with ftp
       #- uses: SamKirkland/FTP-Deploy-Action@4.0.0
