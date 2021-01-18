@@ -116,7 +116,9 @@ namespace HEF_Test
                 .RuleFor(x => x.Description, y => y.Lorem.Text())
                 .RuleFor(x => x.Status, y => (int)y.PickRandom<Enums.JobStatus>())
                 .RuleFor(x => x.Unit, y => (int)y.PickRandom<Enums.Unit>())
-                .RuleFor(x => x.Value, y => y.Random.Double(1, 100));
+                .RuleFor(x => x.Value, y => y.Random.Double(1, 100))
+                .RuleFor(x => x.SubJobTask, y => (int)y.PickRandom<Enums.SubJobTask>())
+                .RuleFor(x => x.CompletedOn, y => DateTime.Today);
             return fakeSubJob;
         }
         public static Faker<User> UserGenerator()
