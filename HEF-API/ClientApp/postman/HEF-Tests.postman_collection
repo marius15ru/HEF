@@ -19,15 +19,9 @@
 									"\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.collectionVariables.set(\"areaID\", jsonData.id);\r",
-									"console.log(jsonData.id);\r",
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Area 1\");\r",
-									"});"
+									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+									"tests[\"Name is correct\"] = jsonData.name === \"< name >\";"
 								],
 								"type": "text/javascript"
 							}
@@ -47,7 +41,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \r\n    \"Name\": \"Area 1\"\r\n}",
+							"raw": "{ \r\n    \"Name\": \"< name >\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -87,16 +81,9 @@
 									"\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.collectionVariables.set(\"userID\", jsonData.id);\r",
-									"console.log(jsonData.id);\r",
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Kalli\");\r",
-									"});\r",
-									""
+									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+									"tests[\"Name is correct\"] = jsonData.name === \"< name >\";"
 								],
 								"type": "text/javascript"
 							}
@@ -107,7 +94,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Name\": \"Kalli\", \r\n    \"Role\": 1, \r\n    \"Status\": 1,\r\n    \"Email\": \"kalli@hef.is\",\r\n    \"Password\": \"My Shit Password\"\r\n}",
+							"raw": "{\r\n    \"Name\": \"< name >\", \r\n    \"Email\": \"< email >\",\r\n    \"Password\": \"< password >\",\r\n    \"Role\": 1, \r\n    \"Status\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,15 +134,9 @@
 									"\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.collectionVariables.set(\"plantID\", jsonData.id);\r",
-									"console.log(jsonData.id);\r",
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Veita nr. 1\");\r",
-									"});\r",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+									"tests[\"Name is correct\"] = jsonData.name === \"< name >\";\r",
 									""
 								],
 								"type": "text/javascript"
@@ -167,7 +148,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Name\": \"Veita nr. 1\"\r\n}",
+							"raw": "{\r\n    \"Name\": \"< name >\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -207,15 +188,9 @@
 									"\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.collectionVariables.set(\"stationsID\", jsonData.id);\r",
-									"console.log(jsonData.id);\r",
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Stöð 1\");\r",
-									"});"
+									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+									"tests[\"Name is correct\"] = jsonData.name === \"< name >\";"
 								],
 								"type": "text/javascript"
 							}
@@ -226,7 +201,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"PlantId\": {{plantID}},\r\n    \"AreaId\": {{areaID}},\r\n    \"Name\": \"Stöð 1\",\r\n    \"Address\": \"Gata 1\"\r\n}",
+							"raw": "{\r\n    \"PlantId\": {{plantID}},\r\n    \"AreaId\": {{areaID}},\r\n    \"Name\": \"< name >\",\r\n    \"Address\": \"< address >\",\r\n    \"Coordinates\": \"< coordinates >\",\r\n    \"LocationPrecise\": \"< locationprecise >\",\r\n    \"Description\": \"< description >\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -266,15 +241,9 @@
 									"\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.collectionVariables.set(\"jobID\", jsonData.id);\r",
-									"console.log(jsonData.id);\r",
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Leki\");\r",
-									"});"
+									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+									"tests[\"Name is correct\"] = jsonData.name === \"< name >\";"
 								],
 								"type": "text/javascript"
 							}
@@ -285,7 +254,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"stationId\": {{stationsID}},\r\n    \"name\": \"Leki\",\r\n    \"completeBy\": \"2020-12-31T00:00:00\",\r\n    \"recurring\": 5,\r\n    \"hasComments\": false\r\n}",
+							"raw": "{\r\n    \"stationId\": {{stationsID}},\r\n    \"name\": \"< name >\",\r\n    \"Description\": \"< description >\",\r\n    \"Status\": 1,\r\n    \"completeBy\": \"2020-01-01\",\r\n    \"recurring\": 1,\r\n    \"Duration\": \"00:00\",\r\n    \"EmergencyJob\": false,\r\n    \"hasComments\": true,\r\n    \"LastCheck\": \"2020-01-01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -326,14 +295,9 @@
 									"var jsonData = pm.response.json();\r",
 									"pm.collectionVariables.set(\"commentsID\", jsonData.id);\r",
 									"\r",
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Assert id is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.text).to.eql(\"A comment\");\r",
-									"});"
+									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+									"tests[\"Text is correct\"] = jsonData.text === \"< text >\";\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -344,7 +308,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"UserID\": {{userID}},\r\n    \"JobID\": {{jobID}},\r\n    \"Text\": \"A comment\",\r\n    \"Seen\": true\r\n}",
+							"raw": "{\r\n    \"UserID\": {{userID}},\r\n    \"JobID\": {{jobID}},\r\n    \"Text\": \"< text >\",\r\n    \"Seen\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -385,14 +349,8 @@
 									"var jsonData = pm.response.json();\r",
 									"pm.collectionVariables.set(\"equipmentID\", jsonData.id);\r",
 									"\r",
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Lögn\");\r",
-									"});"
+									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+									"tests[\"Name is correct\"] = jsonData.name === \"< name >\";"
 								],
 								"type": "text/javascript"
 							}
@@ -403,7 +361,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"StationId\": {{stationsID}},\r\n    \"Name\": \"Lögn\",\r\n    \"Model\": \"2018-01-01\",\r\n    \"Manufacturer\": \"Pipes PLC\",\r\n    \"Operation\": \"Flytur vökva.\",\r\n    \"LastCheck\": \"2020-01-01\"\r\n}",
+							"raw": "{\r\n    \"StationId\": {{stationsID}},\r\n    \"Name\": \"< name >\",\r\n    \"Model\": \"2018-01-01\",\r\n    \"Manufacturer\": \"< manufacturer >\",\r\n    \"Operation\": \"< operation >\",\r\n    \"LastCheck\": \"2020-01-01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -443,9 +401,9 @@
 									"\r",
 									"var jsonData = pm.response.json();\r",
 									"pm.collectionVariables.set(\"subjobID\", jsonData.id);\r",
-									"console.log(jsonData.id);\r",
+									"\r",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
-									"tests[\"Name is correct\"] = jsonData.name === \"Skrá mælingar\";\r",
+									"tests[\"Task is correct\"] = jsonData.subJobTask === 1;\r",
 									""
 								],
 								"type": "text/javascript"
@@ -457,7 +415,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"JobId\":{{jobID}}, \r\n    \"EquipmentId\": {{equipmentID}}, \r\n    \"Name\": \"Skrá mælingar\", \r\n    \"Description\": \"Lýsingar á verki\", \r\n    \"Status\": 1, \r\n    \"Unit\": \"metri\", \r\n    \"Value\": 10.0 \r\n}",
+							"raw": "{\r\n    \"JobId\":{{jobID}}, \r\n    \"EquipmentId\": {{equipmentID}}, \r\n    \"Description\": \"< description >\", \r\n    \"Status\": 1, \r\n    \"Unit\": 1, \r\n    \"Value\": 10.0,\r\n    \"SubJobTask\": 1,\r\n    \"CompletedOn\": \"2021-01-01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -518,7 +476,15 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"areaID\");\r",
+									"var jsonData = pm.response.json().find(x => x.id == id);\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === id;\r",
+									"    jsonData.name === \"< name >\";\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -565,8 +531,18 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"userID\");\r",
+									"var jsonData = pm.response.json().find(x => x.id == id);\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === id;\r",
+									"    jsonData.name === \"< name >\";\r",
+									"    jsonData.email === \"< email >\";\r",
+									"    jsonData.password === \"< password >\";\r",
+									"    jsonData.role === 1;\r",
+									"    jsonData.status === 1;\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -627,8 +603,14 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"plantID\");\r",
+									"var jsonData = pm.response.json().find(x => x.id == id);\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === id;\r",
+									"    jsonData.name === \"< name >\";\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -689,8 +671,20 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"stationsID\");\r",
+									"var jsonData = pm.response.json().find(x => x.id == id);\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === id;\r",
+									"    jsonData.plantId === pm.collectionVariables.get(\"plantID\");\r",
+									"    jsonData.areaId === pm.collectionVariables.get(\"areaID\");\r",
+									"    jsonData.name === \"< name >\";\r",
+									"    jsonData.address === \"< address >\";\r",
+									"    jsonData.coordinates === \"< coordinates >\";\r",
+									"    jsonData.locationPrecise === \"< locationprecise >\";\r",
+									"    jsonData.description === \"< description >\";\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -751,8 +745,22 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"jobID\");\r",
+									"var jsonData = pm.response.json().find(x => x.id == id);\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === id;\r",
+									"    jsonData.stationId === pm.collectionVariables.get(\"stationsID\");\r",
+									"    jsonData.name === \"< name >\";\r",
+									"    jsonData.description === \"< description >\";\r",
+									"    jsonData.status === 1;\r",
+									"    jsonData.completeBy === \"2020-01-01\";\r",
+									"    jsonData.recurring === 1;\r",
+									"    jsonData.emergencyJob === false;\r",
+									"    jsonData.hasComments === true;\r",
+									"    jsonData.lastCheck === \"2020-01-01\";\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -813,8 +821,17 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"commentsID\");\r",
+									"var jsonData = pm.response.json().find(x => x.id == id);\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === id;\r",
+									"    jsonData.userId === pm.collectionVariables.get(\"userID\");\r",
+									"    jsonData.jobId === pm.collectionVariables.get(\"jobID\");\r",
+									"    jsonData.text === \"< text >\";\r",
+									"    jsonData.seen === false;\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -875,8 +892,19 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"var id = pm.collectionVariables.get(\"equipmentID\");\r",
+									"var jsonData = pm.response.json().find(x => x.id == id);\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === id;\r",
+									"    jsonData.stationsId === pm.collectionVariables.get(\"stationsID\");\r",
+									"    jsonData.name === \"< name >\";\r",
+									"    jsonData.model === \"2018-01-01\";\r",
+									"    jsonData.manufacturer === \"< manufacturer >\";\r",
+									"    jsonData.operation === \"< operation >\";\r",
+									"    jsonData.lastCheck === \"2018-01-01\";\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -938,11 +966,21 @@
 							"script": {
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
 									"var id = pm.collectionVariables.get(\"subjobID\");\r",
-									"console.log(id);\r",
-									"var obj = pm.response.json().find(x => x.id == id);\r",
-									"console.log(obj);\r",
-									"tests[\"Name is correct\"] = obj.name === \"Skrá mælingar\";"
+									"var jsonData = pm.response.json().find(x => x.id == id);\r",
+									"\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === id;\r",
+									"    jsonData.jobId === pm.collectionVariables.get(\"jobID\");\r",
+									"    jsonData.equipmentId === pm.collectionVariables.get(\"equipmentID\");\r",
+									"    jsonData.description === \"< description >\";\r",
+									"    jsonData.status === 1;\r",
+									"    jsonData.unit === 1;\r",
+									"    jsonData.value === 10.0;\r",
+									"    jsonData.subJobTask === 1;\r",
+									"    jsonData.completedOn === \"2021-01-01\";\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -1027,9 +1065,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});"
+									"tests[\"Status code is 204\"] = responseCode.code === 204;"
 								],
 								"type": "text/javascript"
 							}
@@ -1040,7 +1076,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \r\n    \"id\": {{areaID}},\r\n    \"name\": \"MyArea\"\r\n}",
+							"raw": "{ \r\n    \"id\": {{areaID}},\r\n    \"name\": \"< updated name >\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1077,11 +1113,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"\r",
-									""
+									"tests[\"Status code is 204\"] = responseCode.code === 204;"
 								],
 								"type": "text/javascript"
 							}
@@ -1092,7 +1124,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": {{userID}},\r\n    \"Name\": \"Kalli\", \r\n    \"Role\": 1, \r\n    \"Status\": 1,\r\n    \"Email\": \"kalli@hef.is\",\r\n    \"Password\": \"My Shit Password\"\r\n}",
+							"raw": "{\r\n    \"Id\": {{userID}},\r\n    \"Name\": \"< updated name >\", \r\n    \"Email\": \"< updated email >\",\r\n    \"Password\": \"< updated password >\",\r\n    \"Role\": 2, \r\n    \"Status\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1120,13 +1152,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"var id = pm.collectionVariables.get(\"plantID\");\r",
-									"/*\r",
-									"var entity = pm.collectionVariables.get(\"entity\");\r",
-									"entity.id = id;\r",
-									"entity.name = \"Ný Stöð\";\r",
-									"pm.collectionVariables.set(\"entity\", entity);\r",
-									"*/"
+									"var id = pm.collectionVariables.get(\"plantID\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1135,11 +1161,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"\r",
-									""
+									"tests[\"Status code is 204\"] = responseCode.code === 204;"
 								],
 								"type": "text/javascript"
 							}
@@ -1150,7 +1172,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": {{plantID}},\r\n\t\"Name\": \"Veita nr. 1\"\r\n}",
+							"raw": "{\r\n    \"Id\": {{plantID}},\r\n\t\"Name\": \"< updated name >\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1178,13 +1200,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.collectionVariables.get(\"stationsID\");\r",
-									"\r",
-									"/*\r",
-									"var entity = pm.collectionVariables.get(\"entity\");\r",
-									"entity.name = \"Ný Stöð\";\r",
-									"pm.collectionVariables.set(\"entity\", entity);\r",
-									"*/"
+									"pm.collectionVariables.get(\"stationsID\");"
 								],
 								"type": "text/javascript"
 							}
@@ -1193,11 +1209,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"\r",
-									""
+									"tests[\"Status code is 204\"] = responseCode.code === 204;"
 								],
 								"type": "text/javascript"
 							}
@@ -1208,7 +1220,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": {{stationsID}},\r\n    \"PlantId\": 1,\r\n    \"AreaId\": 2,\r\n    \"Name\": \"Stöð 1\",\r\n    \"Address\": \"Götustræti 1\"\r\n}",
+							"raw": "{\r\n    \"Id\": {{stationsID}},\r\n    \"PlantId\": {{plantID}},\r\n    \"AreaId\": {{areaID}},\r\n    \"Name\": \"< updated name >\",\r\n    \"Address\": \"< updated address >\",\r\n    \"Coordinates\": \"< updated coordinates >\",\r\n    \"LocationPrecise\": \"< updated locationprecise >\",\r\n    \"Description\": \"< updated description >\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1245,9 +1257,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});"
+									"tests[\"Status code is 204\"] = responseCode.code === 204;"
 								],
 								"type": "text/javascript"
 							}
@@ -1258,7 +1268,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": {{jobID}},\r\n    \"stationId\": 1,\r\n    \"name\": \"Leki Stór\",\r\n    \"completeBy\": \"2020-12-31T00:00:00\",\r\n    \"recurring\": 5,\r\n    \"hasComments\": false\r\n}",
+							"raw": "{\r\n    \"Id\": {{jobID}},\r\n    \"stationId\": {{stationsID}},\r\n    \"name\": \"< updated name >\",\r\n    \"Description\": \"< updated description >\",\r\n    \"Status\": 2,\r\n    \"completeBy\": \"2020-01-02\",\r\n    \"recurring\": 2,\r\n    \"Duration\": \"00:01\",\r\n    \"EmergencyJob\": true,\r\n    \"hasComments\": false,\r\n    \"LastCheck\": \"2020-01-02\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1308,7 +1318,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \r\n    \"Id\": {{commentsID}},\r\n    \"UserId\": 1,\r\n    \"JobId\": 1,\r\n    \"Text\": \"Edited comment\",\r\n    \"Seen\": true\r\n}",
+							"raw": "{ \r\n    \"Id\": {{commentsID}},\r\n    \"UserID\": {{userID}},\r\n    \"JobID\": {{jobID}},\r\n    \"Text\": \"< updated text >\",\r\n    \"Seen\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1345,9 +1355,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});"
+									"tests[\"Status code is 204\"] = responseCode.code === 204;"
 								],
 								"type": "text/javascript"
 							}
@@ -1358,7 +1366,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": {{equipmentID}},\r\n    \"StationId\": 1,\r\n    \"Name\": \"Lögn 1600mm\",\r\n    \"Model\": \"2018-01-01\",\r\n    \"Manufacturer\": \"Pipes PLC\",\r\n    \"Operation\": \"Flytur vökva.\",\r\n    \"LastCheck\": \"2020-01-01\"\r\n}",
+							"raw": "{\r\n    \"Id\": {{equipmentID}},\r\n    \"StationId\": {{stationsID}},\r\n    \"Name\": \"< updated name >\",\r\n    \"Model\": \"2018-01-02\",\r\n    \"Manufacturer\": \"< updated manufacturer >\",\r\n    \"Operation\": \"< updated operation >\",\r\n    \"LastCheck\": \"2020-01-02\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1406,7 +1414,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": {{subjobID}},\r\n    \"JobId\": 1, \r\n    \"EquipmentId\": 1, \r\n    \"Name\": \"Skrá verk\", \r\n    \"Description\": \"Lýsingar á verki\", \r\n    \"Status\": 1, \r\n    \"Unit\": \"metri\", \r\n    \"Value\": 10.0 \r\n}",
+							"raw": "{\r\n    \"Id\": {{subjobID}},\r\n    \"JobId\":{{jobID}}, \r\n    \"EquipmentId\": {{equipmentID}}, \r\n    \"Description\": \"< updated description >\", \r\n    \"Status\": 2, \r\n    \"Unit\": 2, \r\n    \"Value\": 20.0,\r\n    \"SubJobTask\": 2,\r\n    \"CompletedOn\": \"2021-01-02\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1468,20 +1476,13 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"MyArea\");\r",
-									"});\r",
+									"var jsonData = pm.response.json();\r",
 									"\r",
-									"var areaID = pm.collectionVariables.get(\"areaID\");\r",
-									"\r",
-									"pm.test(\"Assert ID is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.id).to.eql(areaID);\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === pm.collectionVariables.get(\"areaID\");\r",
+									"    jsonData.name ===  \"< updated name >\";\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1521,20 +1522,17 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Kalli\");\r",
-									"});\r",
+									"var jsonData = pm.response.json();\r",
 									"\r",
-									"var id = pm.collectionVariables.get(\"userID\");\r",
-									"\r",
-									"pm.test(\"Assert id is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === pm.collectionVariables.get(\"userID\");\r",
+									"    jsonData.name === \"< updated name >\";\r",
+									"    jsonData.email === \"< updated email >\";\r",
+									"    jsonData.password === \"< updated password >\";\r",
+									"    jsonData.role === 2;\r",
+									"    jsonData.status === 2;\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1574,20 +1572,13 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Veita nr. 1\");\r",
-									"});\r",
+									"var jsonData = pm.response.json();\r",
 									"\r",
-									"var id = pm.collectionVariables.get(\"plantID\");\r",
-									"\r",
-									"pm.test(\"Assert id is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === pm.collectionVariables.get(\"plantID\");\r",
+									"    jsonData.name === \"< updated name >\";\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1627,20 +1618,19 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Stöð 1\");\r",
-									"});\r",
+									"var jsonData = pm.response.json();\r",
 									"\r",
-									"var id = pm.collectionVariables.get(\"stationsID\");\r",
-									"\r",
-									"pm.test(\"Assert id is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === pm.collectionVariables.get(\"userID\");\r",
+									"    jsonData.plantId === pm.collectionVariables.get(\"plantID\");\r",
+									"    jsonData.areaId === pm.collectionVariables.get(\"areaID\");\r",
+									"    jsonData.name === \"< updated name >\";\r",
+									"    jsonData.address === \"< updated address >\";\r",
+									"    jsonData.coordinates === \"< updated coordinates >\";\r",
+									"    jsonData.locationPrecise === \"< updated locationprecise >\";\r",
+									"    jsonData.description === \"< updated description >\";\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1680,16 +1670,22 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Leki Stór\");\r",
-									"});\r",
+									"var jsonData = pm.response.json();\r",
 									"\r",
-									"console.log(\"GetById Job: \" + JSON.stringify(pm.response.json()));"
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === pm.collectionVariables.get(\"jobID\");\r",
+									"    jsonData.stationId === pm.collectionVariables.get(\"stationsID\");\r",
+									"    jsonData.name === \"< updated name >\";\r",
+									"    jsonData.description === \"< updated description >\";\r",
+									"    jsonData.status === 2;\r",
+									"    jsonData.completeBy === \"2020-01-02\";\r",
+									"    jsonData.recurring === 2;\r",
+									"    jsonData.emergencyJob === true;\r",
+									"    jsonData.hasComments === false;\r",
+									"    jsonData.lastCheck === \"2020-01-02\";\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -1728,20 +1724,16 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
 									"\r",
-									"pm.test(\"Assert text is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.text).to.eql(\"A comment\");\r",
-									"});\r",
+									"var jsonData = pm.response.json();\r",
 									"\r",
-									"var id = pm.collectionVariables.get(\"commentsID\");\r",
-									"\r",
-									"pm.test(\"Assert id is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === pm.collectionVariables.get(\"commentsID\");\r",
+									"    jsonData.userId === pm.collectionVariables.get(\"userID\");\r",
+									"    jsonData.jobId === pm.collectionVariables.get(\"jobID\");\r",
+									"    jsonData.text === \"< updated text >\";\r",
+									"    jsonData.seen === true;\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1781,20 +1773,18 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
 									"\r",
-									"pm.test(\"Assert name is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.eql(\"Lögn 1600mm\");\r",
-									"});\r",
+									"var jsonData = pm.response.json();\r",
 									"\r",
-									"var id = pm.collectionVariables.get(\"equipmentID\");\r",
-									"\r",
-									"pm.test(\"Assert id is correct\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.id).to.eql(id);\r",
+									"pm.test(\"Object matches\", function () {\r",
+									"    jsonData.id === pm.collectionVariables.get(\"equipmentID\");\r",
+									"    jsonData.stationsId === pm.collectionVariables.get(\"stationsID\");\r",
+									"    jsonData.name === \"< updated name >\";\r",
+									"    jsonData.model === \"2018-01-02\";\r",
+									"    jsonData.manufacturer === \"< updated manufacturer >\";\r",
+									"    jsonData.operation === \"< updated operation >\";\r",
+									"    jsonData.lastCheck === \"2018-01-02\";\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1837,17 +1827,17 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
 									"\r",
 									"var jsonData = pm.response.json();\r",
-									"// tests[\"Name is correct\"] = jsonData.name === \"Skrá verk\";\r",
 									"\r",
 									"pm.test(\"Object matches\", function () {\r",
 									"    jsonData.id === pm.collectionVariables.get(\"subjobID\");\r",
-									"    jsonData.jobid === 1;\r",
-									"    jsonData.equipmentid === 1;\r",
-									"    jsonData.name === \"Skrá verk\";\r",
-									"    jsonData.description === \"Lýsingar á verki\";\r",
-									"    jsonData.status === 1;\r",
-									"    jsonData.unit === \"metri\";\r",
-									"    jsonData.value === 10.0;\r",
+									"    jsonData.jobId === pm.collectionVariables.get(\"jobID\");\r",
+									"    jsonData.equipmentId === pm.collectionVariables.get(\"equipmentID\");\r",
+									"    jsonData.description === \"< updated description >\";\r",
+									"    jsonData.status === 2;\r",
+									"    jsonData.unit === 2;\r",
+									"    jsonData.value === 20.0;\r",
+									"    jsonData.subJobTask === 2;\r",
+									"    jsonData.completedOn === \"2021-01-02\";\r",
 									"});"
 								],
 								"type": "text/javascript"
