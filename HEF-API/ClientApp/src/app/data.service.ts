@@ -14,7 +14,7 @@ export class DataService {
 
   private jobsUrl = '/api/jobs/';
   private subJobsUrl = '/api/subjobs/';
-  private subJobsHistoryUrl = 'api/subjobs/history/'
+  private subJobsHistoryUrl = 'api/subjobs/history/';
   private equipmentsUrl = '/api/equipments/';
   private plantsUrl = '/api/plants/';
   private areasUrl = '/api/areas/';
@@ -35,10 +35,10 @@ export class DataService {
 
   private _jobsPastDueDateSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
   private _jobsPastDueDate$: Observable<Job[]> = this._jobsPastDueDateSource.asObservable();
-  get jobsPastDueDate$(): Observable<Job[]> { return this._jobsPastDueDate$ }
-  get jobsPastDueDate(): Job[] { return this._jobsPastDueDateSource.getValue()}
-  set jobsPastDueDate(newValue: Job[]){
-    this._jobsPastDueDateSource.next(newValue);    
+  get jobsPastDueDate$(): Observable<Job[]> { return this._jobsPastDueDate$; }
+  get jobsPastDueDate(): Job[] { return this._jobsPastDueDateSource.getValue(); }
+  set jobsPastDueDate(newValue: Job[]) {
+    this._jobsPastDueDateSource.next(newValue);
   }
 
   private _filteredJobsSource: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>(null);
@@ -49,72 +49,72 @@ export class DataService {
     this._filteredJobsSource.next(newValue);
   }
 
-  //SubJobs
+  // SubJobs
 
   private _subJobsSource: BehaviorSubject<SubJobs[]> = new BehaviorSubject<SubJobs[]>(null);
   private _subJobs$: Observable<SubJobs[]> = this._subJobsSource.asObservable();
-  get subJobs$(): Observable<SubJobs[]> { return this._subJobs$ }
-  get subJobs(): SubJobs[] { return this._subJobsSource.getValue()}
-  set subJobs(newValue: SubJobs[]){
-    this._subJobsSource.next(newValue);    
+  get subJobs$(): Observable<SubJobs[]> { return this._subJobs$; }
+  get subJobs(): SubJobs[] { return this._subJobsSource.getValue(); }
+  set subJobs(newValue: SubJobs[]) {
+    this._subJobsSource.next(newValue);
   }
 
   private _subJobsPastDueDateSource: BehaviorSubject<SubJobs[]> = new BehaviorSubject<SubJobs[]>(null);
   private _subJobsPastDueDate$: Observable<SubJobs[]> = this._subJobsPastDueDateSource.asObservable();
-  get subJobsPastDueDate$(): Observable<SubJobs[]> { return this._subJobsPastDueDate$ }
-  get subJobsPastDueDate(): SubJobs[] { return this._subJobsPastDueDateSource.getValue()}
-  set subJobsPastDueDate(newValue: SubJobs[]){
-    this._subJobsPastDueDateSource.next(newValue);    
+  get subJobsPastDueDate$(): Observable<SubJobs[]> { return this._subJobsPastDueDate$; }
+  get subJobsPastDueDate(): SubJobs[] { return this._subJobsPastDueDateSource.getValue(); }
+  set subJobsPastDueDate(newValue: SubJobs[]) {
+    this._subJobsPastDueDateSource.next(newValue);
   }
 
   private _subJobsForJobSource: BehaviorSubject<SubJobs[]> = new BehaviorSubject<SubJobs[]>(null);
   private _subJobsForJob$: Observable<SubJobs[]> = this._subJobsForJobSource.asObservable();
-  get subJobsForJob$(): Observable<SubJobs[]> { return this._subJobsForJob$ }
-  get subJobsForJob(): SubJobs[] { return this._subJobsForJobSource.getValue()}
-  set subJobsForJob(newValue: SubJobs[]){
-    this._subJobsForJobSource.next(newValue);    
+  get subJobsForJob$(): Observable<SubJobs[]> { return this._subJobsForJob$; }
+  get subJobsForJob(): SubJobs[] { return this._subJobsForJobSource.getValue(); }
+  set subJobsForJob(newValue: SubJobs[]) {
+    this._subJobsForJobSource.next(newValue);
   }
 
-  //Sub Job History
+  // Sub Job History
 
   private _subJobsHistorySource: BehaviorSubject<SubJobs[]> = new BehaviorSubject<SubJobs[]>(null);
   private _subJobsHistory$: Observable<SubJobs[]> = this._subJobsHistorySource.asObservable();
-  get subJobsHistory$(): Observable<SubJobs[]> { return this._subJobsHistory$ }
-  get subJobsHistory(): SubJobs[] { return this._subJobsHistorySource.getValue()}
-  set subJobsHistory(newValue: SubJobs[]){
-    this._subJobsHistorySource.next(newValue);    
+  get subJobsHistory$(): Observable<SubJobs[]> { return this._subJobsHistory$; }
+  get subJobsHistory(): SubJobs[] { return this._subJobsHistorySource.getValue(); }
+  set subJobsHistory(newValue: SubJobs[]) {
+    this._subJobsHistorySource.next(newValue);
   }
 
   private _subJobsHistoryForJobSource: BehaviorSubject<SubJobs[]> = new BehaviorSubject<SubJobs[]>(null);
   private _subJobsHistoryForJob$: Observable<SubJobs[]> = this._subJobsHistoryForJobSource.asObservable();
-  get subJobsHistoryForJob$(): Observable<SubJobs[]> { return this._subJobsHistoryForJob$ }
-  get subJobsHistoryForJob(): SubJobs[] { return this._subJobsHistoryForJobSource.getValue()}
-  set subJobsHistoryForJob(newValue: SubJobs[]){
-    this._subJobsHistoryForJobSource.next(newValue);    
+  get subJobsHistoryForJob$(): Observable<SubJobs[]> { return this._subJobsHistoryForJob$; }
+  get subJobsHistoryForJob(): SubJobs[] { return this._subJobsHistoryForJobSource.getValue(); }
+  set subJobsHistoryForJob(newValue: SubJobs[]) {
+    this._subJobsHistoryForJobSource.next(newValue);
   }
 
   private _filteredSubJobsHistoryForJobSource: BehaviorSubject<SubJobs[]> = new BehaviorSubject<SubJobs[]>(null);
   private _filteredSubJobsHistoryForJob$: Observable<SubJobs[]> = this._filteredSubJobsHistoryForJobSource.asObservable();
-  get filteredSubJobsHistoryForJob$(): Observable<SubJobs[]> { return this._filteredSubJobsHistoryForJob$ }
-  get filteredSubJobsHistoryForJob(): SubJobs[] { return this._filteredSubJobsHistoryForJobSource.getValue()}
-  set filteredSubJobsHistoryForJob(newValue: SubJobs[]){
-    this._filteredSubJobsHistoryForJobSource.next(newValue);    
+  get filteredSubJobsHistoryForJob$(): Observable<SubJobs[]> { return this._filteredSubJobsHistoryForJob$; }
+  get filteredSubJobsHistoryForJob(): SubJobs[] { return this._filteredSubJobsHistoryForJobSource.getValue(); }
+  set filteredSubJobsHistoryForJob(newValue: SubJobs[]) {
+    this._filteredSubJobsHistoryForJobSource.next(newValue);
   }
 
   private _subJobsHistoryDatesSource: BehaviorSubject<Date[]> = new BehaviorSubject<Date[]>(null);
   private _subJobsHistoryDates$: Observable<Date[]> = this._subJobsHistoryDatesSource.asObservable();
-  get subJobsHistoryDates$(): Observable<Date[]> { return this._subJobsHistoryDates$ }
-  get subJobsHistoryDates(): Date[] { return this._subJobsHistoryDatesSource.getValue()}
-  set subJobsHistoryDates(newValue: Date[]){
-    this._subJobsHistoryDatesSource.next(newValue);    
+  get subJobsHistoryDates$(): Observable<Date[]> { return this._subJobsHistoryDates$; }
+  get subJobsHistoryDates(): Date[] { return this._subJobsHistoryDatesSource.getValue(); }
+  set subJobsHistoryDates(newValue: Date[]) {
+    this._subJobsHistoryDatesSource.next(newValue);
   }
 
   private _subJobsHistoryUniqueDatesSource: BehaviorSubject<Date[]> = new BehaviorSubject<Date[]>(null);
   private _subJobsHistoryUniqueDates$: Observable<Date[]> = this._subJobsHistoryUniqueDatesSource.asObservable();
-  get subJobsHistoryUniqueDates$(): Observable<Date[]> { return this._subJobsHistoryUniqueDates$ }
-  get subJobsHistoryUniqueDates(): Date[] { return this._subJobsHistoryUniqueDatesSource.getValue()}
-  set subJobsHistoryUniqueDates(newValue: Date[]){
-    this._subJobsHistoryUniqueDatesSource.next(newValue);    
+  get subJobsHistoryUniqueDates$(): Observable<Date[]> { return this._subJobsHistoryUniqueDates$; }
+  get subJobsHistoryUniqueDates(): Date[] { return this._subJobsHistoryUniqueDatesSource.getValue(); }
+  set subJobsHistoryUniqueDates(newValue: Date[]) {
+    this._subJobsHistoryUniqueDatesSource.next(newValue);
   }
 
 
@@ -259,10 +259,10 @@ export class DataService {
 
   private _equipmentsByJobStationSource: BehaviorSubject<Equipment[]> = new BehaviorSubject<Equipment[]>(null);
   private _equipmentsByJobStation$: Observable<Equipment[]> = this._equipmentsByJobStationSource.asObservable();
-  get equipmentsByJobStation$(): Observable<Equipment[]> { return this._equipmentsByJobStation$ }
-  get equipmentsByJobStation(): Equipment[] { return this._equipmentsByJobStationSource.getValue()}
-  set equipmentsByJobStation(newValue: Equipment[]){
-    this._equipmentsByJobStationSource.next(newValue);    
+  get equipmentsByJobStation$(): Observable<Equipment[]> { return this._equipmentsByJobStation$; }
+  get equipmentsByJobStation(): Equipment[] { return this._equipmentsByJobStationSource.getValue(); }
+  set equipmentsByJobStation(newValue: Equipment[]) {
+    this._equipmentsByJobStationSource.next(newValue);
   }
 
   private _filteredEquipmentsSource: BehaviorSubject<Equipment[]> = new BehaviorSubject<Equipment[]>(null);
@@ -341,24 +341,24 @@ export class DataService {
         );
   }
 
-  //SubJobs
+  // SubJobs
 
-  getSubJobs(jobId =  null){
+  getSubJobs(jobId =  null) {
     this.http.get<SubJobs[]>('api/subjobs').subscribe(result => {
       console.log(result);
       this.subJobs = result;
-      if(jobId){
+      if (jobId) {
         this.getSubJobsForJob(jobId);
       }
       this.filterSubJobsPastDueDate(this.jobs, result);
     }, error => console.error(error));
   }
 
-  getSubJobsForJob(jobId: number){
+  getSubJobsForJob(jobId: number) {
     this.subJobsForJob = this.subJobs.filter(subJob => subJob.jobId === jobId);
   }
 
-  filterSubJobsPastDueDate(jobs: Job[], subJobs: SubJobs[]){
+  filterSubJobsPastDueDate(jobs: Job[], subJobs: SubJobs[]) {
     let tempJobs = [];
 
     tempJobs = this.getJobsPastDueDate(jobs, new Date());
@@ -366,10 +366,10 @@ export class DataService {
     tempJobs = this.getSubJobsPastDueDate(tempJobs, subJobs);
     this.subJobsPastDueDate = tempJobs;
 
-    if(tempJobs.length > 0){
-      console.log("ÉG ER MEÐ FLEIRI EN 0 Í LISTANUM");
+    if (tempJobs.length > 0) {
+      console.log('ÉG ER MEÐ FLEIRI EN 0 Í LISTANUM');
       this.subJobsPastDueDate.forEach((subJob, index, array) => {
-        let requestModel = new subJobHistory; 
+        const requestModel = new subJobHistory;
         requestModel.equipmentId = subJob.equipmentId;
         requestModel.description = subJob.description;
         requestModel.jobId = subJob.jobId;
@@ -389,100 +389,100 @@ export class DataService {
                 const year = new Date(job.completeBy).getFullYear();
                 this.http.get<JobAssignments[]>('api/jobs/' + job.id.toString() + '/users').subscribe(result => {
                   const assigned: JobAssignments[] = result;
-                  switch(job.recurring){
-                    case 1: 
+                  switch (job.recurring) {
+                    case 1:
                       job.completeBy = new Date(year, month, day + 7);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
                       break;
-                    case 2: 
+                    case 2:
                       job.completeBy = new Date(year, month, day + 14);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
                       break;
                     case 3:
                       job.completeBy = new Date(year, month + 1, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
                       break;
                     case 4:
                       job.completeBy = new Date(year, month + 2, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
-                      break;               
+                      break;
                     case 5:
                       job.completeBy = new Date(year, month + 3, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
-                      break;       
+                      break;
                     case 6:
                       job.completeBy = new Date(year, month + 6, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
-                      break; 
+                      break;
                     case 7:
                       job.completeBy = new Date(year + 1, month, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
-                      break;  
+                      break;
                     case 8:
                       job.completeBy = new Date(year + 2, month, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
-                      break; 
+                      break;
                     case 9:
                       job.completeBy = new Date(year + 3, month, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
                       break;
                     case 10:
                       job.completeBy = new Date(year + 5, month, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
-                      break; 
+                      break;
                     case 11:
                       job.completeBy = new Date(year + 10, month, day);
-                      if(assigned.length > 0){
+                      if (assigned.length > 0) {
                         job.status = 2;
-                      }else{
+                      } else {
                         job.status = 1;
                       }
-                      break;              
+                      break;
                     }
                     this.updateJob(job, job.id.toString()).subscribe(result => {
                         this.getJobs();
                     });
-                })
+                });
               });
             }
           });
@@ -493,11 +493,11 @@ export class DataService {
 
   }
 
-  getJobsPastDueDate(jobs: Job[], today: Date): Job[]{
+  getJobsPastDueDate(jobs: Job[], today: Date): Job[] {
     return jobs.filter(job => (new Date(job.completeBy) < today) && (job.recurring > 0 || job.emergencyJob === false));
   }
 
-  getSubJobsPastDueDate(jobs: Job[], subJobs: SubJobs[]): SubJobs[]{
+  getSubJobsPastDueDate(jobs: Job[], subJobs: SubJobs[]): SubJobs[] {
     return subJobs.filter((subJob: SubJobs) => {
       return jobs.find(job => job.id == subJob.jobId);
     });
@@ -527,7 +527,7 @@ export class DataService {
 
   // Sub Job History
 
-  getSubJobHistory(){
+  getSubJobHistory() {
     const url = this.subJobsHistoryUrl;
     this.http.get<SubJobs[]>(url).subscribe(result => {
       console.log(result);
@@ -535,7 +535,7 @@ export class DataService {
     }, error => console.error(error));
   }
 
-  getSubJobHistoryByJobId(jobId: string){
+  getSubJobHistoryByJobId(jobId: string) {
     const url = this.subJobsHistoryUrl + jobId;
     this.http.get<SubJobs[]>(url).subscribe(result => {
       console.log(result);
@@ -544,12 +544,12 @@ export class DataService {
     }, error => console.error(error));
   }
 
-  addToSubJobHistory(subJob: SubJobs){
+  addToSubJobHistory(subJob: SubJobs) {
     console.log('DataService - AddSubJob', subJob);
     return this.http.post<SubJobs>(this.subJobsHistoryUrl, subJob, this.httpOptions);
   }
 
-  //Filters
+  // Filters
 
   // Job Filtering
   filterJobs(jobStatuses: number[], stationIds: number[], plantIds: number[], areaIds: number[], hasComments: boolean,
@@ -651,7 +651,7 @@ export class DataService {
 
   // SubJob Filtering
 
-  filterSubJobsHistory(CompletedOnFrom: Date, CompletedOnTo: Date, subJobs: SubJobs[]){
+  filterSubJobsHistory(CompletedOnFrom: Date, CompletedOnTo: Date, subJobs: SubJobs[]) {
     let tempSubJobs = [];
 
     tempSubJobs = this.filterByCompletedOnFrom(CompletedOnFrom, subJobs);
@@ -660,19 +660,19 @@ export class DataService {
     this.filteredSubJobsHistoryForJob = tempSubJobs;
   }
 
-  filterByCompletedOnFrom(CompletedOnFrom: Date, subJobs: SubJobs[]): SubJobs[]{
-    if(CompletedOnFrom === null){
+  filterByCompletedOnFrom(CompletedOnFrom: Date, subJobs: SubJobs[]): SubJobs[] {
+    if (CompletedOnFrom === null) {
       return subJobs;
     }
-    return subJobs.filter((subJob: SubJobs) => new Date(subJob.completedOn) > CompletedOnFrom)
+    return subJobs.filter((subJob: SubJobs) => new Date(subJob.completedOn) > CompletedOnFrom);
   }
 
-  filterByCompletedOnTo(CompletedOnTo: Date, subJobs: SubJobs[]): SubJobs[]{
-    if(CompletedOnTo === null){
+  filterByCompletedOnTo(CompletedOnTo: Date, subJobs: SubJobs[]): SubJobs[] {
+    if (CompletedOnTo === null) {
       return subJobs;
     }
-    return subJobs.filter((subJob: SubJobs) => new Date(subJob.completedOn) < CompletedOnTo)
-  
+    return subJobs.filter((subJob: SubJobs) => new Date(subJob.completedOn) < CompletedOnTo);
+
   }
 
   // Comment filtering
@@ -873,11 +873,11 @@ export class DataService {
         );
   }
 
-  filterEquipmentsByJobStation(stationId: Number, equipments: Equipment[]){
+  filterEquipmentsByJobStation(stationId: Number, equipments: Equipment[]) {
     this.equipmentsByJobStation = this.equipments.filter(equipment => stationId === equipment.stationId);
   }
 
-  //Areas
+  // Areas
 
   getAreas() {
     this.http.get<Area[]>('api/areas').subscribe(result => {
@@ -945,7 +945,7 @@ export class DataService {
   // JobAssignments
 
   getJobAssignments(job: Job) {
-    let assignedIds: number[] = [];
+    const assignedIds: number[] = [];
     this.http.get<JobAssignments[]>('api/jobs/' + job.id.toString() + '/users').subscribe(result => {
       console.log('Job Assignments', result);
       this.jobAssignments = result;

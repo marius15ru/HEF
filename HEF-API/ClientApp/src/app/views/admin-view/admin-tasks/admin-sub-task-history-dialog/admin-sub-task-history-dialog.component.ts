@@ -16,7 +16,7 @@ export class AdminSubTaskHistoryDialogComponent implements OnInit {
 
   // subJobsPastDueDate$: Observable<SubJobs[]> = this.dataService.subJobsPastDueDate$;
   equipments$: Observable<Equipment[]> = this.dataService.equipments$;
-  
+
   status = JobStatus;
   task = SubJobTask;
   unit = MeasurementType;
@@ -30,8 +30,8 @@ export class AdminSubTaskHistoryDialogComponent implements OnInit {
   completedOnFrom: Date = null;
   completedOnTo: Date = null;
 
-  filtersVisible: boolean = false;
-  filterAction: string = 'Sýna síur';
+  filtersVisible = false;
+  filterAction = 'Sýna síur';
 
   constructor(public dialogRef: MatDialogRef<AdminSubTaskHistoryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, job: Job},
@@ -43,26 +43,26 @@ export class AdminSubTaskHistoryDialogComponent implements OnInit {
     this.equipments = this.dataService.equipments;
   }
 
-  filterSubJobsHistory(){
+  filterSubJobsHistory() {
     this.dataService.filterSubJobsHistory(
-      this.completedOnFrom, 
-      this.completedOnTo, 
+      this.completedOnFrom,
+      this.completedOnTo,
       this.dataService.subJobsHistoryForJob);
   }
 
-  getCurrentDate(){
+  getCurrentDate() {
     return new Date();
   }
 
-  clearSubJobsHistoryFilter(){
+  clearSubJobsHistoryFilter() {
     this.completedOnFrom = null;
     this.completedOnTo = null;
 
     this.filterSubJobsHistory();
   }
 
-  filtersVisibleToggle(){
-    if(!this.filtersVisible){
+  filtersVisibleToggle() {
+    if (!this.filtersVisible) {
       this.filterAction = 'Fela síur';
       return this.filtersVisible = true;
     }

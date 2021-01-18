@@ -136,7 +136,7 @@ export class UserTasksComponent implements OnInit {
     });
   }
 
-  openSubTaskDialog(jobs: Job, action: string){
+  openSubTaskDialog(jobs: Job, action: string) {
     const refUser = this.dialogItem.open(UserSubTaskDialogComponent, {
       data: {
         action: action,

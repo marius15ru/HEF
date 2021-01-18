@@ -16,7 +16,7 @@ export class UserSubTaskDialogComponent implements OnInit {
   equipments$: Observable<Equipment[]> = this.dataService.equipments$;
   subJobsForJob$: Observable<SubJobs[]> = this.dataService.subJobsForJob$;
   equipmentsByJobStation$: Observable<Equipment[]> = this.dataService.equipmentsByJobStation$;
-  
+
   myForm: FormGroup;
   currentJobSubJobs: FormGroup;
   selectedRow: Job;
@@ -30,10 +30,10 @@ export class UserSubTaskDialogComponent implements OnInit {
 
   measuredValue: number[] = [];
 
-  
+
 
   constructor( public dialogRef: MatDialogRef<UserSubTaskDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, job: Job}, 
+    @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, job: Job},
     private _snackBar: MatSnackBar,
     private fb: FormBuilder,
     private dataService: DataService ) { }
@@ -57,32 +57,32 @@ export class UserSubTaskDialogComponent implements OnInit {
     });
   }
 
-  recurFormatter(index: number){
+  recurFormatter(index: number) {
     return Recurring[index];
   }
 
-  subJobTaskFormatter(index: number){
+  subJobTaskFormatter(index: number) {
     return SubJobTask[index];
   }
 
-  unitFormatter(index: number){
+  unitFormatter(index: number) {
     return MeasurementType[index];
   }
 
-  onValueChange(args: any, index: number){
+  onValueChange(args: any, index: number) {
     console.log(args.target.value);
     this.measuredValue[index] = parseInt(args.target.value);
   }
 
-  onSubmitCurrentSubJobs(){
+  onSubmitCurrentSubJobs() {
 
   }
 
-  updateSubJobRow(subJob: SubJobs, index: number){
+  updateSubJobRow(subJob: SubJobs, index: number) {
     subJob.value = this.measuredValue[index];
     this.dataService.updateSubJob(subJob, subJob.id.toString()).subscribe(result => {
       this.dataService.getSubJobs(subJob.jobId);
-      if(subJob.status == 5){
+      if (subJob.status == 5) {
         this.selectedRow.lastCheck = new Date();
         this.dataService.updateJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(result => {
           this.dataService.getJobs();

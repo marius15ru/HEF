@@ -15,7 +15,7 @@ export class AdminSubTaskDialogComponent implements OnInit {
   equipments$: Observable<Equipment[]> = this.dataService.equipments$;
   subJobsForJob$: Observable<SubJobs[]> = this.dataService.subJobsForJob$;
   equipmentsByJobStation$: Observable<Equipment[]> = this.dataService.equipmentsByJobStation$;
-  
+
   myForm: FormGroup;
   currentJobSubJobs: FormGroup;
   selectedRow: Job;
@@ -63,24 +63,24 @@ export class AdminSubTaskDialogComponent implements OnInit {
     return Recurring[index];
   }
 
-  subJobTaskFormatter(index: number){
+  subJobTaskFormatter(index: number) {
     return SubJobTask[index];
   }
 
-  unitFormatter(index: number){
+  unitFormatter(index: number) {
     return MeasurementType[index];
   }
 
-  onValueChange(args: any, index: number){
+  onValueChange(args: any, index: number) {
     console.log(args.target.value);
     this.measuredValue[index] = parseInt(args.target.value);
   }
 
-  updateSubJobRow(subJob: SubJobs, index: number){
+  updateSubJobRow(subJob: SubJobs, index: number) {
     subJob.value = this.measuredValue[index];
     this.dataService.updateSubJob(subJob, subJob.id.toString()).subscribe(result => {
       this.dataService.getSubJobs(subJob.jobId);
-      if(subJob.status == 5){
+      if (subJob.status == 5) {
         this.selectedRow.lastCheck = new Date();
         this.dataService.updateJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(result => {
           this.dataService.getJobs();
@@ -90,8 +90,8 @@ export class AdminSubTaskDialogComponent implements OnInit {
     });
   }
 
-  
-  deleteSubJobRow(subJob: SubJobs, index: number){
+
+  deleteSubJobRow(subJob: SubJobs, index: number) {
     console.log(subJob);
 
     this.dataService.deleteSubJob(subJob, subJob.id.toString()).subscribe(result => {
@@ -102,12 +102,12 @@ export class AdminSubTaskDialogComponent implements OnInit {
 
   }
 
-  
-  onSubmitCurrentSubJobs(){
+
+  onSubmitCurrentSubJobs() {
 
   }
 
-  addSubJob(){
+  addSubJob() {
     const subJobs = this.fb.group({
       equipmentId: [],
       status: [],
@@ -115,54 +115,54 @@ export class AdminSubTaskDialogComponent implements OnInit {
       value: [],
       unit: [],
       subJobTask: []
-    })
+    });
 
     this.subJobs.push(subJobs);
   }
 
-  addCurrentSubJob(subjob){
+  addCurrentSubJob(subjob) {
     this.currentSubJobs.push(subjob);
   }
 
-  deleteSubJob(i){
+  deleteSubJob(i) {
     this.subJobs.removeAt(i);
   }
 
-  deleteCurrentSubJob(i){
+  deleteCurrentSubJob(i) {
     this.currentSubJobs.removeAt(i);
   }
 
-  get subJobs(){
+  get subJobs() {
     return this.myForm.get('subJobs') as FormArray;
   }
 
-  get currentSubJobs(){
+  get currentSubJobs() {
     return this.currentJobSubJobs.get('subJobs') as FormArray;
   }
 
-  onSubmit(myform: FormGroup){
+  onSubmit(myform: FormGroup) {
     const someArray = this.subJobs.controls.values();
 
     const anotherArray = this.myForm.value;
     const subJobArray: SubJobs[] = anotherArray.subJobs;
-    
+
     subJobArray.forEach((subJob: SubJobs) => {
-      let requestModel = new SubJobs;
+      const requestModel = new SubJobs;
       requestModel.equipmentId = subJob.equipmentId;
       requestModel.jobId = this.selectedRow.id;
       requestModel.subJobTask = subJob.subJobTask;
       requestModel.unit = subJob.unit;
       requestModel.description = subJob.description;
       // requestModel.value = 0.0;
-      if(this.selectedRow.status > 1){
+      if (this.selectedRow.status > 1) {
         requestModel.status = 2;
-      }else{
+      } else {
         requestModel.status = 1;
       }
       console.log(requestModel);
-      if(requestModel){
+      if (requestModel) {
         this.dataService.addSubJob(requestModel).subscribe(result => {
-          //Hér kemur virkni fyrir breytingu á stöðu yfirverks
+          // Hér kemur virkni fyrir breytingu á stöðu yfirverks
           this.dataService.getSubJobs(requestModel.jobId);
           this.openSnackBar('Nýju undirverki hefur verið bætt við', 'Loka');
         });

@@ -101,12 +101,12 @@ export class AdminTasksComponent implements OnInit {
     this.customAttributes = {class: 'customcss'};
     this.getData();
   }
-  
-  deleteComment(comment: Comment){
+
+  deleteComment(comment: Comment) {
     this.dataService.deleteJobComment(comment);
   }
-  
-  getData(){
+
+  getData() {
     this.jobs = this.dataService.jobs;
     this.comments = this.dataService.comments;
     this.stations = this.dataService.stations;
@@ -267,7 +267,7 @@ export class AdminTasksComponent implements OnInit {
     });
   }
 
-  openSubTaskHistoryDialog(jobs: Job, action: string){
+  openSubTaskHistoryDialog(jobs: Job, action: string) {
     const refUser = this.dialogItem.open(AdminSubTaskHistoryDialogComponent, {
       data: {
         action: action,
