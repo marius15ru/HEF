@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
@@ -17,6 +17,7 @@ export class AdminEquipmentComponent implements OnInit {
   filteredEquipments$: Observable<Equipment[]> = this.dataService.filteredEquipments$;
   stations$: Observable<Station[]> = this.dataService.stations$;
 
+  equipmentFilters: { [key: string]: any; } = this.dataService.equipmentFilters;
 
   public equipments: Equipment[];
   public stations: Station[];
@@ -26,11 +27,6 @@ export class AdminEquipmentComponent implements OnInit {
 
   filtersVisible = false;
   filterAction = 'Sýna síur';
-
-  selectedStations: number[] = [];
-
-  lastCheckFrom: Date = null;
-  lastCheckTo: Date = null;
 
   constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
 
@@ -54,13 +50,11 @@ export class AdminEquipmentComponent implements OnInit {
   }
 
   filterEquipment() {
-    this.dataService.filterEquipments(this.selectedStations, this.lastCheckFrom, this.lastCheckTo, this.dataService.equipments);
+    this.dataService.filterEquipments(this.equipmentFilters,this.dataService.equipments);
   }
 
   clearEquipmentFilter() {
-    this.selectedStations = [];
-    this.lastCheckFrom = null;
-    this.lastCheckTo = null;
+    this.equipmentFilters = {};
     this.filterEquipment();
   }
 
@@ -69,7 +63,7 @@ export class AdminEquipmentComponent implements OnInit {
     this.equipments = this.dataService.equipments;
   }
 
-  stationFormatter(field: string, data: Object, column: Object) {
+  stationFormatter(field: string, data: Object) {
     return data[field].name;
   }
 
@@ -82,7 +76,7 @@ export class AdminEquipmentComponent implements OnInit {
       width: '800px'
     });
 
-    refUser.afterClosed().subscribe( (result) => {
+    refUser.afterClosed().subscribe(() => {
       console.log('Dialog closed');
     });
     // this.getData();

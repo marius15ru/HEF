@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { MeasurementType, PlantType, Role, SubJobTask, UserStatus, JobStatus, Recurring } from './enums';
+import { MeasurementType, Role, UserStatus, JobStatus, Recurring } from './enums';
 
 export class Area {
     id: number;

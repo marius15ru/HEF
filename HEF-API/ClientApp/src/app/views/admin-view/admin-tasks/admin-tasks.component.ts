@@ -4,13 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
 import { Area, Comment, Job, Plant, Station, User } from 'src/app/shared/models';
 import { AdminTasksDialogComponent } from './admin-tasks-dialog/admin-tasks-dialog.component';
-import { FilterSettings, FilterSettingsModel, GridComponent, QueryCellInfoEventArgs, RowDataBoundEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
+import { FilterSettingsModel, GridComponent, RowDataBoundEventArgs, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { DataService } from 'src/app/data.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
-import {FormGroup, FormControl} from '@angular/forms';
-import { Tooltip } from '@syncfusion/ej2-popups';
 import { AdminSubTaskDialogComponent } from './admin-sub-task-dialog/admin-sub-task-dialog.component';
 import { AdminSubTaskHistoryDialogComponent } from './admin-sub-task-history-dialog/admin-sub-task-history-dialog.component';
 
@@ -51,6 +49,8 @@ export class AdminTasksComponent implements OnInit {
   plants$: Observable<Plant[]> = this.dataService.plants$;
   areas$: Observable<Area[]> = this.dataService.areas$;
 
+  jobFilters: { [key: string]: any } = this.dataService.jobFilters;
+  commentFilters: { [key: string]: any } = this.dataService.commentFilters;
 
   filtersVisible = false;
   filterAction = 'Sýna síur';
@@ -72,19 +72,6 @@ export class AdminTasksComponent implements OnInit {
   jobStatus = JobStatus;
 
   seen: boolean = null;
-
-  selectedJobStatuses: number[] = [];
-  selectedStations: number[] = [];
-  selectedPlants: number[] = [];
-  selectedAreas: number[] = [];
-  selectedUsers: number[] = [];
-  selectedJobs: number[] = [];
-  hasComments: boolean = null;
-  emergencyJobs: boolean = null;
-  lastCheckFrom: Date = null;
-  lastCheckTo: Date = null;
-  completeByFrom: Date = null;
-  completeByTo: Date = null;
 
   public customAttributes: Object;
   @Inject('BASE_URL') baseUrl: string;
@@ -139,46 +126,27 @@ export class AdminTasksComponent implements OnInit {
   }
 
   clearJobFilter() {
-    this.selectedJobStatuses = [];
-    this.selectedStations = [];
-    this.selectedPlants = [];
-    this.selectedAreas = [];
-    this.hasComments = null;
-    this.emergencyJobs = null;
-    this.lastCheckFrom = null;
-    this.lastCheckTo = null;
-    this.completeByFrom = null;
-    this.completeByTo = null;
+    this.jobFilters = {};
     this.filterJobs();
   }
 
   filterJobs() {
-    console.log(this.completeByFrom);
-    console.log(this.completeByTo);
-
     this.dataService.filterJobs(
-      this.selectedJobStatuses,
-      this.selectedStations,
-      this.selectedPlants,
-      this.selectedAreas,
-      this.hasComments,
-      this.emergencyJobs,
-      this.lastCheckFrom,
-      this.lastCheckTo,
-      this.completeByFrom,
-      this.completeByTo,
-      this.dataService.jobs);
+      this.jobFilters,
+      this.dataService.jobs
+    );
   }
 
   clearCommentFilter() {
-    this.selectedUsers = [];
-    this.selectedJobs = [];
-    this.seen = null;
+    this.commentFilters = {};
     this.filterComments();
   }
 
   filterComments() {
-    this.dataService.filterComments(this.selectedUsers, this.selectedJobs, this.seen, this.dataService.comments);
+    this.dataService.filterComments(
+      this.commentFilters,
+      this.dataService.comments
+    );
   }
 
   toolbarClick(args: ClickEventArgs): void {
@@ -189,19 +157,19 @@ export class AdminTasksComponent implements OnInit {
     }
   }
 
-  recurFormatter(field: string, data: Object, column: Object) {
+  recurFormatter(field: string, data: Object) {
     return Recurring[data[field]];
   }
 
-  statusFormatter(field: string, data: Object, column: Object) {
+  statusFormatter(field: string, data: Object) {
     return JobStatus[data[field]];
   }
 
-  stationFormatter(field: string, data: Object, column: Object) {
+  stationFormatter(field: string, data: Object) {
     return data[field].name;
   }
 
-  boolFormatter(field: string, data: Object, column: Object) {
+  boolFormatter(field: string, data: Object,) {
     if (data[field] === true) {
       return 'Já';
     } else {
@@ -209,19 +177,13 @@ export class AdminTasksComponent implements OnInit {
     }
   }
 
-  userFormatter(field: string, data: Object, column: Object) {
+  userFormatter(field: string, data: Object) {
     return data[field].name;
   }
 
-  jobFormatter(field: string, data: Object, column: Object) {
+  jobFormatter(field: string, data: Object) {
     return data[field].name;
   }
-
-  tooltip (args: QueryCellInfoEventArgs) {
-    const tooltip: Tooltip = new Tooltip({
-        content: args.data[args.column.field].toString()
-    }, args.cell as HTMLTableCellElement);
-}
 
   rowDataBound(args: RowDataBoundEventArgs) {
     const status = 'status';
@@ -252,13 +214,13 @@ export class AdminTasksComponent implements OnInit {
       width: '800px'
     });
 
-    refUser.afterClosed().subscribe( (result) => {
+    refUser.afterClosed().subscribe(() => {
       console.log('Dialog closed');
     });
   }
 
   openSubTaskDialog(jobs: Job, action: string) {
-    const refUser = this.dialogItem.open(AdminSubTaskDialogComponent, {
+    this.dialogItem.open(AdminSubTaskDialogComponent, {
       data: {
         action: action,
         job: jobs
@@ -268,7 +230,7 @@ export class AdminTasksComponent implements OnInit {
   }
 
   openSubTaskHistoryDialog(jobs: Job, action: string) {
-    const refUser = this.dialogItem.open(AdminSubTaskHistoryDialogComponent, {
+    this.dialogItem.open(AdminSubTaskHistoryDialogComponent, {
       data: {
         action: action,
         job: jobs

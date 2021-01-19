@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
@@ -44,7 +44,7 @@ export class AdminPlantsComponent implements OnInit {
       width: '800px'
     });
 
-    refUser.afterClosed().subscribe( (result) => {
+    refUser.afterClosed().subscribe(() => {
       console.log('Dialog closed');
       // this.getData();
     });

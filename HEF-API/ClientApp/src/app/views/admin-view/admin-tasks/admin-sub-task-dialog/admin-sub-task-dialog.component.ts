@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
@@ -78,11 +78,11 @@ export class AdminSubTaskDialogComponent implements OnInit {
 
   updateSubJobRow(subJob: SubJobs, index: number) {
     subJob.value = this.measuredValue[index];
-    this.dataService.updateSubJob(subJob, subJob.id.toString()).subscribe(result => {
+    this.dataService.updateSubJob(subJob, subJob.id.toString()).subscribe(() => {
       this.dataService.getSubJobs(subJob.jobId);
       if (subJob.status == 5) {
         this.selectedRow.lastCheck = new Date();
-        this.dataService.updateJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(result => {
+        this.dataService.updateJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(() => {
           this.dataService.getJobs();
         });
       }
@@ -94,16 +94,11 @@ export class AdminSubTaskDialogComponent implements OnInit {
   deleteSubJobRow(subJob: SubJobs, index: number) {
     console.log(subJob);
 
-    this.dataService.deleteSubJob(subJob, subJob.id.toString()).subscribe(result => {
+    this.dataService.deleteSubJob(subJob, subJob.id.toString()).subscribe(() => {
       this.dataService.getSubJobs(subJob.jobId);
       this.openSnackBar('Undirverki hefur verið eytt', 'Loka');
       this.deleteCurrentSubJob(index);
     });
-
-  }
-
-
-  onSubmitCurrentSubJobs() {
 
   }
 
@@ -140,9 +135,7 @@ export class AdminSubTaskDialogComponent implements OnInit {
     return this.currentJobSubJobs.get('subJobs') as FormArray;
   }
 
-  onSubmit(myform: FormGroup) {
-    const someArray = this.subJobs.controls.values();
-
+  onSubmit() {
     const anotherArray = this.myForm.value;
     const subJobArray: SubJobs[] = anotherArray.subJobs;
 
@@ -161,7 +154,7 @@ export class AdminSubTaskDialogComponent implements OnInit {
       }
       console.log(requestModel);
       if (requestModel) {
-        this.dataService.addSubJob(requestModel).subscribe(result => {
+        this.dataService.addSubJob(requestModel).subscribe(() => {
           // Hér kemur virkni fyrir breytingu á stöðu yfirverks
           this.dataService.getSubJobs(requestModel.jobId);
           this.openSnackBar('Nýju undirverki hefur verið bætt við', 'Loka');

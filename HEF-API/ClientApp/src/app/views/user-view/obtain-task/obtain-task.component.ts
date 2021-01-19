@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
@@ -75,7 +74,7 @@ export class ObtainTaskComponent implements OnInit {
     if (job.status === 1) {
       const requestModelJob = job;
       requestModelJob.status = 2;
-      this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(result => {
+      this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(() => {
         this.dataService.getJobs();
       });
     }
@@ -141,15 +140,15 @@ export class ObtainTaskComponent implements OnInit {
   //   }, 300);
   // }
 
-  recurFormatter(field: string, data: Object, column: Object) {
+  recurFormatter(field: string, data: Object) {
     return Recurring[data[field]];
   }
 
-  statusFormatter(field: string, data: Object, column: Object) {
+  statusFormatter(field: string, data: Object) {
     return JobStatus[data[field]];
   }
 
-  boolFormatter(field: string, data: Object, column: Object) {
+  boolFormatter(field: string, data: Object) {
     if (data[field] === true) {
       return 'Já';
     } else {
@@ -157,7 +156,7 @@ export class ObtainTaskComponent implements OnInit {
     }
   }
 
-  stationFormatter(field: string, data: Object, column: Object) {
+  stationFormatter(field: string, data: Object) {
     return data[field].name;
   }
 
@@ -170,13 +169,13 @@ export class ObtainTaskComponent implements OnInit {
       width: '800px'
     });
 
-    refUser.afterClosed().subscribe( (result) => {
+    refUser.afterClosed().subscribe(() => {
       console.log('Dialog closed');
     });
   }
 
   openSubTaskDialog(jobs: Job, action: string) {
-    const refUser = this.dialogItem.open(ObtainSubTaskDialogComponent, {
+    this.dialogItem.open(ObtainSubTaskDialogComponent, {
       data: {
         action: action,
         job: jobs

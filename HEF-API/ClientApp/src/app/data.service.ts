@@ -1,11 +1,9 @@
-import { HttpClient, HttpHeaders, JsonpClientBackend } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Area, Equipment, Job, JobAssignments, Comment, Plant, User, Station, SubJobs, subJobHistory } from './shared/models';
 import { MessageService } from './message.service';
-import { JobStatus } from './shared/enums';
-import { Item } from '@syncfusion/ej2-angular-navigations';
 
 @Injectable({
   providedIn: 'root'
@@ -289,12 +287,17 @@ export class DataService {
     this._userSource.next(newValue);
   }
 
+  public jobFilters: { [key: number]: any; } = {};
+  public commentFilters: { [key: number]: any; } = {};
+  public equipmentFilters: { [key: number]: any; } = {};
+  public stationFilters: { [key: number]: any; } = {};
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   constructor( private http: HttpClient,  private messageService: MessageService,
-    @Inject('BASE_URL') baseUrl: string
+    // @Inject('BASE_URL') baseUrl: string
     ) { }
 
   // Get current User
@@ -332,7 +335,7 @@ export class DataService {
       );
   }
 
-  deleteJob(job: Job, jobId: string): Observable<{}> {
+  deleteJob(job: Job, jobId: string): Observable<any> {
     console.log(job, jobId);
       const url = this.jobsUrl + jobId + '/';
       return this.http.delete(url, this.httpOptions)
@@ -378,119 +381,54 @@ export class DataService {
         requestModel.unit = subJob.unit;
         requestModel.value = subJob.value;
         requestModel.completedOn = new Date();
-        this.addToSubJobHistory(requestModel).subscribe(result => {
+        this.addToSubJobHistory(requestModel).subscribe(() => {
           subJob.status = 2;
           subJob.value = 0.0;
-          this.updateSubJob(subJob, subJob.id.toString()).subscribe(result => {
+          this.updateSubJob(subJob, subJob.id.toString()).subscribe(() => {
             if (index === (array.length - 1)) {
               this.jobsPastDueDate.forEach(job => {
-                const day = new Date(job.completeBy).getDate();
-                const month = new Date(job.completeBy).getMonth();
-                const year = new Date(job.completeBy).getFullYear();
+                let day = new Date(job.completeBy).getDate();
+                let month = new Date(job.completeBy).getMonth();
+                let year = new Date(job.completeBy).getFullYear();
                 this.http.get<JobAssignments[]>('api/jobs/' + job.id.toString() + '/users').subscribe(result => {
                   const assigned: JobAssignments[] = result;
                   switch (job.recurring) {
-                    case 1:
-                      job.completeBy = new Date(year, month, day + 7);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 1: day += 7;
                       break;
-                    case 2:
-                      job.completeBy = new Date(year, month, day + 14);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 2: day += 14;
                       break;
-                    case 3:
-                      job.completeBy = new Date(year, month + 1, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 3: month += 1;
                       break;
-                    case 4:
-                      job.completeBy = new Date(year, month + 2, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 4: month += 2;
                       break;
-                    case 5:
-                      job.completeBy = new Date(year, month + 3, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 5: month += 3;
                       break;
-                    case 6:
-                      job.completeBy = new Date(year, month + 6, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 6: month += 6;
                       break;
-                    case 7:
-                      job.completeBy = new Date(year + 1, month, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 7: year += 1;
                       break;
-                    case 8:
-                      job.completeBy = new Date(year + 2, month, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 8: year += 2;
                       break;
-                    case 9:
-                      job.completeBy = new Date(year + 3, month, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 9: year += 3;
                       break;
-                    case 10:
-                      job.completeBy = new Date(year + 5, month, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 10: year += 5;
                       break;
-                    case 11:
-                      job.completeBy = new Date(year + 10, month, day);
-                      if (assigned.length > 0) {
-                        job.status = 2;
-                      } else {
-                        job.status = 1;
-                      }
+                    case 11: year += 10;
                       break;
-                    }
-                    this.updateJob(job, job.id.toString()).subscribe(result => {
-                        this.getJobs();
-                    });
+                  }
+                  job.completeBy = new Date(year, month, day);
+                  job.status = assigned.length > 0 ? 2 : 1;
+
+                  this.updateJob(job, job.id.toString()).subscribe(() => {
+                    this.getJobs();
+                  });
                 });
               });
             }
           });
         });
       });
-
     }
-
   }
 
   getJobsPastDueDate(jobs: Job[], today: Date): Job[] {
@@ -549,233 +487,75 @@ export class DataService {
     return this.http.post<SubJobs>(this.subJobsHistoryUrl, subJob, this.httpOptions);
   }
 
-  // Filters
+  filterList<T, U>(models: T[], list: U[], getProperty: (p: T) => U): T[] {
+    if (!list || list.length === 0) {
+      return models;
+    }
+    return models.filter(m => list.includes(getProperty(m)));
+  }
+
+  filterSingle<T, U>(models: T[], filterVar: U, getProperty: (p: T, q: U) => boolean): T[] {
+    if (filterVar === undefined || filterVar === null) {
+      return models;
+    }
+    return models.filter(m => getProperty(m, filterVar));
+  }
 
   // Job Filtering
-  filterJobs(jobStatuses: number[], stationIds: number[], plantIds: number[], areaIds: number[], hasComments: boolean,
-              emergencyJobs: boolean, lastCheckFrom: Date, lastCheckTo: Date, completeByFrom: Date, completeByTo: Date, jobs: Job[]) {
-    let tempJobs = [];
+  filterJobs(jobFilters: { [key: string]: any; }, jobs: Job[]) {
+    jobs = this.filterList<Job, number>(jobs, jobFilters['plants'], (p: Job): number => p.station.plantId);
+    jobs = this.filterList<Job, number>(jobs, jobFilters['status'], (p: Job): number => p.status);
+    jobs = this.filterList<Job, number>(jobs, jobFilters['stations'], (p: Job): number => p.stationId);
+    jobs = this.filterList<Job, number>(jobs, jobFilters['areas'], (p: Job): number => p.station.areaId);
 
-    tempJobs = this.filterByJobStatus(jobStatuses, jobs);
-    tempJobs = this.filterByStation(stationIds, tempJobs);
-    tempJobs = this.filterByPlant(plantIds, tempJobs);
-    tempJobs = this.filterByArea(areaIds, tempJobs);
-    tempJobs = this.filterByHasComments(hasComments, tempJobs);
-    tempJobs = this.filterByEmergencyJob(emergencyJobs, tempJobs);
-    tempJobs = this.filterByLastCheckFrom(lastCheckFrom, tempJobs);
-    tempJobs = this.filterByLastCheckTo(lastCheckTo, tempJobs);
-    tempJobs = this.filterByCompleteByFrom(completeByFrom, tempJobs);
-    tempJobs = this.filterByCompleteByTo(completeByTo, tempJobs);
+    jobs = this.filterSingle<Job, Date>(jobs, jobFilters['lastCheckFrom'], (p: Job, d: Date): boolean => new Date(p.lastCheck) >= d);
+    jobs = this.filterSingle<Job, Date>(jobs, jobFilters['lastCheckTo'], (p: Job, d: Date): boolean => new Date(p.lastCheck) <= d);
 
-    this.filteredJobs = tempJobs;
-  }
-
-  filterByJobStatus(jobStatuses: number[], jobs: Job[]): Job[] {
-    if (!jobStatuses || jobStatuses.length === 0 ) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => {
-      return jobStatuses.find(status => status === job.status.valueOf());
-    });
-  }
-
-  filterByStation(stationIds: number[], jobs: Job[]): Job[] {
-    if (!stationIds || stationIds.length === 0) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => {
-      return stationIds.find(stationId => stationId === job.stationId);
-    });
-  }
-
-  filterByPlant(plantIds: number[], jobs: Job[]): Job[] {
-    if (!plantIds || plantIds.length === 0) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => {
-      return plantIds.find(plantId => plantId === job.station.plantId);
-    });
-  }
-
-  filterByArea(areaIds: number[], jobs: Job[]): Job[] {
-    if (!areaIds || areaIds.length === 0) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => {
-      return areaIds.find(areaId => areaId === job.station.areaId);
-    });
-  }
-
-
-  filterByHasComments(hasComments: boolean, jobs: Job[]): Job[] {
-    if (hasComments === null) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => job.hasComments === hasComments);
-  }
-
-  filterByEmergencyJob(emergencyJob: boolean, jobs: Job[]): Job[] {
-    if (emergencyJob === null) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => job.emergencyJob === emergencyJob);
-  }
-
-  filterByLastCheckFrom(lastCheckFrom: Date, jobs: Job[]): Job[] {
-    if (lastCheckFrom === null) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => new Date(job.lastCheck) > lastCheckFrom);
-  }
-
-  filterByLastCheckTo(lastCheckTo: Date, jobs: Job[]): Job[] {
-    if (lastCheckTo === null) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => new Date(job.lastCheck) < lastCheckTo);
-  }
-
-  filterByCompleteByFrom(completeByFrom: Date, jobs: Job[]): Job[] {
-    if (completeByFrom === null) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => new Date(job.completeBy) > completeByFrom);
-  }
-
-  filterByCompleteByTo(completeByTo: Date, jobs: Job[]): Job[] {
-    if (completeByTo === null) {
-      return jobs;
-    }
-    return jobs.filter((job: Job) => new Date(job.completeBy) < completeByTo);
+    jobs = this.filterSingle<Job, Date>(jobs, jobFilters['completeByFrom'], (p: Job, d: Date): boolean => new Date(p.completeBy) >= d);
+    jobs = this.filterSingle<Job, Date>(jobs, jobFilters['completeByTo'], (p: Job, d: Date): boolean => new Date(p.completeBy) <= d);
+    
+    jobs = this.filterSingle<Job, boolean>(jobs, jobFilters['hasComments'], (p: Job, d: boolean): boolean => p.hasComments === d);
+    jobs = this.filterSingle<Job, boolean>(jobs, jobFilters['emergencyJobs'], (p: Job, d: boolean): boolean => p.emergencyJob === d);
+    this.filteredJobs = jobs;
   }
 
   // SubJob Filtering
 
-  filterSubJobsHistory(CompletedOnFrom: Date, CompletedOnTo: Date, subJobs: SubJobs[]) {
-    let tempSubJobs = [];
+  filterSubJobsHistory(subJobFilters: { [key: string]: any; }, subJobs: SubJobs[]) {
+    subJobs = this.filterSingle<SubJobs, Date>(subJobs, subJobFilters['CompletedOnFrom'], (p: SubJobs, d: Date): boolean => new Date(p.completedOn) >= d);
+    subJobs = this.filterSingle<SubJobs, Date>(subJobs, subJobFilters['CompletedOnTo'], (p: SubJobs, d: Date): boolean => new Date(p.completedOn) <= d);
 
-    tempSubJobs = this.filterByCompletedOnFrom(CompletedOnFrom, subJobs);
-    tempSubJobs = this.filterByCompletedOnTo(CompletedOnTo, tempSubJobs);
-
-    this.filteredSubJobsHistoryForJob = tempSubJobs;
-  }
-
-  filterByCompletedOnFrom(CompletedOnFrom: Date, subJobs: SubJobs[]): SubJobs[] {
-    if (CompletedOnFrom === null) {
-      return subJobs;
-    }
-    return subJobs.filter((subJob: SubJobs) => new Date(subJob.completedOn) > CompletedOnFrom);
-  }
-
-  filterByCompletedOnTo(CompletedOnTo: Date, subJobs: SubJobs[]): SubJobs[] {
-    if (CompletedOnTo === null) {
-      return subJobs;
-    }
-    return subJobs.filter((subJob: SubJobs) => new Date(subJob.completedOn) < CompletedOnTo);
-
+    this.filteredSubJobsHistoryForJob = subJobs;
   }
 
   // Comment filtering
-  filterComments(users: number[], jobs: number[], seen: boolean, comments: Comment[]) {
-    let tempComments = [];
 
-    tempComments = this.filterByCommentUser(users, comments);
-    tempComments = this.filterByCommentJob(jobs, tempComments);
-    tempComments = this.filterBySeenComments(seen, tempComments);
+  filterComments(commentFilters: { [key: string]: any; }, comments: Comment[]) {
+    comments = this.filterList<Comment, number>(comments, commentFilters['users'], (p: Comment): number => p.userId);
+    comments = this.filterList<Comment, number>(comments, commentFilters['jobs'], (p: Comment): number => p.jobId);
+    comments = this.filterSingle<Comment, boolean>(comments, commentFilters['seen'], (p: Comment, d: boolean): boolean => p.seen === d);
 
-    this.filteredComments = tempComments;
-  }
-
-  filterByCommentUser(users: number[], comments: Comment[]): Comment[] {
-    if (!users || users.length === 0 ) {
-      return comments;
-    }
-    return comments.filter((comment: Comment) => {
-      return users.find(jobId => jobId === comment.userId);
-    });
-  }
-
-  filterByCommentJob(jobs: number[], comments: Comment[]): Comment[] {
-    if (!jobs || jobs.length === 0) {
-      return comments;
-    }
-    return comments.filter((comment: Comment) => {
-      return jobs.find(jobIds => jobIds === comment.jobId);
-    });
-  }
-
-  filterBySeenComments(seen: boolean, comments: Comment[]): Comment[] {
-    if (seen === null) {
-      return comments;
-    }
-    return comments.filter((comment: Comment) => comment.seen === seen);
+    this.filteredComments = comments;
   }
 
   // Equipment filtering
 
-  filterEquipments(stations: number[], lastCheckFrom: Date, lastCheckTo: Date, equipments: Equipment[]) {
-    let tempEquipments = [];
+  filterEquipments(equipmentFilters: { [key: string]: any; }, equipments: Equipment[]) {
+    equipments = this.filterList<Equipment, number>(equipments, equipmentFilters['stations'], (p: Equipment): number => p.stationId);
+    equipments = this.filterSingle<Equipment, Date>(equipments, equipmentFilters['lastCheckFrom'], (p: Equipment, d: Date): boolean => new Date(p.lastCheck) >= d);
+    equipments = this.filterSingle<Equipment, Date>(equipments, equipmentFilters['lastCheckTo'], (p: Equipment, d: Date): boolean => new Date(p.lastCheck) <= d);
 
-    tempEquipments = this.filterEquipmentByStation(stations, equipments);
-    tempEquipments = this.filterEquipmentByLastCheckFrom(lastCheckFrom, tempEquipments);
-    tempEquipments = this.filterEquipmentByLastCheckTo(lastCheckTo, tempEquipments);
-
-    this.filteredEquipments = tempEquipments;
+    this.filteredEquipments = equipments;
   }
-
-  filterEquipmentByStation(stations: number[], equipments: Equipment[]): Equipment[] {
-    if (!stations || stations.length === 0) {
-      return equipments;
-    }
-    return equipments.filter((equipment: Equipment) => {
-      return stations.find(stationId => stationId === equipment.stationId);
-    });
-  }
-
-  filterEquipmentByLastCheckFrom(lastCheckFrom: Date, equipments: Equipment[]): Equipment[] {
-    if (lastCheckFrom === null) {
-      return equipments;
-    }
-    return equipments.filter((equipment: Equipment) => new Date(equipment.lastCheck) >= lastCheckFrom);
-  }
-
-  filterEquipmentByLastCheckTo(lastCheckTo: Date, equipments: Equipment[]): Equipment[] {
-    if (lastCheckTo === null) {
-      return equipments;
-    }
-    return equipments.filter((equipment: Equipment) => new Date(equipment.lastCheck) <= lastCheckTo);
-  }
-
 
   // Station filtering
 
-  filterStations(plants: number[], areas: number[], stations: Station[]) {
-    let tempStations = [];
+  filterStations(stationFilters: { [key: string]: any; }, stations: Station[]) {
+    stations = this.filterList<Station, number>(stations, stationFilters['plants'], (p: Station): number => p.plantId);
+    stations = this.filterList<Station, number>(stations, stationFilters['areas'], (p: Station): number => p.areaId);
 
-    tempStations = this.filterStationsByPlant(plants, stations);
-    tempStations = this.filterStationsByArea(areas, tempStations);
-
-    this.filteredStations = tempStations;
+    this.filteredStations = stations;
   }
-
-  filterStationsByPlant(plants: number[], stations: Station[]): Station[] {
-    if (!plants || plants.length === 0) {
-      return stations;
-    }
-    return stations.filter((station: Station) => {
-      return plants.find(plantId => plantId === station.plantId);
-    });
-  }
-
-  filterStationsByArea(areas: number[], stations: Station[]): Station[] {
-    if (!areas || areas.length === 0) {
-      return stations;
-    }
-    return stations.filter((station: Station) => {
-      return areas.find(areaId => areaId === station.areaId);
-    });
-  }
-
 
   // Stations
 
@@ -873,8 +653,8 @@ export class DataService {
         );
   }
 
-  filterEquipmentsByJobStation(stationId: Number, equipments: Equipment[]) {
-    this.equipmentsByJobStation = this.equipments.filter(equipment => stationId === equipment.stationId);
+  filterEquipmentsByJobStation(stationId: number, equipments: Equipment[]) {
+    this.equipmentsByJobStation = equipments.filter(equipment => stationId === equipment.stationId);
   }
 
   // Areas
@@ -984,9 +764,9 @@ export class DataService {
         if (this.jobComments.length > 0) {
           this.unSeenComments = this.jobComments.filter(comment => comment.seen === false);
           this.unSeenComments.forEach(comment => {
-            if ((this.user.id !== comment.userId) && !comment.seen ) {
+            if ((userId !== comment.userId) && !comment.seen ) {
               comment.seen = true;
-              this.updateJobComment(comment).subscribe(_ => {
+              this.updateJobComment(comment).subscribe(() => {
                 this.getComments();
               });
             }

@@ -80,7 +80,7 @@ export class UserTaskDialogComponent implements OnInit {
     const updateId: string = this.selectedRow.id.toString();
 
     console.log(requestModel);
-    this.dataService.updateJob(requestModel, this.selectedRow.id.toString()).subscribe(result => {
+    this.dataService.updateJob(requestModel, updateId).subscribe(result => {
       console.log(result);
       this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
     }, error => console.error(error));
@@ -105,13 +105,13 @@ export class UserTaskDialogComponent implements OnInit {
     requestModel.userId = this.userId;
     // console.log(requestModel);
 
-    this.dataService.addJobComment(requestModel).subscribe(result => {
+    this.dataService.addJobComment(requestModel).subscribe(() => {
       this.commentForm.reset();
       this.dataService.getComments(this.selectedRow.id);
       if (this.selectedRow.hasComments === false) {
         const requestModelJob = this.selectedRow;
         requestModelJob.hasComments = true;
-        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(_ => {
+        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(() => {
           this.dataService.getJobs();
           this.dataService.getUserJobs(requestModel.userId);
         });

@@ -22,13 +22,9 @@ export class AdminSubTaskHistoryDialogComponent implements OnInit {
   unit = MeasurementType;
 
   uniqueDates: Date[] = [];
-
   equipments: Equipment[] = [];
-
   selectedRow: Job;
-
-  completedOnFrom: Date = null;
-  completedOnTo: Date = null;
+  subJobFilters: { [key: number]: any; } = {};
 
   filtersVisible = false;
   filterAction = 'Sýna síur';
@@ -45,9 +41,9 @@ export class AdminSubTaskHistoryDialogComponent implements OnInit {
 
   filterSubJobsHistory() {
     this.dataService.filterSubJobsHistory(
-      this.completedOnFrom,
-      this.completedOnTo,
-      this.dataService.subJobsHistoryForJob);
+      this.subJobFilters,
+      this.dataService.subJobsHistoryForJob
+    );
   }
 
   getCurrentDate() {
@@ -55,9 +51,7 @@ export class AdminSubTaskHistoryDialogComponent implements OnInit {
   }
 
   clearSubJobsHistoryFilter() {
-    this.completedOnFrom = null;
-    this.completedOnTo = null;
-
+    this.subJobFilters = {};
     this.filterSubJobsHistory();
   }
 

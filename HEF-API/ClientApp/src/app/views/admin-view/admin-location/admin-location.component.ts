@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { ClickEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
-import { DataOperation } from 'src/app/shared/enums';
 import { Area, Plant, Station } from 'src/app/shared/models';
 import { AdminLocationDialogComponent } from './admin-location-dialog/admin-location-dialog.component';
 
@@ -21,8 +20,7 @@ export class AdminLocationComponent implements OnInit {
   plants$: Observable<Plant[]> = this.dataService.plants$;
   areas$: Observable<Area[]> = this.dataService.areas$;
 
-  selectedPlants: number[] = [];
-  selectedAreas: number[] = [];
+  stationFilters: { [key: string]: any; } = this.dataService.stationFilters;
 
   filtersVisible = false;
   filterAction = 'Sýna síur';
@@ -37,8 +35,6 @@ export class AdminLocationComponent implements OnInit {
   public customAttributes: Object;
 
   constructor(public dialogItem: MatDialog, private http: HttpClient, private dataService: DataService) {}
-
-
 
   ngOnInit() {
     // this.getData();
@@ -64,22 +60,19 @@ export class AdminLocationComponent implements OnInit {
   }
 
   filterStations() {
-    this.dataService.filterStations(this.selectedPlants, this.selectedAreas, this.dataService.stations);
+    this.dataService.filterStations(this.stationFilters, this.dataService.stations);
   }
 
   clearStationFilter() {
-    this.selectedAreas = [];
-    this.selectedPlants = [];
-
+    this.stationFilters = {};
     this.filterStations();
   }
 
-  plantFormatter(field: string, data: Object, column: Object) {
+  plantFormatter(field: string, data: Object) {
     return data[field].name;
   }
 
-
-  areaFormatter(field: string, data: Object, column: Object) {
+  areaFormatter(field: string, data: Object) {
     return data[field].name;
   }
 
@@ -101,14 +94,9 @@ export class AdminLocationComponent implements OnInit {
       width: '800px'
     });
 
-    refUser.afterClosed().subscribe( (result) => {
+    refUser.afterClosed().subscribe(() => {
       console.log('Dialog closed');
     });
   }
 
 }
-
-// interface Area {
-//   id: number;
-//   name: string;
-// }

@@ -56,7 +56,7 @@ export class AdminPlantsDialogComponent implements OnInit {
 
     switch (this.dialogData.action.toLowerCase()) {
       case 'insert':
-        this.dataService.addPlant(requestModel).subscribe(result => {
+        this.dataService.addPlant(requestModel).subscribe(() => {
           this.dataService.getPlants();
          this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
         }, error => console.error(error));
@@ -64,7 +64,7 @@ export class AdminPlantsDialogComponent implements OnInit {
       case 'update':
         const updateId: string = this.selectedRow.id.toString();
         requestModel.id = this.selectedRow.id;
-        this.dataService.updatePlant(requestModel, updateId).subscribe(result => {
+        this.dataService.updatePlant(requestModel, updateId).subscribe(() => {
           this.dataService.getPlants();
           this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
@@ -72,7 +72,7 @@ export class AdminPlantsDialogComponent implements OnInit {
       case 'delete':
         const deleteId: string = this.selectedRow.id.toString();
         requestModel.id = this.selectedRow.id;
-        this.dataService.deletePlant(requestModel, deleteId).subscribe(result => {
+        this.dataService.deletePlant(requestModel, deleteId).subscribe(() => {
           this.dataService.getPlants();
           this.openSnackBar(requestModel.name + ' eytt', 'Loka');
         }, error => console.error(error));

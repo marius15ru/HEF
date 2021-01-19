@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -109,8 +109,7 @@ export class AdminStaffComponent implements OnInit {
     });
   }
 
-  openDialog(action: string) {
-
+  openDialog() {
     const refUser = this.dialogItem.open(AdminStaffDialogComponent, {
       data: {
         action: 'insert',
@@ -118,7 +117,7 @@ export class AdminStaffComponent implements OnInit {
       width: '800px'
     });
 
-    refUser.afterClosed().subscribe( (result) => {
+    refUser.afterClosed().subscribe(() => {
       console.log('Dialog closed');
     });
   }

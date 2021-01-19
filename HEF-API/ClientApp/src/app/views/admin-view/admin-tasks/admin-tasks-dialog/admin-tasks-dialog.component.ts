@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit, Pipe, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GridComponent, RowDataBoundEventArgs } from '@syncfusion/ej2-angular-grids';
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { JobStatus, Recurring } from 'src/app/shared/enums';
-import { Comment, EnumToArrayPipe, Job, JobAssignments, Station, User } from 'src/app/shared/models';
+import { Comment, Job, JobAssignments, Station, User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-admin-tasks-dialog',
@@ -50,7 +50,7 @@ export class AdminTasksDialogComponent implements OnInit {
     comment: new FormControl('')
   });
 
-  boolArray: Boolean[] = [true, false];
+  boolArray: boolean[] = [true, false];
 
   jobForm = new FormGroup({
     station: new FormControl(''),
@@ -122,7 +122,7 @@ export class AdminTasksDialogComponent implements OnInit {
       case 'insert':
         requestModel.completeBy = new Date(requestModel.completeBy);
         requestModel.lastCheck = new Date(requestModel.lastCheck);
-        this.dataService.addJob(requestModel).subscribe(result => {
+        this.dataService.addJob(requestModel).subscribe(() => {
           this.dataService.getJobs();
           this.openSnackBar(requestModel.name + ' bætt við', 'Loka');
           }, error => console.error(error));
@@ -130,7 +130,7 @@ export class AdminTasksDialogComponent implements OnInit {
       case 'update':
         const updateId: string = this.selectedRow.id.toString();
         requestModel.id = this.selectedRow.id;
-        this.dataService.updateJob(requestModel, this.selectedRow.id.toString()).subscribe(result => {
+        this.dataService.updateJob(requestModel, updateId).subscribe(() => {
           this.dataService.getJobs();
           this.openSnackBar(requestModel.name + ' uppfært', 'Loka');
         }, error => console.error(error));
@@ -154,7 +154,7 @@ export class AdminTasksDialogComponent implements OnInit {
           });
         }
 
-        this.dataService.deleteJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(result => {
+        this.dataService.deleteJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(() => {
           this.dataService.getJobs();
         this.openSnackBar(this.selectedRow.name + ' eytt', 'Loka');
         }, error => console.error(error));
@@ -170,16 +170,16 @@ export class AdminTasksDialogComponent implements OnInit {
        case 'insert':
           const requestModelAssign: JobAssignments = this.assignmentForm.value;
           console.log('assignedInsert');
-          requestModelAssign.jobId = this.selectedRow.id;
+         requestModelAssign.jobId = job.id;
           const userId: string = requestModelAssign.userId.toString() + '/';
 
           this.dataService.addJobAssignment(requestModelAssign, userId).subscribe(result => {
-            this.dataService.getJobAssignments(this.selectedRow);
-            console.log(result, this.selectedRow.name, 'assigned insert');
-            if (this.selectedRow.status === 1) {
-              const requestModelJob = this.selectedRow;
+            this.dataService.getJobAssignments(job);
+            console.log(result, job.name, 'assigned insert');
+            if (job.status === 1) {
+              const requestModelJob = job;
               requestModelJob.status = 2;
-              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(_ => {
+              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(() => {
                 this.dataService.getJobs();
               });
             }
@@ -191,12 +191,12 @@ export class AdminTasksDialogComponent implements OnInit {
           const requestModelAssignDelete = new JobAssignments;
           requestModelAssignDelete.jobId = this.selectedRow.id;
           requestModelAssignDelete.userId = index.id;
-          this.dataService.deleteJobAssignment(requestModelAssignDelete).subscribe(result => {
+          this.dataService.deleteJobAssignment(requestModelAssignDelete).subscribe(() => {
             this.dataService.getJobAssignments(this.selectedRow);
             if (this.selectedRow.status !== 1 && this.dataService.assignedUsers.length === 1) {
               const requestModelJob = this.selectedRow;
               requestModelJob.status = 1;
-              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(_ => {
+              this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(() => {
                 this.dataService.getJobs();
               });
             }
@@ -214,13 +214,13 @@ export class AdminTasksDialogComponent implements OnInit {
     requestModel.userId = parseInt(localStorage.getItem('user'), 0);
     console.log(requestModel);
 
-    this.dataService.addJobComment(requestModel).subscribe(result => {
+    this.dataService.addJobComment(requestModel).subscribe(() => {
       this.commentForm.reset();
       this.dataService.getComments(this.selectedRow.id);
       if (this.selectedRow.hasComments === false) {
         const requestModelJob = this.selectedRow;
         requestModelJob.hasComments = true;
-        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(_ => {
+        this.dataService.updateJob(requestModelJob, requestModelJob.id.toString()).subscribe(() => {
           this.dataService.getJobs();
         });
       }

@@ -1,14 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { LogInComponent } from './views/log-in/log-in.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,7 +25,7 @@ import { AdminStaffComponent } from './views/admin-view/admin-staff/admin-staff.
 import { UserTasksComponent } from './views/user-view/user-tasks/user-tasks.component';
 import { CreateEmergencyTaskComponent } from './views/user-view/create-emergency-task/create-emergency-task.component';
 import { ObtainTaskComponent } from './views/user-view/obtain-task/obtain-task.component';
-import { GridModule, Sort, SortService, ResizeService, PdfExportService, ToolbarService, PageService } from '@syncfusion/ej2-angular-grids';
+import { GridModule, SortService, ResizeService, PdfExportService, ToolbarService, PageService } from '@syncfusion/ej2-angular-grids';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { AdminTasksDialogComponent } from './views/admin-view/admin-tasks/admin-tasks-dialog/admin-tasks-dialog.component';
 import { AdminStaffDialogComponent } from './views/admin-view/admin-staff/admin-staff-dialog/admin-staff-dialog.component';
@@ -36,7 +35,6 @@ import { AdminEquipmentDialogComponent } from './views/admin-view/admin-equipmen
 import { AdminAreasComponent } from './views/admin-view/admin-areas/admin-areas.component';
 import { AdminAreasDialogComponent } from './views/admin-view/admin-areas/admin-areas-dialog/admin-areas-dialog.component';
 import { EnumToArrayPipe } from './shared/models';
-import { MessagesComponent } from './messages/messages.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { UserTaskDialogComponent } from './views/user-view/user-tasks/user-task-dialog/user-task-dialog.component';
 import { ObtainTaskDialogComponent } from './views/user-view/obtain-task/obtain-task-dialog/obtain-task-dialog.component';
@@ -65,7 +63,6 @@ export function tokenGetter() {
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    LogInComponent,
     UserViewComponent,
     AdminViewComponent,
     AdminTasksComponent,
@@ -84,7 +81,6 @@ export function tokenGetter() {
     AdminAreasComponent,
     AdminAreasDialogComponent,
     EnumToArrayPipe,
-    MessagesComponent,
     UserTaskDialogComponent,
     ObtainTaskDialogComponent,
     AdminSubTaskDialogComponent,

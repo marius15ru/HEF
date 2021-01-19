@@ -74,17 +74,13 @@ export class ObtainSubTaskDialogComponent implements OnInit {
     this.measuredValue[index] = parseInt(args.target.value);
   }
 
-  onSubmitCurrentSubJobs() {
-
-  }
-
   updateSubJobRow(subJob: SubJobs, index: number) {
     subJob.value = this.measuredValue[index];
-    this.dataService.updateSubJob(subJob, subJob.id.toString()).subscribe(result => {
+    this.dataService.updateSubJob(subJob, subJob.id.toString()).subscribe(() => {
       this.dataService.getSubJobs(subJob.jobId);
       if (subJob.status == 5) {
         this.selectedRow.lastCheck = new Date();
-        this.dataService.updateJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(result => {
+        this.dataService.updateJob(this.selectedRow, this.selectedRow.id.toString()).subscribe(() => {
           this.dataService.getJobs();
         });
       }

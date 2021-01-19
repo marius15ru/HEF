@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
-import { Area, Job, JobAssignments, Plant, Station, User } from 'src/app/shared/models';
+import { Job, JobAssignments, Station, User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-create-emergency-task',
@@ -61,7 +60,7 @@ export class CreateEmergencyTaskComponent implements OnInit {
       jobAssignment.jobId = result.id;
       jobAssignment.userId = parseInt(this.userId, 0);
       this.selectedUsers.forEach(userId => {
-        this.dataService.addJobAssignment(jobAssignment, userId.toString()).subscribe(_ => {
+        this.dataService.addJobAssignment(jobAssignment, userId.toString()).subscribe(() => {
           // console.log(_);
         });
       });

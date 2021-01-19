@@ -31,7 +31,9 @@ jobs:
         run: npm ci
 
       - name: Run Linters
-        run: npm run lint
+        run: |
+          npm run lint -- --fix
+          npm run lint
       
       - name: Run Tests on Services
         working-directory: HEF-API/
@@ -39,7 +41,7 @@ jobs:
       
       - name: Run API tests
         run: |
-          npm start
+          (npm start&)
           npm run postman
         env:
           CI: true
