@@ -1,19 +1,19 @@
 
 <mat-dialog-content>
     <div *ngIf="(subJobsHistoryForJob$ | async)?.length > 0">
-        <h4>Saga Undirverka</h4>
+        <h4>Saga Undirverka {{selectedRow.name}}</h4>
         <!-- <button mat-raised-button color="accent" (click)="filtersVisibleToggle()">{{filterAction}}</button> -->
     </div>
     <div *ngIf="(subJobsHistoryForJob$ | async)?.length > 0" class="subjobshistory-filters">
         <mat-form-field >
-            <mat-label >Sía Eindaga (frá)</mat-label>
+            <mat-label >Sía dagsetningu (frá)</mat-label>
             <input matInput  [max]="getCurrentDate()"  [matDatepicker]="picker3" (dateChange)="filterSubJobsHistory()" [(ngModel)]="subJobFilters['CompletedOnFrom']">
             <mat-datepicker-toggle matSuffix [for]="picker3" ></mat-datepicker-toggle>
             <mat-datepicker [startAt]="getCurrentDate()" #picker3></mat-datepicker>
         </mat-form-field>
         
         <mat-form-field >
-            <mat-label >Sía Eindaga (til)</mat-label>
+            <mat-label >Sía dagsetningu (til)</mat-label>
             <input matInput [max]="getCurrentDate()" [matDatepicker]="picker4" (dateChange)="filterSubJobsHistory()" [(ngModel)]="subJobFilters['CompletedOnTo']">
             <mat-datepicker-toggle matSuffix [for]="picker4" ></mat-datepicker-toggle>
             <mat-datepicker [startAt]="getCurrentDate()" #picker4></mat-datepicker>

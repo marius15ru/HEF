@@ -7,3 +7,9 @@
     margin-bottom: 10px;
     background-color: #f9f9f9; 
 }
+
+.subtask-row-delete{
+    float: right;
+    margin-top: 20px;
+
+}

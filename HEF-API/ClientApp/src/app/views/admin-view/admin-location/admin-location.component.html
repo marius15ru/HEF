@@ -1,61 +1,58 @@
 <div>
-    <div>
-        <div class="row ml-1 grid-action-buttons">
-            <div>
-                <h2>Allar stöðvar</h2>
-            </div>
-            <div class="ml-auto mr-3">
-                <button mat-raised-button color="primary" (click)="openDialog(null, 'insert')">Stofna</button>
-            </div>
+    <h2>Allar stöðvar</h2>
+    <div class="row ml-1 grid-action-buttons">
+        <div>
+            <button mat-raised-button color="accent" (click)="filtersVisibleToggle()">{{filterAction}}</button>
         </div>
-        <button mat-raised-button color="accent" (click)="filtersVisibleToggle()">{{filterAction}}</button>
-        <mat-card *ngIf="filtersVisible" class="row" style="text-align: center;">
-            <mat-card-content>
-                <div class="col-md-12">
-                    <mat-form-field>
-                        <mat-label>Sía veitur</mat-label>
-                        <mat-select multiple type="number" value='null' (selectionChange)="filterStations()" [(ngModel)]="stationFilters['plants']" disableOptionCentering panelClass="material-select-box">
-                            <mat-option *ngFor="let item of (plants$ | async)" [value]="item.id">{{item.name}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Sía svæði</mat-label>
-                        <mat-select multiple type="number" value='null' (selectionChange)="filterStations()" [(ngModel)]="stationFilters['areas']" disableOptionCentering panelClass="material-select-box">
-                            <mat-option *ngFor="let item of (areas$ | async)" [value]="item.id">{{item.name}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-    
-                </div>
-                <button mat-raised-button color="accent" (click)="clearStationFilter()">Hreinsa síur</button>
-    
-            </mat-card-content>
-        </mat-card>
-        
-        <ejs-grid #grid id='OllVerk'  
-        [dataSource]="(filteredStations$ | async)" 
-        [allowPaging]='true' 
-        [allowSorting]='true' 
-        [allowResizing]="true" 
-        [pageSettings]="pageSettings"
-        (toolbarClick)='toolbarClick($event)'>
-            <e-columns >
-                <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-                <e-column field='name' headerText='Nafn' width="110px" [customAttributes]='customAttributes'></e-column>
-                <e-column field='plant' headerText='Veita' width="90px" [valueAccessor]='plantFormatter' [customAttributes]='customAttributes'></e-column>
-                <e-column field='area' headerText='Svæði' width="120px" [valueAccessor]='areaFormatter' [customAttributes]='customAttributes'></e-column>
-                <e-column field='address' headerText='Heimilisfang' [customAttributes]='customAttributes'></e-column>
-                <e-column field='coordinates' headerText='Hnit' width="95px" [customAttributes]='customAttributes'></e-column>
-                <e-column field='locationPrecise' headerText='Nákv. staðsetning' type="text" width="110px" [customAttributes]='customAttributes'></e-column>
-                <e-column field='description' headerText='Lýsing' width="95px" [customAttributes]='customAttributes'></e-column>
-                <e-column field="operations" headerText="Aðgerðir" width="110" [customAttributes]='customAttributes'>
-                    <ng-template #template let-stations>
-                        <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
-                        <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(stations, 'view')"></i>
-                        <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(stations, 'update')"></i>
-                        <i class="fas fa-trash-alt action-icon" matTooltip="Eyða" (click)="openDialog(stations, 'delete')"></i>
-                    </ng-template>
-                </e-column>
-            </e-columns>
-        </ejs-grid>
+        <div class="ml-auto mr-3">
+            <button mat-raised-button color="primary" (click)="openDialog(null, 'insert')">Stofna</button>
+        </div>
     </div>
+    <mat-card *ngIf="filtersVisible" class="row" style="text-align: center;">
+        <mat-card-content>
+            <div class="col-md-12">
+                <mat-form-field>
+                    <mat-label>Sía veitur</mat-label>
+                    <mat-select multiple type="number" value='null' (selectionChange)="filterStations()" [(ngModel)]="stationFilters['plants']" disableOptionCentering panelClass="material-select-box">
+                        <mat-option *ngFor="let item of (plants$ | async)" [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Sía svæði</mat-label>
+                    <mat-select multiple type="number" value='null' (selectionChange)="filterStations()" [(ngModel)]="stationFilters['areas']" disableOptionCentering panelClass="material-select-box">
+                        <mat-option *ngFor="let item of (areas$ | async)" [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <button mat-raised-button color="accent" (click)="clearStationFilter()">Hreinsa síur</button>
+        </mat-card-content>
+    </mat-card>
+        
+    <ejs-grid #grid id='OllVerk'  
+    [dataSource]="(filteredStations$ | async)" 
+    [allowPaging]='true' 
+    [allowSorting]='true' 
+    [allowResizing]="true" 
+    [pageSettings]="pageSettings"
+    (toolbarClick)='toolbarClick($event)'>
+        <e-columns >
+            <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+            <e-column field='name' headerText='Nafn' width="110px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='plant' headerText='Veita' width="90px" [valueAccessor]='plantFormatter' [customAttributes]='customAttributes'></e-column>
+            <e-column field='area' headerText='Svæði' width="120px" [valueAccessor]='areaFormatter' [customAttributes]='customAttributes'></e-column>
+            <e-column field='address' headerText='Heimilisfang' [customAttributes]='customAttributes'></e-column>
+            <e-column field='coordinates' headerText='Hnit' width="95px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='locationPrecise' headerText='Nákv. staðsetning' type="text" width="110px" [customAttributes]='customAttributes'></e-column>
+            <e-column field='description' headerText='Lýsing' width="95px" [customAttributes]='customAttributes'></e-column>
+            <e-column field="operations" headerText="Aðgerðir" width="110" [customAttributes]='customAttributes'>
+                <ng-template #template let-stations>
+                    <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
+                    <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(stations, 'view')"></i>
+                    <i class="fas fa-edit action-icon" matTooltip="Uppfæra" (click)="openDialog(stations, 'update')"></i>
+                    <i class="fas fa-trash-alt action-icon" matTooltip="Eyða" (click)="openDialog(stations, 'delete')"></i>
+                </ng-template>
+            </e-column>
+        </e-columns>
+    </ejs-grid>
 </div>

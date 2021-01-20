@@ -1,4 +1,5 @@
 <mat-dialog-content>
+    <h4>Undirverk {{selectedRow.name}}</h4>
     <mat-form-field class="form-input">
         <mat-label>Yfirverk</mat-label>
         <input matInput [value]="selectedRow.name" [disabled]="true">
@@ -58,7 +59,7 @@
                 </mat-form-field>
                 <button mat-raised-button color="accent" (click)="updateSubJobRow(subjob, i)">Uppfæra röð</button>
                 <!-- <button mat-raised-button color="warn" class="" (click)="deleteSubJobRow(subjob)"></button> -->
-                <button mat-fab color="warn" matTooltip="Eyða" (click)="deleteSubJobRow(subjob, i)">
+                <button mat-fab color="warn" class="subtask-row-delete" matTooltip="Eyða" (click)="deleteSubJobRow(subjob, i)">
                     <mat-icon>delete</mat-icon>
                   </button>
             </mat-card>

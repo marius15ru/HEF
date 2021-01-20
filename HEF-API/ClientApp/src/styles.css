@@ -146,8 +146,10 @@ mat-grid-tile {
   margin-top: 20px;
   width: 125px;
   border-radius: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px;
+  /* padding-bottom: 5px; */
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .action-icon{
@@ -232,6 +234,10 @@ mat-grid-tile {
 
 .grid-action-buttons{
   margin-bottom: 5px;
+}
+
+.grid-class{
+  margin-bottom: 25px;
 }
 
 html, body { height: 100%; }

@@ -1,14 +1,14 @@
 <div>
+    <h2 >Allur búnaður</h2>
     <div class="row ml-1 grid-action-buttons">
         <div>
-            <h2 >Allur búnaður</h2>
+            <button mat-raised-button color="accent" (click)="filtersVisibleToggle()">{{filterAction}}</button>
         </div>
         <div class="ml-auto mr-3">
             <button mat-raised-button color="primary" (click)="openDialog(null, 'insert')">Stofna</button> 
         </div>
     </div>
 
-    <button mat-raised-button color="accent" (click)="filtersVisibleToggle()">{{filterAction}}</button>
     
     <mat-card *ngIf="filtersVisible" class="row" style="text-align: center;">
         <mat-card-content>
