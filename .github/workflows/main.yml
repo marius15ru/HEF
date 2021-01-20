@@ -41,9 +41,13 @@ jobs:
       
       - name: Run API tests
         run: |
-          (npm start&)
-          sleep 2
+          (dotnet run HEF-API.csproj --project ./.. &)
           npm run postman
+          while ! nc -z localhost 5001; do   
+            sleep 1
+          done
+          npm run postman
+          kill -9 $(lsof -t -i:5001)
         env:
           CI: true
       
