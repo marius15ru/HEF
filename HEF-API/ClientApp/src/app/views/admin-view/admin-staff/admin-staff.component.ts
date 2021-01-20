@@ -109,10 +109,10 @@ export class AdminStaffComponent implements OnInit {
     });
   }
 
-  openDialog() {
+  openDialog(action: string) {
     const refUser = this.dialogItem.open(AdminStaffDialogComponent, {
       data: {
-        action: 'insert',
+        action: action,
       },
       width: '800px'
     });

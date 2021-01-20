@@ -28,6 +28,7 @@ export class AdminSubTaskDialogComponent implements OnInit {
   equipments: Equipment[] = [];
 
   measuredValue: number[] = [];
+  description: number[] = [];
 
   constructor( public dialogRef: MatDialogRef<AdminSubTaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: {action: string, job: Job},
@@ -71,10 +72,16 @@ export class AdminSubTaskDialogComponent implements OnInit {
     return MeasurementType[index];
   }
 
-  onValueChange(args: any, index: number) {
+  onValueChange(args: any, index: number, field: string) {
     console.log(args.target.value);
-    this.measuredValue[index] = parseInt(args.target.value);
+    if (field === 'measuredValue') {
+      this.measuredValue[index] = parseInt(args.target.value);
+    } else if (field === 'description') {
+      this.description[index] = args.target.value;
+    }
   }
+
+  on
 
   updateSubJobRow(subJob: SubJobs, index: number) {
     subJob.value = this.measuredValue[index];
@@ -135,8 +142,8 @@ export class AdminSubTaskDialogComponent implements OnInit {
     return this.currentJobSubJobs.get('subJobs') as FormArray;
   }
 
-  onSubmit() {
-    const anotherArray = this.myForm.value;
+  onSubmit(myForm: FormGroup) {
+    const anotherArray = myForm.value;
     const subJobArray: SubJobs[] = anotherArray.subJobs;
 
     subJobArray.forEach((subJob: SubJobs) => {

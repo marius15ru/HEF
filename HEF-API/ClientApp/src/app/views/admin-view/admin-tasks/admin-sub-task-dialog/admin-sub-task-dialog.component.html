@@ -13,7 +13,7 @@
         <input matInput [value]="recurFormatter(selectedRow.recurring)" [disabled]="true">
     </mat-form-field>
 
-    <form [formGroup]="currentJobSubJobs" (ngSubmit)="onSubmitCurrentSubJobs()">
+    <form [formGroup]="currentJobSubJobs">
         <div formArrayName="subJobs">
             <h4>Skráð Undirverk</h4>
             <mat-card *ngFor="let subjob of currentJobSubJobs.value.subJobs; let i = index" class="col-md-12 dialog-subjobsforjob-card">
@@ -43,11 +43,11 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Lýsing</mat-label>
-                    <textarea matInput [(value)]="subjob.description"></textarea>
+                    <textarea matInput [(value)]="subjob.description" (change)="onValueChange($event, i, 'description')"></textarea>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Niðurstaða Mælingar</mat-label>
-                    <input #valueInput type="number" matInput [(value)]="subjob.value" (change)="onValueChange($event, i)">
+                    <input #valueInput type="number" matInput [(value)]="subjob.value" (change)="onValueChange($event, i, 'measuredValue')">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Staða undirverks</mat-label>

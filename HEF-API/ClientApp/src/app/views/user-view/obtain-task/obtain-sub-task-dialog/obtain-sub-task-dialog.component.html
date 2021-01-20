@@ -12,7 +12,7 @@
         <input matInput [value]="recurFormatter(selectedRow.recurring)" [disabled]="true">
     </mat-form-field>
 
-    <form [formGroup]="currentJobSubJobs" (ngSubmit)="onSubmitCurrentSubJobs()">
+    <form [formGroup]="currentJobSubJobs">
         <div formArrayName="subJobs">
             <h4>Skoða Undirverk</h4>
             <mat-card *ngFor="let subjob of currentJobSubJobs.value.subJobs; let i = index" class="col-md-12 dialog-subjobsforjob-card">
