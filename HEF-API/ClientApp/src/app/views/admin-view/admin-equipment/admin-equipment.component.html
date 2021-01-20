@@ -49,7 +49,7 @@
             <e-column field='model' headerText='Árgerð' type='date' format="yyyy" [customAttributes]='customAttributes'></e-column>
             <e-column field='manufacturer' headerText='Framleiðandi' [customAttributes]='customAttributes'></e-column>
             <e-column field='operation' headerText='Aðgerð' [customAttributes]='customAttributes'></e-column>
-            <e-column field='lastCheck' headerText='Síðasta ath' type='date' format="dd.MM.yyyy" [customAttributes]='customAttributes'></e-column>
+            <e-column field='lastCheck' headerText='Síðasta athugun' type='date' format="dd.MM.yyyy" [customAttributes]='customAttributes'></e-column>
             <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
                 <ng-template #template let-equipments>
                     <i class="far fa-eye action-icon" matTooltip="Skoða" (click)="openDialog(equipments, 'view')"></i>

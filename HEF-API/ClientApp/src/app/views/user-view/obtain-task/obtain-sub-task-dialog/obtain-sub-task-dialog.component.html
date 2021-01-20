@@ -14,7 +14,7 @@
 
     <form [formGroup]="currentJobSubJobs" (ngSubmit)="onSubmitCurrentSubJobs()">
         <div formArrayName="subJobs">
-            <h4>Skráð Undirverk</h4>
+            <h4>Skoða Undirverk</h4>
             <mat-card *ngFor="let subjob of currentJobSubJobs.value.subJobs; let i = index" class="col-md-12 dialog-subjobsforjob-card">
                 <mat-form-field>
                     <mat-label>Búnaður</mat-label>
