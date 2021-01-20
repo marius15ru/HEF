@@ -1887,6 +1887,219 @@
 			"name": "Delete",
 			"item": [
 				{
+					"name": "DeleteComment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"commentsID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"commentsID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/comments/{{commentsID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"{{commentsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteSubJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"subjobID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 204\"] = responseCode.code === 204;\r",
+									"\r",
+									"pm.collectionVariables.unset(\"subjobID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/subjobs/{{subjobID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjobs",
+								"{{subjobID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteJob",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"jobID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"jobID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/jobs/{{jobID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"{{jobID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEquipment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"equipmentID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"equipmentID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/equipments/{{equipmentID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"equipments",
+								"{{equipmentID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteStation",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.get(\"stationsID\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"stationsID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/stations/{{stationsID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"stations",
+								"{{stationsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "DeleteArea",
 					"event": [
 						{
@@ -2014,219 +2227,6 @@
 								"api",
 								"plants",
 								"{{plantID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteStation",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.get(\"stationsID\");"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"\r",
-									"pm.collectionVariables.unset(\"stationsID\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/stations/{{stationsID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"stations",
-								"{{stationsID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteJob",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.get(\"jobID\");"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"\r",
-									"pm.collectionVariables.unset(\"jobID\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/jobs/{{jobID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"jobs",
-								"{{jobID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteComment",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.get(\"commentsID\");"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"\r",
-									"pm.collectionVariables.unset(\"commentsID\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/comments/{{commentsID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"comments",
-								"{{commentsID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteEquipment",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.get(\"equipmentID\");"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"\r",
-									"pm.collectionVariables.unset(\"equipmentID\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/equipments/{{equipmentID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"equipments",
-								"{{equipmentID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteSubJob",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.get(\"subjobID\");"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"tests[\"Status code is 204\"] = responseCode.code === 204;\r",
-									"\r",
-									"pm.collectionVariables.unset(\"subjobID\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/subjobs/{{subjobID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"subjobs",
-								"{{subjobID}}"
 							]
 						}
 					},
