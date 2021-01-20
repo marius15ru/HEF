@@ -11,7 +11,7 @@ import { ObtainTaskDialogComponent } from './obtain-task-dialog/obtain-task-dial
 @Component({
   selector: 'app-obtain-task',
   templateUrl: './obtain-task.component.html',
-  styleUrls: ['./obtain-task.component.css']
+  styleUrls: ['./../user-view.component.css', './obtain-task.component.css']
 })
 export class ObtainTaskComponent implements OnInit {
   availableJobs$: Observable<Job[]> = this.dataService.availableJobs$;

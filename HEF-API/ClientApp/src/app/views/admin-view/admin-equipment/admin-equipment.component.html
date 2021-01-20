@@ -1,18 +1,13 @@
 <div>
-    <h2 >Allur búnaður</h2>
-    <div class="row ml-1 grid-action-buttons">
-        <div>
-            <button mat-raised-button color="accent" (click)="filtersVisibleToggle()">{{filterAction}}</button>
-        </div>
-        <div class="ml-auto mr-3">
-            <button mat-raised-button color="primary" (click)="openDialog(null, 'insert')">Stofna</button> 
-        </div>
+    <div class="table-caption">
+        <h2>Allur búnaður</h2>
+        <button mat-raised-button color="accent" (click)="filtersVisibleToggle()">{{filterAction}}</button>
+        <button mat-raised-button color="primary" (click)="openDialog(null, 'insert')">Stofna</button> 
     </div>
 
     
-    <mat-card *ngIf="filtersVisible" class="row" style="text-align: center;">
-        <mat-card-content>
-            <div class="col-md-12">
+    <mat-card *ngIf="filtersVisible">
+        <mat-card-content class="filters">
                 <mat-form-field>
                     <mat-label>Sía Stöð</mat-label>
                     <mat-select multiple type="number" value='null' (selectionChange)="filterEquipment()" [(ngModel)]="equipmentFilters['stations']" disableOptionCentering panelClass="material-select-box">
@@ -20,7 +15,7 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field >
+                <mat-form-field>
                     <mat-label >Sía Síðustu athugun (frá)</mat-label>
                     <input matInput  [max]="lastCheckTo"  [matDatepicker]="picker1" (dateChange)="filterEquipment()" [(ngModel)]="equipmentFilters['lastCheckFrom']">
                     <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
@@ -33,7 +28,6 @@
                     <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
                     <mat-datepicker [startAt]="getCurrentDate()" #picker2></mat-datepicker>
                 </mat-form-field>
-            </div>
             <button mat-raised-button color="accent" (click)="clearEquipmentFilter()">Hreinsa síur</button>
 
         </mat-card-content>

@@ -9,7 +9,7 @@ import { AdminAreasDialogComponent } from './admin-areas-dialog/admin-areas-dial
 @Component({
   selector: 'app-admin-areas',
   templateUrl: './admin-areas.component.html',
-  styleUrls: ['./admin-areas.component.css']
+  styleUrls: ['./../admin-view.component.css', './admin-areas.component.css']
 })
 export class AdminAreasComponent implements OnInit {
 

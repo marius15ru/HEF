@@ -10,7 +10,7 @@ import { AdminPlantsDialogComponent } from './admin-plants-dialog/admin-plants-d
 @Component({
   selector: 'app-admin-plants',
   templateUrl: './admin-plants.component.html',
-  styleUrls: ['./admin-plants.component.css']
+  styleUrls: ['./../admin-view.component.css', './admin-plants.component.css']
 })
 export class AdminPlantsComponent implements OnInit {
 

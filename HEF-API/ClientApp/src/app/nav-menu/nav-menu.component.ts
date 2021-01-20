@@ -11,7 +11,7 @@ export class NavMenuComponent {
   constructor(public authGuard: AuthGuardService) {}
 
   isExpanded = false;
-  role: Role = parseInt(localStorage.getItem('role'), 0);
+  role = localStorage.getItem('role');
 
   collapse() {
     this.isExpanded = false;

@@ -1,30 +1,31 @@
 <div>
+  <div class="table-caption">
     <h2>Sækja nýtt verk</h2>
-    <ejs-grid
-    #grid [dataSource]="(availableJobs$ | async)"
-    allowPaging='true'
-    allowSorting='true'
-    [allowResizing]='true'
-    [allowTextWrap]='true'>
-        <e-columns >
-            <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-            <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
-            <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='description' headerText='Lýsing' width="300px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
-            <!-- <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column> -->
-            <!--  <e-column field='lastCheck' headerText='Síðasta ath' type='date' format="dd.MM.yy" width="100" [customAttributes]='customAttributes'></e-column> -->
-            <!-- <e-column field='recurring' headerText='Endurtekið?' width="100" [customAttributes]='customAttributes' [valueAccessor]="recurFormatter"></e-column> -->
-            <!-- <e-column field='duration' headerText='Lengd' width="100" [customAttributes]='customAttributes'></e-column> -->
-            <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
-            <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
-                <ng-template #template let-availableJobs>
-                    <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
-                    <i class="fas fa-hand-holding-box action-icon" matTooltip="Sækja" (click)="onSubmit(availableJobs)"></i>
-                    <i class="fas fa-baby subjob-action-icon" matTooltip="Skoða undirverk" (click)="openSubTaskDialog(availableJobs, 'subJob')"></i>
-                </ng-template>
-            </e-column>
-        </e-columns>
-    </ejs-grid>
+  </div>
+  <ejs-grid #grid [dataSource]="(availableJobs$ | async)"
+            allowPaging='true'
+            allowSorting='true'
+            [allowResizing]='true'
+            [allowTextWrap]='true'>
+    <e-columns>
+      <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+      <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
+      <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
+      <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yyyy" width="110px" [customAttributes]='customAttributes'></e-column>
+      <e-column field='description' headerText='Lýsing' width="300px" [customAttributes]='customAttributes'></e-column>
+      <e-column field='emergencyJob' headerText='Neyðarverk?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column>
+      <!-- <e-column field='hasComments' headerText='Athugasemdir?' width="100" [customAttributes]='customAttributes' [valueAccessor]="boolFormatter"></e-column> -->
+      <!--  <e-column field='lastCheck' headerText='Síðasta ath' type='date' format="dd.MM.yy" width="100" [customAttributes]='customAttributes'></e-column> -->
+      <!-- <e-column field='recurring' headerText='Endurtekið?' width="100" [customAttributes]='customAttributes' [valueAccessor]="recurFormatter"></e-column> -->
+      <!-- <e-column field='duration' headerText='Lengd' width="100" [customAttributes]='customAttributes'></e-column> -->
+      <e-column field='status' headerText='Staða' width="100" [customAttributes]='customAttributes' [valueAccessor]="statusFormatter"></e-column>
+      <e-column field="operations" headerText="Aðgerðir" width="100" [customAttributes]='customAttributes'>
+        <ng-template #template let-availableJobs>
+          <!-- <i class="far fa-hand-pointer action-icon" matTooltip="Útdeila" (click)="openDialog(jobs, 'assign')"></i> -->
+          <i class="fas fa-hand-holding-box action-icon" matTooltip="Sækja" (click)="onSubmit(availableJobs)"></i>
+          <i class="fas fa-baby subjob-action-icon" matTooltip="Skoða undirverk" (click)="openSubTaskDialog(availableJobs, 'subJob')"></i>
+        </ng-template>
+      </e-column>
+    </e-columns>
+  </ejs-grid>
 </div>

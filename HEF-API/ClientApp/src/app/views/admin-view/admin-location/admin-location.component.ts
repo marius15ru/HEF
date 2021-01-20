@@ -11,7 +11,7 @@ import { AdminLocationDialogComponent } from './admin-location-dialog/admin-loca
 @Component({
   selector: 'app-admin-location',
   templateUrl: './admin-location.component.html',
-  styleUrls: ['./admin-location.component.css']
+  styleUrls: ['./../admin-view.component.css', './admin-location.component.css']
 })
 export class AdminLocationComponent implements OnInit {
 

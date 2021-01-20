@@ -15,3 +15,12 @@
 } */
 
 /* Styles for the ink bar */
+
+.table-caption {
+  display: flex;
+  margin: 10px 0px;
+}
+
+  .table-caption h2 {
+    margin: 5px auto 5px 5px;
+  }

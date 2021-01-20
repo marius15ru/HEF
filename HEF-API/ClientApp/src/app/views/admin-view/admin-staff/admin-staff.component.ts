@@ -12,7 +12,7 @@ import { AdminStaffDialogComponent } from './admin-staff-dialog/admin-staff-dial
 @Component({
   selector: 'app-admin-staff',
   templateUrl: './admin-staff.component.html',
-  styleUrls: ['./admin-staff.component.css']
+  styleUrls: ['./../admin-view.component.css', './admin-staff.component.css']
 })
 export class AdminStaffComponent implements OnInit {
 

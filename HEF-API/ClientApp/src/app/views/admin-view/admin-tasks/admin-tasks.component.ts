@@ -35,7 +35,7 @@ L10n.load({
 @Component({
   selector: 'app-admin-tasks',
   templateUrl: './admin-tasks.component.html',
-  styleUrls: ['./admin-tasks.component.css']
+  styleUrls: ['./../admin-view.component.css', './admin-tasks.component.css']
 })
 export class AdminTasksComponent implements OnInit {
 

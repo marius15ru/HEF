@@ -7,7 +7,7 @@ import { Job, JobAssignments, Station, User } from 'src/app/shared/models';
 @Component({
   selector: 'app-create-emergency-task',
   templateUrl: './create-emergency-task.component.html',
-  styleUrls: ['./create-emergency-task.component.css']
+  styleUrls: ['./../user-view.component.css', './create-emergency-task.component.css']
 })
 export class CreateEmergencyTaskComponent implements OnInit {
   users$: Observable<User[]> = this.dataService.users$;

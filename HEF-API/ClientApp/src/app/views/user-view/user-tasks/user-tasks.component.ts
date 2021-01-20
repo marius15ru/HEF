@@ -31,7 +31,7 @@ L10n.load({
 @Component({
   selector: 'app-user-tasks',
   templateUrl: './user-tasks.component.html',
-  styleUrls: ['./user-tasks.component.css']
+  styleUrls: ['./../user-view.component.css', './user-tasks.component.css']
 })
 export class UserTasksComponent implements OnInit {
   userJobs$: Observable<Job[]> = this.dataService.userJobs$;

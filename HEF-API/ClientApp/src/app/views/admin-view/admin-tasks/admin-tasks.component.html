@@ -1,199 +1,163 @@
 <div class="grid-class">
+  <div class="table-caption">
     <h2>Öll verk</h2>
-    <div class="row ml-1 grid-action-buttons">
-        <div>
-            <button color="accent" mat-raised-button (click)="filtersVisibleToggle('jobs')">{{filterAction}}</button>
-        </div>
-        <div class="ml-auto mr-3">
-            <button color="primary" mat-raised-button (click)="openDialog(null, 'insert')">Stofna</button>
-        </div>
-    </div>
-    
-    <mat-card *ngIf="filtersVisible" class="row" style="text-align: center;">
-        <mat-card-content>
+    <button color="accent" mat-raised-button (click)="filtersVisibleToggle('jobs')">{{filterAction}}</button>
+    <button color="primary" mat-raised-button (click)="openDialog(null, 'insert')">Stofna</button>
+  </div>
+  <mat-card *ngIf="filtersVisible">
+    <mat-card-content class="filters">
+        <mat-form-field>
+          <mat-label>Sía Veitur</mat-label>
+          <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['plants']" disableOptionCentering panelClass="material-select-box">
+            <mat-option *ngFor="let item of (plants$ | async)" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Stöður</mat-label>
+          <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['status']" disableOptionCentering panelClass="material-select-box">
+            <mat-option *ngFor="let item of jobStatus | enumToArray" [value]="item.index">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Stöðvar</mat-label>
+          <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['stations']" disableOptionCentering panelClass="material-select-box">
+            <mat-option *ngFor="let item of (stations$ | async)" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Síðustu athugunanir (frá)</mat-label>
+          <input matInput [max]="lastCheckTo" [matDatepicker]="picker1" (dateChange)="filterJobs()" [(ngModel)]="jobFilters['lastCheckFrom']">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker [startAt]="getCurrentDate()" #picker1></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Síðustu athugunanir (til)</mat-label>
+          <input matInput [min]="lastCheckFrom" [max]="getCurrentDate()" [matDatepicker]="picker2" (dateChange)="filterJobs()" [(ngModel)]="jobFilters['lastCheckTo']">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker [startAt]="getCurrentDate()" #picker2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Svæði</mat-label>
+          <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['areas']" disableOptionCentering panelClass="material-select-box">
+            <mat-option *ngFor="let item of (areas$ | async)" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Athugasemdir</mat-label>
+          <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['hasComments']" disableOptionCentering panelClass="material-select-box">
+            <mat-option [value]="null">-</mat-option>
+            <mat-option [value]="true">Já</mat-option>
+            <mat-option [value]="false">Nei</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Neyðarverk</mat-label>
+          <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['emergencyJobs']" disableOptionCentering panelClass="material-select-box">
+            <mat-option [value]="null">-</mat-option>
+            <mat-option [value]="true">Já</mat-option>
+            <mat-option [value]="false">Nei</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Eindaga (frá)</mat-label>
+          <input matInput [max]="completeByTo" [matDatepicker]="picker3" (dateChange)="filterJobs()" [(ngModel)]="jobFilters['completeByFrom']">
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker [startAt]="getCurrentDate()" #picker3></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Eindaga (til)</mat-label>
+          <input matInput [min]="completeByFrom" [matDatepicker]="picker4" (dateChange)="filterJobs()" [(ngModel)]="jobFilters['completeByTo']">
+          <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+          <mat-datepicker [startAt]="getCurrentDate()" #picker4></mat-datepicker>
+        </mat-form-field>
+      <button color="accent" mat-raised-button (click)="clearJobFilter()">Hreinsa síur</button>
+    </mat-card-content>
+  </mat-card>
+  <ejs-grid #grid id='OllVerk'
+            [allowPaging]='true'
+            [dataSource]="(filteredJobs$ | async)"
+            [allowSorting]='true'
+            [allowResizing]="true"
+            [allowTextWrap]='true'
+            (toolbarClick)='toolbarClick($event)'
+            (rowDataBound)="rowDataBound($event)"
+            [pageSettings]='pageSettings'>
+    <e-columns>
+      <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
+      <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
+      <e-column field='description' headerText='Lýsing' width="300px" [customAttributes]='customAttributes'></e-column>
+      <e-column field='status' headerText='Staða' width="85px" [valueAccessor]='statusFormatter' [customAttributes]='customAttributes'></e-column>
+      <e-column field='recurring' headerText='Endurtekið?' width="105px" [valueAccessor]='recurFormatter' [customAttributes]='customAttributes'></e-column>
+      <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
+      <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yy" width="85px" [customAttributes]='customAttributes'></e-column>
+      <e-column field='lastCheck' headerText='Síðasta athugun' format="dd.MM.yy" type="date" width="110px" [customAttributes]='customAttributes'></e-column>
+      <e-column field='emergencyJob' headerText='Neyðarverk?' width="105px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
+      <e-column field='hasComments' headerText='athugasemdir?' width="115px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
+      <!-- <e-column field='duration' headerText='Lengd(mín)' width="100px" [customAttributes]='customAttributes'></e-column> -->
+      <e-column field="operations" headerText="Aðgerðir" width="150px" [customAttributes]='customAttributes'>
+        <ng-template #template let-jobs>
+          <div style="text-align: center;" class="row">
             <div class="col-md-12">
-                <mat-form-field>
-                    <mat-label>Sía Veitur</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['plants']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option *ngFor="let item of (plants$ | async)" [value]="item.id">{{item.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Sía Stöður</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['status']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option *ngFor="let item of jobStatus | enumToArray" [value]="item.index" >{{item.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                
-                <mat-form-field>
-                    <mat-label>Sía Stöðvar</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['stations']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option *ngFor="let item of (stations$ | async)" [value]="item.id">{{item.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                
-                <mat-form-field >
-                    <mat-label >Sía Síðustu athugunanir (frá)</mat-label>
-                    <input matInput  [max]="lastCheckTo"  [matDatepicker]="picker1" (dateChange)="filterJobs()" [(ngModel)]="jobFilters['lastCheckFrom']">
-                    <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
-                    <mat-datepicker [startAt]="getCurrentDate()" #picker1></mat-datepicker>
-                </mat-form-field>
-                
-                <mat-form-field >
-                    <mat-label >Sía Síðustu athugunanir (til)</mat-label>
-                    <input matInput [min]="lastCheckFrom" [max]="getCurrentDate()"  [matDatepicker]="picker2" (dateChange)="filterJobs()" [(ngModel)]="jobFilters['lastCheckTo']">
-                    <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
-                    <mat-datepicker [startAt]="getCurrentDate()" #picker2></mat-datepicker>
-                </mat-form-field>
+              <i class="fas fa-hand-holding-box action-icon" matTooltip="Úthluta" (click)="openDialog(jobs, 'assign')"></i>
+              <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobs, 'comment')"></i>
+              <i class="far fa-eye action-icon" matTooltip="Skoða Verk" (click)="openDialog(jobs, 'view')"></i>
+              <i class="fas fa-edit action-icon" matTooltip="Uppfæra Verk" (click)="openDialog(jobs, 'update')"></i>
+              <i class="fas fa-trash-alt action-icon" matTooltip="Eyða verki" (click)="openDialog(jobs, 'delete')"></i>
+              <i class="fas fa-baby subjob-action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobs, 'subJob')"></i>
+              <i class="far fa-scroll subjob-action-icon" matTooltip="Skoða sögu undirverka" (click)="openSubTaskHistoryDialog(jobs, 'subJobHistory')"></i>
             </div>
-            <div class="col-md-12">
-                <mat-form-field>
-                    <mat-label>Sía Svæði</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['areas']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option *ngFor="let item of (areas$ | async)" [value]="item.id">{{item.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Sía Athugasemdir</mat-label>
-                    <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['hasComments']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option [value]="null">-</mat-option>
-                        <mat-option [value]="true">Já</mat-option>
-                        <mat-option [value]="false">Nei</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                
-                <mat-form-field>
-                    <mat-label>Sía Neyðarverk</mat-label>
-                    <mat-select value='null' (selectionChange)="filterJobs()" [(ngModel)]="jobFilters['emergencyJobs']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option [value]="null">-</mat-option>
-                        <mat-option [value]="true">Já</mat-option>
-                        <mat-option [value]="false">Nei</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field >
-                    <mat-label >Sía Eindaga (frá)</mat-label>
-                    <input matInput  [max]="completeByTo"  [matDatepicker]="picker3" (dateChange)="filterJobs()" [(ngModel)]="jobFilters['completeByFrom']">
-                    <mat-datepicker-toggle matSuffix [for]="picker3" ></mat-datepicker-toggle>
-                    <mat-datepicker [startAt]="getCurrentDate()" #picker3></mat-datepicker>
-                </mat-form-field>
-                
-                <mat-form-field >
-                    <mat-label >Sía Eindaga (til)</mat-label>
-                    <input matInput [min]="completeByFrom"  [matDatepicker]="picker4" (dateChange)="filterJobs()" [(ngModel)]="jobFilters['completeByTo']">
-                    <mat-datepicker-toggle matSuffix [for]="picker4" ></mat-datepicker-toggle>
-                    <mat-datepicker [startAt]="getCurrentDate()" #picker4></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <button color="accent" mat-raised-button (click)="clearJobFilter()">Hreinsa síur</button>
-        </mat-card-content>
-    </mat-card>
-
-    <ejs-grid 
-    #grid id='OllVerk' 
-    [allowPaging]='true'
-    [dataSource]="(filteredJobs$ | async)" 
-    [allowSorting]='true' 
-    [allowResizing]="true" 
-    [allowTextWrap]='true'
-
-    (toolbarClick)='toolbarClick($event)'
-    (rowDataBound)="rowDataBound($event)"
-    [pageSettings]='pageSettings'
-    >
-        <e-columns >
-            <!-- <e-column field='id' headerText='Auðkenni' isPrimaryKey='true' width="95px"></e-column> -->
-            <e-column field='name' headerText='Nafn' width="120px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='description' headerText='Lýsing' width="300px"[customAttributes]='customAttributes'></e-column>
-            <e-column field='status' headerText='Staða' width="85px" [valueAccessor]='statusFormatter' [customAttributes]='customAttributes'></e-column>
-            <e-column field='recurring' headerText='Endurtekið?' width="105px" [valueAccessor]='recurFormatter' [customAttributes]='customAttributes'></e-column>
-            <e-column field='station' headerText='Stöð' width="90px" [valueAccessor]="stationFormatter" [customAttributes]='customAttributes'></e-column>
-            <e-column field='completeBy' headerText='Eindagi' type='date' format="dd.MM.yy" width="85px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='lastCheck' headerText='Síðasta athugun' format="dd.MM.yy" type="date" width="110px" [customAttributes]='customAttributes'></e-column>
-            <e-column field='emergencyJob' headerText='Neyðarverk?' width="105px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
-            <e-column field='hasComments' headerText='athugasemdir?' width="115px" [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
-            <!-- <e-column field='duration' headerText='Lengd(mín)' width="100px" [customAttributes]='customAttributes'></e-column> -->
-            <e-column field="operations" headerText="Aðgerðir" width="150px" [customAttributes]='customAttributes'>
-                <ng-template #template let-jobs>
-                    <div style="text-align: center;" class="row">
-                        <div class="col-md-12">
-                            <i class="fas fa-hand-holding-box action-icon" matTooltip="Úthluta" (click)="openDialog(jobs, 'assign')"></i>
-                            <i class="far fa-comment action-icon" matTooltip="Skrá athugasemd" (click)="openDialog(jobs, 'comment')"></i>
-                            <i class="far fa-eye action-icon" matTooltip="Skoða Verk" (click)="openDialog(jobs, 'view')"></i>
-                            <i class="fas fa-edit action-icon" matTooltip="Uppfæra Verk" (click)="openDialog(jobs, 'update')"></i>
-                            <i class="fas fa-trash-alt action-icon" matTooltip="Eyða verki" (click)="openDialog(jobs, 'delete')"></i>
-                        </div>
-                        <div class="col-md-12">
-                            <i class="fas fa-baby subjob-action-icon" matTooltip="Skrá undirverk" (click)="openSubTaskDialog(jobs, 'subJob')"></i>
-                            <i class="far fa-scroll subjob-action-icon" matTooltip="Skoða sögu undirverka" (click)="openSubTaskHistoryDialog(jobs, 'subJobHistory')"></i>
-                        </div>
-                    </div>
-                </ng-template>
-            </e-column>
-        </e-columns>
-    </ejs-grid>
+          </div>
+        </ng-template>
+      </e-column>
+    </e-columns>
+  </ejs-grid>
 </div>
-
-
-
 <div class="grid-class">
-    <div class="row ml-1 grid-action-buttons">
-        <div>
-            <h2 >Athugasemdir við verk</h2>
-        </div>
-    </div>
-
+  <div class="table-caption">
+    <h2>Athugasemdir við verk</h2>
     <button color="accent" mat-raised-button (click)="filtersVisibleToggle('comments')">{{filterAction}}</button>
-
-    <mat-card *ngIf="commentFiltersVisible" class="row" style="text-align: center;">
-        <mat-card-content>
-            <div class="col-md-12">
-                <mat-form-field>
-                    <mat-label>Sía Verk</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="commentFilters['jobs']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option *ngFor="let item of (jobs$ | async)" [value]="item.id" >{{item.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            
-                <mat-form-field>
-                    <mat-label>Sía Starfsmann</mat-label>
-                    <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="commentFilters['users']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option *ngFor="let item of (users$ | async)" [value]="item.id">{{item.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            
-                <mat-form-field>
-                    <mat-label>Séð athugasemd?</mat-label>
-                    <mat-select value='null' (selectionChange)="filterComments()" [(ngModel)]="commentFilters['seen']" disableOptionCentering panelClass="material-select-box">
-                        <mat-option [value]="null">-</mat-option>
-                        <mat-option [value]="true">Já</mat-option>
-                        <mat-option [value]="false">Nei</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <button color="accent" mat-raised-button (click)="clearCommentFilter()">Hreinsa síur</button>
-        </mat-card-content>
-    </mat-card>
- 
-    <ejs-grid
-    #grid id='AllarAthugasemdir' 
-    [dataSource]="(filteredComments$ | async)" 
-    [allowPaging]='true' 
-    [allowSorting]='true' 
-    [allowResizing]="true" 
-    [allowTextWrap]='true'
-
-    (toolbarClick)='toolbarClick($event)'
-    (rowDataBound)="rowDataBound($event)"
-    [pageSettings]='pageSettings'>
-        <e-columns>
-            <!-- <e-column field="id" headerText='Verk' [customAttributes]='customAttributes'></e-column> -->
-            <e-column field="job" headerText='Verk' [valueAccessor]="jobFormatter" [customAttributes]='customAttributes'></e-column>
-            <e-column field="user" headerText='Notandi' [valueAccessor]="userFormatter" [customAttributes]='customAttributes'></e-column>
-            <e-column field="text" headerText='Athugasemd' [customAttributes]='customAttributes'></e-column>
-            <e-column field="seen" headerText='Séð' [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
-        </e-columns>
-    </ejs-grid>
+  </div>
+  <mat-card *ngIf="commentFiltersVisible">
+    <mat-card-content class="filters">
+        <mat-form-field>
+          <mat-label>Sía Verk</mat-label>
+          <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="commentFilters['jobs']" disableOptionCentering panelClass="material-select-box">
+            <mat-option *ngFor="let item of (jobs$ | async)" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sía Starfsmann</mat-label>
+          <mat-select multiple type="number" value='null' (selectionChange)="filterComments()" [(ngModel)]="commentFilters['users']" disableOptionCentering panelClass="material-select-box">
+            <mat-option *ngFor="let item of (users$ | async)" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Séð athugasemd?</mat-label>
+          <mat-select value='null' (selectionChange)="filterComments()" [(ngModel)]="commentFilters['seen']" disableOptionCentering panelClass="material-select-box">
+            <mat-option [value]="null">-</mat-option>
+            <mat-option [value]="true">Já</mat-option>
+            <mat-option [value]="false">Nei</mat-option>
+          </mat-select>
+        </mat-form-field>
+      <button color="accent" mat-raised-button (click)="clearCommentFilter()">Hreinsa síur</button>
+    </mat-card-content>
+  </mat-card>
+  <ejs-grid #grid id='AllarAthugasemdir'
+            [dataSource]="(filteredComments$ | async)"
+            [allowPaging]='true'
+            [allowSorting]='true'
+            [allowResizing]="true"
+            [allowTextWrap]='true'
+            (toolbarClick)='toolbarClick($event)'
+            (rowDataBound)="rowDataBound($event)"
+            [pageSettings]='pageSettings'>
+    <e-columns>
+      <!-- <e-column field="id" headerText='Verk' [customAttributes]='customAttributes'></e-column> -->
+      <e-column field="job" headerText='Verk' [valueAccessor]="jobFormatter" [customAttributes]='customAttributes'></e-column>
+      <e-column field="user" headerText='Notandi' [valueAccessor]="userFormatter" [customAttributes]='customAttributes'></e-column>
+      <e-column field="text" headerText='Athugasemd' [customAttributes]='customAttributes'></e-column>
+      <e-column field="seen" headerText='Séð' [valueAccessor]="boolFormatter" [customAttributes]='customAttributes'></e-column>
+    </e-columns>
+  </ejs-grid>
 </div>
+

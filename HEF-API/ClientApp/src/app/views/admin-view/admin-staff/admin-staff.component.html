@@ -1,11 +1,7 @@
 <div>
-    <div class="row ml-1 grid-action-buttons">
-        <div>
-            <h2 >Allir starfsmenn</h2>
-        </div>
-        <div class="ml-auto mr-3">
-            <button mat-raised-button color="primary" (click)="openDialog('insert')">Stofna</button>
-        </div>
+    <div class="table-caption">
+        <h2>Allir starfsmenn</h2>
+        <button mat-raised-button color="primary" (click)="openDialog('insert')">Stofna</button>
     </div>
     <mat-accordion *ngFor="let user of (users$ | async); let i = index" style="text-align: center;">
         <mat-expansion-panel hideToggle>
