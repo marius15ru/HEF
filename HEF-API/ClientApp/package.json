@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts",
     "lint-n-fix": "eslint . --ext .ts --fix",
     "e2e": "ng e2e",
-    "postman": "newman run ./postman/HEF-Tests.postman_collection --insecure"
+    "postman": "newman run ./postman/HEF-Tests.postman_collection.json --insecure"
   },
   "private": true,
   "dependencies": {
