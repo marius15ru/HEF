@@ -212,11 +212,12 @@ export class AdminTasksDialogComponent implements OnInit {
     requestModel.text = this.commentForm.value.comment;
     requestModel.jobId = this.selectedRow.id;
     requestModel.userId = parseInt(localStorage.getItem('user'), 0);
+    requestModel.seen = false;
     console.log(requestModel);
 
     this.dataService.addJobComment(requestModel).subscribe(() => {
       this.commentForm.reset();
-      this.dataService.getComments(this.selectedRow.id);
+      this.dataService.getComments(this.selectedRow.id, this.dataService.user.id);
       if (this.selectedRow.hasComments === false) {
         const requestModelJob = this.selectedRow;
         requestModelJob.hasComments = true;

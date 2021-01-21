@@ -346,19 +346,25 @@ export class DataService {
 
   // SubJobs
 
-  getSubJobs(jobId =  null) {
+  getSubJobs(jobId =  null, job = null) {
     this.http.get<SubJobs[]>('api/subjobs').subscribe(result => {
       console.log(result);
       this.subJobs = result;
       if (jobId) {
-        this.getSubJobsForJob(jobId);
+        this.getSubJobsForJob(jobId, job);
       }
       this.filterSubJobsPastDueDate(this.jobs, result);
     }, error => console.error(error));
   }
 
-  getSubJobsForJob(jobId: number) {
+  getSubJobsForJob(jobId: number, job: Job) {
     this.subJobsForJob = this.subJobs.filter(subJob => subJob.jobId === jobId);
+    let finishedSubJobs = this.subJobsForJob.filter(item => item.status === 5);
+    console.log(finishedSubJobs.length);
+    console.log(this.subJobsForJob)
+    if(finishedSubJobs.length === this.subJobsForJob.length){
+      job.status = 5;
+    }
   }
 
   filterSubJobsPastDueDate(jobs: Job[], subJobs: SubJobs[]) {
@@ -448,6 +454,8 @@ export class DataService {
 
   updateSubJob(subJob: SubJobs, subJobId: string): Observable<SubJobs> {
     const url = this.subJobsUrl + subJobId + '/';
+
+
     return this.http.put<SubJobs>(url, subJob, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateJob', subJob))
@@ -755,7 +763,7 @@ export class DataService {
   }
 
   // Comments
-  getComments(jobId = null, userId = null) {
+  getComments(jobId = null, userId: number = null) {
     return this.http.get<Comment[]>('api/comments').subscribe(result => {
       this.comments = result;
       this.filteredComments = result;
