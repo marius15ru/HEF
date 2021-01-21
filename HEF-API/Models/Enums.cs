@@ -33,7 +33,9 @@ namespace HEF_API.Models
             Liters = 2,
             Bar = 3,
             Meters = 4,
-            LitersPerSecond = 5
+            LitersPerSecond = 5,
+            Percentage = 6,
+            Ph = 7,
 
         }
 

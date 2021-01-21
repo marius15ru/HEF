@@ -38,7 +38,9 @@ export enum MeasurementType {
     'Lítrar' = 2,
     'Þrýstingur(bar)' = 3,
     'Metrar' = 4,
-    'Lítrar á sekúndu' = 5
+    'Lítrar á sekúndu' = 5,
+    '%' = 6,
+    'ph-gildi' = 7
 }
 
 export enum PlantType {
@@ -82,5 +84,10 @@ export enum SubJobTask {
     'Mæla hitastig' = 5,
     'Mæla hæð' = 6,
     'Skúra' = 7,
-    'Athuga mótor' = 8
+    'Athuga mótor' = 8,
+    'Ath Seirumagn' = 9,
+    'Ath virkni síu' = 10,
+    'Mæla sýrustig' = 11,
+    'Fjarlægja steina' = 12,
+    'Mæla rakastig' = 13
 }

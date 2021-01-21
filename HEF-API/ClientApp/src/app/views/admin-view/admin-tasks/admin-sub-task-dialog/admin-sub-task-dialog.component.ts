@@ -81,8 +81,6 @@ export class AdminSubTaskDialogComponent implements OnInit {
     }
   }
 
-  on
-
   updateSubJobRow(subJob: SubJobs, index: number) {
     subJob.value = this.measuredValue[index];
     this.dataService.updateSubJob(subJob, subJob.id.toString()).subscribe(() => {
