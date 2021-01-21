@@ -763,7 +763,7 @@ export class DataService {
   }
 
   // Comments
-  getComments(jobId = null, userId: number = null) {
+  getComments(jobId = null, userId = null) {
     return this.http.get<Comment[]>('api/comments').subscribe(result => {
       this.comments = result;
       this.filteredComments = result;
