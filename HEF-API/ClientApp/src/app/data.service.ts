@@ -351,7 +351,7 @@ export class DataService {
       console.log(result);
       this.subJobs = result;
       if (jobId) {
-        this.getSubJobsForJob(jobId, job);
+        this.getSubJobsForJob(jobId);
       }
       this.filterSubJobsPastDueDate(this.jobs, result);
     }, error => console.error(error));
@@ -359,12 +359,6 @@ export class DataService {
 
   getSubJobsForJob(jobId: number) {
     this.subJobsForJob = this.subJobs.filter(subJob => subJob.jobId === jobId);
-    // let finishedSubJobs = this.subJobsForJob.filter(item => item.status === 5);
-    // console.log(finishedSubJobs.length);
-    // console.log(this.subJobsForJob)
-    // if(finishedSubJobs.length === this.subJobsForJob.length){
-    //   job.status = 5;
-    // }
   }
 
   filterSubJobsPastDueDate(jobs: Job[], subJobs: SubJobs[]) {
