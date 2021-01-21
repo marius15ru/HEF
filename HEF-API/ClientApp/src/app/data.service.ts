@@ -357,14 +357,14 @@ export class DataService {
     }, error => console.error(error));
   }
 
-  getSubJobsForJob(jobId: number, job: Job) {
+  getSubJobsForJob(jobId: number) {
     this.subJobsForJob = this.subJobs.filter(subJob => subJob.jobId === jobId);
-    let finishedSubJobs = this.subJobsForJob.filter(item => item.status === 5);
-    console.log(finishedSubJobs.length);
-    console.log(this.subJobsForJob)
-    if(finishedSubJobs.length === this.subJobsForJob.length){
-      job.status = 5;
-    }
+    // let finishedSubJobs = this.subJobsForJob.filter(item => item.status === 5);
+    // console.log(finishedSubJobs.length);
+    // console.log(this.subJobsForJob)
+    // if(finishedSubJobs.length === this.subJobsForJob.length){
+    //   job.status = 5;
+    // }
   }
 
   filterSubJobsPastDueDate(jobs: Job[], subJobs: SubJobs[]) {
